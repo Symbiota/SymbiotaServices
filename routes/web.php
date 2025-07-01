@@ -8,3 +8,12 @@ Route::get('/', function () {
 Route::get('/customer-management', function () {
     return view('customer-management');
 });
+
+Route::post('/customer', function(){
+    // Customer::create([
+
+    // ])
+    dd(request()->all());
+})
+
+?>
