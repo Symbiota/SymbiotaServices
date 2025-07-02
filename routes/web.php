@@ -7,7 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/customer-management', function () {
-    return view('customer-management');
+    $customers = Customer::all();
+    return view('customer-management', compact('customers'));
 });
 
 Route::post('/customer', function(){

@@ -20,8 +20,8 @@ class Customer extends Model {
     /**
      * @return Collection
      */
-    public static function getCustomers(): Collection {
-        Customer::orderBy('name', 'DESC')->get();
-    }
+    // public static function getCustomers(): Collection {
+    //     Customer::orderBy('name', 'DESC')->get();
+    // }
 
 }
