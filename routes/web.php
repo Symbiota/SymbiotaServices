@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Customer;
 
 Route::get('/', function () {
     return view('welcome');
@@ -10,10 +11,14 @@ Route::get('/customer-management', function () {
 });
 
 Route::post('/customer', function(){
-    // Customer::create([
+    //@TODO validate
+    Customer::create([
+        'name'=>request('customer-name'),
+        'darbi_account'=>request('customer-DARBI-number')
+    ]);
 
-    // ])
-    dd(request()->all());
+    // @TODO return what? a redirect?
+    // dd(request()->all());
 })
 
 ?>
