@@ -12,17 +12,21 @@ Route::get('/customer-management', function () {
 });
 
 Route::post('/customer', function(){
-    //@TODO validate
     request()->validate([
-        'customer-name'=>['required'],
-        'customer-DARBI-number'=>['required']
-
+        'customer-name'=>['required', 'unique:customers,name'],
+        'customer-DARBI-number'=>['required', 'numeric']
     ]);
     Customer::create([
         'name'=>request('customer-name'),
         'darbi_account'=>request('customer-DARBI-number')
     ]);
     return redirect('/customer-management');
-})
+});
+
+Route::post('/customer/{id}', function($id){
+    $customer = Customer::find($id);
+    $customer->delete();
+    return redirect('/customer-management');
+});
 
 ?>

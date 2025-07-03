@@ -8,7 +8,7 @@
                   <a href='/customer/{{$customer->id}}'>
                      - {{$customer->name}}
                   </a>
-                  <form action="/customer/{{ $customer->id }}" method="DELETE" onsubmit="return confirm('Are you sure you want to delete this customer?');">
+                  <form action="/customer/{{ $customer->id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this customer?');">
                      @csrf
                      <!-- @method('DELETE') -->
                      <button type="submit" class="hover:text-red-500">
@@ -53,7 +53,7 @@
          @if($errors->any())
             <ul>
                @foreach($errors->all() as $error)
-                  <li>{{$error}}</li>
+                  <li class="text-white">{{$error}}</li>
                @endforeach
             </ul>
          @endif
