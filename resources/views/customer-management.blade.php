@@ -13,7 +13,7 @@
                      hx-delete={{url('/customer/' . $customer->id)}}
                      hx-target="#customer-list-div"
                      hx-swap="outerHTML"
-                     onsubmit="return confirm('Are you sure you want to delete this customer?');"
+                     hx-confirm="Are you sure you want to delete this customer?"
                   >
                      @csrf
                      <button type="submit" class="hover:text-red-500">
