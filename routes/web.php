@@ -23,10 +23,15 @@ Route::post('/customer', function(){
     return redirect('/customer-management');
 });
 
-Route::post('/customer/{id}', function($id){
-    $customer = Customer::find($id);
-    $customer->delete();
-    return redirect('/customer-management');
+Route::delete('/customer/{id}', function($id){
+    $targetCustomer = Customer::find($id);
+    $targetCustomer->delete();
+
+    $customers = Customer::all();
+    return view('customer-management', compact('customers'))
+        ->fragment('customer-list');
+
+    // return redirect('/customer-management');
 });
 
 ?>
