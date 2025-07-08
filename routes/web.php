@@ -2,31 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Customer;
+use App\Http\Controllers\CustomerController;
 
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/customer-management', function () {
-    $customers = Customer::all();
-    return view('customer-management', compact('customers'));
-});
-
-Route::post('/customer', function(){
-    request()->validate([
-        'customer-name'=>['required', 'unique:customers,name'],
-        'customer-DARBI-number'=>['required', 'numeric']
-    ]);
-    Customer::create([
-        'name'=>request('customer-name'),
-        'darbi_account'=>request('customer-DARBI-number')
-    ]);
-    return redirect('/customer-management');
-});
-
-Route::post('/customer/{id}', function($id){
-    $customer = Customer::find($id);
-    $customer->delete();
-    return redirect('/customer-management');
-});
-
+Route::get('/customer-management', [CustomerController::class, 'index']);
+Route::post('/customer', [CustomerController::class, 'create']);
+Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
 ?>
