@@ -20,16 +20,19 @@ class CustomerController extends Controller
             'name'=>request('customer-name'),
             'darbi_account'=>request('customer-DARBI-number')
         ]);
-        return redirect('/customer-management');
+        return $this->updateFragment('customer-management', 'customer-list');
     }
 
     public function destroy($id){
         $targetCustomer = Customer::find($id);
         $targetCustomer->delete();
+        return $this->updateFragment('customer-management', 'customer-list');
+    }
 
+    private function updateFragment($viewName, $fragmentName){
         $customers = Customer::all();
-        return view('customer-management', compact('customers'))
-            ->fragment('customer-list');
+        return view($viewName, compact('customers'))
+            ->fragment($fragmentName);
     }
 
 }
