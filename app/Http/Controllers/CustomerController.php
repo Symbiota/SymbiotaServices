@@ -16,15 +16,23 @@ class CustomerController extends Controller
             'customer-name'=>['required', 'unique:customers,name'],
             'customer-DARBI-number'=>['required', 'numeric']
         ]);
-        Customer::create([
-            'name'=>request('customer-name'),
-            'darbi_account'=>request('customer-DARBI-number')
-        ]);
-        // return $this->updateFragment('customer-management', 'customer-list');
-        return response(
-            $this->updateFragment('customer-management', 'customer-list'))->header('HX-Trigger', json_encode([
-                'customer-created' => ['message'=>'Customer ' . request('customer-name') . ' successfully created!']
+        try{
+
+            Customer::create([
+                'name'=>request('customer-name'),
+                'darbi_account'=>request('customer-DARBI-number')
+            ]);
+            return response(
+                $this->updateFragment('customer-management', 'customer-list'))->header('HX-Trigger', json_encode([
+                    'customer-created' => ['message'=>'Customer ' . request('customer-name') . ' successfully created!']
             ]));
+        } catch(\Exception $error){
+            return response(
+                $this->updateFragment('customer-management', 'customer-list'))->header('HX-Trigger', json_encode([
+                    'customer-created' => ['message'=>'Customer creation failed!']
+            ]));
+        }
+        // return $this->updateFragment('customer-management', 'customer-list');
     }
 
     public function destroy($id){

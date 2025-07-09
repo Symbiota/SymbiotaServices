@@ -76,7 +76,7 @@
    </div>
    <div
       id='indicator-div'
-      x-data="{ show: true, message: 'testing' }"
+      x-data="{ show: true, message: '' }"
       x-show="show"
       x-transition
       x-text="message"
