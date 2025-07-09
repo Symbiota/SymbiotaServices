@@ -9,6 +9,7 @@
                   <a href='/customer/{{$customer->id}}'>
                      - {{$customer->name}}
                   </a>
+                  @fragment('customer-form')
                   <form 
                      hx-delete={{url('/customer/' . $customer->id)}}
                      hx-target="#customer-list-div"
@@ -22,6 +23,7 @@
                         </svg>
                      </button>
                   </form>
+                  @endfragment
                </li>
             @endforeach
          </ul>
