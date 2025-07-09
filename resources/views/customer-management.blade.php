@@ -74,4 +74,15 @@
          @endif
       </form>
    </div>
+   <div
+      id='indicator-div'
+      x-data="{ show: true, message: 'testing' }"
+      x-show="show"
+      x-transition
+      x-text="message"
+      class="bg-green-500 text-white px-4 py-2 rounded mb-4 w-full"
+      @customer-created.window="message = $event.detail.message; show=true; setTimeout(()=> show=false, 3000)"
+   >
+
+   </div>
 </x-layout>

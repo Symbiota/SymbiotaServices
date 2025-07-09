@@ -20,7 +20,11 @@ class CustomerController extends Controller
             'name'=>request('customer-name'),
             'darbi_account'=>request('customer-DARBI-number')
         ]);
-        return $this->updateFragment('customer-management', 'customer-list');
+        // return $this->updateFragment('customer-management', 'customer-list');
+        return response(
+            $this->updateFragment('customer-management', 'customer-list'))->header('HX-Trigger', json_encode([
+                'customer-created' => ['message'=>'Customer ' . request('customer-name') . ' successfully created!']
+            ]));
     }
 
     public function destroy($id){
