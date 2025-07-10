@@ -9,12 +9,12 @@
                   <a href='/customer/{{$customer->id}}'>
                      - {{$customer->name}}
                   </a>
-                  @fragment('customer-form')
                   <form 
                      hx-delete={{url('/customer/' . $customer->id)}}
                      hx-target="#customer-list-div"
                      hx-swap="outerHTML"
                      hx-confirm="Are you sure you want to delete this customer?"
+                     hx-indicator="#loading-spinner"
                   >
                      @csrf
                      <button type="submit" class="hover:text-red-500">
@@ -23,16 +23,18 @@
                         </svg>
                      </button>
                   </form>
-                  @endfragment
+                  <div id="loading-spinner" class="hidden">Loading...</div>
                </li>
             @endforeach
          </ul>
       </div>
       @endfragment
+      @fragment('customer-create-form')
       <form
+         id="customer-create-form"
          hx-post={{url('/customer/')}}
          hx-target="#customer-list-div"
-         hx-swap="outerHTML"
+         hx-swap="innerHTML"
       >
          @csrf
          <div class="space-y-6">
@@ -75,6 +77,7 @@
             </ul>
          @endif
       </form>
+      @endfragment
    </div>
    <div
       id='indicator-div'
