@@ -18,51 +18,40 @@ class CustomerController extends Controller
                 'customer-DARBI-number'=>['required', 'numeric']
         ]);
         if($validator->fails()){
-            $view = $this->updateFragment('customer-management', 'customer-form')->withErrors($validator);
-            return response($view)
-                ->header('HX-Trigger', json_encode([
-                'customer-created' => ['message'=>'Customer creation failed!']
+            $view = view('customer-management', ['customers' => Customer::all()])
+                ->withErrors($validator);
+            $fragment = $view->fragment('customer-create-form');
+
+            return response($fragment)->header('HX-Trigger', json_encode([
+                'customer-created' => ['message' => 'Customer creation failed!']
             ]));
-            // return $this
-            // ->updateFragment('customer-management', 'customer-form')
-            // ->withErrors($validator)
-            // ->withHeaders([
-            //     'HX-Trigger' => json_encode([
-            //         'customer-created' => ['message' => 'Customer creation failed!']
-            //     ])
-            // ]);
         }
-        // request()->validate([
-        //     'customer-name'=>['required', 'unique:customers,name'],
-        //     'customer-DARBI-number'=>['required', 'numeric']
-        // ]);
         try{
 
             Customer::create([
                 'name'=>request('customer-name'),
                 'darbi_account'=>request('customer-DARBI-number')
             ]);
+            // return response(
+            //     $this->updateFragment('customer-management', 'customer-list-div'))->header('HX-Trigger', json_encode([
+            //         'customer-created' => ['message'=>'Customer ' . request('customer-name') . ' successfully created!']
+            // ]));
             return response(
-                $this->updateFragment('customer-management', 'customer-list'))->header('HX-Trigger', json_encode([
+                $this->updateFragment('customer-management'))->header('HX-Trigger', json_encode([
                     'customer-created' => ['message'=>'Customer ' . request('customer-name') . ' successfully created!']
             ]));
         } catch(\Exception $error){
-            // return response(
-            //     $this->updateFragment('customer-management', 'customer-list'))->header('HX-Trigger', json_encode([
-            //         'customer-created' => ['message'=>'Customer creation failed!']
-            // ]));
             return response(
                 $this->updateFragment('customer-management'))->header('HX-Trigger', json_encode([
                     'customer-created' => ['message'=>'Something has gone wrong. Please contact the site administrators.']
             ]));
         }
-        // return $this->updateFragment('customer-management', 'customer-list');
     }
 
     public function destroy($id){
         $targetCustomer = Customer::find($id);
         $targetCustomer->delete();
-        return $this->updateFragment('customer-management', 'customer-list');
+        return $this->updateFragment('customer-management', 'customer-list-div');
     }
 
     private function updateFragment($viewName, $fragmentName = null){
