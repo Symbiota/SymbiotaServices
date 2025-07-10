@@ -23,7 +23,8 @@
         <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
             <nav>
                 <a class="text-white mr-8" href="/">Home</a>
-                <a class="text-white" href="/customer-management">Customer Management</a>
+                <a class="text-white mr-8" href="/customer-management">Customer Management</a>
+                <a class="text-white" href="/customers">Customers</a>
             </nav>
             @if (Route::has('login'))
                 <nav class="flex items-center justify-end gap-4">
