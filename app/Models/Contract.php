@@ -16,7 +16,7 @@ class Contract extends Model
         'original_contact_id',
         'darbi_header_ref_1',
         'darbi_header_ref_2',
-        'darbi_special_instructionss',
+        'darbi_special_instructions',
         'notes',
         'start_date',
         'end_date'

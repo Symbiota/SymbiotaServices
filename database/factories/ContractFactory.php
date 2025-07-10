@@ -26,5 +26,5 @@ class ContractFactory extends Factory
             'start_date' => $this->faker->date(),
             'end_date' => $this->faker->date()
         ];
-    }
+    } // to use: php artisan tinker, App\Models\Contract::factory(number)->create() - also generates customers
 }

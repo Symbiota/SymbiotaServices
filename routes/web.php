@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Customer;
 use App\Models\Contract;
+use App\Models\Service;
 use App\Http\Controllers\CustomerController;
 
 Route::get('/', function () {
@@ -13,9 +14,22 @@ Route::get('/customer-management', [CustomerController::class, 'index']);
 Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
 
 
+
+
+Route::get('/contracts', function (){
+    return view('contracts', ['contracts' => Contract::all()]);
+});
+
+Route::get('/contracts/{id}', function ($id){
+    $contract = Contract::find($id);
+    return view('contract', compact('contract'));
+});
+
+
 Route::get('/customers', function (){
     return view('customers.index', ['customers' => Customer::all()]);
 });
+
 
 Route::get('/customers/{id}', function ($id) {
     $customer = Customer::find($id);

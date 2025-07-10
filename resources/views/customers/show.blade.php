@@ -13,7 +13,7 @@
 
     <div>
         @foreach($customer->contracts as $contract)
-            <a href="/customers/{{ $customer['id'] }}" class="block px-4 py-2 border border-gray-500">
+            <a href="/contracts/{{ $contract->id }}" class="block px-4 py-2 border border-gray-500">
                 <div>
                     <b>Contract ID:</b> {{ $contract->id }}
                     <b>Customer ID:</b> {{ $contract->customer_id }}

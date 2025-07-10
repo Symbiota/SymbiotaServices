@@ -23,5 +23,5 @@ class CustomerFactory extends Factory
             'correspondence' => $this->faker->email(),
             'notes' => $this->faker->text(),
         ];
-    }
+    } // to use: php artisan tinker, App\Models\Customer::factory(number)->create()
 }
