@@ -3,14 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Customer;
 use App\Models\Contract;
-use App\Models\Service;
 use App\Http\Controllers\CustomerController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/customer-management', [CustomerController::class, 'index']);
-//Route::post('/customer', [CustomerController::class, 'create']);
+Route::post('/customer', [CustomerController::class, 'create']);
 Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
 
 
@@ -72,25 +71,25 @@ Route::patch('/customers/{id}', function ($id){
 
 
 // Create
-Route::post('/customers', function () {
+// Route::post('/customers', function () {
 
-    request()->validate([
-        'name' => ['required'],
-        'darbi_account' => ['required', 'numeric', 'digits:4'],
-        'darbi_site' => ['required'],
-        'correspondence' => ['required'],
-    ]);
+//     request()->validate([
+//         'name' => ['required'],
+//         'darbi_account' => ['required', 'numeric', 'digits:4'],
+//         'darbi_site' => ['required'],
+//         'correspondence' => ['required'],
+//     ]);
 
-    Customer::create([
-        'name' => request('name'),
-        'darbi_account' => request('darbi_account'),
-        'darbi_site' => request('darbi_site'),
-        'correspondence' => request('correspondence'),
-        'notes' => request('notes')
-    ]);
+//     Customer::create([
+//         'name' => request('name'),
+//         'darbi_account' => request('darbi_account'),
+//         'darbi_site' => request('darbi_site'),
+//         'correspondence' => request('correspondence'),
+//         'notes' => request('notes')
+//     ]);
 
-    return redirect('/customers');
-});
+//     return redirect('/customers');
+// });
 
 
 
