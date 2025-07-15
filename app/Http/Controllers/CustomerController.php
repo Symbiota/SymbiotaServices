@@ -47,7 +47,8 @@ class CustomerController extends Controller
             //     ]),
             // );
             $customers = Customer::all();
-            return response()->view('customers.index', compact('customers'))->fragment('customer-list');
+            // return response()->view('customers.index', compact('customers'))->fragment('customer-list');
+            return view('customers.index', compact('customers'))->fragment('customer-list');
         } catch (\Exception $error) {
             dd($error);
             // return response($this->updateFragment('customer-management'))->header(
