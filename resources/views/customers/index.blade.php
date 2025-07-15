@@ -113,9 +113,7 @@
             </div>
 
             <div class="mt-6 flex items-center justify-end gap-x-6">
-                <a href="/customers/{{ $customer->id }}"
-                    class="text-sm/6 font-semibold text-gray-900
-                    @click.prevent="show=false">
+                <a href="#" class="text-sm/6 font-semibold text-gray-900" @click.prevent="show=false">
                     Cancel
                 </a>
                 <button type="submit"
