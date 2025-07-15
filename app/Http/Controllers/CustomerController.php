@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
     public function index() {
-        return view('customers.index', ['customers' => Customer::all()]);
+        return view('customers.index', ['customers' => Customer::all()]); // Passes array $customers to index view
     }
 
-    public function show(Customer $customer) {
-        return view('customers.show', compact('customer'));
+    public function show(Customer $customer) { // Customer $customer automatically retrieves the ID of the customer
+        return view('customers.show', ['customer' => $customer]); // Passes that customer to a new variable $customer for the show view
     }
 
     public function create() {

@@ -34,6 +34,4 @@
         }
     </script>
 
-
-
 </x-table-layout>

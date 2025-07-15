@@ -18,8 +18,8 @@
                     id="name" 
                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500" 
                     placeholder="Hollis Stacy"
-                    value=""
-                required>
+                    value="{{ $customer->name ?? '' }}"
+                required> <!-- value is blank if variable not found (i.e create menu) -->
                 </div>
                     @error('name')
                     <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -38,7 +38,7 @@
                     id="darbi_account" 
                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500" 
                     placeholder="1234"
-                    value=""
+                    value="{{ $customer->darbi_account ?? '' }}"
                 required>
                 </div>
                     @error('darbi_account')
@@ -58,7 +58,7 @@
                     id="darbi_site" 
                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500" 
                     placeholder="Site.com" 
-                    value=""
+                    value="{{ $customer->darbi_site ?? '' }}"
                     required>
                 </div>
                     @error('darbi_site')
@@ -78,7 +78,7 @@
                     id="correspondence" 
                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500" 
                     placeholder="email@email.com" 
-                    value=""
+                    value="{{ $customer->correspondence ?? '' }}"
                 required>
                 </div>
                     @error('correspondence')
@@ -98,7 +98,7 @@
                     id="notes" 
                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500" 
                     placeholder="Extra Notes"
-                    value="" 
+                    value="{{ $customer->notes ?? '' }}" 
                 />
                 </div>
                     @error('notes')

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Contract extends Model
@@ -31,6 +33,6 @@ class Contract extends Model
     // A contract has many services
     public function services()
     {
-        return $this->hasMany(Service::class);
+        return $this->hasMany(Service::class, 'id'); // Searches in "id" column of Services table instead of the default contract_id
     }
 }
