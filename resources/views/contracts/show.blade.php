@@ -13,18 +13,16 @@
         <li><b>end_date:</b> {{ $contract->end_date }}</li>
     </ul>
 
-    {{-- WIP: Services Function - need this comment as laravel reads variables in regular comments
+
     <div>
     @foreach($contract->services as $service)
-            <div">
-                <div>
-                    <li><b>id:</b>  {{ $service->id }}</li>
-                    <li><b>name:</b>  {{ $service->name }}</li>
-                </div>
-            </a>
-            <br>
+        <div>
+            <li><b>id:</b>  {{ $service->id }}</li>
+            <li><b>name:</b>  {{ $service->name }}</li>
+        </div>
+        <br>
     @endforeach
     </div>
-    --}}
+
 
 </x-table-layout>
