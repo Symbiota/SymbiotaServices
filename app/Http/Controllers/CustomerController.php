@@ -20,13 +20,7 @@ class CustomerController extends Controller
             'customer-DARBI-number' => ['required', 'numeric'],
         ]);
         if ($validator->fails()) {
-            // $view = view('customer-management', ['customers' => Customer::all()])
-            //     ->withErrors($validator);
-            // $fragment = $view->fragment('customer-create-form');
-
-            // return response($fragment)->header('HX-Trigger', json_encode([
-            //     'customer-created' => ['message' => 'Customer creation failed!']
-            // ]));
+            // @TODO
         }
         try {
             Customer::create([
@@ -36,27 +30,10 @@ class CustomerController extends Controller
                 'correspondence' => request('correspondence'),
                 'notes' => request('notes'),
             ]);
-            // return response(
-            //     $this->updateFragment('customer-management', 'customer-list-div'))->header('HX-Trigger', json_encode([
-            //         'customer-created' => ['message'=>'Customer ' . request('customer-name') . ' successfully created!']
-            // ]));
-            // return response($this->updateFragment('customer-management'))->header(
-            //     'HX-Trigger',
-            //     json_encode([
-            //         'customer-created' => ['message' => 'Customer ' . request('customer-name') . ' successfully created!'],
-            //     ]),
-            // );
             $customers = Customer::all();
-            // return response()->view('customers.index', compact('customers'))->fragment('customer-list');
             return view('customers.index', compact('customers'))->fragment('customer-list');
         } catch (\Exception $error) {
-            dd($error);
-            // return response($this->updateFragment('customer-management'))->header(
-            //     'HX-Trigger',
-            //     json_encode([
-            //         'customer-created' => ['message' => 'Something has gone wrong. Please contact the site administrators.'],
-            //     ]),
-            // );
+            dd($error); // @TODO implement
         }
     }
 
@@ -66,7 +43,6 @@ class CustomerController extends Controller
         $targetCustomer->delete();
         $customers = Customer::all();
         return view('customers.index', compact('customers'))->fragment('customer-list');
-        // return $this->updateFragment('customer-management', 'customer-list-div');
     }
 
     private function updateFragment($viewName, $fragmentName = null)
