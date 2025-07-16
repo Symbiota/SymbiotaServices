@@ -44,14 +44,4 @@ class CustomerController extends Controller
         $customers = Customer::all();
         return view('customers.index', compact('customers'))->fragment('customer-list');
     }
-
-    private function updateFragment($viewName, $fragmentName = null)
-    {
-        $customers = Customer::all();
-        if ($fragmentName) {
-            return view($viewName, compact('customers'))->fragment($fragmentName);
-        } else {
-            return view($viewName, compact('customers'));
-        }
-    }
 }
