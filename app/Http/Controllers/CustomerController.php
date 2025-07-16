@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Response;
 
-class CustomerController extends Controller
-{
+class CustomerController extends Controller {
     public function index() {
         return view('customers.index', ['customers' => Customer::all()]); // Passes array $customers to index view
     }
@@ -15,8 +17,7 @@ class CustomerController extends Controller
         return view('customers.show', ['customer' => $customer]); // Passes that customer to a new variable $customer for the show view
     }
 
-    public function create(Request $request)
-    {
+    public function create(Request $request) {
         $validator = Validator::make($request->all(), [
             'customer-name' => ['required', 'unique:customers,name'],
             'customer-DARBI-number' => ['required', 'numeric'],
@@ -33,7 +34,21 @@ class CustomerController extends Controller
                 'notes' => request('notes'),
             ]);
             $customers = Customer::all();
-            return view('customers.index', compact('customers'))->fragment('customer-list');
+            // return view('customers.index', compact('customers'))->fragment('customer-list');
+            // return response()
+            //     ->view('customers.index', compact('customers'))
+            //     ->fragment('customer-list')
+            //     ->header('HX-Trigger', json_encode([
+            //         'toast' => 'Customer successfully created!',
+            //     ]));
+            $html = View::make('customers.index', [
+                'customers' => Customer::all()
+            ])->renderSections()['customer-list'] ?? '';
+
+            return Response::make($html)
+                ->header('HX-Trigger', json_encode([
+                    'toast' => 'Customer successfully created!',
+                ]));
         } catch (\Exception $error) {
             dd($error); // @TODO implement
         }

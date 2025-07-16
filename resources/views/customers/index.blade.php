@@ -44,4 +44,20 @@
             @endforeach
         </div>
     @endfragment
+
+    <div x-data="{ showToast: false, message: '' }"
+        @toast.window="showToast = true; message = $event.detail.value; setTimeout(() => showToast = false, 3000)"
+        x-show="showToast" x-text="message" class="fixed bottom-0 right-0 mb-4 mr-4 bg-blue-500 text-white p-4 rounded">
+    </div>
+
+    <script>
+        window.toast = message => window.dispatchEvent(new CustomEvent('toast', {
+            detail: message
+        }));
+        document.body.addEventListener('toast', event => {
+            window.dispatchEvent(new CustomEvent('toast', {
+                detail: event.detail
+            }));
+        });
+    </script>
 </x-table-layout>
