@@ -64,7 +64,9 @@ class CustomerController extends Controller
     {
         $targetCustomer = Customer::find($id);
         $targetCustomer->delete();
-        return $this->updateFragment('customer-management', 'customer-list-div');
+        $customers = Customer::all();
+        return view('customers.index', compact('customers'))->fragment('customer-list');
+        // return $this->updateFragment('customer-management', 'customer-list-div');
     }
 
     private function updateFragment($viewName, $fragmentName = null)
