@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Response;
 
 class CustomerController extends Controller {
     public function index() {
@@ -34,12 +32,12 @@ class CustomerController extends Controller {
             // dd($validator);
             // $viewHtml = view('customers.index', compact('customers'))->fragment('error-div');
             // return response($viewHtml);
-            return response(
-                view('customers.index', [
-                    'customers' => Customer::all()
-                ])->withErrors($validator)
-                    ->fragment('error-div')
-            )->setStatusCode(422);
+            // return response(
+            //     view('customers.index', [
+            //         'customers' => Customer::all()
+            //     ])->withErrors($validator)
+            //         ->fragment('error-div')
+            // )->setStatusCode(422);
         }
         try {
             Customer::create([
@@ -85,6 +83,7 @@ class CustomerController extends Controller {
     }
 
     public function destroy($id) {
+        sleep(10);
         $targetCustomer = Customer::find($id);
         $targetCustomer->delete();
         $customers = Customer::all();
