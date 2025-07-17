@@ -76,5 +76,6 @@ Route::get('/customers', [CustomerController::class, 'index']);
 Route::get('/customers/{customer}', [CustomerController::class, 'show']);
 Route::post('/customers', [CustomerController::class, 'create']);
 Route::patch('/customers/{customer}', [CustomerController::class, 'update']);
+Route::patch('/customer', [CustomerController::class, 'update']);
 
 ?>

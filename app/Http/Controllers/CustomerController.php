@@ -16,9 +16,10 @@ class CustomerController extends Controller {
     }
 
     public function create(Request $request) {
+        // @TODO if mode is edit, don't return a view
         $validator = Validator::make($request->all(), [
-            'customer-name' => ['required', 'unique:customers,name'],
-            'customer-DARBI-number' => ['required', 'numeric'],
+            'name' => ['required', 'unique:customers,name'],
+            'darbi_account' => ['required', 'numeric'],
         ]);
         // request()->validate([
         //     'customer-name' => ['required', 'unique:customers,name'],
@@ -42,7 +43,7 @@ class CustomerController extends Controller {
         try {
             Customer::create([
                 'name' => request('name'),
-                'darbi_account' => request('customer-DARBI-number'),
+                'darbi_account' => request('darbi_account'),
                 'darbi_site' => request('darbi_site'),
                 'correspondence' => request('correspondence'),
                 'notes' => request('notes'),
@@ -65,7 +66,7 @@ class CustomerController extends Controller {
         request()->validate([
             'name' => ['required'],
             'darbi_account' => ['required', 'numeric', 'digits:4'],
-            'darbi_site' => ['required'],
+            'darbi_site' => ['required'], // @TODO letter followed by four numbers
             'correspondence' => ['required'],
         ]);
 
@@ -79,11 +80,17 @@ class CustomerController extends Controller {
         ]);
 
         // Redirect to the customer page
-        return redirect('/customers/' . $customer->id);
+        // return redirect('/customers/' . $customer->id);
+        $customers = Customer::all();
+        $viewHtml = view('customers.show', compact('customers'))->fragment('customer-list');
+        return response($viewHtml)
+            ->header('HX-Trigger', json_encode([
+                'toast' => 'Customer successfully updated!',
+                'close-form' => true
+            ]));
     }
 
     public function destroy($id) {
-        sleep(10);
         $targetCustomer = Customer::find($id);
         $targetCustomer->delete();
         $customers = Customer::all();
