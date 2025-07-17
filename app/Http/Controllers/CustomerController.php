@@ -22,8 +22,24 @@ class CustomerController extends Controller {
             'customer-name' => ['required', 'unique:customers,name'],
             'customer-DARBI-number' => ['required', 'numeric'],
         ]);
+        // request()->validate([
+        //     'customer-name' => ['required', 'unique:customers,name'],
+        //     'customer-DARBI-number' => ['required', 'numeric']
+        // ]);
+        // $validator = request()->validate([
+        //     'customer-name' => ['required', 'unique:customers,name'],
+        //     'customer-DARBI-number' => ['required', 'numeric']
+        // ]);
         if ($validator->fails()) {
-            // @TODO
+            // dd($validator);
+            // $viewHtml = view('customers.index', compact('customers'))->fragment('error-div');
+            // return response($viewHtml);
+            return response(
+                view('customers.index', [
+                    'customers' => Customer::all()
+                ])->withErrors($validator)
+                    ->fragment('error-div')
+            )->setStatusCode(422);
         }
         try {
             Customer::create([
@@ -38,6 +54,7 @@ class CustomerController extends Controller {
             return response($viewHtml)
                 ->header('HX-Trigger', json_encode([
                     'toast' => 'Customer successfully created!',
+                    'close-form' => true
                 ]));
         } catch (\Exception $error) {
             dd($error); // @TODO implement
