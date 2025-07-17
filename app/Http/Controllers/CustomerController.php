@@ -34,18 +34,8 @@ class CustomerController extends Controller {
                 'notes' => request('notes'),
             ]);
             $customers = Customer::all();
-            // return view('customers.index', compact('customers'))->fragment('customer-list');
-            // return response()
-            //     ->view('customers.index', compact('customers'))
-            //     ->fragment('customer-list')
-            //     ->header('HX-Trigger', json_encode([
-            //         'toast' => 'Customer successfully created!',
-            //     ]));
-            $html = View::make('customers.index', [
-                'customers' => Customer::all()
-            ])->renderSections()['customer-list'] ?? '';
-
-            return Response::make($html)
+            $viewHtml = view('customers.index', compact('customers'))->fragment('customer-list');
+            return response($viewHtml)
                 ->header('HX-Trigger', json_encode([
                     'toast' => 'Customer successfully created!',
                 ]));
