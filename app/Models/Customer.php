@@ -16,7 +16,7 @@ class Customer extends Model {
 
     protected $fillable = [
         'name',
-        'darbi_account',
+        'darbi_customer_account_number',
         'darbi_site',
         'correspondence',
         'notes'

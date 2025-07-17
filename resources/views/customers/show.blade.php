@@ -3,7 +3,7 @@
 
     <ul>
         <li><b>Name:</b> {{ $customer->name }}</li>
-        <li><b>Darbi Customer Account Number:</b> {{ $customer->darbi_account }}</li>
+        <li><b>Darbi Customer Account Number:</b> {{ $customer->darbi_customer_account_number }}</li>
         <li><b>Darbi site:</b> {{ $customer->darbi_site }}</li>
         <!--<li><b>Correspondence:</b>  {{ $customer->correspondence }}</li>-->
         <li><b>Notes:</b> {{ $customer->notes }}</li>

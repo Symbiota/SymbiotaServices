@@ -30,7 +30,7 @@
             @foreach ($customers as $customer)
                 <a href="/customers/{{ $customer->id }}" class="block px-4 py-6 border border-gray-500">
                     <strong>{{ $customer->name }}</strong>
-                    <div>{{ $customer->darbi_account }}: {{ $customer->correspondence }}</div>
+                    <div>{{ $customer->darbi_customer_account_number }}: {{ $customer->correspondence }}</div>
                     <form hx-delete={{ url('/customer/' . $customer->id) }} hx-target="#customer-list-div"
                         hx-swap="outerHTML" hx-confirm="Are you sure you want to delete this customer?"
                         hx-indicator="#loading-spinner-{{ $customer->id }}">

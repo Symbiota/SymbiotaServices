@@ -19,7 +19,7 @@ class CustomerController extends Controller {
         // @TODO if mode is edit, don't return a view
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'unique:customers,name'],
-            'darbi_account' => ['required', 'numeric'],
+            'darbi_customer_account_number' => ['required', 'numeric'],
         ]);
         // request()->validate([
         //     'customer-name' => ['required', 'unique:customers,name'],
@@ -43,7 +43,7 @@ class CustomerController extends Controller {
         try {
             Customer::create([
                 'name' => request('name'),
-                'darbi_account' => request('darbi_account'),
+                'darbi_customer_account_number' => request('darbi_customer_account_number'),
                 'darbi_site' => request('darbi_site'),
                 'correspondence' => request('correspondence'),
                 'notes' => request('notes'),
@@ -65,7 +65,7 @@ class CustomerController extends Controller {
         // Validate
         request()->validate([
             'name' => ['required'],
-            'darbi_account' => ['required', 'numeric', 'digits:4'],
+            'darbi_customer_account_number' => ['required', 'numeric', 'digits:4'],
             'darbi_site' => ['required'], // @TODO letter followed by four numbers
             'correspondence' => ['required'],
         ]);
@@ -73,7 +73,7 @@ class CustomerController extends Controller {
         // Update
         $customer->update([
             'name' => request('name'),
-            'darbi_account' => request('darbi_account'),
+            'darbi_customer_account_number' => request('darbi_customer_account_number'),
             'darbi_site' => request('darbi_site'),
             'correspondence' => request('correspondence'),
             'notes' => request('notes')

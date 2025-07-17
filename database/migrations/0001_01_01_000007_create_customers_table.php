@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('darbi_account', 50)->nullable();
+            $table->string('darbi_customer_account_number', 50)->nullable();
             $table->string('darbi_site', 50)->nullable();
             $table->mediumText('correspondence')->nullable();
             $table->mediumText('notes')->nullable();

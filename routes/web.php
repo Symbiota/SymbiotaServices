@@ -42,7 +42,7 @@ Route::patch('/customers/{id}', function ($id) {
     // Validate
     request()->validate([
         'name' => ['required'],
-        'darbi_account' => ['required', 'numeric', 'digits:4'],
+        'darbi_customer_account_number' => ['required', 'numeric', 'digits:4'],
         'darbi_site' => ['required'],
         'correspondence' => ['required'],
     ]);
@@ -52,7 +52,7 @@ Route::patch('/customers/{id}', function ($id) {
     $customer = Customer::findOrFail($id);
     $customer->update([
         'name' => request('name'),
-        'darbi_account' => request('darbi_account'),
+        'darbi_customer_account_number' => request('darbi_customer_account_number'),
         'darbi_site' => request('darbi_site'),
         'correspondence' => request('correspondence'),
         'notes' => request('notes'),
