@@ -81,8 +81,9 @@ class CustomerController extends Controller {
 
         // Redirect to the customer page
         // return redirect('/customers/' . $customer->id);
-        $customers = Customer::all();
-        $viewHtml = view('customers.show', compact('customers'))->fragment('customer-list');
+        // $customer = Customer::find($customer->id);
+        // dd($customer);
+        $viewHtml = view('customers.show', compact('customer'))->fragment('customer-list');
         return response($viewHtml)
             ->header('HX-Trigger', json_encode([
                 'toast' => 'Customer successfully updated!',
