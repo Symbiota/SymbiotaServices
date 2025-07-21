@@ -1,25 +1,24 @@
 <x-table-layout heading="{{ $customer->name }}">
     <title>CUSTOMER: {{ $customer->name }}</title>
 
-    <ul>
-        <li><b>Name:</b> {{ $customer->name }}</li>
-        <li><b>Darbi Customer Account Number:</b>
-            {{ $customer->darbi_customer_account_number }}</li>
-        <li><b>Darbi site:</b> {{ $customer->darbi_site }}</li>
-        <!--<li><b>Correspondence:</b>  {{ $customer->correspondence }}</li>-->
-        <li><b>Notes:</b> {{ $customer->notes }}</li>
-    </ul>
+    @fragment('customer-list')
+        <div id="customer-list-div">
+            <ul>
+                <li><b>Name:</b> {{ $customer->name }}</li>
+                <li><b>Darbi Customer Account Number:</b>
+                    {{ $customer->darbi_customer_account_number }}</li>
+                <li><b>Darbi site:</b> {{ $customer->darbi_site }}</li>
+                <!--<li><b>Correspondence:</b>  {{ $customer->correspondence }}</li>-->
+                <li><b>Notes:</b> {{ $customer->notes }}</li>
+            </ul>
+        </div>
+    @endfragment
 
     <br>
-    <div x-data="{ show: false }">
+    <div x-data="{ show: false }" @close-form.window="show=false">
         <button @click="show = true"
             class='relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300'>Edit
             Customer</button>
-
-        @fragment('customer-list')
-            <div class = "space-y-4" id="customer-list-div">
-            </div>
-        @endfragment
 
         <div id="edit-form" x-show="show">
             <x-customer-form :customer="$customer" :formMethod="'PATCH'"
