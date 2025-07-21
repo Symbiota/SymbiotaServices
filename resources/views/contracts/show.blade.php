@@ -13,14 +13,21 @@
         <li><b>end_date:</b> {{ $contract->end_date }}</li>
     </ul>
 
+    <br>
 
     <div>
     @foreach($contract->services as $service)
-        <div>
-            <li><b>id:</b>  {{ $service->id }}</li>
-            <li><b>name:</b>  {{ $service->name }}</li>
+        <div class="block px-4 py-2 border border-gray-500">
+            <b>Service ID:</b> {{ $service->id }}
+            <br>
+            <b>Service Name:</b> {{ $service->name }}
+            <br>
+            <b>Description:</b> {{ $service->description }}
+            <br>
+            <b>Price per unit:</b> {{ $service->price_per_unit }}
+            <br>
+            <b>Darbi Item Number:</b> {{ $service->darbi_item_number }}
         </div>
-        <br>
     @endforeach
     </div>
 
