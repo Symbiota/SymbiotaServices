@@ -27,7 +27,7 @@
                     <div class="flex items-center">
                         <div class="shrink-0">
                             <img class="h-12 w-17 bg-white rounded-xl"
-                                src="https://symbiota.org/wp-content/uploads/LogoSymbiotaPNG-1-1980x1318.png"
+                                src=""
                                 alt="Symbiota" />
                         </div>
                         <div class="hidden md:block">
