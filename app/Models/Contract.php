@@ -33,6 +33,6 @@ class Contract extends Model
     // A contract has many services
     public function services()
     {
-        return $this->hasMany(Service::class, 'id'); // Searches in "id" column of Services table instead of the default contract_id
+        return $this->belongsToMany(Service::class);
     }
 }
