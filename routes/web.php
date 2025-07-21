@@ -10,32 +10,8 @@ use App\Http\Controllers\ServiceController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/customer-management', [CustomerController::class, 'index']);
-Route::post('/customer', [CustomerController::class, 'create']);
+
 Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
-
-Route::get('/contracts', function () {
-    return view('contracts', ['contracts' => Contract::all()]);
-});
-
-Route::get('/contracts/{id}', function ($id) {
-    $contract = Contract::find($id);
-    return view('contract', compact('contract'));
-});
-
-Route::get('/customers', function () {
-    return view('customers.index', ['customers' => Customer::all()]);
-});
-
-Route::get('/customers/{id}', function ($id) {
-    $customer = Customer::find($id);
-    return view('customers.show', compact('customer')); // = ['customer' => $customer]
-});
-
-Route::get('/customers/{id}/edit', function ($id) {
-    $customer = Customer::find($id);
-    return view('customers.edit', ['customer' => $customer]);
-});
 
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/services/{service}', [ServiceController::class, 'show']);
