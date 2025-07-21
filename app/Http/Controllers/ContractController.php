@@ -38,7 +38,7 @@ class ContractController extends Controller
             'end_date' => request('end_date'),
         ]);
 
-        return redirect('/customers');
+        return redirect('/contracts');
     }
 
 }
