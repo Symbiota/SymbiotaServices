@@ -37,33 +37,6 @@ Route::get('/customers/{id}/edit', function ($id) {
     return view('customers.edit', ['customer' => $customer]);
 });
 
-// Update
-// Route::patch('/customers/{id}', function ($id) {
-//     // Validate
-//     request()->validate([
-//         'name' => ['required'],
-//         'darbi_customer_account_number' => ['required', 'numeric', 'digits:4'],
-//         'darbi_site' => ['required'],
-//         'correspondence' => ['required'],
-//     ]);
-//     // Authorize
-
-//     // Update
-//     $customer = Customer::findOrFail($id);
-//     $customer->update([
-//         'name' => request('name'),
-//         'darbi_customer_account_number' => request('darbi_customer_account_number'),
-//         'darbi_site' => request('darbi_site'),
-//         'correspondence' => request('correspondence'),
-//         'notes' => request('notes'),
-//     ]);
-
-//     // and Persist
-
-//     // redirect to the customer page
-//     return redirect('/customers/' . $customer->id);
-// });
-
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/services/{service}', [ServiceController::class, 'show']);
 
@@ -76,6 +49,5 @@ Route::get('/customers', [CustomerController::class, 'index']);
 Route::get('/customers/{customer}', [CustomerController::class, 'show']);
 Route::post('/customers', [CustomerController::class, 'create']);
 Route::patch('/customers/{customer}', [CustomerController::class, 'update']);
-// Route::patch('/customer', [CustomerController::class, 'update']);
 
 ?>
