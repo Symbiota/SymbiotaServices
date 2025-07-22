@@ -1,18 +1,6 @@
 <x-table-layout heading="Customers">
     <title>CUSTOMERS PAGE</title>
 
-    @fragment('error-div')
-        @if ($errors->any())
-            <div id="error-div">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li class="text-red">{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-    @endfragment
-
     <div x-data = "{ show: false }" id="create-form"
         @close-form.window="show=false">
         <button @click="show = true"
@@ -22,7 +10,17 @@
         <x-customer-form :formMethod="'POST'" :formEndpoint="url('/customer')"></x-customer-form>
     </div>
 
-    <br>
+    @fragment('error-div')
+        @if ($errors->any())
+            <div id="error-div">
+                <ul id="error-list">
+                    @foreach ($errors->all() as $error)
+                        <li class="text-red-500">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    @endfragment
     <br>
 
     @fragment('customer-list')
