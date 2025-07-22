@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Contract;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class ContractController extends Controller
@@ -14,8 +15,8 @@ class ContractController extends Controller
         return view('contracts.show', ['contract' => $contract]);
     }
 
-    public function create() {
-        return view('contracts.create');
+    public function create(Customer $customer = null) {
+        return view('contracts.create', compact('customer'));
     }
 
     public function store() {

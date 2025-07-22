@@ -18,7 +18,7 @@
                             id="customer_id" 
                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500" 
                             placeholder=""
-                            value="{{ $customer_id ?? '' }}"
+                            value="{{ $customer->id ?? '' }}"
                         required> <!-- value is blank if variable not found (i.e create menu) -->
                         </div>
                             @error('customer_id')
@@ -118,7 +118,7 @@
                             id="notes" 
                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500" 
                             placeholder=""
-                            value="{{ $customer->notes ?? '' }}" 
+                            value="" 
                         />
                         </div>
                             @error('notes')
@@ -137,7 +137,7 @@
                             name="start_date" 
                             id="start_date" 
                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500" 
-                            placeholder=""
+                            placeholder="YYYY-MM-DD"
                             value="" 
                         />
                         </div>
@@ -157,7 +157,7 @@
                             name="end_date" 
                             id="end_date" 
                             class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500" 
-                            placeholder=""
+                            placeholder="YYYY-MM-DD"
                             value="" 
                         />
                         </div>

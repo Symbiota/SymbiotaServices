@@ -17,7 +17,7 @@ Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/services/{service}', [ServiceController::class, 'show']);
 
-Route::get('/contracts/create', [ContractController::class, 'create']);
+Route::get('/contracts/create/{customer?}', [ContractController::class, 'create'])->name('contracts.create');
 Route::get('/contracts', [ContractController::class, 'index']);
 Route::get('/contracts/{contract}', [ContractController::class, 'show']);
 Route::post('/contracts', [ContractController::class, 'store']);
