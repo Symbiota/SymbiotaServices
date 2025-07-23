@@ -19,9 +19,9 @@ class Service extends Model
         'darbi_item_number'
     ];
 
-    // A service belongs to a contract
-    public function contract()
+    // A service belongs to many contract
+    public function contracts()
     {
-        return $this->belongsTo(Contract::class);
+        return $this->belongsToMany(Contract::class);
     }
 }
