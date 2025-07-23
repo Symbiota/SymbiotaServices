@@ -1,18 +1,6 @@
 <x-table-layout heading="Customers">
     <title>CUSTOMERS PAGE</title>
 
-    @fragment('error-div')
-        @if ($errors->any())
-            <div id="error-div">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li class="text-red">{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-    @endfragment
-
     <div x-data = "{ show: false }" id="create-form"
         @close-form.window="show=false">
         <button @click="show = true"
@@ -26,6 +14,15 @@
 
     @fragment('customer-list')
         <div class = "space-y-4" id="customer-list-div">
+            @if ($errors->any())
+                <div id="error-div">
+                    <ul id="error-list">
+                        @foreach ($errors->all() as $error)
+                            <li class="text-red-500">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @foreach ($customers as $customer)
                 <a href="/customers/{{ $customer->id }}"
                     class="block px-4 py-6 border border-gray-500">
