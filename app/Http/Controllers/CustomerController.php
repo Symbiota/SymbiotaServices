@@ -40,6 +40,7 @@ class CustomerController extends Controller
                     json_encode([
                         'toast' => 'Customer successfully created!',
                         'close-form' => true,
+                        'create-success' => true,
                     ]),
                 );
             }
