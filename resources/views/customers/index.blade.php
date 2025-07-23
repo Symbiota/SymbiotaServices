@@ -23,7 +23,6 @@
     </div>
 
     <br>
-    <br>
 
     @fragment('customer-list')
         <div class = "space-y-4" id="customer-list-div">

@@ -3,7 +3,7 @@
         
     <ul>
         <li><b>Contract ID:</b> {{ $contract->id }}</li>
-        <li><b>Customer ID:</b> {{ $contract->customer_id }}</li>
+        <li><a href="/customers/{{ $contract->customer_id }}"><b>Customer ID:</b> {{ $contract->customer_id }}</a></li>
         <li><b>original_contact_id:</b> {{ $contract->original_contact_id }}</li>
         <li><b>darbi_header_ref_1:</b> {{ $contract->darbi_header_ref_1 }}</li>
         <li><b>darbi_header_ref_2:</b> {{ $contract->darbi_header_ref_2 }}</li>
