@@ -10,21 +10,19 @@
         <x-customer-form :formMethod="'POST'" :formEndpoint="url('/customer')"></x-customer-form>
     </div>
 
-    @fragment('error-div')
-        @if ($errors->any())
-            <div id="error-div">
-                <ul id="error-list">
-                    @foreach ($errors->all() as $error)
-                        <li class="text-red-500">{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-    @endfragment
     <br>
 
     @fragment('customer-list')
         <div class = "space-y-4" id="customer-list-div">
+            @if ($errors->any())
+                <div id="error-div">
+                    <ul id="error-list">
+                        @foreach ($errors->all() as $error)
+                            <li class="text-red-500">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @foreach ($customers as $customer)
                 <a href="/customers/{{ $customer->id }}"
                     class="block px-4 py-6 border border-gray-500">

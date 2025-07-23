@@ -50,7 +50,7 @@ class CustomerController extends Controller
             $customers = Customer::all();
             return view('customers.index', compact('customers'))
                 ->withErrors($e->errors())
-                ->fragment('error-div');
+                ->fragment('customer-list');
         }
         // $validator = Validator::make($request->all(), [
         //     'name' => ['required', 'unique:customers,name'],
