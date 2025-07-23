@@ -170,10 +170,10 @@
 
             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-4">
-                    <label for="service" class="block text-sm/6 font-medium text-gray-900">Select Service</label>
+                    <label for="service" class="block text-sm/6 font-medium text-gray-900">Select Service (Hold ctrl or cmd to select multiple)</label>
                     <div class="mt-2">
                         <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                        <select name="services[]" id="services" multiple>
+                        <select name="services[]" id="services" class="border" multiple>
                             @foreach($services as $service)
                                 <option value="{{ $service->id }}">{{ $service->name }}</option>
                             @endforeach

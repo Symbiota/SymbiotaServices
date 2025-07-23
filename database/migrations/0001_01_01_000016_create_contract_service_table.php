@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Contract::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Service::class)->constrained()->cascadeOnDelete();
             */
-            $table->timestamps();
         });
     }
 
