@@ -62,11 +62,4 @@
         class="fixed bottom-0 right-0 mb-4 mr-4 bg-blue-500 text-white p-4 rounded">
     </div>
 
-    <script>
-        document.body.addEventListener('toast', event => {
-            window.dispatchEvent(new CustomEvent('toast', {
-                detail: event.detail
-            }));
-        });
-    </script>
 </x-table-layout>
