@@ -9,8 +9,8 @@
 @endphp
 <!doctype html>
 
-<form {!! $htmxMethodAttribute !!} hx-target="#customer-list-div" hx-swap="outerHTML"
-    x-show = "show">
+<form id="customer-create-form" {!! $htmxMethodAttribute !!}
+    hx-target="#customer-list-div" hx-swap="outerHTML" x-show = "show">
     @csrf
 
     {{ $slot }}
