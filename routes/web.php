@@ -20,6 +20,7 @@ Route::get('/contracts/create/{customer?}', [ContractController::class, 'create'
 Route::get('/contracts', [ContractController::class, 'index']);
 Route::get('/contracts/{contract}', [ContractController::class, 'show']);
 Route::post('/contracts', [ContractController::class, 'store']);
+Route::patch('/contracts/{contract}', [ContractController::class, 'update']);
 
 Route::get('/customers', [CustomerController::class, 'index']);
 Route::get('/customers/{customer}', [CustomerController::class, 'show']);

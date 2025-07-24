@@ -43,7 +43,30 @@ class ContractController extends Controller
 
         $contract->services()->attach(request('services'));
 
-        return redirect('/contracts');
+        return redirect('/customers/' . $contract->customer_id);
+    }
+
+    public function update(Contract $contract) {
+        request()->validate([
+            'customer_id' => ['required'],
+            'original_contact_id' => ['required'],
+            'darbi_header_ref_1' => ['required'],
+            'start_date' => ['required', 'date_format:Y-m-d'],
+            'end_date' => ['required', 'date_format:Y-m-d'],
+        ]);
+
+        $contract->update([
+            'customer_id' => request('customer_id'),
+            'original_contact_id' => request('original_contact_id'),
+            'darbi_header_ref_1' => request('darbi_header_ref_1'),
+            'darbi_header_ref_2' => request('darbi_header_ref_2'),
+            'darbi_special_instructions' => request('darbi_special_instructions'),
+            'notes' => request('notes'),
+            'start_date' => request('start_date'),
+            'end_date' => request('end_date'),
+        ]);
+
+        return redirect('/contracts/' . $contract->id);
     }
 
 }
