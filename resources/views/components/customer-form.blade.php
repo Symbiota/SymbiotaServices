@@ -13,8 +13,6 @@
     hx-target="#customer-list-div" hx-swap="outerHTML" x-show = "show">
     @csrf
 
-    {{ $slot }}
-
     <div class="space-y-12" x-show="show">
         <div class="border-b border-gray-900/10 pb-12">
 

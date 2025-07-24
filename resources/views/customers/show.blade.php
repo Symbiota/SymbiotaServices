@@ -54,6 +54,12 @@
                     {{ $contract->darbi_special_instructions }}
                     <br>
                     <b>Notes:</b> {{ $contract->notes }}
+                    <br>
+                    <b>Services:</b>
+                    @foreach($contract->services as $service)
+                        <p class="ml-8">{{ $service->name }}<p>
+                    @endforeach
+
                 </div>
             </a>
             <br>
