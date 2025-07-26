@@ -33,19 +33,42 @@
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
                                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                                @auth
                                 <a href="/"
-                                    class="{{ request()->is('/') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium"
-                                    aria-current="page">Home</a>
+                                    class="{{ request()->is('/') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Home</a>
                                 <a href="/contacts"
-                                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Contacts</a>
+                                    class="{{ request()->is('contacts') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Contacts</a>
                                 <a href="/services"
-                                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Services</a>
+                                    class="{{ request()->is('services*') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Services</a>
                                 <a href="/customers"
-                                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Customers</a>
+                                    class="{{ request()->is('customers*') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Customers</a>
                                 <a href="/contracts"
-                                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Contracts</a>
+                                    class="{{ request()->is('contracts*') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Contracts</a>
+                                @endauth
                             </div>
                         </div>
+                    </div>
+
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            @guest
+                                <a href="/register"
+                                    class="{{ request()->is('register') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Register</a>
+                                <a href="/login"
+                                    class="{{ request()->is('login') ? 'bg-gray-900 text-white': 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Log In</a>
+                            @endguest
+                            @auth
+                                <form method="POST" action="/logout">
+                                    @csrf
+                                    <button type="submit" class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Log Out</button>
+
+                                </form>
+                            @endauth
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </nav>
 
         <header class="bg-white shadow-sm">

@@ -22,8 +22,8 @@ class ContractController extends Controller
 
     public function store() {
         request()->validate([
-            'customer_id' => ['required'],
-            'original_contact_id' => ['required'],
+            'customer_id' => ['required', 'exists:customers,id'],
+            'original_contact_id' => ['required', 'numeric', 'exists:contacts,id'],
             'darbi_header_ref_1' => ['required'],
             'start_date' => ['required', 'date_format:Y-m-d'],
             'end_date' => ['required', 'date_format:Y-m-d'],
