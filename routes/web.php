@@ -17,6 +17,8 @@ Route::delete('/customer/{id}', [CustomerController::class, 'destroy'])->middlew
 
 Route::get('/services', [ServiceController::class, 'index'])->middleware('auth');
 Route::get('/services/{service}', [ServiceController::class, 'show'])->middleware('auth');
+Route::patch('/services/{service}', [ServiceController::class, 'update'])->middleware('auth');
+Route::post('/services', [ServiceController::class, 'store'])->middleware('auth');
 
 Route::get('/contracts/create/{customer?}', [ContractController::class, 'create'])->name('contracts.create')->middleware('auth');
 Route::get('/contracts', [ContractController::class, 'index'])->middleware('auth');
