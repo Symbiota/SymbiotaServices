@@ -9,6 +9,48 @@
         @endif
     </div>
 
+    <div id="create-form" style="display:none;">
+        <x-service-form action="/services"></x-service-form>
+    </div>
+
+    <br>
+
+    <div class = "space-y-4">
+        @foreach ($services as $service)
+        @if($service->active_status == 1)
+            <a href="/services/{{ $service->id }}" class="block px-4 py-6 border border-gray-500 flex justify-between items-center">
+                <div>
+                    <strong>{{ $service->name }}</strong>
+                    <div>ID: {{ $service->id }}</div>
+                </div>
+                <form method="post" action="/services/{{ $service->id }}/retire">
+                    @csrf
+                    @method('PATCH')
+                    <x-ec-button>Retire</x-ec-button>
+                </form>
+            </a>
+        @endif
+        @endforeach
+    </div>
+
+    <br>
+
+    <x-ec-button onclick="toggleRetiredServices()">Retired Services</x-ec-button>
+
+    <br>
+    <br>
+
+    <div id="retired_services" class = "space-y-4" style="display:none;">
+        @foreach ($services as $service)
+        @if($service->active_status == 0)
+            <a href="/services/{{ $service->id }}" class="block px-4 py-6 border border-gray-500">
+                <strong>{{ $service->name }}</strong>
+                <div>ID: {{ $service->id }}</div>
+            </a>
+        @endif
+        @endforeach
+    </div>
+
     <script>
         function toggleCreateForm() {
             var form = document.getElementById("create-form");
@@ -18,21 +60,15 @@
                 form.style.display = "none";
             }
         }
+
+        function toggleRetiredServices() {
+            var element = document.getElementById("retired_services");
+            if (element.style.display === "none") {
+                element.style.display = "block";
+            } else {
+                element.style.display = "none";
+            }
+        }
     </script>
-
-    <div id="create-form" style="display:none;">
-        <x-service-form action="/services"></x-service-form>
-    </div>
-
-    <br>
-
-    <div class = "space-y-4">
-        @foreach ($services as $service)
-            <a href="/services/{{ $service->id }}" class="block px-4 py-6 border border-gray-500">
-                <strong>{{ $service->name }}</strong>
-                <div>ID: {{ $service->id }}</div>
-            </a>
-        @endforeach
-    </div>
 
 </x-table-layout>

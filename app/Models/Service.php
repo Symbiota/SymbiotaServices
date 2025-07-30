@@ -16,7 +16,8 @@ class Service extends Model
         'name',
         'description',
         'price_per_unit',
-        'darbi_item_number'
+        'darbi_item_number',
+        'active_status'
     ];
 
     // A service belongs to many contract

@@ -20,7 +20,7 @@ class ServiceFactory extends Factory
             'name' => $this->faker->jobTitle(),
             'description' => $this->faker->word(),
             'price_per_unit' => $this->faker->numberBetween(1, 10),
-            'darbi_item_number' => $this->faker->numberBetween(1, 10)
+            'darbi_item_number' => $this->faker->numberBetween(1, 10),
         ];
     } // to use: php artisan tinker, App\Models\Service::factory(number)->create()
 }

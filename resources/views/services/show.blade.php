@@ -32,5 +32,12 @@
     <div id="edit-form" style="display:none;">
         <x-service-form :service="$service">@method('PATCH')</x-service-form>
     </div>
+    <br>
+
+    <form method="post" action="/services/{{ $service->id }}/retire">
+        @csrf
+        @method('PATCH')
+        <x-ec-button>Retire Service</x-ec-button>
+    </form>
 
 </x-table-layout>

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->decimal('price_per_unit', 20, 2);
             $table->string('darbi_item_number', 50)->nullable();
+            $table->tinyInteger('active_status')->default(1);
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
         });

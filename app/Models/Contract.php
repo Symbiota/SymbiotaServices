@@ -13,7 +13,6 @@ class Contract extends Model
     protected $table = 'contracts';
 
     protected $fillable = [
-        'id',
         'customer_id',
         'original_contact_id',
         'darbi_header_ref_1',

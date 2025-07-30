@@ -50,4 +50,11 @@ class ServiceController extends Controller
         return redirect('/services/' . $service->id);
     }
 
+    public function retire(Service $service) {
+        $service->update([
+            'active_status' => 0,
+        ]);
+        return redirect('/services');
+    }
+
 }
