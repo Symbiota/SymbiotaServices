@@ -37,7 +37,7 @@
                         {{ $customer->correspondence }}</div>
                     <form hx-delete={{ url('/customer/' . $customer->id) }}
                         hx-target="#customer-list-div" hx-swap="outerHTML"
-                        hx-confirm="Are you sure you want to delete this customer?"
+                        hx-confirm="Are you sure you want to delete this customer? All of their contracts would also be deleted."
                         hx-indicator="#loading-spinner-{{ $customer->id }}">
                         @csrf
                         <button type="submit" class="hover:text-red-500">
