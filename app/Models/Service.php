@@ -20,7 +20,7 @@ class Service extends Model
         'active_status'
     ];
 
-    // A service belongs to many contract
+    // A service belongs to many contracts
     public function contracts()
     {
         return $this->belongsToMany(Contract::class);

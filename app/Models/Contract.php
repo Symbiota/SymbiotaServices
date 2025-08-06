@@ -29,9 +29,15 @@ class Contract extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    // A contract has many services
+    // A contract belongs to many services
     public function services()
     {
         return $this->belongsToMany(Service::class);
+    }
+
+    // A contract has multiple invoices
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

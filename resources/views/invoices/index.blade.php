@@ -2,7 +2,7 @@
     <title>INVOICES PAGE</title>
 
     <a href="/invoices/create"> <x-ec-button>Create
-            invoice</x-ec-button></a>
+            Invoice</x-ec-button></a>
 
     <br>
     <br>

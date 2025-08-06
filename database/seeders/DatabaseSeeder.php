@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Service;
+use App\Models\Customer;
+use App\Models\Contract;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,8 +28,14 @@ class DatabaseSeeder extends Seeder
             'password' => 'admin',
         ]);
 
-        \App\Models\Customer::factory(15)->create();
-        \App\Models\Contract::factory(30)->create();
-        \App\Models\Service::factory(15)->create();
+        $services = Service::factory(15)->create();
+        Customer::factory(15)->create();
+        $contracts = Contract::factory(30)->create();
+
+        $contracts->each(function ($contract) use ($services) {
+            $contract->services()->attach(
+                $services->random(rand(1, 5))->pluck('id')->toArray()
+            );
+        });
     }
 }
