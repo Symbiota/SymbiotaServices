@@ -5,9 +5,9 @@
         <div id="customer-list-div">
             <ul>
                 <li><b>Name:</b> {{ $customer->name }}</li>
-                <li><b>Darbi Customer Account Number:</b>
+                <li><b>DARBI Customer Account Number:</b>
                     {{ $customer->darbi_customer_account_number }}</li>
-                <li><b>Darbi site:</b> {{ $customer->darbi_site }}</li>
+                <li><b>DARBI site:</b> {{ $customer->darbi_site }}</li>
                 <li><b>Notes:</b> {{ $customer->notes }}</li>
             </ul>
         </div>
@@ -27,8 +27,8 @@
 
     <br>
 
-    <a href="{{ route('contracts.create', $customer) }}"
-        <x-ec-button>Create Contract</x-ec-button></a>
+    <a href="{{ route('contracts.create', $customer) }}" <x-ec-button>Create
+        Contract</x-ec-button></a>
 
     <br>
     <br>
@@ -55,8 +55,9 @@
                     <b>Notes:</b> {{ $contract->notes }}
                     <br>
                     <b>Services:</b>
-                    @foreach($contract->services as $service)
-                        <p class="ml-8">{{ $service->name }}<p>
+                    @foreach ($contract->services as $service)
+                        <p class="ml-8">{{ $service->name }}
+                        <p>
                     @endforeach
 
                 </div>
