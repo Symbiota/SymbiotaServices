@@ -19,23 +19,11 @@
     <br>
 
     <div class="flex items-center">
-        <x-ec-button onclick="toggleEditForm()">Edit Contract</x-ec-button>
-
-        @if ($errors->any())
-            <p class="text-red-500 text-sm ml-3"> Error Editing Contract</p>
-        @endif
+        <x-ec-button onclick="toggleView('edit-form')">Edit
+            Contract</x-ec-button>
     </div>
 
-    <script>
-        function toggleEditForm() {
-            var form = document.getElementById("edit-form");
-            if (form.style.display === "none") {
-                form.style.display = "block";
-            } else {
-                form.style.display = "none";
-            }
-        }
-    </script>
+    <script src="{{ asset('show-hide.js') }}"></script>
 
     <div id="edit-form" style="display:none;">
         <form method="POST">

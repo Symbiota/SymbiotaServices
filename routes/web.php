@@ -6,6 +6,7 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\InvoiceController;
 use App\Models\Contact;
 
 Route::get('/', function () {
@@ -31,6 +32,9 @@ Route::get('/customers', [CustomerController::class, 'index'])->middleware('auth
 Route::get('/customers/{customer}', [CustomerController::class, 'show'])->middleware('auth');
 Route::post('/customers', [CustomerController::class, 'create'])->middleware('auth');
 Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->middleware('auth');
+
+Route::get('/invoices', [InvoiceController::class, 'index'])->middleware('auth');
+Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->middleware('auth');
 
 Route::get('/contacts', function (){
     return view('contacts.index', ['contacts' => Contact::all()]);

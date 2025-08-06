@@ -17,10 +17,6 @@ return new class extends Migration
             $table->unsignedInteger('service_id');
             $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
-            /*
-            $table->foreignIdFor(\App\Models\Contract::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Service::class)->constrained()->cascadeOnDelete();
-            */
         });
     }
 

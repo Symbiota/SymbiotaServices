@@ -43,6 +43,8 @@
                                         class="{{ request()->is('customers*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Customers</a>
                                     <a href="/contracts"
                                         class="{{ request()->is('contracts*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Contracts</a>
+                                    <a href="/invoices"
+                                        class="{{ request()->is('invoices*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Invoices</a>
                                 @endauth
                             </div>
                         </div>

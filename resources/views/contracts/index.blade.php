@@ -17,4 +17,5 @@
             </a>
         @endforeach
     </div>
+
 </x-table-layout>

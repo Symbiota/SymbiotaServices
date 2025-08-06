@@ -2,12 +2,15 @@
     <title>SERVICES PAGE</title>
 
     <div class="flex items-center">
-        <x-ec-button onclick="toggleCreateForm()">Create Service</x-ec-button>
+        <x-ec-button onclick="toggleView('create-form')">Create
+            Service</x-ec-button>
 
         @if ($errors->any())
             <p class="text-red-500 text-sm ml-3"> Error Creating Service</p>
         @endif
     </div>
+
+    <script src="{{ asset('show-hide.js') }}"></script>
 
     <div id="create-form" style="display:none;">
         <x-service-form action="/services"></x-service-form>
@@ -39,7 +42,7 @@
 
     <br>
 
-    <x-ec-button onclick="toggleRetiredServices()">Retired
+    <x-ec-button onclick="toggleView('retired_services')">Retired
         Services</x-ec-button>
 
     <br>
@@ -57,24 +60,6 @@
         @endforeach
     </div>
 
-    <script>
-        function toggleCreateForm() {
-            var form = document.getElementById("create-form");
-            if (form.style.display === "none") {
-                form.style.display = "block";
-            } else {
-                form.style.display = "none";
-            }
-        }
-
-        function toggleRetiredServices() {
-            var element = document.getElementById("retired_services");
-            if (element.style.display === "none") {
-                element.style.display = "block";
-            } else {
-                element.style.display = "none";
-            }
-        }
-    </script>
+    <script src="{{ asset('show-hide.js') }}"></script>
 
 </x-table-layout>
