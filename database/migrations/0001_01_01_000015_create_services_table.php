@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('darbi_customer_account_number', 50)->nullable();
-            $table->string('darbi_site', 50)->nullable();
-            $table->mediumText('correspondence')->nullable();
-            $table->mediumText('notes')->nullable();
+            $table->string('description');
+            $table->decimal('price_per_unit', 20, 2);
+            $table->string('darbi_item_number', 50)->nullable();
+            $table->tinyInteger('active_status')->default(1);
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('services');
     }
 };
