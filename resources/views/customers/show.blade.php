@@ -41,7 +41,7 @@
                     <b>Contract ID:</b> {{ $contract->id }}
                     <b>Customer ID:</b> {{ $contract->customer_id }}
                     <b>Original Contact ID:</b>
-                    {{ $contract->original_contract_id }}
+                    {{ $contract->original_contact_id }}
                     <br>
                     <b>Start Date:</b> {{ $contract->start_date }}
                     <b>End Date:</b> {{ $contract->end_date }}
