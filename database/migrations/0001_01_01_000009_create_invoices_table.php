@@ -18,8 +18,8 @@ return new class extends Migration
             $table->date('billing_start')->nullable();
             $table->date('billing_end')->nullable();
             $table->decimal('amount_billed', 20, 3)->nullable();
-            $table->dateTime('date_invoiced')->nullable();
-            $table->dateTime('date_paid')->nullable();
+            $table->date('date_invoiced')->nullable();
+            $table->date('date_paid')->nullable();
             $table->mediumText('notes')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();

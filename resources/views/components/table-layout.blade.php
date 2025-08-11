@@ -27,7 +27,8 @@
                     <div class="flex items-center">
                         <div class="shrink-0">
                             <img class="h-12 w-17 bg-white rounded-xl"
-                                src="" alt="Symbiota" />
+                                src="{{ asset('LogoSymbiotaPNG.png') }}"
+                                alt="Symbiota" />
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
