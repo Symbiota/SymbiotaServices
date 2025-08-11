@@ -91,8 +91,10 @@
                             <select name="services[]" id="services"
                                 class="border" required multiple>
                                 @foreach ($services as $service)
-                                    <option value="{{ $service->id }}">
-                                        {{ $service->name }}</option>
+                                    @if ($service->active_status == 1)
+                                        <option value="{{ $service->id }}">
+                                            {{ $service->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>

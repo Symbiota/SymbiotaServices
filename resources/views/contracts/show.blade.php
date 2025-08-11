@@ -24,7 +24,13 @@
             @foreach ($contract->services as $service)
                 <a href="/services/{{ $service->id }}">
                     <ul class="block px-4 py-2 border border-gray-500">
-                        <li><b>Service ID:</b> {{ $service->id }}</li>
+                        <li><b>
+                                @if ($service->active_status == 0)
+                                    (RETIRED)
+                                @endif
+                            </b></li>
+                        <li><b>Service ID:</b> {{ $service->id }}
+                        </li>
                         <li><b>Service Name:</b> {{ $service->name }}</li>
                         <li><b>Description:</b> {{ $service->description }}
                         </li>
@@ -37,6 +43,31 @@
                 </a>
             @endforeach
         </div>
+
+        <div class="ml-6">
+            @foreach ($contract->invoices as $invoice)
+                <a href="/invoices/{{ $invoice->id }}">
+                    <ul class="block px-4 py-2 border border-gray-500">
+                        <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
+                        <li><b>Contract ID:</b> {{ $invoice->contract_id }}
+                        </li>
+                        <li><b>Billing Start Date:</b>
+                            {{ $invoice->billing_start }}
+                        </li>
+                        <li><b>Billing End Date:</b>
+                            {{ $invoice->billing_end }}
+                        </li>
+                        <li><b>Amount Billed:</b> {{ $invoice->amount_billed }}
+                        </li>
+                        <li><b>Date Invoiced:</b> {{ $invoice->date_invoiced }}
+                        </li>
+                        <li><b>Date Paid:</b> {{ $invoice->date_paid }}</li>
+                        <li><b>Notes:</b> {{ $invoice->notes }}</li>
+                    </ul>
+                </a>
+            @endforeach
+        </div>
+
     </div>
 
     <br>
@@ -159,30 +190,11 @@
     </div>
 
     <br>
-    <br>
 
-    <div>
-        @foreach ($contract->invoices as $invoice)
-            <a href="/invoices/{{ $invoice->id }}">
-                <ul class="block px-4 py-2 border border-gray-500">
-                    <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
-                    <li><b>Contract ID:</b> {{ $invoice->contract_id }}
-                    </li>
-                    <li><b>Billing Start Date:</b>
-                        {{ $invoice->billing_start }}
-                    </li>
-                    <li><b>Billing End Date:</b> {{ $invoice->billing_end }}
-                    </li>
-                    <li><b>Amount Billed:</b> {{ $invoice->amount_billed }}
-                    </li>
-                    <li><b>Date Invoiced:</b> {{ $invoice->date_invoiced }}
-                    </li>
-                    <li><b>Date Paid:</b> {{ $invoice->date_paid }}</li>
-                    <li><b>Notes:</b> {{ $invoice->notes }}</li>
-                </ul>
-            </a>
-            <br>
-        @endforeach
-    </div>
+    <a href="/invoices/create"> <x-ec-button>Create
+            Invoice</x-ec-button></a>
+
+    <br>
+    <br>
 
 </x-table-layout>

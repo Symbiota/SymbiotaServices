@@ -10,8 +10,6 @@
         @endif
     </div>
 
-    <script src="{{ asset('show-hide.js') }}"></script>
-
     <div id="create-form" style="display:none;">
         <x-service-form action="/services"></x-service-form>
     </div>
@@ -61,7 +59,5 @@
             @endif
         @endforeach
     </div>
-
-    <script src="{{ asset('show-hide.js') }}"></script>
 
 </x-table-layout>

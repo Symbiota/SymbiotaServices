@@ -1,7 +1,7 @@
 <x-table-layout heading="Create Invoice">
     <title>CREATE INVOICE</title>
 
-    <form method="POST" action="/invoices">
+    <form method="POST" action="/invoices/create">
         @csrf
 
         <div class="space-y-12">
@@ -10,7 +10,7 @@
                 <x-form-box for="contract_id" class="-mt-8"> Contract ID*
                     <x-form-input type="text" name="contract_id"
                         id="contract_id"
-                        value="{{ old('contract_id') ?? ($customer->id ?? '') }}"></x-form-input>
+                        value="{{ old('contract_id') ?? ($contract->id ?? '') }}"></x-form-input>
                     @error('contract_id')
                         <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                     @enderror
@@ -53,7 +53,7 @@
                     </div>
                 </x-form-box>
 
-                <x-form-box for="amount_billed"> Amount Billed
+                <x-form-box for="amount_billed"> Amount Billed*
                     <x-form-input type="text" name="amount_billed"
                         id="amount_billed"
                         value="{{ old('amount_billed') }}"></x-form-input>
