@@ -69,4 +69,10 @@ class ContractController extends Controller
         return redirect('/contracts/' . $contract->id);
     }
 
+    public function destroy(Contract $contract)
+    {
+        $contract->delete();
+        return redirect('/contracts/');
+    }
+
 }

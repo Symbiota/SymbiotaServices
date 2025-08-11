@@ -191,10 +191,27 @@
 
     <br>
 
-    <a href="/invoices/create"> <x-ec-button>Create
-            Invoice</x-ec-button></a>
+    <div class="flex items-center">
+        <x-ec-button onclick="toggleView('delete-form')">Delete
+            Contract</x-ec-button>
+
+        <div id="delete-form" style="display:none;" class="ml-6">
+            <form method="POST" action="/contracts/{{ $contract->id }}">
+                @csrf
+                @method('DELETE')
+                <p class="ml-6 mb-2">Are you sure?</p>
+                <x-ec-button type="submit" class="hover:text-red-500">
+                    YES</x-ec-button>
+                <x-ec-button type="button" onclick="toggleView('delete-form')"
+                    class="hover:text-red-500">
+                    No</x-ec-button>
+            </form>
+        </div>
+    </div>
 
     <br>
-    <br>
+
+    <a href="/invoices/create"> <x-ec-button>Create
+            Invoice</x-ec-button></a>
 
 </x-table-layout>
