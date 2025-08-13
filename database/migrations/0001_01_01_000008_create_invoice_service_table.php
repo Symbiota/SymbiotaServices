@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoice_items', function (Blueprint $table) {
+        Schema::create('invoice_service', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('invoice_id')->nullable()->index('fk_invoice_pk');
-            $table->unsignedInteger('item_id')->nullable()->index('fk_invoice_item_pk');
+            $table->unsignedInteger('service_id')->nullable()->index('fk_invoice_service_pk');
             $table->string('type', 50)->nullable();
             $table->decimal('qty', 20, 3)->nullable();
             $table->date('date_calculated')->nullable();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoice_items');
+        Schema::dropIfExists('invoice_service');
     }
 };
