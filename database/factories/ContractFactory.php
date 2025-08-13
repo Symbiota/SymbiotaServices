@@ -25,8 +25,6 @@ class ContractFactory extends Factory
             'original_contact_id' => Contact::factory(),
             'darbi_special_instructions' => $this->faker->text(),
             'notes' => $this->faker->text(),
-            'start_date' => $this->faker->date(),
-            'end_date' => $this->faker->date()
         ];
     } // to use: php artisan tinker, generate customers first, then App\Models\Contract::factory(number)->create() - also generates contacts
 }

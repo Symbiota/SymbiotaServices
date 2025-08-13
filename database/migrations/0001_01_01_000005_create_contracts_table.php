@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('darbi_header_ref_2', 20)->nullable();
             $table->text('darbi_special_instructions')->nullable();
             $table->mediumText('notes')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
         });

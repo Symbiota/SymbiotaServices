@@ -13,8 +13,6 @@
                 class="block px-4 py-6 border border-gray-500 flex justify-between items-center">
                 <div>
                     <strong>Contract ID: {{ $contract->id }}</strong>
-                    <br>
-                    {{ $contract->start_date }}: {{ $contract->end_date }}
                 </div>
                 <form method="POST" action="/contracts/{{ $contract->id }}">
                     @csrf

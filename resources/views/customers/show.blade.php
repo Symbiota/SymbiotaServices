@@ -43,9 +43,6 @@
                     <b>Original Contact ID:</b>
                     {{ $contract->original_contact_id }}
                     <br>
-                    <b>Start Date:</b> {{ $contract->start_date }}
-                    <b>End Date:</b> {{ $contract->end_date }}
-                    <br>
                     <b>Header Ref 1:</b> {{ $contract->darbi_header_ref_1 }}
                     <b>Header Ref 2:</b> {{ $contract->darbi_header_ref_2 }}
                     <br>

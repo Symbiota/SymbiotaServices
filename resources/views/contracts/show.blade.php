@@ -16,8 +16,6 @@
             <li><b>DARBI Special Instructions:</b>
                 {{ $contract->darbi_special_instructions }}</li>
             <li><b>Notes:</b> {{ $contract->notes }}</li>
-            <li><b>Start Date:</b> {{ $contract->start_date }}</li>
-            <li><b>End Date:</b> {{ $contract->end_date }}</li>
         </ul>
 
         <div class="ml-6">
@@ -151,26 +149,6 @@
                             id="notes"
                             value="{{ $contract->notes ?? '' }}"></x-form-input>
                         @error('notes')
-                            <p class="text-red-500 text-sm ml-3">
-                                {{ $message }}</p>
-                        @enderror
-                    </x-form-box>
-
-                    <x-form-box for="start_date"> Start Date*
-                        <x-form-input type="text" name="start_date"
-                            id="start_date" placeholder="YYYY-MM-DD"
-                            value="{{ $contract->start_date ?? '' }}"></x-form-input>
-                        @error('start_date')
-                            <p class="text-red-500 text-sm ml-3">
-                                {{ $message }}</p>
-                        @enderror
-                    </x-form-box>
-
-                    <x-form-box for="end_date"> End Date*
-                        <x-form-input type="text" name="end_date"
-                            id="end_date" placeholder="YYYY-MM-DD"
-                            value="{{ $contract->end_date ?? '' }}"></x-form-input>
-                        @error('end_date')
                             <p class="text-red-500 text-sm ml-3">
                                 {{ $message }}</p>
                         @enderror

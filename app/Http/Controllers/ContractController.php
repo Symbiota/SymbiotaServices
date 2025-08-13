@@ -25,8 +25,6 @@ class ContractController extends Controller
             'customer_id' => ['required', 'exists:customers,id'],
             'original_contact_id' => ['required', 'numeric', 'exists:contacts,id'],
             'darbi_header_ref_1' => ['required'],
-            'start_date' => ['required', 'date_format:Y-m-d'],
-            'end_date' => ['required', 'date_format:Y-m-d'],
             'services' => ['required']
         ]);
 
@@ -37,8 +35,6 @@ class ContractController extends Controller
             'darbi_header_ref_2' => request('darbi_header_ref_2'),
             'darbi_special_instructions' => request('darbi_special_instructions'),
             'notes' => request('notes'),
-            'start_date' => request('start_date'),
-            'end_date' => request('end_date'),
         ]);
 
         $contract->services()->attach(request('services'));
@@ -51,8 +47,6 @@ class ContractController extends Controller
             'customer_id' => ['required'],
             'original_contact_id' => ['required'],
             'darbi_header_ref_1' => ['required'],
-            'start_date' => ['required', 'date_format:Y-m-d'],
-            'end_date' => ['required', 'date_format:Y-m-d'],
         ]);
 
         $contract->update([
@@ -62,8 +56,6 @@ class ContractController extends Controller
             'darbi_header_ref_2' => request('darbi_header_ref_2'),
             'darbi_special_instructions' => request('darbi_special_instructions'),
             'notes' => request('notes'),
-            'start_date' => request('start_date'),
-            'end_date' => request('end_date'),
         ]);
 
         return redirect('/contracts/' . $contract->id);
