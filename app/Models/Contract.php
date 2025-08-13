@@ -21,16 +21,10 @@ class Contract extends Model
         'notes',
     ];
     
-    // A contract belong to a customer
+    // A contract belongs to a customer
     public function customer()
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    // A contract belongs to many services
-    public function services()
-    {
-        return $this->belongsToMany(Service::class);
     }
 
     // A contract has multiple invoices

@@ -37,8 +37,6 @@ class ContractController extends Controller
             'notes' => request('notes'),
         ]);
 
-        $contract->services()->attach(request('services'));
-
         return redirect('/customers/' . $contract->customer_id);
     }
 

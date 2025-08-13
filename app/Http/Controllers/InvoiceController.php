@@ -38,7 +38,7 @@ class InvoiceController extends Controller
             'notes' => request('notes'),
         ]);
 
-        //$invoice->services()->attach(request('services'));
+        $invoice->services()->attach(request('services'));
 
         return redirect('/contracts/' . $invoice->contract_id);
     }

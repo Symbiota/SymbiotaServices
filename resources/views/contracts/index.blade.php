@@ -10,7 +10,7 @@
     <div class = "space-y-4">
         @foreach ($contracts as $contract)
             <a href="/contracts/{{ $contract->id }}"
-                class="block px-4 py-6 border border-gray-500 flex justify-between items-center">
+                class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                 <div>
                     <strong>Contract ID: {{ $contract->id }}</strong>
                 </div>

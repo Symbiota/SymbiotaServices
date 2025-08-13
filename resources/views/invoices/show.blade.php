@@ -13,7 +13,8 @@
         <li><b>Notes:</b> {{ $invoice->notes }}</li>
     </ul>
 
-    {{--
+    <br>
+
     @foreach ($invoice->services as $service)
         <a href="/services/{{ $service->id }}">
             <ul class="block px-4 py-2 border border-gray-500">
@@ -34,7 +35,7 @@
                     {{ $service->darbi_item_number }}</li>
             </ul>
         </a>
+        <br>
     @endforeach
-    --}}
 
 </x-table-layout>

@@ -32,10 +32,12 @@ class DatabaseSeeder extends Seeder
         Customer::factory(15)->create();
         $contracts = Contract::factory(30)->create();
 
+        /*
         $contracts->each(function ($contract) use ($services) {
             $contract->services()->attach(
                 $services->random(rand(1, 5))->pluck('id')->toArray()
             );
         });
+        */
     }
 }

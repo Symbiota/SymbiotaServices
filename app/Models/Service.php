@@ -20,9 +20,10 @@ class Service extends Model
         'active_status'
     ];
 
-    // A service belongs to many contracts
-    public function contracts()
+    // Services have a many-to-many relationship with invoices
+    public function invoices()
     {
-        return $this->belongsToMany(Contract::class);
+        return $this->belongsToMany(Invoice::class);
     }
+
 }

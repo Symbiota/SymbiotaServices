@@ -63,27 +63,6 @@
                     @enderror
                 </x-form-box>
 
-                <x-form-box for="service"> Select Service* (Hold ctrl or cmd to
-                    select multiple)
-                    <div class="mt-2">
-                        <div
-                            class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                            <select name="services[]" id="services"
-                                class="border" required multiple>
-                                @foreach ($services as $service)
-                                    @if ($service->active_status == 1)
-                                        <option value="{{ $service->id }}">
-                                            {{ $service->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                        @error('service')
-                            <p class="text-red-500 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </x-form-box>
-
             </div>
         </div>
 

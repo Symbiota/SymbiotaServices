@@ -28,4 +28,10 @@ class Invoice extends Model
         return $this->belongsTo(Contract::class);
     }
 
+    // Invoices have a many-to-many relationship with services (items)
+    public function services()
+    {
+        return $this->belongsToMany(Service::class);
+    }
+
 }
