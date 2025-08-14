@@ -38,17 +38,19 @@
                     <br>
                     @foreach ($services as $service)
                         <div class="p-4 border border-gray-500">
-                            <input type="checkbox" name="services[]"
+                            <input type="checkbox"
+                                name="service[{{ $service->id }}]"
                                 value="{{ $service->id }}">
                             {{ $service->name }}
                             <br>
-                            <input type="number" id="qty" name="qty[]"
-                                value="1" min="1"
+                            <input type="number" id="qty"
+                                name="qty[{{ $service->id }}]" value="1"
+                                min="1"
                                 class="m-1 ml-4 mt-2 p-1 border border-gray-500"
                                 service_price="{{ $service->price_per_unit }}"
                                 onchange="calc_amount_owed(this)">
                             $<input type="text" id="amount_owed"
-                                name="amount_owed[]"
+                                name="amount_owed[{{ $service->id }}]"
                                 value="{{ $service->price_per_unit }}"
                                 class="m-1 mt-2 p-1 border border-gray-500"
                                 readonly>

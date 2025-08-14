@@ -22,12 +22,12 @@ class InvoiceController extends Controller
     public function store() {
         request()->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
-            'billing_start' => ['required', 'date_format:Y-m-d'],
-            'billing_end' => ['required', 'date_format:Y-m-d'],
-            'amount_billed' => ['required', 'numeric'],
+            //'billing_start' => ['required', 'date_format:Y-m-d'],
+            //'billing_end' => ['required', 'date_format:Y-m-d'],
+            //'amount_billed' => ['required', 'numeric'],
             //'date_invoiced' => ['date_format:Y-m-d'],
             //'date_paid' => ['date_format:Y-m-d'],
-            'services' => ['required'],
+            'service' => ['required'],
         ]);
 
         $invoice = Invoice::create([
@@ -39,13 +39,13 @@ class InvoiceController extends Controller
             'notes' => request('notes'),
         ]);
 
-        $services_ids = request('services');
+        $services = request('service');
         $qtys = request('qty');
         $amounts_owed = request('amount_owed');
 
         $data = [];
-        foreach ($services_ids as $index => $service_id) {
-            $data[$service_id] = ['qty' => $qtys[$index], 'amount_owed' => $amounts_owed[$index]];
+        foreach ($services as $service_id => $checked) {
+            $data[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id]];
         }
 
         $invoice->services()->attach($data);
