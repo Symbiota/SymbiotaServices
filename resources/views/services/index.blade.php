@@ -22,7 +22,7 @@
         @foreach ($services as $service)
             @if ($service->active_status == 1)
                 <a href="/services/{{ $service->id }}"
-                    class="block px-4 py-6 border border-gray-500 flex justify-between items-center">
+                    class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                     <div>
                         <strong>{{ $service->name }}</strong>
                         <div>ID: {{ $service->id }}</div>

@@ -34,7 +34,7 @@
                     @enderror
                 </x-form-box>
 
-                <x-form-box for="services"> Select Service*
+                <x-form-box for="services"> Select Services*
                     <br>
                     @foreach ($services as $service)
                         <div class="p-4 border border-gray-500">
@@ -42,15 +42,34 @@
                                 value="{{ $service->id }}">
                             {{ $service->name }}
                             <br>
-                            <input type="number" name="qty[]" value="1"
-                                min="1"
-                                class="m-1 ml-4 mt-2 p-1 border border-gray-500">
+                            <input type="number" id="qty" name="qty[]"
+                                value="1" min="1"
+                                class="m-1 ml-4 mt-2 p-1 border border-gray-500"
+                                service_price="{{ $service->price_per_unit }}"
+                                onchange="calc_amount_owed(this)">
+                            $<input type="text" id="amount_owed"
+                                name="amount_owed[]"
+                                value="{{ $service->price_per_unit }}"
+                                class="m-1 mt-2 p-1 border border-gray-500"
+                                readonly>
                         </div>
                     @endforeach
-                    @error('service')
+                    @error('services')
                         <p class="text-red-500 text-sm"> {{ $message }}</p>
                     @enderror
                 </x-form-box>
+
+                <script>
+                    function calc_amount_owed(element) {
+                        var price_per_unit = element.getAttribute('service_price');
+                        var qty = element.value;
+                        var amount_owed = price_per_unit * qty;
+                        var amount_owed_box = element.parentElement.querySelector(
+                            '#amount_owed');
+                        amount_owed_box.value = amount_owed.toFixed(
+                            2);
+                    }
+                </script>
 
                 <x-form-box for="amount_billed"> Amount Billed*
                     <x-form-input type="text" name="amount_billed"

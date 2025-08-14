@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('type', 50)->nullable();
             $table->decimal('qty', 20, 2)->nullable();
             $table->date('date_calculated')->nullable();
-            $table->decimal('amount_owed', 20, 3)->nullable();
+            $table->decimal('amount_owed', 20, 2)->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
         });

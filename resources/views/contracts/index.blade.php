@@ -12,7 +12,8 @@
             <a href="/contracts/{{ $contract->id }}"
                 class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                 <div>
-                    <strong>Contract ID: {{ $contract->id }}</strong>
+                    <strong>Contract ID: {{ $contract->id }}</strong> <br>
+                    <strong>Customer ID: {{ $contract->customer_id }}</strong>
                 </div>
                 <form method="POST" action="/contracts/{{ $contract->id }}">
                     @csrf

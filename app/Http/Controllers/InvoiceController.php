@@ -27,6 +27,7 @@ class InvoiceController extends Controller
             'amount_billed' => ['required', 'numeric'],
             //'date_invoiced' => ['date_format:Y-m-d'],
             //'date_paid' => ['date_format:Y-m-d'],
+            'services' => ['required'],
         ]);
 
         $invoice = Invoice::create([
@@ -40,10 +41,11 @@ class InvoiceController extends Controller
 
         $services_ids = request('services');
         $qtys = request('qty');
+        $amounts_owed = request('amount_owed');
 
         $data = [];
         foreach ($services_ids as $index => $service_id) {
-            $data[$service_id] = ['qty' => $qtys[$index]];
+            $data[$service_id] = ['qty' => $qtys[$index], 'amount_owed' => $amounts_owed[$index]];
         }
 
         $invoice->services()->attach($data);
