@@ -23,7 +23,7 @@ class Service extends Model
     // Services have a many-to-many relationship with invoices
     public function invoices()
     {
-        return $this->belongsToMany(Invoice::class);
+        return $this->belongsToMany(Invoice::class)->withPivot('qty');
     }
 
 }

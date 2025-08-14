@@ -162,8 +162,9 @@
                 <li><b>Notes:</b> {{ $invoice->notes }}</li>
                 <b>Services:</b>
                 @foreach ($invoice->services as $service)
-                    <p class="ml-8">{{ $service->name }}
-                    <p>
+                    <p class="ml-8">
+                        {{ $service->name }}: {{ $service->pivot->qty }}
+                    </p>
                 @endforeach
             </ul>
         </a>

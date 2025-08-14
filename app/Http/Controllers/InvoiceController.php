@@ -38,7 +38,15 @@ class InvoiceController extends Controller
             'notes' => request('notes'),
         ]);
 
-        $invoice->services()->attach(request('services'));
+        $services_ids = request('services');
+        $qtys = request('qty');
+
+        $data = [];
+        foreach ($services_ids as $index => $service_id) {
+            $data[$service_id] = ['qty' => $qtys[$index]];
+        }
+
+        $invoice->services()->attach($data);
 
         return redirect('/contracts/' . $invoice->contract_id);
     }

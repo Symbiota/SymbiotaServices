@@ -23,16 +23,14 @@
                             (RETIRED)
                         @endif
                     </b></li>
-                <li><b>Service ID:</b> {{ $service->id }}
-                </li>
+                <li><b>Service ID:</b> {{ $service->id }}</li>
                 <li><b>Service Name:</b> {{ $service->name }}</li>
-                <li><b>Description:</b> {{ $service->description }}
+                <li><b>Quantity:</b> {{ $service->pivot->qty }}
                 </li>
-                <li><b>Price per unit:</b>
-                    {{ $service->price_per_unit }}
+                <li><b>Description:</b> {{ $service->description }}</li>
+                <li><b>Price per unit:</b> {{ $service->price_per_unit }}</li>
+                <li><b>DARBI Item Number:</b> {{ $service->darbi_item_number }}
                 </li>
-                <li><b>DARBI Item Number:</b>
-                    {{ $service->darbi_item_number }}</li>
             </ul>
         </a>
         <br>

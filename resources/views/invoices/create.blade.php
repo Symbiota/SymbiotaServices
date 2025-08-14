@@ -34,23 +34,22 @@
                     @enderror
                 </x-form-box>
 
-                <x-form-box for="service"> Select Service* (Hold ctrl or cmd to
-                    select multiple)
-                    <div class="mt-2">
-                        <div
-                            class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                            <select name="services[]" id="services"
-                                class="border" required multiple>
-                                @foreach ($services as $service)
-                                    <option value="{{ $service->id }}">
-                                        {{ $service->name }}</option>
-                                @endforeach
-                            </select>
+                <x-form-box for="services"> Select Service*
+                    <br>
+                    @foreach ($services as $service)
+                        <div class="p-4 border border-gray-500">
+                            <input type="checkbox" name="services[]"
+                                value="{{ $service->id }}">
+                            {{ $service->name }}
+                            <br>
+                            <input type="number" name="qty[]" value="1"
+                                min="1"
+                                class="m-1 ml-4 mt-2 p-1 border border-gray-500">
                         </div>
-                        @error('service')
-                            <p class="text-red-500 text-sm">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    @endforeach
+                    @error('service')
+                        <p class="text-red-500 text-sm"> {{ $message }}</p>
+                    @enderror
                 </x-form-box>
 
                 <x-form-box for="amount_billed"> Amount Billed*
@@ -96,7 +95,7 @@
         </div>
 
         <div class="mt-6 flex items-center justify-end gap-x-6">
-            <a href="/customers/{{ $customer->id ?? '' }}"
+            <a href="/contracts/{{ $contract->id ?? '' }}"
                 class="text-sm/6 font-semibold text-gray-900">Cancel</a>
 
             <button type="submit"

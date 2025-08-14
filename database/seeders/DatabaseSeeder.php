@@ -28,9 +28,9 @@ class DatabaseSeeder extends Seeder
             'password' => 'admin',
         ]);
 
-        $services = Service::factory(15)->create();
-        Customer::factory(15)->create();
-        $contracts = Contract::factory(30)->create();
+        $services = Service::factory(6)->create();
+        Customer::factory(10)->create();
+        $contracts = Contract::factory(20)->create();
 
         /*
         $contracts->each(function ($contract) use ($services) {
