@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('invoice_service', function (Blueprint $table) {
-            $table->foreign(['service_id'], 'FK_invoice_service_pk')->references(['id'])->on('services')->onUpdate('restrict')->onDelete('restrict');
-            $table->foreign(['invoice_id'], 'FK_invoice_pk')->references(['id'])->on('invoices')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign(['service_id'], 'FK_invoice_service_pk')->references(['id'])->on('services')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign(['invoice_id'], 'FK_invoice_pk')->references(['id'])->on('invoices')->onUpdate('restrict')->onDelete('cascade');
         });
     }
 

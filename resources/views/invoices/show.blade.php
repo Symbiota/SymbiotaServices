@@ -24,15 +24,14 @@
                         @endif
                     </b></li>
                 <li><b>Service ID:</b> {{ $service->id }}</li>
-                <br>
-                <li><b>Service Name:</b> {{ $service->name }}</li>
+                <li><b>Name:</b> {{ $service->name }}</li>
                 <li><b>Quantity:</b> {{ $service->pivot->qty }}
                 </li>
                 <li><b>Amount Paid:</b> ${{ $service->pivot->amount_owed }}
                 </li>
                 <br>
                 <li><b>Description:</b> {{ $service->description }}</li>
-                <li><b>Price per unit:</b> {{ $service->price_per_unit }}</li>
+                <li><b>Price per unit:</b> ${{ $service->price_per_unit }}</li>
                 <li><b>DARBI Item Number:</b> {{ $service->darbi_item_number }}
                 </li>
             </ul>
