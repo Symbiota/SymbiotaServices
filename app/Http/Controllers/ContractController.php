@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use App\Models\Contract;
 use App\Models\Customer;
-use App\Models\Service;
 use Illuminate\Http\Request;
 
 class ContractController extends Controller
@@ -17,7 +16,7 @@ class ContractController extends Controller
     }
 
     public function create(Customer $customer = null) {
-        return view('contracts.create', ['customer' => $customer], ['services' => Service::all()]);
+        return view('contracts.create', ['customer' => $customer]);
     }
 
     public function store() {
