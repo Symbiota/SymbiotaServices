@@ -40,16 +40,18 @@
                         <div class="p-4 border border-gray-500">
                             <input type="checkbox"
                                 name="service[{{ $service->id }}]"
-                                value="{{ $service->id }}">
+                                id="service" value="{{ $service->id }}"
+                                onchange="calc_total_amount_billed();">
                             {{ $service->name }}
                             <br>
-                            <input type="number" id="qty"
-                                name="qty[{{ $service->id }}]" value="1"
-                                min="1"
+                            <input type="number" value="1" min="1"
+                                name="qty[{{ $service->id }}]"
+                                id="qty_{{ $service->id }}"
                                 class="m-1 ml-4 mt-2 p-1 border border-gray-500"
                                 service_price="{{ $service->price_per_unit }}"
-                                onchange="calc_amount_owed(this)">
-                            $<input type="text" id="amount_owed"
+                                onchange="calc_each_service_bill({{ $service->id }}); calc_total_amount_billed();">
+                            $<input type="text"
+                                id="amount_owed_{{ $service->id }}"
                                 name="amount_owed[{{ $service->id }}]"
                                 value="{{ $service->price_per_unit }}"
                                 class="m-1 mt-2 p-1 border border-gray-500"
@@ -62,14 +64,31 @@
                 </x-form-box>
 
                 <script>
-                    function calc_amount_owed(element) {
-                        var price_per_unit = element.getAttribute('service_price');
-                        var qty = element.value;
+                    function calc_each_service_bill(id) {
+                        var qty_box = document.getElementById(
+                            'qty_' + id)
+                        var amount_owed_box = document.getElementById(
+                            'amount_owed_' + id);
+                        var price_per_unit = qty_box.getAttribute('service_price');
+                        var qty = qty_box.value;
                         var amount_owed = price_per_unit * qty;
-                        var amount_owed_box = element.parentElement.querySelector(
-                            '#amount_owed');
                         amount_owed_box.value = amount_owed.toFixed(
                             2);
+                    }
+
+                    function calc_total_amount_billed() {
+                        var total_box = document.getElementById('amount_billed');
+                        let total = 0;
+                        const checkboxes = document.querySelectorAll(
+                            '#service:checked');
+
+                        checkboxes.forEach(checkbox => {
+                            var amount_owed_box = document.getElementById(
+                                'amount_owed_' + checkbox.value)
+                            total += parseFloat(amount_owed_box.value)
+                        });
+
+                        total_box.value = total.toFixed(2);
                     }
                 </script>
 

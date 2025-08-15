@@ -154,7 +154,7 @@
                 <li><b>Billing End Date:</b>
                     {{ $invoice->billing_end }}
                 </li>
-                <li><b>Amount Billed:</b> {{ $invoice->amount_billed }}
+                <li><b>Total Amount Billed:</b> ${{ $invoice->amount_billed }}
                 </li>
                 <li><b>Date Invoiced:</b> {{ $invoice->date_invoiced }}
                 </li>
