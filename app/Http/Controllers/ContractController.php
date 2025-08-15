@@ -24,7 +24,6 @@ class ContractController extends Controller
             'customer_id' => ['required', 'exists:customers,id'],
             'original_contact_id' => ['required', 'numeric', 'exists:contacts,id'],
             'darbi_header_ref_1' => ['required'],
-            'services' => ['required']
         ]);
 
         $contract = Contract::create([

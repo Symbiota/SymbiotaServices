@@ -4,6 +4,7 @@
     @fragment('customer-list')
         <div id="customer-list-div">
             <ul>
+                <li><b>ID:</b> {{ $customer->id }}</li>
                 <li><b>Name:</b> {{ $customer->name }}</li>
                 <li><b>DARBI Customer Account Number:</b>
                     {{ $customer->darbi_customer_account_number }}</li>
