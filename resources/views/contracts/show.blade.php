@@ -40,8 +40,8 @@
             </div>
         </div>
 
-        <a href="/invoices/create"> <x-ec-button>Create
-                Invoice</x-ec-button></a>
+        <a href="{{ route('invoices.create', $contract) }}"<x-ec-button>Create
+            Invoice</x-ec-button></a>
 
         <div class="flex items-center">
             <x-ec-button onclick="toggleView('edit-form')">Edit
@@ -91,6 +91,7 @@
                 @endforeach
             </ul>
         </a>
+        <br>
     @endforeach
 
 </x-table-layout>

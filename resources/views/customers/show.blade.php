@@ -28,7 +28,7 @@
 
     <br>
 
-    <a href="{{ route('contracts.create', $customer) }}" <x-ec-button>Create
+    <a href="{{ route('contracts.create', $customer) }}"<x-ec-button>Create
         Contract</x-ec-button></a>
 
     <br>

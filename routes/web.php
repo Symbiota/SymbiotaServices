@@ -35,10 +35,10 @@ Route::get('/customers/{customer}', [CustomerController::class, 'show'])->middle
 Route::post('/customers', [CustomerController::class, 'create'])->middleware('auth');
 Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->middleware('auth');
 
-Route::get('/invoices/create', [InvoiceController::class, 'create'])->middleware('auth');
+Route::get('/invoices/create/{contract?}', [InvoiceController::class, 'create'])->name('invoices.create')->middleware('auth');
 Route::get('/invoices', [InvoiceController::class, 'index'])->middleware('auth');
 Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->middleware('auth');
-Route::post('/invoices/create', [InvoiceController::class, 'store'])->middleware('auth');
+Route::post('/invoices', [InvoiceController::class, 'store'])->middleware('auth');
 Route::patch('/invoices/{invoice}', [InvoiceController::class, 'update'])->middleware('auth');
 
 Route::get('/contacts', function (){

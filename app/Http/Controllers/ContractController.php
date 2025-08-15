@@ -15,7 +15,7 @@ class ContractController extends Controller
         return view('contracts.show', ['contract' => $contract]);
     }
 
-    public function create(Customer $customer = null) {
+    public function create(Customer $customer) {
         return view('contracts.create', ['customer' => $customer]);
     }
 
