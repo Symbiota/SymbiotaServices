@@ -1,5 +1,5 @@
 function toggleView(elementID) {
-    var element = document.getElementById(elementID);
+    let element = document.getElementById(elementID);
     if (element.style.display === "none") {
         element.style.display = "block";
     } else {
