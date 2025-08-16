@@ -1,4 +1,4 @@
-<form {{ $attributes->merge(['method' => 'post']) }}>
+<form {{ $attributes->merge(['method' => 'POST']) }}>
     @csrf
     {{ $slot }}
 

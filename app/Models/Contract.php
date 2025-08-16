@@ -19,19 +19,17 @@ class Contract extends Model
         'darbi_header_ref_2',
         'darbi_special_instructions',
         'notes',
-        'start_date',
-        'end_date'
     ];
     
-    // A contract belong to a customer
+    // A contract belongs to a customer
     public function customer()
     {
         return $this->belongsTo(Customer::class);
     }
 
-    // A contract has many services
-    public function services()
+    // A contract has multiple invoices
+    public function invoices()
     {
-        return $this->belongsToMany(Service::class);
+        return $this->hasMany(Invoice::class);
     }
 }

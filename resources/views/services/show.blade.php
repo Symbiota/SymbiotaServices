@@ -10,34 +10,30 @@
 
     <br>
 
-    <div class="flex items-center">
-        <x-ec-button onclick="toggleEditForm()">Edit Service</x-ec-button>
+    <div class="flex items-start">
 
-        @if ($errors->any())
-            <p class="text-red-500 text-sm ml-3"> Error Editing Service</p>
-        @endif
+        <form method="post" action="/services/{{ $service->id }}/retire">
+            @csrf
+            @method('PATCH')
+            <x-ec-button>Retire Service</x-ec-button>
+        </form>
+
+        <div class="flex items-center">
+            <x-ec-button onclick="toggleView('edit-form')">Edit
+                Service</x-ec-button>
+
+            @if ($errors->any())
+                <p class="text-red-500 text-sm ml-3"> Error Editing Service</p>
+            @endif
+        </div>
+
     </div>
 
-    <script>
-        function toggleEditForm() {
-            var form = document.getElementById("edit-form");
-            if (form.style.display === "none") {
-                form.style.display = "block";
-            } else {
-                form.style.display = "none";
-            }
-        }
-    </script>
+    <script src="{{ asset('show-hide.js') }}"></script>
 
     <div id="edit-form" style="display:none;">
         <x-service-form :service="$service">@method('PATCH')</x-service-form>
     </div>
     <br>
-
-    <form method="post" action="/services/{{ $service->id }}/retire">
-        @csrf
-        @method('PATCH')
-        <x-ec-button>Retire Service</x-ec-button>
-    </form>
 
 </x-table-layout>

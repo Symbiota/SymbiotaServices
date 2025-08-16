@@ -4,6 +4,7 @@
     @fragment('customer-list')
         <div id="customer-list-div">
             <ul>
+                <li><b>ID:</b> {{ $customer->id }}</li>
                 <li><b>Name:</b> {{ $customer->name }}</li>
                 <li><b>DARBI Customer Account Number:</b>
                     {{ $customer->darbi_customer_account_number }}</li>
@@ -27,7 +28,7 @@
 
     <br>
 
-    <a href="{{ route('contracts.create', $customer) }}" <x-ec-button>Create
+    <a href="{{ route('contracts.create', $customer) }}"<x-ec-button>Create
         Contract</x-ec-button></a>
 
     <br>
@@ -41,10 +42,7 @@
                     <b>Contract ID:</b> {{ $contract->id }}
                     <b>Customer ID:</b> {{ $contract->customer_id }}
                     <b>Original Contact ID:</b>
-                    {{ $contract->original_contract_id }}
-                    <br>
-                    <b>Start Date:</b> {{ $contract->start_date }}
-                    <b>End Date:</b> {{ $contract->end_date }}
+                    {{ $contract->original_contact_id }}
                     <br>
                     <b>Header Ref 1:</b> {{ $contract->darbi_header_ref_1 }}
                     <b>Header Ref 2:</b> {{ $contract->darbi_header_ref_2 }}
@@ -54,12 +52,6 @@
                     <br>
                     <b>Notes:</b> {{ $contract->notes }}
                     <br>
-                    <b>Services:</b>
-                    @foreach ($contract->services as $service)
-                        <p class="ml-8">{{ $service->name }}
-                        <p>
-                    @endforeach
-
                 </div>
             </a>
             <br>

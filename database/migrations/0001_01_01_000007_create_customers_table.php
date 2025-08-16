@@ -17,6 +17,13 @@ return new class extends Migration
             $table->string('darbi_customer_account_number', 50)->nullable();
             $table->string('darbi_site', 50)->nullable();
             $table->mediumText('correspondence')->nullable();
+            $table->string('department_name')->nullable();
+            $table->string('address_line_1')->nullable();
+            $table->string('address_line_2')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('country')->nullable();
             $table->mediumText('notes')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
