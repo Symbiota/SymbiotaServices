@@ -15,12 +15,30 @@
                 @enderror
             </x-form-box>
 
+            {{--
             <x-form-box for="financial_contact_id"> Financial Contact ID*
                 <x-form-input type="text" name="financial_contact_id"
                     id="financial_contact_id"
-                    value="{{ $invoice->financial_contact_id ?? ($contract->id ?? old('financial_contact_id')) }}"></x-form-input>
+                    value="{{ $invoice->financial_contact_id ?? ($contract->current_financial_contact_id ?? old('financial_contact_id')) }}"></x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">
+                        {{ $message }}
+                    </p>
+                @enderror
+            </x-form-box>
+            --}}
+
+            <x-form-box for="financial_contact_id"> Financial Contact ID*
+                <select name="financial_contact_id" id="financial_contact_id">
+                    @foreach ($contacts as $contact)
+                        <option value="{{ $contact->id }}">
+                            {{ $contact->first_name }} {{ $contact->last_name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('financial_contact_id')
+                    <p class="text-red-500
+                    text-sm ml-3">
                         {{ $message }}
                     </p>
                 @enderror

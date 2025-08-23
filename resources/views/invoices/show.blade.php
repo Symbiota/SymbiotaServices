@@ -36,8 +36,8 @@
     <script src="{{ asset('show-hide.js') }}"></script>
 
     <div id="edit-form" style="display:none;">
-        <x-invoice-form :invoice="$invoice"
-            :services="$services">@method('PATCH')</x-invoice-form>
+        <x-invoice-form :invoice="$invoice" :services="$services"
+            :contacts="$contacts">@method('PATCH')</x-invoice-form>
     </div>
 
     <br>

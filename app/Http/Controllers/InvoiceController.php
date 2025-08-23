@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\Service;
 use App\Models\Contract;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -14,11 +15,19 @@ class InvoiceController extends Controller
     }
 
     public function show(Invoice $invoice) {
-        return view('invoices.show', ['invoice' => $invoice], ['services' => Service::all()]);
+        return view('invoices.show', [
+            'invoice' => $invoice,
+            'services' => Service::all(),
+            'contacts' => Contact::all(),
+        ]);
     }
 
     public function create(Contract $contract) {
-        return view('invoices.create', ['services' => Service::all()], ['contract' => $contract]);
+    return view('invoices.create', [
+            'contract' => $contract,
+            'services' => Service::all(),
+            'contacts' => Contact::all()
+        ]);
     }
 
     public function store() {
