@@ -24,6 +24,7 @@ class InvoiceController extends Controller
     public function store() {
         request()->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
+            'financial_contact_id' => ['required', 'exists:contacts,id'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
             'billing_end' => ['required', 'date_format:Y-m-d'],
             'amount_billed' => ['required', 'numeric'],
@@ -34,6 +35,7 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::create([
             'contract_id' => request('contract_id'),
+            'financial_contact_id' => request('contract_id'),
             'billing_start' => request('billing_start'),
             'billing_end' => request('billing_end'),
             'amount_billed' => request('amount_billed'),

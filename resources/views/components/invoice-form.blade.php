@@ -15,6 +15,17 @@
                 @enderror
             </x-form-box>
 
+            <x-form-box for="financial_contact_id"> Financial Contact ID*
+                <x-form-input type="text" name="financial_contact_id"
+                    id="financial_contact_id"
+                    value="{{ $invoice->financial_contact_id ?? ($contract->id ?? old('financial_contact_id')) }}"></x-form-input>
+                @error('financial_contact_id')
+                    <p class="text-red-500 text-sm ml-3">
+                        {{ $message }}
+                    </p>
+                @enderror
+            </x-form-box>
+
             <x-form-box for="billing_start"> Billing Start*
                 <x-form-input type="text" name="billing_start"
                     id="billing_start" placeholder="YYYY-MM-DD"
