@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Invoice;
 use App\Models\Service;
 use App\Models\Contract;

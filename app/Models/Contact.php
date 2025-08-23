@@ -21,11 +21,10 @@ class Contact extends Model {
         'notes',
     ];
 
-    /**
-     * @return Collection
-     */
-    public static function getContacts(): Collection {
-        Contact::orderBy('last_name', 'DESC')->get();
+    // A contact can have multiple invoices
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, foreignKey: 'financial_contact_id');
     }
 
 }

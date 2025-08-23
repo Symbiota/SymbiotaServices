@@ -28,11 +28,4 @@ class Customer extends Model {
         return $this->hasMany(Contract::class);
     }
 
-    /**
-     * @return Collection
-     */
-    // public static function getCustomers(): Collection {
-    //     Customer::orderBy('name', 'DESC')->get();
-    // }
-
 }

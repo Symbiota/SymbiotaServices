@@ -15,6 +15,8 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('contract_id');
             $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
+            $table->unsignedInteger('financial_contact_id');
+            $table->foreign('financial_contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->date('billing_start')->nullable();
             $table->date('billing_end')->nullable();
             $table->decimal('amount_billed', 20, 3)->nullable();

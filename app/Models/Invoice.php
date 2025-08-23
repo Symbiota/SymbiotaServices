@@ -14,6 +14,7 @@ class Invoice extends Model
 
     protected $fillable = [
         'contract_id',
+        'financial_contact_id',
         'billing_start',
         'billing_end',
         'amount_billed',
@@ -22,7 +23,7 @@ class Invoice extends Model
         'notes',
     ];
     
-    // An invoice belongs to a contract
+    // An invoice belongs to one contract
     public function contract()
     {
         return $this->belongsTo(Contract::class);
@@ -32,6 +33,12 @@ class Invoice extends Model
     public function services()
     {
         return $this->belongsToMany(Service::class)->withPivot('qty', 'amount_owed');
+    }
+
+    // An invoice belongs to one contact
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class, ownerKey: 'financial_contact_id');
     }
 
 }
