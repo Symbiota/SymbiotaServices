@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Service;
 use App\Models\Customer;
 use App\Models\Contract;
+use App\Models\Contact;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $services = Service::factory(6)->create();
+        Contact::factory(15)->create();
         Customer::factory(10)->create();
         $contracts = Contract::factory(20)->create();
 
