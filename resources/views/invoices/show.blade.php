@@ -3,10 +3,12 @@
 
     <ul>
         <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
-        <li><a href="/contracts/{{ $invoice->contract_id }}"><b>Contract ID:</b>
+        <li><a href="/contracts/{{ $invoice->contract_id }}"><b
+                    class="text-blue-700 underline decoration-2">Contract ID:</b>
                 {{ $invoice->contract_id }}</a></li>
         <li><a href="/contacts/{{ $invoice->financial_contact_id }}">
-                <b>Financial Contact ID:</b>
+                <b class="text-blue-700 underline decoration-2">Financial Contact
+                    ID:</b>
                 {{ $invoice->financial_contact_id }}</a>
         </li>
         <li><b>Billing Start Date:</b> {{ $invoice->billing_start }}</li>

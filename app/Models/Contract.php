@@ -15,6 +15,9 @@ class Contract extends Model
     protected $fillable = [
         'customer_id',
         'original_contact_id',
+        'current_financial_contact_id',
+        'pi_contact_id',
+        'technical_contact_id',
         'darbi_header_ref_1',
         'darbi_header_ref_2',
         'darbi_special_instructions',

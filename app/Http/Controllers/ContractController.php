@@ -23,13 +23,18 @@ class ContractController extends Controller
     public function store() {
         request()->validate([
             'customer_id' => ['required', 'exists:customers,id'],
-            'original_contact_id' => ['required', 'numeric', 'exists:contacts,id'],
+            'financial_contact_id' => ['required', 'numeric', 'exists:contacts,id'],
             'darbi_header_ref_1' => ['required'],
+            'pi_contact_id' => ['nullable', 'numeric', 'exists:contacts,id'],
+            'technical_contact_id' => ['nullable', 'numeric', 'exists:contacts,id'],
         ]);
 
         $contract = Contract::create([
             'customer_id' => request('customer_id'),
-            'original_contact_id' => request('original_contact_id'),
+            'original_contact_id' => request('financial_contact_id'),
+            'current_financial_contact_id' => request('financial_contact_id'),
+            'pi_contact_id' => request('pi_contact_id'),
+            'technical_contact_id' => request('technical_contact_id'),
             'darbi_header_ref_1' => request('darbi_header_ref_1'),
             'darbi_header_ref_2' => request('darbi_header_ref_2'),
             'darbi_special_instructions' => request('darbi_special_instructions'),
@@ -41,14 +46,18 @@ class ContractController extends Controller
 
     public function update(Contract $contract) {
         request()->validate([
-            'customer_id' => ['required'],
-            'original_contact_id' => ['required'],
+            'customer_id' => ['required', 'exists:customers,id'],
+            'financial_contact_id' => ['required', 'numeric', 'exists:contacts,id'],
             'darbi_header_ref_1' => ['required'],
+            'pi_contact_id' => ['nullable', 'numeric', 'exists:contacts,id'],
+            'technical_contact_id' => ['nullable', 'numeric', 'exists:contacts,id'],
         ]);
 
         $contract->update([
             'customer_id' => request('customer_id'),
-            'original_contact_id' => request('original_contact_id'),
+            'current_financial_contact_id' => request('financial_contact_id'),
+            'pi_contact_id' => request('pi_contact_id'),
+            'technical_contact_id' => request('technical_contact_id'),
             'darbi_header_ref_1' => request('darbi_header_ref_1'),
             'darbi_header_ref_2' => request('darbi_header_ref_2'),
             'darbi_special_instructions' => request('darbi_special_instructions'),

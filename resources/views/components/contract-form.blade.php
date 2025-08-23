@@ -14,12 +14,32 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="original_contact_id"> Original Contact
+            <x-form-box for="financial_contact_id"> Financial Contact
                 ID*
-                <x-form-input type="text" name="original_contact_id"
-                    id="original_contact_id"
-                    value="{{ $contract->original_contact_id ?? old('original_contact_id') }}"></x-form-input>
-                @error('original_contact_id')
+                <x-form-input type="text" name="financial_contact_id"
+                    id="financial_contact_id"
+                    value="{{ $contract->current_financial_contact_id ?? old('financial_contact_id') }}"></x-form-input>
+                @error('financial_contact_id')
+                    <p class="text-red-500 text-sm ml-3">
+                        {{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="pi_contact_id"> PI Contact ID
+                <x-form-input type="text" name="pi_contact_id"
+                    id="pi_contact_id"
+                    value="{{ $contract->pi_contact_id ?? old('pi_contact_id') }}"></x-form-input>
+                @error('pi_contact_id')
+                    <p class="text-red-500 text-sm ml-3">
+                        {{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="technical_contact_id"> Technical Contact ID
+                <x-form-input type="text" name="technical_contact_id"
+                    id="technical_contact_id"
+                    value="{{ $contract->technical_contact_id ?? old('technical_contact_id') }}"></x-form-input>
+                @error('technical_contact_id')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}</p>
                 @enderror

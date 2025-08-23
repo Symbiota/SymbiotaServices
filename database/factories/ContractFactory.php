@@ -24,9 +24,8 @@ class ContractFactory extends Factory
             'current_financial_contact_id' => $this->faker->randomElement(Contact::pluck('id')),
             'darbi_header_ref_1' => $this->faker->word(),
             'darbi_header_ref_2' => $this->faker->word(),
-            'original_contact_id' => Contact::factory(),
             'darbi_special_instructions' => $this->faker->text(),
             'notes' => $this->faker->text(),
         ];
-    } // to use: php artisan tinker, generate customers first, then App\Models\Contract::factory(number)->create() - also generates contacts
+    }
 }

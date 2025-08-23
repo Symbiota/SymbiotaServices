@@ -28,8 +28,8 @@ class InvoiceController extends Controller
             'billing_start' => ['required', 'date_format:Y-m-d'],
             'billing_end' => ['required', 'date_format:Y-m-d'],
             'amount_billed' => ['required', 'numeric'],
-            //'date_invoiced' => ['date_format:Y-m-d'],
-            //'date_paid' => ['date_format:Y-m-d'],
+            'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
+            'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'service' => ['required'],
         ]);
 
