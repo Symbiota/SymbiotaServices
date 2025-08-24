@@ -6,6 +6,7 @@
         <li><b>Name:</b> {{ $contact->first_name }} {{ $contact->last_name }}
         </li>
         <li><b>Email:</b> {{ $contact->email }}</li>
+        <li><b>Phone Number:</b> {{ $contact->phone_number }}</li>
         <li><b>Notes:</b> {{ $contact->notes }}</li>
     </ul>
 

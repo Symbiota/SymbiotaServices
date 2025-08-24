@@ -43,6 +43,7 @@ Route::patch('/invoices/{invoice}', [InvoiceController::class, 'update'])->middl
 
 Route::get('/contacts', [ContactController::class, 'index'])->middleware('auth');
 Route::get('/contacts/{contact}', [ContactController::class, 'show'])->middleware('auth');
+Route::post('/contacts/create', [ContactController::class, 'store'])->middleware('auth');
 
 Route::get('/register', [RegisteredUserController::class, 'create']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
