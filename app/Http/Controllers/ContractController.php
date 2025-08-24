@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contract;
 use App\Models\Customer;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class ContractController extends Controller
@@ -13,11 +14,17 @@ class ContractController extends Controller
     }
 
     public function show(Contract $contract) {
-        return view('contracts.show', ['contract' => $contract]);
+        return view('contracts.show', [
+            'contract' => $contract,
+            'contacts' => Contact::all(),
+        ]);
     }
 
     public function create(Customer $customer) {
-        return view('contracts.create', ['customer' => $customer]);
+        return view('contracts.create', [
+            'customer' => $customer,
+            'contacts' => Contact::all(),
+        ]);
     }
 
     public function store() {

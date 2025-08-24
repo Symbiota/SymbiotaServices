@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('contracts', function (Blueprint $table) {
+            $table->unsignedInteger('current_financial_contact_id');
             $table->unsignedInteger('pi_contact_id')->nullable();
             $table->unsignedInteger('technical_contact_id')->nullable();
-            $table->unsignedInteger('current_financial_contact_id');
         });
     }
 

@@ -39,7 +39,7 @@ class InvoiceController extends Controller
             'amount_billed' => ['required', 'numeric'],
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
-            'service' => ['required'],
+            'services' => ['required'],
         ]);
 
         $invoice = Invoice::create([
@@ -73,16 +73,18 @@ class InvoiceController extends Controller
 
         request()->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
+            'financial_contact_id' => ['required', 'exists:contacts,id'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
             'billing_end' => ['required', 'date_format:Y-m-d'],
             'amount_billed' => ['required', 'numeric'],
             'date_invoiced' => ['date_format:Y-m-d'],
             'date_paid' => ['date_format:Y-m-d'],
-            'service' => ['required'],
+            'services' => ['required'],
         ]);
 
         $invoice->update([
             'contract_id' => request('contract_id'),
+            'financial_contact_id' => request('contract_id'),
             'billing_start' => request('billing_start'),
             'billing_end' => request('billing_end'),
             'amount_billed' => request('amount_billed'),

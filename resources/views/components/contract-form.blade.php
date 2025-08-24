@@ -14,34 +14,70 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="financial_contact_id"> Financial Contact
-                ID*
-                <x-form-input type="text" name="financial_contact_id"
-                    id="financial_contact_id"
-                    value="{{ $contract->current_financial_contact_id ?? old('financial_contact_id') }}"></x-form-input>
+            <x-form-box for="financial_contact_id"> Financial Contact ID*
+                <div
+                    class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 mt-2">
+                    <select name="financial_contact_id"
+                        id="financial_contact_id"
+                        class="bg-white block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500">
+                        <option value="" class=""></option>
+                        @foreach ($contacts as $contact)
+                            <option value="{{ $contact->id }}">
+                                {{ $contact->id }}: {{ $contact->first_name }}
+                                {{ $contact->last_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                        {{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="pi_contact_id"> PI Contact ID
-                <x-form-input type="text" name="pi_contact_id"
-                    id="pi_contact_id"
-                    value="{{ $contract->pi_contact_id ?? old('pi_contact_id') }}"></x-form-input>
+                <div
+                    class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 mt-2">
+                    <select name="pi_contact_id" id="pi_contact_id"
+                        class="bg-white block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500">
+                        <option value="" class=""></option>
+                        @foreach ($contacts as $contact)
+                            <option value="{{ $contact->id }}">
+                                {{ $contact->id }}:
+                                {{ $contact->first_name }}
+                                {{ $contact->last_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 @error('pi_contact_id')
                     <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                        {{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="technical_contact_id"> Technical Contact ID
-                <x-form-input type="text" name="technical_contact_id"
-                    id="technical_contact_id"
-                    value="{{ $contract->technical_contact_id ?? old('technical_contact_id') }}"></x-form-input>
+                <div
+                    class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 mt-2">
+                    <select name="technical_contact_id"
+                        id="technical_contact_id"
+                        class="bg-white block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500">
+                        <option value="" class=""></option>
+                        @foreach ($contacts as $contact)
+                            <option value="{{ $contact->id }}">
+                                {{ $contact->id }}:
+                                {{ $contact->first_name }}
+                                {{ $contact->last_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 @error('technical_contact_id')
                     <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                        {{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
