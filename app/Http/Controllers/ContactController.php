@@ -7,20 +7,22 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('contacts.index', ['contacts' => Contact::all()]);
     }
 
-    public function show(Contact $contact) {
+    public function show(Contact $contact)
+    {
         return view('contacts.show', ['contact' => $contact]);
     }
 
-    public function store() {
-        request()->validate([
+    public function store()
+    {
+        request()->validateWithBag('contact_errors', [
             'first_name' => ['required'],
             'last_name' => ['required'],
             'email' => ['required', 'email'],
-
         ]);
 
         Contact::create([
