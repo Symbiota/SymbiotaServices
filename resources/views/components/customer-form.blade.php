@@ -25,6 +25,15 @@
                 @enderror
             </x-form-box>
 
+            <x-form-box for="department_name"> Department Name
+                <x-form-input type="text" name="department_name"
+                    id="department_name" placeholder=""
+                    value="{{ $customer->department_name ?? '' }}"></x-form-input>
+                @error('department_name')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
             <x-form-box for="darbi_customer_account_number"> DARBI Customer
                 Account Number*
                 <x-form-input type="text"
@@ -50,6 +59,60 @@
                     id="correspondence" placeholder="email@email.com"
                     value="{{ $customer->correspondence ?? '' }}"></x-form-input>
                 @error('correspondence')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="address_line_1"> Billing Address Line 1*
+                <x-form-input type="text" name="address_line_1"
+                    id="address_line_1" placeholder=""
+                    value="{{ $customer->address_line_1 ?? '' }}"></x-form-input>
+                @error('address_line_1')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="address_line_2"> Billing Address Line 2
+                <x-form-input type="text" name="address_line_2"
+                    id="address_line_2" placeholder=""
+                    value="{{ $customer->address_line_2 ?? '' }}"></x-form-input>
+                @error('address_line_2')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="city"> City*
+                <x-form-input type="text" name="city" id="city"
+                    placeholder=""
+                    value="{{ $customer->city ?? '' }}"></x-form-input>
+                @error('city')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="state"> State*
+                <x-form-input type="text" name="state" id="state"
+                    placeholder=""
+                    value="{{ $customer->state ?? '' }}"></x-form-input>
+                @error('state')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="zip_code"> Zip Code*
+                <x-form-input type="text" name="zip_code" id="zip_code"
+                    placeholder=""
+                    value="{{ $customer->zip_code ?? '' }}"></x-form-input>
+                @error('zip_code')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="country"> Country*
+                <x-form-input type="text" name="country" id="country"
+                    placeholder=""
+                    value="{{ $customer->country ?? '' }}"></x-form-input>
+                @error('country')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
