@@ -59,7 +59,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="service"> Select Services*
+            <x-form-box for="services"> Select Services*
                 <br>
                 @foreach ($services as $service)
                     <div class="p-4 border border-gray-500">
@@ -83,7 +83,7 @@
                             readonly>
                     </div>
                 @endforeach
-                @error('service')
+                @error('services')
                     <p class="text-red-500 text-sm"> {{ $message }}</p>
                 @enderror
             </x-form-box>

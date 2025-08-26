@@ -84,7 +84,7 @@ class InvoiceController extends Controller
             'amount_billed' => ['required', 'numeric'],
             'date_invoiced' => ['date_format:Y-m-d'],
             'date_paid' => ['date_format:Y-m-d'],
-            'services' => ['required'],
+            'service' => ['required'],
         ]);
 
         $invoice->update([
