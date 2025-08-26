@@ -23,8 +23,9 @@ class CustomerController extends Controller
         try {
             $validated = $request->validate([
                 'name' => ['required', 'unique:customers,name'],
-                'darbi_customer_account_number' => ['required', 'numeric'],
-                'address_line_1' => ['address_line_1'],
+                'darbi_customer_account_number' => ['required', 'numeric', 'digits:4'],
+                'darbi_site' => ['required', 'regex:/^[a-zA-Z][0-9]{4}$/'],
+                'address_line_1' => ['required'],
                 'city' => ['required'],
                 'state' => ['required'],
                 'zip_code' => ['required'],
@@ -40,6 +41,7 @@ class CustomerController extends Controller
                     'address_line_1' => request('address_line_1'),
                     'address_line_2' => request('address_line_2'),
                     'city' => request('city'),
+                    'state' => request('state'),
                     'zip_code' => request('zip_code'),
                     'country' => request('country'),
                     'notes' => request('notes'),
@@ -64,9 +66,10 @@ class CustomerController extends Controller
     public function update(Customer $customer)
     {
         request()->validate([
-            'name' => ['required', 'unique:customers,name'],
-            'darbi_customer_account_number' => ['required', 'numeric'],
-            'address_line_1' => ['address_line_1'],
+            'name' => ['required'],
+            'darbi_customer_account_number' => ['required', 'numeric', 'digits:4'],
+            'darbi_site' => ['required', 'regex:/^[a-zA-Z][0-9]{4}$/'],
+            'address_line_1' => ['required'],
             'city' => ['required'],
             'state' => ['required'],
             'zip_code' => ['required'],
@@ -82,6 +85,7 @@ class CustomerController extends Controller
             'address_line_1' => request('address_line_1'),
             'address_line_2' => request('address_line_2'),
             'city' => request('city'),
+            'state' => request('state'),
             'zip_code' => request('zip_code'),
             'country' => request('country'),
             'notes' => request('notes'),
