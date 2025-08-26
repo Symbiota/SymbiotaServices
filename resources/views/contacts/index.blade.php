@@ -11,7 +11,7 @@
     </div>
 
     <div id="create-form" style="display:none;">
-        <x-contact-form action="/contacts/create"></x-service-form>
+        <x-contact-form action="/contacts/create"></x-contact-form>
     </div>
 
     <script src="{{ asset('show-hide.js') }}"></script>

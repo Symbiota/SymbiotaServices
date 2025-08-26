@@ -10,11 +10,13 @@ use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('invoices.index', ['invoices' => Invoice::all()]);
     }
 
-    public function show(Invoice $invoice) {
+    public function show(Invoice $invoice)
+    {
         return view('invoices.show', [
             'invoice' => $invoice,
             'services' => Service::all(),
@@ -22,15 +24,17 @@ class InvoiceController extends Controller
         ]);
     }
 
-    public function create(Contract $contract) {
-    return view('invoices.create', [
+    public function create(Contract $contract)
+    {
+        return view('invoices.create', [
             'contract' => $contract,
             'services' => Service::all(),
             'contacts' => Contact::all()
         ]);
     }
 
-    public function store() {
+    public function store()
+    {
         request()->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
             'financial_contact_id' => ['required', 'exists:contacts,id'],
@@ -39,7 +43,7 @@ class InvoiceController extends Controller
             'amount_billed' => ['required', 'numeric'],
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
-            'services' => ['required'],
+            'service' => ['required'],
         ]);
 
         $invoice = Invoice::create([
@@ -67,7 +71,8 @@ class InvoiceController extends Controller
         return redirect('/contracts/' . $invoice->contract_id);
     }
 
-    public function update(Invoice $invoice) {
+    public function update(Invoice $invoice)
+    {
 
         $invoice->services()->detach();
 
@@ -106,5 +111,4 @@ class InvoiceController extends Controller
 
         return redirect('/invoices/' . $invoice->id);
     }
-
 }
