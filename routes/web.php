@@ -43,6 +43,7 @@ Route::patch('/invoices/{invoice}', [InvoiceController::class, 'update'])->middl
 
 Route::get('/contacts', [ContactController::class, 'index'])->middleware('auth');
 Route::get('/contacts/{contact}', [ContactController::class, 'show'])->middleware('auth');
+Route::patch('/contacts/{contact}', [ContactController::class, 'update'])->middleware('auth');
 Route::post('/contacts/create', [ContactController::class, 'store'])->middleware('auth');
 
 Route::get('/register', [RegisteredUserController::class, 'create']);
@@ -51,5 +52,3 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::get('/login', [SessionController::class, 'create']);
 Route::post('/login', [SessionController::class, 'store']);
 Route::post('/logout', [SessionController::class, 'destroy']);
-
-?>

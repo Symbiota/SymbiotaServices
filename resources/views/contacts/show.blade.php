@@ -10,4 +10,24 @@
         <li><b>Notes:</b> {{ $contact->notes }}</li>
     </ul>
 
+    <br>
+
+    <div class="flex items-start">
+        <div class="flex items-center">
+            <x-ec-button onclick="toggleView('edit-form')">Edit
+                Contact</x-ec-button>
+
+            @if ($errors->any())
+                <p class="text-red-500 text-sm ml-3"> Error Editing Contact
+                </p>
+            @endif
+        </div>
+    </div>
+
+    <script src="{{ asset('show-hide.js') }}"></script>
+
+    <div id="edit-form" style="display:none;">
+        <x-contact-form :contact="$contact">@method('PATCH')</x-contact-form>
+    </div>
+
 </x-table-layout>
