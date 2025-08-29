@@ -9,25 +9,29 @@ use Illuminate\Http\Request;
 
 class ContractController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('contracts.index', ['contracts' => Contract::all()]);
     }
 
-    public function show(Contract $contract) {
+    public function show(Contract $contract)
+    {
         return view('contracts.show', [
             'contract' => $contract,
             'contacts' => Contact::all(),
         ]);
     }
 
-    public function create(Customer $customer) {
+    public function create(Customer $customer)
+    {
         return view('contracts.create', [
             'customer' => $customer,
             'contacts' => Contact::all(),
         ]);
     }
 
-    public function store() {
+    public function store()
+    {
         request()->validate([
             'customer_id' => ['required', 'exists:customers,id'],
             'financial_contact_id' => ['required', 'numeric', 'exists:contacts,id'],
@@ -48,10 +52,11 @@ class ContractController extends Controller
             'notes' => request('notes'),
         ]);
 
-        return redirect('/customers/' . $contract->customer_id);
+        return redirect('/contracts/' . $contract->id);
     }
 
-    public function update(Contract $contract) {
+    public function update(Contract $contract)
+    {
         request()->validate([
             'customer_id' => ['required', 'exists:customers,id'],
             'financial_contact_id' => ['required', 'numeric', 'exists:contacts,id'],
@@ -79,5 +84,4 @@ class ContractController extends Controller
         $contract->delete();
         return redirect('/contracts/');
     }
-
 }

@@ -21,10 +21,19 @@
                     <select name="financial_contact_id"
                         id="financial_contact_id"
                         class="bg-white block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500">
-                        <option value="" class=""></option>
+                        @isset($invoice)
+                            // On invoice edit page
+                            <option value="{{ $invoice->financial_contact_id }}">
+                                {{ $invoice->financial_contact_id }}
+                                : {{ $invoice->contact->first_name }}
+                                {{ $invoice->contact->last_name }}
+                            </option>
+                        @endisset
+                        <option value=""></option>
                         @foreach ($contacts as $contact)
                             <option value="{{ $contact->id }}">
-                                {{ $contact->id }}: {{ $contact->first_name }}
+                                {{ $contact->id }}:
+                                {{ $contact->first_name }}
                                 {{ $contact->last_name }}
                             </option>
                         @endforeach

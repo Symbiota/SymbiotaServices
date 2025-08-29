@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Contact extends Model {
-
+class Contact extends Model
+{
     use HasFactory;
     protected $table = 'contacts';
 
@@ -25,7 +25,6 @@ class Contact extends Model {
     // A contact can have multiple invoices
     public function invoices()
     {
-        return $this->hasMany(Invoice::class, foreignKey: 'financial_contact_id');
+        return $this->hasMany(Invoice::class);
     }
-
 }

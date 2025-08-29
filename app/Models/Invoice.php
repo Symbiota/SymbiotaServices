@@ -22,7 +22,7 @@ class Invoice extends Model
         'date_paid',
         'notes',
     ];
-    
+
     // An invoice belongs to one contract
     public function contract()
     {
@@ -38,7 +38,6 @@ class Invoice extends Model
     // An invoice belongs to one contact
     public function contact()
     {
-        return $this->belongsTo(Contact::class, ownerKey: 'financial_contact_id');
+        return $this->belongsTo(Contact::class, 'financial_contact_id');
     }
-
 }
