@@ -9,7 +9,9 @@
         <li><a href="/contacts/{{ $invoice->financial_contact_id }}">
                 <b class="text-blue-700 underline decoration-2">Financial Contact
                     ID:</b>
-                {{ $invoice->financial_contact_id }}</a>
+                {{ $invoice->financial_contact_id }} -
+                {{ $invoice->contact->first_name }}
+                {{ $invoice->contact->last_name }}</a>
         </li>
         <li><b>Billing Start Date:</b> {{ $invoice->billing_start }}</li>
         <li><b>Billing End Date:</b> {{ $invoice->billing_end }}</li>
