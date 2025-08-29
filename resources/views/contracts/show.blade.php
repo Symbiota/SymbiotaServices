@@ -10,22 +10,44 @@
         <li><a href="/contacts/{{ $contract->original_contact_id }}"><b
                     class="text-blue-700 underline decoration-2">Original Contact
                     ID:</b>
-                {{ $contract->original_contact_id }}</a></li>
+                {{ $contract->original_contact_id }} -
+                {{ $contract->original_contact->first_name }}
+                {{ $contract->original_contact->last_name }}</a></li>
         </li>
         <li><a href="/contacts/{{ $contract->current_financial_contact_id }}"><b
                     class="text-blue-700 underline decoration-2">Current
                     Financial Contact ID:</b>
-                {{ $contract->current_financial_contact_id }}</a></li>
+                {{ $contract->current_financial_contact_id }} -
+                {{ $contract->current_financial_contact->first_name }}
+                {{ $contract->current_financial_contact->last_name }}</a></li>
         </li>
-        <li><a href="/contacts/{{ $contract->pi_contact_id }}"><b
-                    class="text-blue-700 underline decoration-2">PI Contact
-                    ID:</b>
-                {{ $contract->pi_contact_id }}</a></li>
+        <li>
+            @if (isset($contract->pi_contact_id))
+                <a href="/contacts/{{ $contract->pi_contact_id }}"><b
+                        class="text-blue-700 underline decoration-2">PI Contact
+                        ID:</b>
+                    {{ $contract->pi_contact_id }} -
+                    {{ $contract->pi_contact->first_name }}
+                    {{ $contract->pi_contact->last_name }}
+                </a>
+            @else
+                <b>PI Contact ID:</b> None
+            @endif
         </li>
-        <li><a href="/contacts/{{ $contract->technical_contact_id }}"><b
-                    class="text-blue-700 underline decoration-2">Technical
-                    Contact ID:</b>
-                {{ $contract->technical_contact_id }}</a></li>
+        </li>
+        <li>
+            @if (isset($contract->technical_contact_id))
+                <a href="/contacts/{{ $contract->pi_contact_id }}"><b
+                        class="text-blue-700 underline decoration-2">Technical
+                        Contact ID:</b>
+                    {{ $contract->technical_contact_id }} -
+                    {{ $contract->technical_contact_id->first_name }}
+                    {{ $contract->technical_contact_id->last_name }}
+                </a>
+            @else
+                <b>Technical Contact ID:</b> None
+            @endif
+        </li>
         </li>
         <li><b>DARBI Header Ref 1:</b> {{ $contract->darbi_header_ref_1 }}
         </li>

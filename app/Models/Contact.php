@@ -22,7 +22,13 @@ class Contact extends Model
         'notes',
     ];
 
-    // A contact can have multiple invoices
+    // Multiple contracts can be linked to one contact
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
+    }
+
+    // Multiple invoices can be linked to one contact
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
