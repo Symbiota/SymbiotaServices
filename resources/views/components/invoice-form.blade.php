@@ -24,9 +24,18 @@
                         @isset($invoice)
                             // On invoice edit page
                             <option value="{{ $invoice->financial_contact_id }}">
-                                {{ $invoice->financial_contact_id }}
-                                : {{ $invoice->contact->first_name }}
+                                {{ $invoice->financial_contact_id }}:
+                                {{ $invoice->contact->first_name }}
                                 {{ $invoice->contact->last_name }}
+                            </option>
+                        @endisset
+                        @isset($contract)
+                            // From contract view to invoice creation
+                            <option
+                                value="{{ $contract->current_financial_contact_id }}">
+                                {{ $contract->current_financial_contact_id }}:
+                                {{ $contract->current_financial_contact->first_name }}
+                                {{ $contract->current_financial_contact->last_name }}
                             </option>
                         @endisset
                         <option value=""></option>

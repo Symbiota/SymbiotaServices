@@ -41,8 +41,8 @@
                         class="text-blue-700 underline decoration-2">Technical
                         Contact ID:</b>
                     {{ $contract->technical_contact_id }} -
-                    {{ $contract->technical_contact_id->first_name }}
-                    {{ $contract->technical_contact_id->last_name }}
+                    {{ $contract->technical_contact->first_name }}
+                    {{ $contract->technical_contact->last_name }}
                 </a>
             @else
                 <b>Technical Contact ID:</b> None
