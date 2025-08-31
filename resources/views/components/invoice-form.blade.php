@@ -29,8 +29,9 @@
                                 {{ $invoice->contact->last_name }}
                             </option>
                         @endisset
-                        @isset($contract)
-                            // From contract view to invoice creation
+                        @isset($contract->current_financial_contact_id)
+                            // From contract view to invoice creation, autofill
+                            current financial contact
                             <option
                                 value="{{ $contract->current_financial_contact_id }}">
                                 {{ $contract->current_financial_contact_id }}:
