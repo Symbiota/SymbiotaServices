@@ -45,7 +45,8 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="darbi_site"> DARBI Site*
+            <x-form-box for="darbi_site"> DARBI Site* (letter followed by 4
+                numbers)
                 <x-form-input type="text" name="darbi_site" id="darbi_site"
                     placeholder="Site.com"
                     value="{{ $customer->darbi_site ?? '' }}"></x-form-input>
