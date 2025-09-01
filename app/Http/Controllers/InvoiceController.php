@@ -117,16 +117,51 @@ class InvoiceController extends Controller
         $filename = 'invoice_' . $invoice->id . '.csv';
         $handle = fopen($filename, 'w');
 
-        fputcsv($handle, [
-            'contract_id',
-            'financial_contact_id',
-            'billing_start',
-            'billing_end',
-            'amount_billed',
-            'date_invoiced',
-            'date_paid',
-            'notes',
-        ]);
+        $submit = [
+            ['Submitted  by (Required)',],
+            [
+                'NAME',
+                'EMAIL',
+                'PHONE',
+                'REQUEST DATE',
+            ],
+            [
+                auth()->user()->name,
+                auth()->user()->email,
+                '[PHONE LATER]',
+                date('m-d-Y'),
+            ],
+            [],
+        ];
+
+        foreach ($submit as $a) {
+            fputcsv($handle, $a);
+        }
+
+        $headers = [
+            'BUSINESS UNIT - KUINT or RSINT',
+            'BILLING UNIT/DEPARTMENT NAME',
+            'CUSTOMER NAME',
+            'CUSTOMER ACCOUNT NUMBER',
+            'CUSTOMER SITE NUMBER',
+            'CUSTOMER CONTACT',
+            'ITEM NUMBER',
+            'ITEM DESCRIPTION',
+            'SALESPERSON',
+            'QUANTITY',
+            'PRICE',
+            'LINE TOTAL',
+            'BILL FROM DATE',
+            'BILL TO DATE',
+            'HEADER REFERENCE 1',
+            'HEADER REFERENCE 2',
+            'LINE REFERENCE 1',
+            'LINE REFERENCE 2',
+            'SPECIAL INSTRUCTIONS',
+            'NOTES:  INCLUDE INVOICE NUMBER AND LINE NUMBER IF CREDIT MEMO',
+        ];
+
+        fputcsv($handle, $headers);
 
         $data = [
             $invoice->contract_id,
