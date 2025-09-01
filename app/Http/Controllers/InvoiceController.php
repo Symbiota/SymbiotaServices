@@ -111,4 +111,38 @@ class InvoiceController extends Controller
 
         return redirect('/invoices/' . $invoice->id);
     }
+
+    public function exportCSV(Invoice $invoice)
+    {
+        $filename = 'invoice_' . $invoice->id . '.csv';
+        $handle = fopen($filename, 'w');
+
+        fputcsv($handle, [
+            'contract_id',
+            'financial_contact_id',
+            'billing_start',
+            'billing_end',
+            'amount_billed',
+            'date_invoiced',
+            'date_paid',
+            'notes',
+        ]);
+
+        $data = [
+            $invoice->contract_id,
+            $invoice->financial_contact_id,
+            $invoice->billing_start,
+            $invoice->billing_end,
+            $invoice->amount_billed,
+            $invoice->date_invoiced,
+            $invoice->date_paid,
+            $invoice->notes,
+        ];
+
+        fputcsv($handle, $data);
+
+        fclose($handle);
+
+        return response()->download(public_path($filename))->deleteFileAfterSend(true);
+    }
 }

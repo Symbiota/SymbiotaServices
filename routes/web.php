@@ -38,6 +38,7 @@ Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->mi
 Route::get('/invoices/create/{contract?}', [InvoiceController::class, 'create'])->name('invoices.create')->middleware('auth');
 Route::get('/invoices', [InvoiceController::class, 'index'])->middleware('auth');
 Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->middleware('auth');
+Route::get('/invoices/{invoice}/exportCSV', [InvoiceController::class, 'exportCSV'])->middleware('auth');
 Route::post('/invoices', [InvoiceController::class, 'store'])->middleware('auth');
 Route::patch('/invoices/{invoice}', [InvoiceController::class, 'update'])->middleware('auth');
 
