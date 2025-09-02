@@ -158,20 +158,19 @@ class InvoiceController extends Controller
             'LINE REFERENCE 1',
             'LINE REFERENCE 2',
             'SPECIAL INSTRUCTIONS',
-            'NOTES:  INCLUDE INVOICE NUMBER AND LINE NUMBER IF CREDIT MEMO',
+            'NOTES: INCLUDE INVOICE NUMBER AND LINE NUMBER IF CREDIT MEMO',
         ];
 
         fputcsv($handle, $headers);
 
         $data = [
-            $invoice->contract_id,
-            $invoice->financial_contact_id,
-            $invoice->billing_start,
-            $invoice->billing_end,
-            $invoice->amount_billed,
-            $invoice->date_invoiced,
-            $invoice->date_paid,
-            $invoice->notes,
+            'KUINT/RSINT', // BUSINESS UNIT - KUINT or RSINT
+            $invoice->contract->customer->department_name, // BILLING UNIT/DEPARTMENT NAME
+            $invoice->contract->customer->name, // CUSTOMER NAME
+            $invoice->contract->customer->name, // CUSTOMER NAME
+            $invoice->contract->customer->name, // CUSTOMER NAME
+            $invoice->contract->customer->name, // CUSTOMER NAME
+            $invoice->contract->customer->name, // CUSTOMER NAME
         ];
 
         fputcsv($handle, $data);
