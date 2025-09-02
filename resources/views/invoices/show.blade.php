@@ -39,6 +39,7 @@
             <a href="/invoices/{{ $invoice->id }}/exportCSV"<x-ec-button>Export
                 CSV</x-ec-button></a>
         </div>
+
     </div>
 
     <script src="{{ asset('show-hide.js') }}"></script>

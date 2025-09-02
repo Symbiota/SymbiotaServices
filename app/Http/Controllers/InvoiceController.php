@@ -7,6 +7,7 @@ use App\Models\Service;
 use App\Models\Contract;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class InvoiceController extends Controller
 {
@@ -73,7 +74,6 @@ class InvoiceController extends Controller
 
     public function update(Invoice $invoice)
     {
-
         $invoice->services()->detach();
 
         request()->validate([
@@ -171,6 +171,7 @@ class InvoiceController extends Controller
             $invoice->contract->customer->name, // CUSTOMER NAME
             $invoice->contract->customer->name, // CUSTOMER NAME
             $invoice->contract->customer->name, // CUSTOMER NAME
+
         ];
 
         fputcsv($handle, $data);

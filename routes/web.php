@@ -22,7 +22,6 @@ Route::patch('/services/{service}', [ServiceController::class, 'update'])->middl
 Route::post('/services', [ServiceController::class, 'store'])->middleware('auth');
 Route::patch('/services/{service}/retire', [ServiceController::class, 'retire'])->middleware('auth');
 
-
 Route::get('/contracts/create/{customer?}', [ContractController::class, 'create'])->name('contracts.create')->middleware('auth');
 Route::get('/contracts', [ContractController::class, 'index'])->middleware('auth');
 Route::get('/contracts/{contract}', [ContractController::class, 'show'])->middleware('auth');
