@@ -126,10 +126,10 @@ class InvoiceController extends Controller
                 'REQUEST DATE',
             ],
             [
-                auth()->user()->name,
+                auth()->user()->name, // Works, inputs user name
                 auth()->user()->email,
                 '[PHONE LATER]',
-                date('m-d-Y'),
+                date('m/d/Y'), // Current date
             ],
             [],
         ];
@@ -167,10 +167,24 @@ class InvoiceController extends Controller
             'KUINT/RSINT', // BUSINESS UNIT - KUINT or RSINT
             $invoice->contract->customer->department_name, // BILLING UNIT/DEPARTMENT NAME
             $invoice->contract->customer->name, // CUSTOMER NAME
-            $invoice->contract->customer->name, // CUSTOMER NAME
-            $invoice->contract->customer->name, // CUSTOMER NAME
-            $invoice->contract->customer->name, // CUSTOMER NAME
-            $invoice->contract->customer->name, // CUSTOMER NAME
+            $invoice->contract->customer->darbi_customer_account_number, // CUSTOMER ACCOUNT NUMBER
+            $invoice->contract->customer->darbi_site, // CUSTOMER SITE NUMBER
+            $invoice->contact->first_name . ' ' . $invoice->contact->last_name, // CUSTOMER CONTACT - NOTE: Invoice Financial Contact
+            '', // ITEM NUMBER
+            $invoice->services, // ITEM DESCRIPTION
+            '', // SALESPERSON
+            '', // QUANTITY
+            '', // PRICE
+            '', // LINE TOTAL
+            $invoice->billing_start, // BILL FROM DATE - NOTE: Billings Notes has MM/DD/YYYY, current settings is YYYY-MM-DD
+            $invoice->billing_end, // BILL TO DATE
+            $invoice->contract->darbi_header_ref_1, // HEADER REFERENCE 1
+            $invoice->contract->darbi_header_ref_2, // HEADER REFERENCE 2
+            'LINE REFERENCE 1', //
+            'LINE REFERENCE 2', //
+            $invoice->contract->darbi_special_instructions, // SPECIAL INSTRUCTIONS
+            'Internal invoice ID: ' . $invoice->id, // NOTES: INCLUDE INVOICE NUMBER AND LINE NUMBER IF CREDIT MEMO
+
 
         ];
 
