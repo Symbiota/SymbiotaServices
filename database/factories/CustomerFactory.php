@@ -22,6 +22,13 @@ class CustomerFactory extends Factory
             'darbi_site' => $this->faker->word(),
             'correspondence' => $this->faker->email(),
             'notes' => $this->faker->text(),
+            'department_name' => $this->faker->company(),
+            'address_line_1' => $this->faker->streetAddress(),
+            'address_line_2' => $this->faker->secondaryAddress(),
+            'city' => $this->faker->city(),
+            'state' => $this->faker->state(),
+            'zip_code' => $this->faker->postcode(),
+            'country' => $this->faker->country(),
         ];
     } // to use: php artisan tinker, App\Models\Customer::factory(number)->create()
 }
