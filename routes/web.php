@@ -36,7 +36,7 @@ Route::get('/contacts', function (){
     return view('contacts.index', ['contacts' => Contact::all()]);
 })->middleware('auth');
 
-Route::get(env('APP_URL') . '/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
 Route::get('/login', [SessionController::class, 'create']);
