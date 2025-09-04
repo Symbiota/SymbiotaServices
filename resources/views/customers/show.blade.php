@@ -6,10 +6,17 @@
             <ul>
                 <li><b>ID:</b> {{ $customer->id }}</li>
                 <li><b>Name:</b> {{ $customer->name }}</li>
+                <li><b>Department Name:</b> {{ $customer->department_name }}</li>
                 <li><b>DARBI Customer Account Number:</b>
                     {{ $customer->darbi_customer_account_number }}</li>
                 <li><b>DARBI site:</b> {{ $customer->darbi_site }}</li>
                 <li><b>Notes:</b> {{ $customer->notes }}</li>
+                <br>
+                <li><b>Country:</b> {{ $customer->country }}</li>
+                <li><b>State:</b> {{ $customer->state }}</li>
+                <li><b>Zip Code:</b> {{ $customer->zip_code }}</li>
+                <li><b>Address Line 1:</b> {{ $customer->address_line_1 }}</li>
+                <li><b>Address Line 2:</b> {{ $customer->address_line_2 }}</li>
             </ul>
         </div>
     @endfragment
