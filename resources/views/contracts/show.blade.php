@@ -96,8 +96,6 @@
 
     </div>
 
-    <script src="{{ asset('show-hide.js') }}"></script>
-
     <div id="edit-form" style="display:none;">
         <x-contract-form :contract="$contract"
             :contacts="$contacts">@method('PATCH')</x-contract-form>

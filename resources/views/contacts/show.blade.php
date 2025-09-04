@@ -24,8 +24,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('show-hide.js') }}"></script>
-
     <div id="edit-form" style="display:none;">
         <x-contact-form :contact="$contact">@method('PATCH')</x-contact-form>
     </div>

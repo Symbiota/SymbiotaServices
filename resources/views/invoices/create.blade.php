@@ -22,7 +22,6 @@
                 <x-contact-form action="/contacts/create"></x-contact-form>
             </div>
 
-            <script src="{{ asset('show-hide.js') }}"></script>
         </div>
 
 </x-table-layout>
