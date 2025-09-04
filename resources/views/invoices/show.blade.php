@@ -25,6 +25,11 @@
 
     <div class="flex items-start">
 
+        <div>
+            <a href="/invoices/{{ $invoice->id }}/exportCSV"<x-ec-button>Export
+                CSV</x-ec-button></a>
+        </div>
+
         <div class="flex items-center">
             <x-ec-button onclick="toggleView('edit-form')">Edit
                 Invoice</x-ec-button>
@@ -33,11 +38,6 @@
                 <p class="text-red-500 text-sm ml-3"> Error Editing Invoice
                 </p>
             @endif
-        </div>
-
-        <div>
-            <a href="/invoices/{{ $invoice->id }}/exportCSV"<x-ec-button>Export
-                CSV</x-ec-button></a>
         </div>
 
     </div>

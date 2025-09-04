@@ -117,13 +117,9 @@ class InvoiceController extends Controller
         $filename = 'invoice_' . $invoice->id . '.csv';
         $handle = fopen($filename, 'w');
 
-        $submit = [
+        $headers = [
             ['Submitted  by (Required)',],
-            [
-                'NAME',
-                'EMAIL',
-                'PHONE',
-                'REQUEST DATE',
+            ['NAME', 'EMAIL', 'PHONE', 'REQUEST DATE',
             ],
             [
                 auth()->user()->name, // Works, inputs user name
@@ -132,13 +128,7 @@ class InvoiceController extends Controller
                 date('m/d/Y'), // Current date
             ],
             [],
-        ];
-
-        foreach ($submit as $a) {
-            fputcsv($handle, $a);
-        }
-
-        $headers = [
+            [
             'BUSINESS UNIT - KUINT or RSINT',
             'BILLING UNIT/DEPARTMENT NAME',
             'CUSTOMER NAME',
@@ -149,6 +139,7 @@ class InvoiceController extends Controller
             'ITEM DESCRIPTION',
             'SALESPERSON',
             'QUANTITY',
+            'UOM',
             'PRICE',
             'LINE TOTAL',
             'BILL FROM DATE',
@@ -159,36 +150,64 @@ class InvoiceController extends Controller
             'LINE REFERENCE 2',
             'SPECIAL INSTRUCTIONS',
             'NOTES: INCLUDE INVOICE NUMBER AND LINE NUMBER IF CREDIT MEMO',
+            ],
         ];
 
-        fputcsv($handle, $headers);
+        foreach ($headers as $submit) {
+            fputcsv($handle, $submit);
+        }
 
         $data = [
             'KUINT/RSINT', // BUSINESS UNIT - KUINT or RSINT
-            $invoice->contract->customer->department_name, // BILLING UNIT/DEPARTMENT NAME
-            $invoice->contract->customer->name, // CUSTOMER NAME
-            $invoice->contract->customer->darbi_customer_account_number, // CUSTOMER ACCOUNT NUMBER
-            $invoice->contract->customer->darbi_site, // CUSTOMER SITE NUMBER
-            $invoice->contact->first_name . ' ' . $invoice->contact->last_name, // CUSTOMER CONTACT - NOTE: Invoice Financial Contact
-            '', // ITEM NUMBER
-            $invoice->services, // ITEM DESCRIPTION
-            '', // SALESPERSON
-            '', // QUANTITY
-            '', // PRICE
-            '', // LINE TOTAL
-            $invoice->billing_start, // BILL FROM DATE - NOTE: Billings Notes has MM/DD/YYYY, current settings is YYYY-MM-DD
-            $invoice->billing_end, // BILL TO DATE
-            $invoice->contract->darbi_header_ref_1, // HEADER REFERENCE 1
-            $invoice->contract->darbi_header_ref_2, // HEADER REFERENCE 2
+            $invoice->contract->customer->department_name,
+            $invoice->contract->customer->name,
+            $invoice->contract->customer->darbi_customer_account_number,
+            $invoice->contract->customer->darbi_site,
+            $invoice->contact->first_name . ' ' . $invoice->contact->last_name, // NOTE: Invoice Financial Contact
+            $invoice->services[0]->darbi_item_number,
+            $invoice->services[0]->description,
+            'SALESPERSON', // SALESPERSON
+            $invoice->services[0]->pivot->qty,
+            'UOM', // UOM
+            $invoice->services[0]->price_per_unit,
+            '$' . $invoice->services[0]->pivot->amount_owed,
+            $invoice->billing_start, // NOTE: Billings Notes has MM/DD/YYYY, current settings is YYYY-MM-DD
+            $invoice->billing_end,
+            $invoice->contract->darbi_header_ref_1,
+            $invoice->contract->darbi_header_ref_2,
             'LINE REFERENCE 1', //
             'LINE REFERENCE 2', //
-            $invoice->contract->darbi_special_instructions, // SPECIAL INSTRUCTIONS
-            'Internal invoice ID: ' . $invoice->id, // NOTES: INCLUDE INVOICE NUMBER AND LINE NUMBER IF CREDIT MEMO
-
-
+            $invoice->contract->darbi_special_instructions,
+            'Internal invoice ID: ' . $invoice->id,
         ];
 
         fputcsv($handle, $data);
+
+        for ($i = 1; $i < count($invoice->services); $i++) {
+            $item_row = ['',
+            '',
+            '',
+            '',
+            '',
+            '',
+            $invoice->services[$i]->darbi_item_number,
+            $invoice->services[$i]->description,
+            '',
+            $invoice->services[$i]->pivot->qty,
+            'UOM',
+            $invoice->services[$i]->price_per_unit,
+            '$' . $invoice->services[$i]->pivot->amount_owed,
+            '',
+            '',
+            '',
+            '',
+            'LINE REFERENCE 1',
+            'LINE REFERENCE 2',
+            '',
+            '',];
+
+            fputcsv($handle, $item_row);
+        }
 
         fclose($handle);
 
