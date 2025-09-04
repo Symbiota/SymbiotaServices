@@ -24,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('contracts', function (Blueprint $table) {
-            
+            $table->dropColumn('current_financial_contact_id');
+            $table->dropColumn('pi_contact_id');
+            $table->dropColumn('technical_contact_id');
         });
     }
 };
