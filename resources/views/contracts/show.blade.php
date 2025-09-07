@@ -37,7 +37,7 @@
         </li>
         <li>
             @if (isset($contract->technical_contact_id))
-                <a href="/contacts/{{ $contract->pi_contact_id }}"><b
+                <a href="/contacts/{{ $contract->technical_contact_id }}"><b
                         class="text-blue-700 underline decoration-2">Technical
                         Contact ID:</b>
                     {{ $contract->technical_contact_id }} -
@@ -95,8 +95,6 @@
         </div>
 
     </div>
-
-    <script src="{{ asset('show-hide.js') }}"></script>
 
     <div id="edit-form" style="display:none;">
         <x-contract-form :contract="$contract"

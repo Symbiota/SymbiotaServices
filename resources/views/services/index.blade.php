@@ -14,8 +14,6 @@
         <x-service-form action="/services"></x-service-form>
     </div>
 
-    <script src="{{ asset('show-hide.js') }}"></script>
-
     <br>
 
     <div class = "space-y-4">
