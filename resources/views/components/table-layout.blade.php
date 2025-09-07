@@ -22,46 +22,42 @@
                                 src="{{ asset('LogoSymbiotaPNG.png') }}"
                                 alt="Symbiota" />
                         </div>
-                        <div class="hidden md:block">
-                            <div class="ml-10 flex items-baseline space-x-4">
-                                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                @auth
-                                    <a href="/"
-                                        class="{{ request()->is('/') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Home</a>
-                                    <a href="/contacts"
-                                        class="{{ request()->is('contacts') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Contacts</a>
-                                    <a href="/services"
-                                        class="{{ request()->is('services*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Services</a>
-                                    <a href="/customers"
-                                        class="{{ request()->is('customers*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Customers</a>
-                                    <a href="/contracts"
-                                        class="{{ request()->is('contracts*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Contracts</a>
-                                    <a href="/invoices"
-                                        class="{{ request()->is('invoices*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Invoices</a>
-                                @endauth
-                            </div>
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                            @auth
+                                <a href="/"
+                                    class="{{ request()->is('/') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Home</a>
+                                <a href="{{ route('services.index') }}"
+                                    class="{{ request()->is('services*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Services</a>
+                                <a href="/{{ route('customers.index') }}"
+                                    class="{{ request()->is('customers*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Customers</a>
+                                <a href="/contacts"
+                                    class="{{ request()->is('contacts') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Contacts</a>
+                                <a href="{{ route('contracts.index') }}"
+                                    class="{{ request()->is('contracts*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Contracts</a>
+                                <a href="{{ route('invoices.index') }}"
+                                    class="{{ request()->is('invoices*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Invoices</a>
+                            @endauth
                         </div>
                     </div>
 
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
-                            @guest
-                                <a href="/register"
-                                    class="{{ request()->is('register') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Register</a>
-                                <a href="/login"
-                                    class="{{ request()->is('login') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Log
-                                    In</a>
-                            @endguest
-                            @auth
-                                <form method="POST" action="/logout">
-                                    @csrf
-                                    <button type="submit"
-                                        class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Log
-                                        Out</button>
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        @guest
+                            <a href="/register"
+                                class="{{ request()->is('register') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Register</a>
+                            <a href="/login"
+                                class="{{ request()->is('login') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Log
+                                In</a>
+                        @endguest
+                        @auth
+                            <form method="POST" action="/logout">
+                                @csrf
+                                <button type="submit"
+                                    class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Log
+                                    Out</button>
 
-                                </form>
-                            @endauth
-                        </div>
+                            </form>
+                        @endauth
                     </div>
 
                 </div>

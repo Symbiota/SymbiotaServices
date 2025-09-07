@@ -1,7 +1,7 @@
 <x-table-layout heading="Contracts">
     <title>CONTRACTS PAGE</title>
 
-    <a href="/contracts/create"> <x-ec-button>Create
+    <a href="{{ route('contracts.create') }}"> <x-ec-button>Create
             Contract</x-ec-button></a>
 
     <br>
@@ -9,7 +9,7 @@
 
     <div class = "space-y-4">
         @foreach ($contracts as $contract)
-            <a href="/contracts/{{ $contract->id }}"
+            <a href="{{ route('contracts.show', $contract) }}"
                 class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                 <div>
                     <strong>Contract ID: {{ $contract->id }}</strong> <br>
