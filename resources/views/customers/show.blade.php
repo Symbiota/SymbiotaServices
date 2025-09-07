@@ -43,7 +43,7 @@
 
     <div>
         @foreach ($customer->contracts as $contract)
-            <a href="/contracts/{{ $contract->id }}"
+            <a href="{{ route('contracts.show', $contract) }}"
                 class="block px-4 py-2 border border-gray-500">
                 <div>
                     <b>Contract ID:</b> {{ $contract->id }}

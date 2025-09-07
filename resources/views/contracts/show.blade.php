@@ -67,7 +67,8 @@
                 Contract</x-ec-button>
 
             <div id="delete-form" style="display:none;" class="-mt-2">
-                <form method="POST" action="/contracts/{{ $contract->id }}">
+                <form method="POST"
+                    action="{{ route('contracts.destroy', $contract) }}">
                     @csrf
                     @method('DELETE')
                     <br>
@@ -98,7 +99,7 @@
 
     <div id="edit-form" style="display:none;">
         <x-contract-form :contract="$contract"
-            :contacts="$contacts">@method('PATCH')</x-contract-form>
+            action="{{ route('contracts.update', $contract) }}">@method('PATCH')</x-contract-form>
     </div>
 
     <br>

@@ -22,14 +22,14 @@ Route::patch('/services/{service}', [ServiceController::class, 'update'])->middl
 Route::post('/services', [ServiceController::class, 'store'])->middleware('auth');
 Route::patch('/services/{service}/retire', [ServiceController::class, 'retire'])->middleware('auth');
 
-Route::get('/contracts/create/{customer?}', [ContractController::class, 'create'])->name('contracts.create')->middleware('auth');
+Route::get('/create/{customer?}', [ContractController::class, 'create'])->name('contracts.create')->middleware('auth');
 Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index')->middleware('auth');
 Route::get('/contracts/{contract}', [ContractController::class, 'show'])->name('contracts.show')->middleware('auth');
-Route::post('/contracts', [ContractController::class, 'store'])->middleware('auth');
-Route::delete('/contracts/{contract}', [ContractController::class, 'destroy'])->middleware('auth');
-Route::patch('/contracts/{contract}', [ContractController::class, 'update'])->middleware('auth');
+Route::post('/contracts/store', [ContractController::class, 'store'])->name('contracts.store')->middleware('auth');
+Route::delete('/contracts/{contract}/delete', [ContractController::class, 'destroy'])->name('contracts.destroy')->middleware('auth');
+Route::patch('/contracts/{contract}/update', [ContractController::class, 'update'])->name('contracts.update')->middleware('auth');
 
-Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index')->middleware('auth');
+Route::get('/customers', [CustomerController::class, 'index'])->middleware('auth');
 Route::get('/customers/{customer}', [CustomerController::class, 'show'])->middleware('auth');
 Route::post('/customers', [CustomerController::class, 'create'])->middleware('auth');
 Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->middleware('auth');

@@ -154,7 +154,7 @@
     <div class="mt-6 flex items-center justify-end gap-x-6">
         <a @if (isset($customer)) href="/customers/{{ $customer->id }}"
         @elseif (isset($contract)) href=""
-        @else href="/contracts" @endif
+        @else href="{{ route('contracts.index') }}" @endif
             class="text-sm/6 font-semibold text-gray-900">Cancel</a>
 
         <button type="submit"

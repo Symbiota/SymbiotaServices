@@ -15,7 +15,8 @@
                     <strong>Contract ID: {{ $contract->id }}</strong> <br>
                     <strong>Customer ID: {{ $contract->customer_id }}</strong>
                 </div>
-                <form method="POST" action="/contracts/{{ $contract->id }}">
+                <form method="POST"
+                    action="{{ route('contracts.destroy', $contract) }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="hover:text-red-500">
