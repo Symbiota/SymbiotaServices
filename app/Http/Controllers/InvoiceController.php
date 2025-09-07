@@ -124,7 +124,7 @@ class InvoiceController extends Controller
             [
                 auth()->user()->name, // Works, inputs user name
                 auth()->user()->email,
-                '[PHONE LATER]',
+                '',
                 date('m/d/Y'), // Current date
             ],
             [],
