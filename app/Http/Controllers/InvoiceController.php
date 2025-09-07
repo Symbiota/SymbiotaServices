@@ -175,8 +175,8 @@ class InvoiceController extends Controller
             $invoice->billing_end,
             $invoice->contract->darbi_header_ref_1,
             $invoice->contract->darbi_header_ref_2,
-            'LINE REFERENCE 1', //
-            'LINE REFERENCE 2', //
+            $invoice->services[0]->line_ref_1,
+            $invoice->services[0]->line_ref_2,
             $invoice->contract->darbi_special_instructions,
             'Internal invoice ID: ' . $invoice->id,
         ];
@@ -201,8 +201,8 @@ class InvoiceController extends Controller
             '',
             '',
             '',
-            'LINE REFERENCE 1',
-            'LINE REFERENCE 2',
+            $invoice->services[$i]->line_ref_1,
+            $invoice->services[$i]->line_ref_2,
             '',
             '',];
 

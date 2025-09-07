@@ -6,6 +6,8 @@
         <li><b>DARBI Item Number:</b> {{ $service->darbi_item_number }}</li>
         <li><b>Price per Unit:</b> {{ $service->price_per_unit }}</li>
         <li><b>Description:</b> {{ $service->description }}</li>
+        <li><b>Line Reference 1:</b> {{ $service->line_ref_1 }}</li>
+        <li><b>Line Reference 2:</b> {{ $service->line_ref_2 }}</li>
     </ul>
 
     <br>

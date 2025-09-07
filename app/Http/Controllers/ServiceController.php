@@ -28,6 +28,8 @@ class ServiceController extends Controller
             'darbi_item_number' => request('darbi_item_number'),
             'price_per_unit' => request('price_per_unit'),
             'description' => request('description'),
+            'line_ref_1' => request('line_ref_1'),
+            'line_ref_2' => request('line_ref_2'),
         ]);
 
         return redirect('/services/' . $service->id);
@@ -46,6 +48,8 @@ class ServiceController extends Controller
             'darbi_item_number' => request('darbi_item_number'),
             'price_per_unit' => request('price_per_unit'),
             'description' => request('description'),
+            'line_ref_1' => request('line_ref_1'),
+            'line_ref_2' => request('line_ref_2'),
         ]);
 
         return redirect('/services/' . $service->id);
