@@ -166,9 +166,9 @@ class InvoiceController extends Controller
             $invoice->contact->first_name . ' ' . $invoice->contact->last_name, // NOTE: Invoice Financial Contact
             $invoice->services[0]->darbi_item_number,
             $invoice->services[0]->description,
-            'SALESPERSON', // SALESPERSON
+            '', // SALESPERSON
             $invoice->services[0]->pivot->qty,
-            'UOM', // UOM
+            '', // UOM
             $invoice->services[0]->price_per_unit,
             '$' . $invoice->services[0]->pivot->amount_owed,
             $invoice->billing_start, // NOTE: Billings Notes has MM/DD/YYYY, current settings is YYYY-MM-DD
@@ -194,7 +194,7 @@ class InvoiceController extends Controller
             $invoice->services[$i]->description,
             '',
             $invoice->services[$i]->pivot->qty,
-            'UOM',
+            '',
             $invoice->services[$i]->price_per_unit,
             '$' . $invoice->services[$i]->pivot->amount_owed,
             '',
