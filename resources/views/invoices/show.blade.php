@@ -50,7 +50,7 @@
     <br>
 
     @foreach ($invoice->services as $service)
-        <a href="/services/{{ $service->id }}">
+        <a href="{{ route('services.show', $service) }}">
             <ul class="block px-4 py-2 border border-gray-500">
                 <li><b>
                         @if ($service->active_status == 0)

@@ -1,7 +1,7 @@
 <x-table-layout heading="Invoices">
     <title>INVOICES PAGE</title>
 
-    <a href="/invoices/create"> <x-ec-button>Create
+    <a href="{{ 'invoices.create' }}"> <x-ec-button>Create
             Invoice</x-ec-button></a>
 
     <br>

@@ -32,7 +32,7 @@ class ServiceController extends Controller
             'line_ref_2' => request('line_ref_2'),
         ]);
 
-        return redirect('/services/' . $service->id);
+        return redirect()->route('services.show', $service);
     }
 
     public function store() {
@@ -52,14 +52,14 @@ class ServiceController extends Controller
             'line_ref_2' => request('line_ref_2'),
         ]);
 
-        return redirect('/services/' . $service->id);
+        return redirect()->route('services.show', $service);
     }
 
     public function retire(Service $service) {
         $service->update([
             'active_status' => 0,
         ]);
-        return redirect('/services');
+        return redirect()->route('services.index');
     }
 
 }

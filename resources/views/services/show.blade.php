@@ -14,7 +14,7 @@
 
     <div class="flex items-start">
 
-        <form method="post" action="/services/{{ $service->id }}/retire">
+        <form method="post" action="{{ route('services.retire', $service) }}">
             @csrf
             @method('PATCH')
             <x-ec-button>Retire Service</x-ec-button>
@@ -32,7 +32,8 @@
     </div>
 
     <div id="edit-form" style="display:none;">
-        <x-service-form :service="$service">@method('PATCH')</x-service-form>
+        <x-service-form :service="$service"
+            action="{{ route('services.update', $service) }}">@method('PATCH')</x-service-form>
     </div>
     <br>
 

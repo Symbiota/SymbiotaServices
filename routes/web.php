@@ -17,10 +17,10 @@ Route::post('/customer', [CustomerController::class, 'create'])->middleware('aut
 Route::delete('/customer/{id}', [CustomerController::class, 'destroy'])->middleware('auth');
 
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index')->middleware('auth');
-Route::get('/services/{service}', [ServiceController::class, 'show'])->middleware('auth');
-Route::patch('/services/{service}', [ServiceController::class, 'update'])->middleware('auth');
-Route::post('/services', [ServiceController::class, 'store'])->middleware('auth');
-Route::patch('/services/{service}/retire', [ServiceController::class, 'retire'])->middleware('auth');
+Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show')->middleware('auth');
+Route::patch('/services/{service}/update', [ServiceController::class, 'update'])->name('services.update')->middleware('auth');
+Route::post('/services/store', [ServiceController::class, 'store'])->name('services.store')->middleware('auth');
+Route::patch('/services/{service}/retire', [ServiceController::class, 'retire'])->name('services.retire')->middleware('auth');
 
 Route::get('/create/{customer?}', [ContractController::class, 'create'])->name('contracts.create')->middleware('auth');
 Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index')->middleware('auth');
@@ -36,10 +36,10 @@ Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->mi
 
 Route::get('/invoices/create/{contract?}', [InvoiceController::class, 'create'])->name('invoices.create')->middleware('auth');
 Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index')->middleware('auth');
-Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->middleware('auth');
+Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('invoices.show')->middleware('auth');
 Route::get('/invoices/{invoice}/exportCSV', [InvoiceController::class, 'exportCSV'])->middleware('auth');
-Route::post('/invoices', [InvoiceController::class, 'store'])->middleware('auth');
-Route::patch('/invoices/{invoice}', [InvoiceController::class, 'update'])->middleware('auth');
+Route::post('/invoices/store', [InvoiceController::class, 'store'])->name('invoices.store')->middleware('auth');
+Route::patch('/invoices/{invoice}/update', [InvoiceController::class, 'update'])->name('invoices.update')->middleware('auth');
 
 Route::get('/contacts', [ContactController::class, 'index'])->middleware('auth');
 Route::get('/contacts/{contact}', [ContactController::class, 'show'])->middleware('auth');
