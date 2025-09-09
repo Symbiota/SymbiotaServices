@@ -29,7 +29,7 @@
 
         <div id="edit-form" x-show="show">
             <x-customer-form :customer="$customer" :formMethod="'PATCH'"
-                :formEndpoint="url('/customers/' . $customer->id)"></x-customer-form>
+                :formEndpoint="route('customers.update', $customer)"></x-customer-form>
         </div>
     </div>
 
