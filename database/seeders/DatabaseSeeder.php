@@ -8,6 +8,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Service;
 use App\Models\Customer;
 use App\Models\Contract;
+use App\Models\Contact;
+use App\Models\Invoice;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,15 +31,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $services = Service::factory(6)->create();
-        Customer::factory(10)->create();
-        $contracts = Contract::factory(20)->create();
+        Contact::factory(10)->create();
+        Customer::factory(6)->create();
+        Contract::factory(15)->create();
+        $invoices = Invoice::factory(20)->create();
 
-        /*
-        $contracts->each(function ($contract) use ($services) {
-            $contract->services()->attach(
+        $invoices->each(function ($invoice) use ($services) {
+            $invoice->services()->attach(
                 $services->random(rand(1, 5))->pluck('id')->toArray()
             );
         });
-        */
     }
 }

@@ -3,10 +3,51 @@
 
     <ul>
         <li><b>Contract ID:</b> {{ $contract->id }}</li>
-        <li><a href="/customers/{{ $contract->customer_id }}"><b>Customer
+        <li><a href="/customers/{{ $contract->customer_id }}"><b
+                    class="text-blue-700 underline decoration-2">Customer
                     ID:</b>
                 {{ $contract->customer_id }}</a></li>
-        <li><b>Original Contact ID:</b> {{ $contract->original_contact_id }}
+        <li><a href="/contacts/{{ $contract->original_contact_id }}"><b
+                    class="text-blue-700 underline decoration-2">Original Contact
+                    ID:</b>
+                {{ $contract->original_contact_id }} -
+                {{ $contract->original_contact->first_name }}
+                {{ $contract->original_contact->last_name }}</a></li>
+        </li>
+        <li><a href="/contacts/{{ $contract->current_financial_contact_id }}"><b
+                    class="text-blue-700 underline decoration-2">Current
+                    Financial Contact ID:</b>
+                {{ $contract->current_financial_contact_id }} -
+                {{ $contract->current_financial_contact->first_name }}
+                {{ $contract->current_financial_contact->last_name }}</a></li>
+        </li>
+        <li>
+            @if (isset($contract->pi_contact_id))
+                <a href="/contacts/{{ $contract->pi_contact_id }}"><b
+                        class="text-blue-700 underline decoration-2">PI Contact
+                        ID:</b>
+                    {{ $contract->pi_contact_id }} -
+                    {{ $contract->pi_contact->first_name }}
+                    {{ $contract->pi_contact->last_name }}
+                </a>
+            @else
+                <b>PI Contact ID:</b> None
+            @endif
+        </li>
+        </li>
+        <li>
+            @if (isset($contract->technical_contact_id))
+                <a href="/contacts/{{ $contract->technical_contact_id }}"><b
+                        class="text-blue-700 underline decoration-2">Technical
+                        Contact ID:</b>
+                    {{ $contract->technical_contact_id }} -
+                    {{ $contract->technical_contact->first_name }}
+                    {{ $contract->technical_contact->last_name }}
+                </a>
+            @else
+                <b>Technical Contact ID:</b> None
+            @endif
+        </li>
         </li>
         <li><b>DARBI Header Ref 1:</b> {{ $contract->darbi_header_ref_1 }}
         </li>
@@ -55,10 +96,9 @@
 
     </div>
 
-    <script src="{{ asset('show-hide.js') }}"></script>
-
     <div id="edit-form" style="display:none;">
-        <x-contract-form :contract="$contract">@method('PATCH')</x-contract-form>
+        <x-contract-form :contract="$contract"
+            :contacts="$contacts">@method('PATCH')</x-contract-form>
     </div>
 
     <br>

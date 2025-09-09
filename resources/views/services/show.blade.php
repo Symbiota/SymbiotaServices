@@ -29,8 +29,6 @@
 
     </div>
 
-    <script src="{{ asset('show-hide.js') }}"></script>
-
     <div id="edit-form" style="display:none;">
         <x-service-form :service="$service">@method('PATCH')</x-service-form>
     </div>

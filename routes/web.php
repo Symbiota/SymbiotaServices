@@ -7,7 +7,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\InvoiceController;
-use App\Models\Contact;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -41,9 +41,10 @@ Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->middlewar
 Route::post('/invoices', [InvoiceController::class, 'store'])->middleware('auth');
 Route::patch('/invoices/{invoice}', [InvoiceController::class, 'update'])->middleware('auth');
 
-Route::get('/contacts', function (){
-    return view('contacts.index', ['contacts' => Contact::all()]);
-})->middleware('auth');
+Route::get('/contacts', [ContactController::class, 'index'])->middleware('auth');
+Route::get('/contacts/{contact}', [ContactController::class, 'show'])->middleware('auth');
+Route::patch('/contacts/{contact}', [ContactController::class, 'update'])->middleware('auth');
+Route::post('/contacts/create', [ContactController::class, 'store'])->middleware('auth');
 
 Route::get('/register', [RegisteredUserController::class, 'create']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
@@ -51,5 +52,3 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::get('/login', [SessionController::class, 'create']);
 Route::post('/login', [SessionController::class, 'store']);
 Route::post('/logout', [SessionController::class, 'destroy']);
-
-?>

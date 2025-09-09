@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Contact extends Model {
-
+class Contact extends Model
+{
     use HasFactory;
     protected $table = 'contacts';
 
@@ -18,14 +18,19 @@ class Contact extends Model {
         'first_name',
         'last_name',
         'email',
+        'phone_number',
         'notes',
     ];
 
-    /**
-     * @return Collection
-     */
-    public static function getContacts(): Collection {
-        Contact::orderBy('last_name', 'DESC')->get();
+    // Multiple contracts can be linked to one contact
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
     }
 
+    // Multiple invoices can be linked to one contact
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

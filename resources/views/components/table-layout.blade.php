@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"
         integrity="sha384-Akqfrbj/HpNVo8k11SXBb6TlBWmXXlYQrCSqEWmyKJe+hDm3Z/B2WVG4smwBkRVm"
         crossorigin="anonymous"></script>
+    <script src="{{ asset('show-hide.js') }}"></script>
 </head>
 
 <body class="h-full">

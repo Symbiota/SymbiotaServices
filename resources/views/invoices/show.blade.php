@@ -3,8 +3,16 @@
 
     <ul>
         <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
-        <li><a href="/contracts/{{ $invoice->contract_id }}"><b>Contract ID:</b>
+        <li><a href="/contracts/{{ $invoice->contract_id }}"><b
+                    class="text-blue-700 underline decoration-2">Contract ID:</b>
                 {{ $invoice->contract_id }}</a></li>
+        <li><a href="/contacts/{{ $invoice->financial_contact_id }}">
+                <b class="text-blue-700 underline decoration-2">Financial Contact
+                    ID:</b>
+                {{ $invoice->financial_contact_id }} -
+                {{ $invoice->contact->first_name }}
+                {{ $invoice->contact->last_name }}</a>
+        </li>
         <li><b>Billing Start Date:</b> {{ $invoice->billing_start }}</li>
         <li><b>Billing End Date:</b> {{ $invoice->billing_end }}</li>
         <li><b>Total Amount Billed:</b> ${{ $invoice->amount_billed }}</li>
@@ -27,11 +35,9 @@
         </div>
     </div>
 
-    <script src="{{ asset('show-hide.js') }}"></script>
-
     <div id="edit-form" style="display:none;">
-        <x-invoice-form :invoice="$invoice"
-            :services="$services">@method('PATCH')</x-invoice-form>
+        <x-invoice-form :invoice="$invoice" :services="$services"
+            :contacts="$contacts">@method('PATCH')</x-invoice-form>
     </div>
 
     <br>
