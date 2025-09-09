@@ -13,9 +13,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/customer', [CustomerController::class, 'create'])->middleware('auth');
-Route::delete('/customer/{id}', [CustomerController::class, 'destroy'])->middleware('auth');
-
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index')->middleware('auth');
 Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show')->middleware('auth');
 Route::patch('/services/{service}/update', [ServiceController::class, 'update'])->name('services.update')->middleware('auth');
@@ -29,10 +26,11 @@ Route::post('/contracts/store', [ContractController::class, 'store'])->name('con
 Route::delete('/contracts/{contract}/delete', [ContractController::class, 'destroy'])->name('contracts.destroy')->middleware('auth');
 Route::patch('/contracts/{contract}/update', [ContractController::class, 'update'])->name('contracts.update')->middleware('auth');
 
-Route::get('/customers', [CustomerController::class, 'index'])->middleware('auth');
-Route::get('/customers/{customer}', [CustomerController::class, 'show'])->middleware('auth');
-Route::post('/customers', [CustomerController::class, 'create'])->middleware('auth');
-Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->middleware('auth');
+Route::patch('/customers/{customer}/update', [CustomerController::class, 'update'])->name('customers.update')->middleware('auth');
+Route::post('/customers/create', [CustomerController::class, 'create'])->name('customers.create')->middleware('auth');
+Route::delete('/customers/{customer}/delete', [CustomerController::class, 'destroy'])->name('customers.delete')->middleware('auth');
+Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index')->middleware('auth');
+Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show')->middleware('auth');
 
 Route::get('/invoices/create/{contract?}', [InvoiceController::class, 'create'])->name('invoices.create')->middleware('auth');
 Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index')->middleware('auth');

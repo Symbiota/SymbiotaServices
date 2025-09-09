@@ -52,6 +52,6 @@ class ContactController extends Controller
             'notes' => request('notes'),
         ]);
 
-        return redirect('/contacts/' . $contact->id);
+        return redirect()->route('contacts.show', $contact);
     }
 }

@@ -3,10 +3,11 @@
 
     <ul>
         <li><b>Contract ID:</b> {{ $contract->id }}</li>
-        <li><a href="/customers/{{ $contract->customer_id }}"><b
+        <li><a href="{{ route('customers.show', $contract->customer) }}"><b
                     class="text-blue-700 underline decoration-2">Customer
                     ID:</b>
-                {{ $contract->customer_id }}</a></li>
+                {{ $contract->customer_id }} -
+                {{ $contract->customer->name }}</a></li>
         <li><a href="{{ route('contacts.show', $contract->original_contact) }}"><b
                     class="text-blue-700 underline decoration-2">Original Contact
                     ID:</b>
