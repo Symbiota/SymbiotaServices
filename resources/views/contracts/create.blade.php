@@ -19,7 +19,8 @@
             </div>
 
             <div id="create-form" style="display:none;">
-                <x-contact-form action="/contacts/create"></x-contact-form>
+                <x-contact-form
+                    action="{{ route('contacts.store') }}"></x-contact-form>
             </div>
 
         </div>

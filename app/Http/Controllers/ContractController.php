@@ -52,7 +52,7 @@ class ContractController extends Controller
             'notes' => request('notes'),
         ]);
 
-        return redirect('/contracts/' . $contract->id);
+        return redirect()->route('contracts.show', $contract);
     }
 
     public function update(Contract $contract)

@@ -36,7 +36,7 @@ class Invoice extends Model
     }
 
     // An invoice belongs to one contact
-    public function contact()
+    public function financial_contact()
     {
         return $this->belongsTo(Contact::class, 'financial_contact_id');
     }

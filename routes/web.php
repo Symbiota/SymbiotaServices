@@ -37,14 +37,14 @@ Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->mi
 Route::get('/invoices/create/{contract?}', [InvoiceController::class, 'create'])->name('invoices.create')->middleware('auth');
 Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index')->middleware('auth');
 Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('invoices.show')->middleware('auth');
-Route::get('/invoices/{invoice}/exportCSV', [InvoiceController::class, 'exportCSV'])->middleware('auth');
+Route::get('/invoices/{invoice}/exportCSV', [InvoiceController::class, 'exportCSV'])->name('invoices.exportCSV')->middleware('auth');
 Route::post('/invoices/store', [InvoiceController::class, 'store'])->name('invoices.store')->middleware('auth');
 Route::patch('/invoices/{invoice}/update', [InvoiceController::class, 'update'])->name('invoices.update')->middleware('auth');
 
-Route::get('/contacts', [ContactController::class, 'index'])->middleware('auth');
-Route::get('/contacts/{contact}', [ContactController::class, 'show'])->middleware('auth');
-Route::patch('/contacts/{contact}', [ContactController::class, 'update'])->middleware('auth');
-Route::post('/contacts/create', [ContactController::class, 'store'])->middleware('auth');
+Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index')->middleware('auth');
+Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show')->middleware('auth');
+Route::patch('/contacts/{contact}/update', [ContactController::class, 'update'])->name('contacts.update')->middleware('auth');
+Route::post('/contacts/store', [ContactController::class, 'store'])->name('contacts.store')->middleware('auth');
 
 Route::get('/register', [RegisteredUserController::class, 'create']);
 Route::post('/register', [RegisteredUserController::class, 'store']);

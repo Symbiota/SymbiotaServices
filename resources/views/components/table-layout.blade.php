@@ -31,7 +31,7 @@
                                     class="{{ request()->is('services*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Services</a>
                                 <a href="/customers"
                                     class="{{ request()->is('customers*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Customers</a>
-                                <a href="/contacts"
+                                <a href="{{ route('contacts.index') }}"
                                     class="{{ request()->is('contacts') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Contacts</a>
                                 <a href="{{ route('contracts.index') }}"
                                     class="{{ request()->is('contracts*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Contracts</a>
