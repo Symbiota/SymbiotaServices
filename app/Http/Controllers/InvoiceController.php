@@ -69,7 +69,7 @@ class InvoiceController extends Controller
 
         $invoice->services()->attach($data);
 
-        return redirect('/invoices/' . $invoice->id);
+        return redirect()->route('invoices.show', $invoice);
     }
 
     public function update(Invoice $invoice)

@@ -105,7 +105,7 @@
     <br>
 
     @foreach ($contract->invoices as $invoice)
-        <a href="/invoices/{{ $invoice->id }}">
+        <a href="{{ route('invoices.show', $invoice) }}">
             <ul class="block px-4 py-2 border border-gray-500">
                 <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
                 <li><b>Contract ID:</b> {{ $invoice->contract_id }}
