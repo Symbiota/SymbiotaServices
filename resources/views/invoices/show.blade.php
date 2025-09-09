@@ -24,6 +24,12 @@
     <br>
 
     <div class="flex items-start">
+
+        <div>
+            <a href="/invoices/{{ $invoice->id }}/exportCSV"<x-ec-button>Export
+                CSV</x-ec-button></a>
+        </div>
+
         <div class="flex items-center">
             <x-ec-button onclick="toggleView('edit-form')">Edit
                 Invoice</x-ec-button>
@@ -33,6 +39,7 @@
                 </p>
             @endif
         </div>
+
     </div>
 
     <div id="edit-form" style="display:none;">

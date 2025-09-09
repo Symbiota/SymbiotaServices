@@ -17,6 +17,8 @@ class Service extends Model
         'description',
         'price_per_unit',
         'darbi_item_number',
+        'line_ref_1',
+        'line_ref_2',
         'active_status'
     ];
 
