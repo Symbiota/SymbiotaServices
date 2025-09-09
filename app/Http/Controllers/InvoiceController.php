@@ -213,4 +213,5 @@ class InvoiceController extends Controller
 
         return response()->download(public_path($filename))->deleteFileAfterSend(true);
     }
+
 }
