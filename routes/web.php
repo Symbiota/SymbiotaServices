@@ -46,7 +46,7 @@ Route::get('/contacts/{contact}', [ContactController::class, 'show'])->middlewar
 Route::patch('/contacts/{contact}', [ContactController::class, 'update'])->middleware('auth');
 Route::post('/contacts/create', [ContactController::class, 'store'])->middleware('auth');
 
-Route::get('/register', [RegisteredUserController::class, 'create']);
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
 Route::get('/login', [SessionController::class, 'create']);
