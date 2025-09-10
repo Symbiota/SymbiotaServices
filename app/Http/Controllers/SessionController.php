@@ -31,7 +31,6 @@ class SessionController extends Controller
             ])->withInput();
         }
     
-
     }
 
     public function destroy()

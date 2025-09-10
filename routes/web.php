@@ -45,8 +45,8 @@ Route::patch('/contacts/{contact}/update', [ContactController::class, 'update'])
 Route::post('/contacts/store', [ContactController::class, 'store'])->name('contacts.store')->middleware('auth');
 
 Route::get('/register', [RegisteredUserController::class, 'create']);
-Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
 
-Route::get('/login', [SessionController::class, 'create']);
-Route::post('/login', [SessionController::class, 'store']);
-Route::post('/logout', [SessionController::class, 'destroy']);
+Route::get('/login', [SessionController::class, 'create'])->name('session.create');
+Route::post('/login', [SessionController::class, 'store'])->name('session.store');
+Route::post('/logout', [SessionController::class, 'destroy'])->name('session.destroy');

@@ -1,7 +1,7 @@
 <x-table-layout heading="Log into Account">
     <title>LOGIN ACCOUNT</title>
 
-    <form method="POST">
+    <form method="POST" action="{{ route('session.store') }}">
         @csrf
 
         <div class="space-y-12">
