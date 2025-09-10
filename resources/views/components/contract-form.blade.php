@@ -152,8 +152,8 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
-        <a @if (isset($customer)) href="/customers/{{ $customer->id }}"
-        @elseif (isset($contract)) href=""
+        <a @if (request()->is('contracts/create/*')) href="{{ route('customers.show', $customer) }}"
+        @elseif (isset($contract)) href="{{ route('contracts.show', $contract) }}"
         @else href="{{ route('contracts.index') }}" @endif
             class="text-sm/6 font-semibold text-gray-900">Cancel</a>
 

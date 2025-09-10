@@ -183,7 +183,7 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
-        <a @if (isset($contract)) href="/contracts/{{ $contract->id }}" {{-- Doesn't work with route --}}
+        <a @if (request()->is('invoices/create/*')) href="{{ route('contracts.show', $contract) }}"
         @elseif (isset($invoice)) href="{{ route('invoices.show', $invoice) }}"
         @else href="{{ route('invoices.index') }}" @endif
             class="text-sm/6 font-semibold text-gray-900">Cancel</a>
