@@ -45,6 +45,8 @@ Run the database migration:
 
 `php artisan migrate`
 
+Note that there's an .htaccess file in the public directory. It may need to be removed for local instances and customized in other environments as needed. This is the configuration that we have working currently in the dev001 server, which has an alias to the /Services path.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
