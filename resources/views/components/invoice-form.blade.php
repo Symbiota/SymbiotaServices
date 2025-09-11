@@ -78,8 +78,13 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="services"> Select Services*
-                <br>
+            <x-form-box for="services">
+                <div class="flex items-center">Select Services*
+                    @error('services')
+                        <p class="text-red-500 text-sm ml-6"> {{ $message }}
+                        </p>
+                    @enderror
+                </div>
                 @foreach ($services as $service)
                     <div class="p-4 border border-gray-500">
                         <input type="checkbox"
@@ -102,9 +107,6 @@
                             readonly>
                     </div>
                 @endforeach
-                @error('services')
-                    <p class="text-red-500 text-sm"> {{ $message }}</p>
-                @enderror
             </x-form-box>
 
             <script>

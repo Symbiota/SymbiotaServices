@@ -44,7 +44,7 @@ class InvoiceController extends Controller
             'amount_billed' => ['required', 'numeric'],
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
-            'service' => ['required'],
+            'services' => ['required'],
         ]);
 
         $invoice = Invoice::create([
@@ -84,7 +84,7 @@ class InvoiceController extends Controller
             'amount_billed' => ['required', 'numeric'],
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
-            'service' => ['required'],
+            'services' => ['required'],
         ]);
 
         $invoice->update([
