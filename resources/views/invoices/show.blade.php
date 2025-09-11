@@ -43,7 +43,8 @@
     </div>
 
     <div id="edit-form" style="display:none;">
-        <x-invoice-form :invoice="$invoice" :services="$services"
+        <x-invoice-form action="{{ route('invoices.update', $invoice) }}"
+            :invoice="$invoice" :services="$services"
             :contacts="$contacts">@method('PATCH')</x-invoice-form>
     </div>
 
