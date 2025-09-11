@@ -78,7 +78,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="services">
+            <x-form-box for="services_field">
                 <div class="flex items-center">Select Services*
                     @error('services')
                         <p class="text-red-500 text-sm ml-6"> {{ $message }}
@@ -88,7 +88,7 @@
                 @foreach ($services as $service)
                     <div class="p-4 border border-gray-500">
                         <input type="checkbox"
-                            name="service[{{ $service->id }}]" id="service"
+                            name="services[{{ $service->id }}]" id="service"
                             value="{{ $service->id }}"
                             onchange="calc_total_amount_billed();">
                         {{ $service->name }}

@@ -58,7 +58,7 @@ class InvoiceController extends Controller
             'notes' => request('notes'),
         ]);
 
-        $services = request('service');
+        $services = request('services');
         $qtys = request('qty');
         $amounts_owed = request('amount_owed');
 
@@ -98,7 +98,7 @@ class InvoiceController extends Controller
             'notes' => request('notes'),
         ]);
 
-        $services = request('service');
+        $services = request('services');
         $qtys = request('qty');
         $amounts_owed = request('amount_owed');
 
