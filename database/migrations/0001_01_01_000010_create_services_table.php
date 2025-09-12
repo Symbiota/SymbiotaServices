@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('description');
-            $table->decimal('price_per_unit', 20, 2);
-            $table->string('darbi_item_number', 50)->nullable();
-            $table->tinyInteger('active_status')->default(1);
+             $table->string('name');
+            $table->string('description', 75)->default('');
+            $table->decimal('price_per_unit', 20, 2)->default(0);
+            $table->string('darbi_item_number', 20)->default('');
+            $table->boolean('active_status')->default(true);
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
         });

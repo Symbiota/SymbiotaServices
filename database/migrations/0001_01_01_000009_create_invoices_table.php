@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('contract_id');
+            $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
+            $table->unsignedInteger('financial_contact_id');
+            $table->foreign('financial_contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->date('billing_start')->nullable();
             $table->date('billing_end')->nullable();
             $table->decimal('amount_billed', 20, 3)->nullable();
-            $table->dateTime('date_invoiced')->nullable();
-            $table->dateTime('date_paid')->nullable();
+            $table->date('date_invoiced')->nullable();
+            $table->date('date_paid')->nullable();
             $table->mediumText('notes')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();

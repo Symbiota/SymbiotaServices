@@ -1,10 +1,11 @@
-<x-table-layout heading="Create Contract">
-    <title>CREATE CONTRACT</title>
+<x-table-layout heading="Create Invoice">
+    <title>CREATE INVOICE</title>
 
     <div class="flex items-start">
         <div class="w-4/5">
-            <x-contract-form class="-mt-8" :customer="$customer" :contacts="$contacts"
-                action="{{ route('contracts.store') }}"></x-contract-form>
+            <x-invoice-form class="-mt-8" :contract="$contract" :services="$services"
+                :contacts="$contacts"
+                action="{{ route('invoices.store') }}"></x-invoice-form>
         </div>
 
         <div class="w-1/5">

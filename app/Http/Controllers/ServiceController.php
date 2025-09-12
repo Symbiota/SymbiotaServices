@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Service;
 use Illuminate\Http\Request;
 
@@ -27,9 +28,11 @@ class ServiceController extends Controller
             'darbi_item_number' => request('darbi_item_number'),
             'price_per_unit' => request('price_per_unit'),
             'description' => request('description'),
+            'line_ref_1' => request('line_ref_1'),
+            'line_ref_2' => request('line_ref_2'),
         ]);
 
-        return redirect('/services/' . $service->id);
+        return redirect()->route('services.show', $service);
     }
 
     public function store() {
@@ -45,16 +48,18 @@ class ServiceController extends Controller
             'darbi_item_number' => request('darbi_item_number'),
             'price_per_unit' => request('price_per_unit'),
             'description' => request('description'),
+            'line_ref_1' => request('line_ref_1'),
+            'line_ref_2' => request('line_ref_2'),
         ]);
 
-        return redirect('/services/' . $service->id);
+        return redirect()->route('services.show', $service);
     }
 
     public function retire(Service $service) {
         $service->update([
             'active_status' => 0,
         ]);
-        return redirect('/services');
+        return redirect()->route('services.index');
     }
 
 }

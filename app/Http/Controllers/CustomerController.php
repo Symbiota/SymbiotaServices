@@ -23,7 +23,13 @@ class CustomerController extends Controller
         try {
             $validated = $request->validate([
                 'name' => ['required', 'unique:customers,name'],
-                'darbi_customer_account_number' => ['required', 'numeric'],
+                'darbi_customer_account_number' => ['required', 'numeric', 'digits:4'],
+                'darbi_site' => ['required', 'regex:/^[a-zA-Z][0-9]{4}$/'],
+                'address_line_1' => ['required'],
+                'city' => ['required'],
+                'state' => ['required'],
+                'zip_code' => ['required'],
+                'country' => ['required'],
             ]);
             if ($validated) {
                 Customer::create([
@@ -31,6 +37,13 @@ class CustomerController extends Controller
                     'darbi_customer_account_number' => request('darbi_customer_account_number'),
                     'darbi_site' => request('darbi_site'),
                     'correspondence' => request('correspondence'),
+                    'department_name' => request('department_name'),
+                    'address_line_1' => request('address_line_1'),
+                    'address_line_2' => request('address_line_2'),
+                    'city' => request('city'),
+                    'state' => request('state'),
+                    'zip_code' => request('zip_code'),
+                    'country' => request('country'),
                     'notes' => request('notes'),
                 ]);
                 $customers = Customer::all();
@@ -55,8 +68,12 @@ class CustomerController extends Controller
         request()->validate([
             'name' => ['required'],
             'darbi_customer_account_number' => ['required', 'numeric', 'digits:4'],
-            'darbi_site' => ['required'], // @TODO letter followed by four numbers
-            'correspondence' => ['required'],
+            'darbi_site' => ['required', 'regex:/^[a-zA-Z][0-9]{4}$/'],
+            'address_line_1' => ['required'],
+            'city' => ['required'],
+            'state' => ['required'],
+            'zip_code' => ['required'],
+            'country' => ['required'],
         ]);
 
         $customer->update([
@@ -64,6 +81,13 @@ class CustomerController extends Controller
             'darbi_customer_account_number' => request('darbi_customer_account_number'),
             'darbi_site' => request('darbi_site'),
             'correspondence' => request('correspondence'),
+            'department_name' => request('department_name'),
+            'address_line_1' => request('address_line_1'),
+            'address_line_2' => request('address_line_2'),
+            'city' => request('city'),
+            'state' => request('state'),
+            'zip_code' => request('zip_code'),
+            'country' => request('country'),
             'notes' => request('notes'),
         ]);
 

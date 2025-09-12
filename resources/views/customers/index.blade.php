@@ -13,7 +13,7 @@
             class='relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300'>
             Create Customer
         </button>
-        <x-customer-form :formMethod="'POST'" :formEndpoint="url('/customer')"></x-customer-form>
+        <x-customer-form :formMethod="'POST'" :formEndpoint="route('customers.create')"></x-customer-form>
     </div>
 
     <br>
@@ -30,12 +30,12 @@
                 </div>
             @endif
             @foreach ($customers as $customer)
-                <a href="/customers/{{ $customer->id }}"
+                <a href="{{ route('customers.show', $customer) }}"
                     class="block px-4 py-6 border border-gray-500">
                     <strong>{{ $customer->name }}</strong>
                     <div>{{ $customer->darbi_customer_account_number }}:
                         {{ $customer->correspondence }}</div>
-                    <form hx-delete={{ url('/customer/' . $customer->id) }}
+                    <form hx-delete={{ route('customers.delete', $customer) }}
                         hx-target="#customer-list-div" hx-swap="outerHTML"
                         hx-confirm="Are you sure you want to delete this customer? All of their contracts would also be deleted."
                         hx-indicator="#loading-spinner-{{ $customer->id }}">

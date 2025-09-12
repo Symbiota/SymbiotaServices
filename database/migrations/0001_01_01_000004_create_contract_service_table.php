@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contract_items', function (Blueprint $table) {
+        Schema::create('contract_service', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('contract_id')->nullable()->index('fk_contract_pk');
-            $table->unsignedInteger('item_id')->nullable()->index('fk_item_pk');
+            $table->unsignedInteger('service_id')->nullable()->index('fk_service_pk');
             $table->text('management_type')->nullable();
             $table->text('portal')->nullable();
             $table->text('globus_folder')->nullable();
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contract_items');
+        Schema::dropIfExists('contract_service');
     }
 };

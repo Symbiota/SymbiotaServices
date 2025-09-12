@@ -19,14 +19,13 @@ class ContractFactory extends Factory
     public function definition(): array
     {
         return [
-            'customer_id' => $this->faker->randomElement(Customer::pluck('id')), 
+            'customer_id' => $this->faker->randomElement(Customer::pluck('id')),
+            'original_contact_id' => $this->faker->randomElement(Contact::pluck('id')),
+            'current_financial_contact_id' => $this->faker->randomElement(Contact::pluck('id')),
             'darbi_header_ref_1' => $this->faker->word(),
             'darbi_header_ref_2' => $this->faker->word(),
-            'original_contact_id' => Contact::factory(),
             'darbi_special_instructions' => $this->faker->text(),
             'notes' => $this->faker->text(),
-            'start_date' => $this->faker->date(),
-            'end_date' => $this->faker->date()
         ];
-    } // to use: php artisan tinker, generate customers first, then App\Models\Contract::factory(number)->create() - also generates contacts
+    }
 }
