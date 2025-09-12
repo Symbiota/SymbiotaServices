@@ -94,7 +94,7 @@
                             {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
                         {{ $service->name }}
                         <br>
-                        <input type="number" value="1" min="1"
+                        <input type="number" value="1" step="any"
                             name="qty[{{ $service->id }}]"
                             id="qty_{{ $service->id }}"
                             class="m-1 ml-4 mt-2 p-1 border border-gray-500"
