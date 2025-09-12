@@ -31,6 +31,7 @@ Route::post('/customers/create', [CustomerController::class, 'create'])->name('c
 Route::delete('/customers/{customer}/delete', [CustomerController::class, 'destroy'])->name('customers.delete')->middleware('auth');
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index')->middleware('auth');
 Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show')->middleware('auth');
+Route::get('/customers/{customer}/exportCSV', [CustomerController::class, 'exportCSV'])->name('customers.exportCSV')->middleware('auth');
 
 Route::get('/invoices/create/{contract?}', [InvoiceController::class, 'create'])->name('invoices.create')->middleware('auth');
 Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index')->middleware('auth');

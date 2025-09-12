@@ -108,4 +108,67 @@ class CustomerController extends Controller
         $customers = Customer::all();
         return view('customers.index', compact('customers'))->fragment('customer-list');
     }
+
+    public function exportCSV(Customer $customer)
+    {
+        $filename = 'customer_request_' . $customer->name . '.csv';
+        $handle = fopen($filename, 'w');
+
+        $headers = [
+            ['Submitted  by (Required)',],
+            ['NAME', 'EMAIL', 'PHONE', 'REQUEST DATE',
+            ],
+            [
+                auth()->user()->name, // Works, inputs user name
+                auth()->user()->email,
+                '',
+                date('m/d/Y'), // Current date
+            ],
+            [], [],
+            [
+            'Requested Action',
+            'Customer Name - Department/PI/External Customer',
+            'Department Name - Department/Division/Store Number',
+            'Address Line 1 - Street Address',
+            'Address Line 2 - Building, Suite, Room',
+            'City',
+            'State',
+            'Postal Code',
+            'Country',
+            'Bill To Contact First Name',
+            'Bill To Contact Last Name',
+            'Bill To Contact Email Address',
+            'Does customer require additional attachments? (Create Site with single contact)',
+            'NOTES:',
+            ],
+        ];
+
+        foreach ($headers as $submit) {
+            fputcsv($handle, $submit);
+        }
+
+        $data = [
+            'NEW CUSTOMER',
+            $customer->name,
+            $customer->department_name,
+            $customer->address_line_1,
+            $customer->address_line_2,
+            $customer->city,
+            $customer->state,
+            $customer->zip_code,
+            $customer->county,
+            'Bill To Contact First Name',
+            'Bill To Contact Last Name',
+            'Bill To Contact Email Address',
+            'YES/NO',
+            $customer->notes,
+        ];
+
+        fputcsv($handle, $data);
+
+        fclose($handle);
+
+        return response()->download(public_path($filename))->deleteFileAfterSend(true);
+    }
+    
 }
