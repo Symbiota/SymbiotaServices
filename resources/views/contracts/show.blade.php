@@ -3,18 +3,20 @@
 
     <ul>
         <li><b>Contract ID:</b> {{ $contract->id }}</li>
-        <li><a href="/customers/{{ $contract->customer_id }}"><b
+        <li><a href="{{ route('customers.show', $contract->customer) }}"><b
                     class="text-blue-700 underline decoration-2">Customer
                     ID:</b>
-                {{ $contract->customer_id }}</a></li>
-        <li><a href="/contacts/{{ $contract->original_contact_id }}"><b
+                {{ $contract->customer_id }} -
+                {{ $contract->customer->name }}</a></li>
+        <li><a href="{{ route('contacts.show', $contract->original_contact) }}"><b
                     class="text-blue-700 underline decoration-2">Original Contact
                     ID:</b>
                 {{ $contract->original_contact_id }} -
                 {{ $contract->original_contact->first_name }}
                 {{ $contract->original_contact->last_name }}</a></li>
         </li>
-        <li><a href="/contacts/{{ $contract->current_financial_contact_id }}"><b
+        <li><a
+                href="{{ route('contacts.show', $contract->current_financial_contact) }}"><b
                     class="text-blue-700 underline decoration-2">Current
                     Financial Contact ID:</b>
                 {{ $contract->current_financial_contact_id }} -
@@ -23,7 +25,7 @@
         </li>
         <li>
             @if (isset($contract->pi_contact_id))
-                <a href="/contacts/{{ $contract->pi_contact_id }}"><b
+                <a href="{{ route('contacts.show', $contract->pi_contact) }}"><b
                         class="text-blue-700 underline decoration-2">PI Contact
                         ID:</b>
                     {{ $contract->pi_contact_id }} -
@@ -37,7 +39,8 @@
         </li>
         <li>
             @if (isset($contract->technical_contact_id))
-                <a href="/contacts/{{ $contract->technical_contact_id }}"><b
+                <a
+                    href="{{ route('contacts.show', $contract->technical_contact) }}"><b
                         class="text-blue-700 underline decoration-2">Technical
                         Contact ID:</b>
                     {{ $contract->technical_contact_id }} -
@@ -67,7 +70,8 @@
                 Contract</x-ec-button>
 
             <div id="delete-form" style="display:none;" class="-mt-2">
-                <form method="POST" action="/contracts/{{ $contract->id }}">
+                <form method="POST"
+                    action="{{ route('contracts.destroy', $contract) }}">
                     @csrf
                     @method('DELETE')
                     <br>
@@ -97,14 +101,14 @@
     </div>
 
     <div id="edit-form" style="display:none;">
-        <x-contract-form :contract="$contract"
-            :contacts="$contacts">@method('PATCH')</x-contract-form>
+        <x-contract-form :contract="$contract" :contacts="$contacts"
+            action="{{ route('contracts.update', $contract) }}">@method('PATCH')</x-contract-form>
     </div>
 
     <br>
 
     @foreach ($contract->invoices as $invoice)
-        <a href="/invoices/{{ $invoice->id }}">
+        <a href="{{ route('invoices.show', $invoice) }}">
             <ul class="block px-4 py-2 border border-gray-500">
                 <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
                 <li><b>Contract ID:</b> {{ $invoice->contract_id }}

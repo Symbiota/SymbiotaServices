@@ -11,14 +11,14 @@
     </div>
 
     <div id="create-form" style="display:none;">
-        <x-contact-form action="/contacts/create"></x-contact-form>
+        <x-contact-form action="{{ route('contacts.store') }}"></x-contact-form>
     </div>
 
     <br>
 
     <div class = "space-y-4">
         @foreach ($contacts as $contact)
-            <a href="/contacts/{{ $contact->id }}"
+            <a href="{{ route('contacts.show', $contact) }}"
                 class="block px-4 py-6 border border-gray-500">
                 <ul>
                     <li><b>Contact ID:</b> {{ $contact->id }}</li>

@@ -3,15 +3,15 @@
 
     <ul>
         <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
-        <li><a href="/contracts/{{ $invoice->contract_id }}"><b
-                    class="text-blue-700 underline decoration-2">Contract ID:</b>
-                {{ $invoice->contract_id }}</a></li>
-        <li><a href="/contacts/{{ $invoice->financial_contact_id }}">
+        <li><a href="{{ route('contracts.show', $invoice->contract) }}">
+                <b class="text-blue-700 underline decoration-2">
+                    Contract ID:</b> {{ $invoice->contract_id }}</a></li>
+        <li><a href="{{ route('contacts.show', $invoice->financial_contact) }}">
                 <b class="text-blue-700 underline decoration-2">Financial Contact
                     ID:</b>
                 {{ $invoice->financial_contact_id }} -
-                {{ $invoice->contact->first_name }}
-                {{ $invoice->contact->last_name }}</a>
+                {{ $invoice->financial_contact->first_name }}
+                {{ $invoice->financial_contact->last_name }}</a>
         </li>
         <li><b>Billing Start Date:</b> {{ $invoice->billing_start }}</li>
         <li><b>Billing End Date:</b> {{ $invoice->billing_end }}</li>
@@ -26,7 +26,7 @@
     <div class="flex items-start">
 
         <div>
-            <a href="/invoices/{{ $invoice->id }}/exportCSV"<x-ec-button>Export
+            <a href="{{ route('invoices.exportCSV', $invoice) }}"<x-ec-button>Export
                 CSV</x-ec-button></a>
         </div>
 
@@ -43,14 +43,15 @@
     </div>
 
     <div id="edit-form" style="display:none;">
-        <x-invoice-form :invoice="$invoice" :services="$services"
+        <x-invoice-form action="{{ route('invoices.update', $invoice) }}"
+            :invoice="$invoice" :services="$services"
             :contacts="$contacts">@method('PATCH')</x-invoice-form>
     </div>
 
     <br>
 
     @foreach ($invoice->services as $service)
-        <a href="/services/{{ $service->id }}">
+        <a href="{{ route('services.show', $service) }}">
             <ul class="block px-4 py-2 border border-gray-500">
                 <li><b>
                         @if ($service->active_status == 0)

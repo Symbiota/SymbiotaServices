@@ -25,8 +25,8 @@
                             // On invoice edit page
                             <option value="{{ $invoice->financial_contact_id }}">
                                 {{ $invoice->financial_contact_id }}:
-                                {{ $invoice->contact->first_name }}
-                                {{ $invoice->contact->last_name }}
+                                {{ $invoice->financial_contact->first_name }}
+                                {{ $invoice->financial_contact->last_name }}
                             </option>
                         @endisset
                         @isset($contract->current_financial_contact_id)
@@ -183,7 +183,9 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
-        <a href="/invoices/{{ $invoice->id ?? '' }}"
+        <a @if (request()->is('invoices/create/*')) href="{{ route('contracts.show', $contract) }}"
+        @elseif (isset($invoice)) href="{{ route('invoices.show', $invoice) }}"
+        @else href="{{ route('invoices.index') }}" @endif
             class="text-sm/6 font-semibold text-gray-900">Cancel</a>
 
         <button type="submit"

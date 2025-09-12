@@ -1,7 +1,7 @@
 <x-table-layout heading="Register New Account">
     <title>REGISTER NEW ACCOUNT</title>
 
-    <form method="POST">
+    <form method="POST" action="{{ route('register.store') }}">
         @csrf
 
         <div class="space-y-12">

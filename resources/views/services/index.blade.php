@@ -11,7 +11,7 @@
     </div>
 
     <div id="create-form" style="display:none;">
-        <x-service-form action="/services"></x-service-form>
+        <x-service-form action="{{ route('services.store') }}"></x-service-form>
     </div>
 
     <br>
@@ -19,7 +19,7 @@
     <div class = "space-y-4">
         @foreach ($services as $service)
             @if ($service->active_status == 1)
-                <a href="/services/{{ $service->id }}"
+                <a href="{{ route('services.show', $service) }}"
                     class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                     <div>
                         <strong>{{ $service->name }}</strong>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <form method="post"
-                        action="/services/{{ $service->id }}/retire">
+                        action="{{ route('services.retire', $service) }}">
                         @csrf
                         @method('PATCH')
                         <x-ec-button>Retire</x-ec-button>
@@ -49,7 +49,7 @@
     <div id="retired_services" class = "space-y-4" style="display:none;">
         @foreach ($services as $service)
             @if ($service->active_status == 0)
-                <a href="/services/{{ $service->id }}"
+                <a href="{{ route('services.show', $service) }}"
                     class="block px-4 py-6 border border-gray-500">
                     <strong>{{ $service->name }}</strong>
                     <div>ID: {{ $service->id }}</div>

@@ -19,7 +19,7 @@ class CustomerFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'darbi_customer_account_number' => $this->faker->numberBetween(1000, 9999),
-            'darbi_site' => $this->faker->word(),
+            'darbi_site' => "A1234",
             'correspondence' => $this->faker->email(),
             'notes' => $this->faker->text(),
             'department_name' => $this->faker->company(),

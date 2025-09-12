@@ -4,7 +4,7 @@
     <div class="flex items-start">
         <div class="w-4/5">
             <x-contract-form class="-mt-8" :customer="$customer" :contacts="$contacts"
-                action="/contracts"></x-contract-form>
+                action="{{ route('contracts.store') }}"></x-contract-form>
         </div>
 
         <div class="w-1/5">
@@ -19,7 +19,8 @@
             </div>
 
             <div id="create-form" style="display:none;">
-                <x-contact-form action="/contacts/create"></x-contact-form>
+                <x-contact-form
+                    action="{{ route('contacts.store') }}"></x-contact-form>
             </div>
 
         </div>

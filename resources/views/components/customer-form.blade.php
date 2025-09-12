@@ -48,7 +48,7 @@
             <x-form-box for="darbi_site"> DARBI Site* (letter followed by 4
                 numbers)
                 <x-form-input type="text" name="darbi_site" id="darbi_site"
-                    placeholder="Site.com"
+                    placeholder="A1234"
                     value="{{ $customer->darbi_site ?? '' }}"></x-form-input>
                 @error('darbi_site')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>

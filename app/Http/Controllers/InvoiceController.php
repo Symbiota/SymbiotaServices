@@ -69,7 +69,7 @@ class InvoiceController extends Controller
 
         $invoice->services()->attach($data);
 
-        return redirect('/invoices/' . $invoice->id);
+        return redirect()->route('invoices.show', $invoice);
     }
 
     public function update(Invoice $invoice)
@@ -109,7 +109,7 @@ class InvoiceController extends Controller
 
         $invoice->services()->attach($data);
 
-        return redirect('/invoices/' . $invoice->id);
+        return redirect()->route('invoices.show', $invoice);
     }
 
     public function exportCSV(Invoice $invoice)
@@ -163,7 +163,7 @@ class InvoiceController extends Controller
             $invoice->contract->customer->name,
             $invoice->contract->customer->darbi_customer_account_number,
             $invoice->contract->customer->darbi_site,
-            $invoice->contact->first_name . ' ' . $invoice->contact->last_name, // NOTE: Invoice Financial Contact
+            $invoice->financial_contact->first_name . ' ' . $invoice->financial_contact->last_name, // NOTE: Invoice Financial Contact
             $invoice->services[0]->darbi_item_number,
             $invoice->services[0]->description,
             '', // SALESPERSON
