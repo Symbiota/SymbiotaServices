@@ -90,7 +90,8 @@
                         <input type="checkbox"
                             name="services[{{ $service->id }}]" id="service"
                             value="{{ $service->id }}"
-                            onchange="calc_total_amount_billed();">
+                            onchange="calc_total_amount_billed();"
+                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
                         {{ $service->name }}
                         <br>
                         <input type="number" value="1" min="1"
@@ -107,6 +108,17 @@
                             readonly>
                     </div>
                 @endforeach
+            </x-form-box>
+
+            <x-form-box for="amount_billed"> Amount Billed*
+                <x-form-input type="text" name="amount_billed"
+                    id="amount_billed"
+                    value="{{ $invoice->amount_billed ?? old('amount_billed') }}"></x-form-input>
+                @error('amount_billed')
+                    <p class="text-red-500 text-sm ml-3">
+                        {{ $message }}
+                    </p>
+                @enderror
             </x-form-box>
 
             <script>
@@ -136,18 +148,9 @@
 
                     total_box.value = total.toFixed(2);
                 }
-            </script>
 
-            <x-form-box for="amount_billed"> Amount Billed*
-                <x-form-input type="text" name="amount_billed"
-                    id="amount_billed"
-                    value="{{ $invoice->amount_billed ?? old('amount_billed') }}"></x-form-input>
-                @error('amount_billed')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
-                @enderror
-            </x-form-box>
+                calc_total_amount_billed()
+            </script>
 
             <x-form-box for="date_invoiced"> Date Invoiced
                 <x-form-input type="text" name="date_invoiced"
@@ -191,4 +194,5 @@
         <button type="submit"
             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
     </div>
+
 </form>

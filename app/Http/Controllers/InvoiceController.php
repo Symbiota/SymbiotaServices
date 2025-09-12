@@ -74,8 +74,6 @@ class InvoiceController extends Controller
 
     public function update(Invoice $invoice)
     {
-        $invoice->services()->detach();
-
         request()->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
             'financial_contact_id' => ['required', 'exists:contacts,id'],
@@ -97,6 +95,8 @@ class InvoiceController extends Controller
             'date_paid' => request('date_paid'),
             'notes' => request('notes'),
         ]);
+
+        $invoice->services()->detach();
 
         $services = request('services');
         $qtys = request('qty');
