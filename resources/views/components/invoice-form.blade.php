@@ -152,6 +152,18 @@
                 calc_total_amount_billed()
             </script>
 
+            <x-form-box for="amount_billed"> Amount Billed*
+                <x-form-input type="text" name="amount_billed"
+                    id="amount_billed"
+                    value="{{ $invoice->amount_billed ?? old('amount_billed') }}"
+                    readonly></x-form-input>
+                @error('amount_billed')
+                    <p class="text-red-500 text-sm ml-3">
+                        {{ $message }}
+                    </p>
+                @enderror
+            </x-form-box>
+
             <x-form-box for="date_invoiced"> Date Invoiced
                 <x-form-input type="text" name="date_invoiced"
                     id="date_invoiced" placeholder="YYYY-MM-DD"
