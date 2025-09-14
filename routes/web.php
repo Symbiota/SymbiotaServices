@@ -11,7 +11,7 @@ use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index')->middleware('auth');
 Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show')->middleware('auth');
