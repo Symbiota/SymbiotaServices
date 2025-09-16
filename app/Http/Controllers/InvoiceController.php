@@ -127,7 +127,7 @@ class InvoiceController extends Controller
                 '',
                 date('m/d/Y'), // Current date
             ],
-            [],
+            [], [],
             [
             'BUSINESS UNIT - KUINT or RSINT',
             'BILLING UNIT/DEPARTMENT NAME',
