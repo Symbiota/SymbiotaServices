@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -109,7 +110,7 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers'))->fragment('customer-list');
     }
 
-    public function exportCSV(Customer $customer)
+    public function exportCSV(Customer $customer, Contract $contract)
     {
         $filename = 'customer_request_' . $customer->name . '.csv';
         $handle = fopen($filename, 'w');
@@ -156,10 +157,10 @@ class CustomerController extends Controller
             $customer->city,
             $customer->state,
             $customer->zip_code,
-            $customer->county,
-            'Bill To Contact First Name',
-            'Bill To Contact Last Name',
-            'Bill To Contact Email Address',
+            $customer->country,
+            $contract->current_financial_contact->first_name ?? '',
+            $contract->current_financial_contact->last_name ?? '',
+            $contract->current_financial_contact->email ?? '',
             'YES/NO',
             $customer->notes,
         ];

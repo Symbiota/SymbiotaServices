@@ -85,6 +85,10 @@
             </div>
         </div>
 
+        <a
+            href="{{ route('customers.exportCSV', ['customer' => $contract->customer, 'contract' => $contract]) }}"<x-ec-button>Export
+            Customer CSV</x-ec-button></a>
+
         <a href="{{ route('invoices.create', $contract) }}"<x-ec-button>Create
             Invoice</x-ec-button></a>
 
