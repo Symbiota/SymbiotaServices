@@ -44,7 +44,7 @@ class InvoiceController extends Controller
             'amount_billed' => ['required', 'numeric'],
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
-            'service' => ['required'],
+            'services' => ['required'],
         ]);
 
         $invoice = Invoice::create([
@@ -58,7 +58,7 @@ class InvoiceController extends Controller
             'notes' => request('notes'),
         ]);
 
-        $services = request('service');
+        $services = request('services');
         $qtys = request('qty');
         $amounts_owed = request('amount_owed');
 
@@ -74,8 +74,6 @@ class InvoiceController extends Controller
 
     public function update(Invoice $invoice)
     {
-        $invoice->services()->detach();
-
         request()->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
             'financial_contact_id' => ['required', 'exists:contacts,id'],
@@ -84,7 +82,7 @@ class InvoiceController extends Controller
             'amount_billed' => ['required', 'numeric'],
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
-            'service' => ['required'],
+            'services' => ['required'],
         ]);
 
         $invoice->update([
@@ -98,7 +96,9 @@ class InvoiceController extends Controller
             'notes' => request('notes'),
         ]);
 
-        $services = request('service');
+        $invoice->services()->detach();
+
+        $services = request('services');
         $qtys = request('qty');
         $amounts_owed = request('amount_owed');
 

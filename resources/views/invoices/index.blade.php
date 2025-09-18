@@ -13,6 +13,7 @@
                 class="block px-4 py-6 border border-gray-500">
                 <ul><b>Invoice ID:</b> {{ $invoice->id }}</ul>
                 <ul><b>Contract ID:</b> {{ $invoice->contract_id }}</ul>
+                <ul><b>Amount Billed:</b> ${{ $invoice->amount_billed }}</ul>
                 <b>Services:</b>
                 @foreach ($invoice->services as $service)
                     <p class="ml-8">
