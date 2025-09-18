@@ -95,7 +95,7 @@
                         {{ $service->name }}
                         <br>
                         <input type="number" value="1" step="any"
-                            name="qty[{{ $service->id }}]"
+                            min="0" name="qty[{{ $service->id }}]"
                             id="qty_{{ $service->id }}"
                             class="m-1 ml-4 mt-2 p-1 border border-gray-500"
                             service_price="{{ $service->price_per_unit }}"
