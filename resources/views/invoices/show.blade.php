@@ -25,10 +25,8 @@
 
     <div class="flex items-start">
 
-        <div>
-            <a href="{{ route('invoices.exportCSV', $invoice) }}"<x-ec-button>Export
-                CSV</x-ec-button></a>
-        </div>
+        <a href="{{ route('invoices.exportCSV', $invoice) }}"<x-ec-button>Export
+            CSV</x-ec-button></a>
 
         <div class="flex items-center">
             <x-ec-button onclick="toggleView('edit-form')">Edit
