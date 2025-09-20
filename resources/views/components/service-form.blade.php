@@ -7,7 +7,7 @@
 
             <x-form-box for="name"> Name*
                 <x-form-input type="text" name="name" id="name"
-                    value="{{ $service->name ?? '' }}"></x-form-input>
+                    value="{{ $service->name ?? old('name') }}"></x-form-input>
                 @error('name')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -15,8 +15,8 @@
 
             <x-form-box for="darbi_item_number"> DARBI Item Number*
                 <x-form-input type="text" name="darbi_item_number"
-                    id="darbi_item_number"
-                    value="{{ $service->darbi_item_number ?? '' }}"></x-form-input>
+                    id="darbi_item_number" placeholder="SYMBI01234"
+                    value="{{ $service->darbi_item_number ?? old('darbi_item_number') }}"></x-form-input>
                 @error('darbi_item_number')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -25,7 +25,7 @@
             <x-form-box for="price_per_unit"> Price Per Unit*
                 <x-form-input type="text" name="price_per_unit"
                     id="price_per_unit"
-                    value="{{ $service->price_per_unit ?? '' }}"></x-form-input>
+                    value="{{ $service->price_per_unit ?? old('price_per_unit') }}"></x-form-input>
                 @error('customer_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -33,7 +33,7 @@
 
             <x-form-box for="description"> Description*
                 <x-form-input type="text" name="description" id="description"
-                    value="{{ $service->description ?? '' }}"></x-form-input>
+                    value="{{ $service->description ?? old('description') }}"></x-form-input>
                 @error('description')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -41,7 +41,7 @@
 
             <x-form-box for="line_ref_1"> Line Reference 1
                 <x-form-input type="text" name="line_ref_1" id="line_ref_1"
-                    value="{{ $service->line_ref_1 ?? '' }}"></x-form-input>
+                    value="{{ $service->line_ref_1 ?? old('line_ref_1') }}"></x-form-input>
                 @error('line_ref_1')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -49,7 +49,7 @@
 
             <x-form-box for="line_ref_2"> Line Reference 2
                 <x-form-input type="text" name="line_ref_2" id="line_ref_2"
-                    value="{{ $service->line_ref_2 ?? '' }}"></x-form-input>
+                    value="{{ $service->line_ref_2 ?? old('line_ref_2') }}"></x-form-input>
                 @error('line_ref_2')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
