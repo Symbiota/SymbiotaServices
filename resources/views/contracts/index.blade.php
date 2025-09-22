@@ -12,8 +12,21 @@
             <a href="{{ route('contracts.show', $contract) }}"
                 class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                 <div>
-                    <strong>Contract ID: {{ $contract->id }}</strong> <br>
-                    <strong>Customer ID: {{ $contract->customer_id }}</strong>
+                    <ul><b>Contract ID:</b> {{ $contract->id }}</ul>
+                    <ul><b>Customer:</b> {{ $contract->customer_id }} -
+                        {{ $contract->customer->name }}</ul>
+                    @isset($contract->customer->department_name)
+                        <ul class="ml-8"><b>
+                                Department Name:</b>
+                            {{ $contract->customer->department_name }}
+                        </ul>
+                    @endisset
+                    @isset($contract->pi_contact)
+                        <ul><b>PI Contact:</b>
+                            {{ $contract->pi_contact->first_name }}
+                            {{ $contract->pi_contact->last_name }}
+                        </ul>
+                    @endisset
                 </div>
                 <form method="POST"
                     action="{{ route('contracts.destroy', $contract) }}">
