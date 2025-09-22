@@ -19,7 +19,8 @@
                     action="{{ route('contracts.destroy', $contract) }}">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="hover:text-red-500">
+                    <button type="submit" class="hover:text-red-500"
+                        onclick="return confirm('Delete this contract?');">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="white"
                             viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
