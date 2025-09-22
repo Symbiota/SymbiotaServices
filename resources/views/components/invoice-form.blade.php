@@ -105,7 +105,7 @@
                             id="qty_{{ $service->id }}"
                             class="m-1 ml-4 mt-2 p-1 border border-gray-500"
                             service_price="{{ $service->price_per_unit }}"
-                            onchange="calc_each_service_bill({{ $service->id }}); calc_total_amount_billed();">
+                            onchange="calc_each_service_bill(); calc_total_amount_billed();">
                         $<input type="text"
                             id="amount_owed_{{ $service->id }}"
                             name="amount_owed[{{ $service->id }}]"
@@ -125,6 +125,41 @@
                     </p>
                 @enderror
             </x-form-box>
+
+            <script>
+                function calc_each_service_bill() {
+                    for (let id = 1; id <= document.querySelectorAll(
+                            '#service').length; id++) {
+                        let qty_box = document.getElementById('qty_' + id);
+                        let amount_owed_box = document.getElementById('amount_owed_' +
+                            id);
+                        let price_per_unit = qty_box.getAttribute('service_price');
+                        let qty = qty_box.value;
+                        let amount_owed = price_per_unit * qty;
+                        amount_owed_box.value =
+                            amount_owed.toFixed(
+                                2);
+                    }
+                }
+
+                function calc_total_amount_billed() {
+                    let total_box = document.getElementById('amount_billed');
+                    let total = 0;
+                    const checkboxes = document.querySelectorAll(
+                        '#service:checked');
+
+                    checkboxes.forEach(checkbox => {
+                        let amount_owed_box = document.getElementById(
+                            'amount_owed_' + checkbox.value);
+                        total += parseFloat(amount_owed_box.value);
+                    });
+
+                    total_box.value = total.toFixed(2);
+                }
+
+                calc_each_service_bill();
+                calc_total_amount_billed();
+            </script>
 
             <x-form-box for="date_invoiced"> Date Invoiced
                 <x-form-input type="text" name="date_invoiced"
