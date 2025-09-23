@@ -17,7 +17,9 @@
         <form method="post" action="{{ route('services.retire', $service) }}">
             @csrf
             @method('PATCH')
-            <x-ec-button>Retire Service</x-ec-button>
+            <x-ec-button onclick="return confirm('Retire this service?');"
+                class="!border-red-500 !text-red-500">Retire
+                Service</x-ec-button>
         </form>
 
         <div class="flex items-center">
