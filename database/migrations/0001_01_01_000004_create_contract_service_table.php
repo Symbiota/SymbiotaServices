@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('contract_service', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('contract_id')->nullable()->index('fk_contract_pk');
-            $table->unsignedInteger('service_id')->nullable()->index('fk_service_pk');
+            $table->unsignedInteger('contract_id')->index('fk_contract_pk');
+            $table->unsignedInteger('service_id')->index('fk_service_pk');
             $table->text('management_type')->nullable();
             $table->text('portal')->nullable();
             $table->text('globus_folder')->nullable();

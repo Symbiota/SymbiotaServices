@@ -66,23 +66,16 @@
     <div class="flex items-start">
 
         <div class="flex-col items-center">
-            <x-ec-button onclick="toggleView('delete-form')">Delete
-                Contract</x-ec-button>
 
-            <div id="delete-form" style="display:none;" class="-mt-2">
-                <form method="POST"
-                    action="{{ route('contracts.destroy', $contract) }}">
-                    @csrf
-                    @method('DELETE')
-                    <br>
-                    <p class="ml-7 mb-3">Are you sure?</p>
-                    <x-ec-button type="submit"
-                        class="hover:text-red-500">YES</x-ec-button>
-                    <x-ec-button type="button"
-                        onclick="toggleView('delete-form')"
-                        class="hover:text-red-500">NO</x-ec-button>
-                </form>
-            </div>
+            <form method="POST"
+                action="{{ route('contracts.destroy', $contract) }}">
+                @csrf
+                @method('DELETE')
+                <x-ec-button type="submit"
+                    onclick="return confirm('Delete this contract?');">Delete
+                    Contract</x-ec-button>
+            </form>
+
         </div>
 
         <a

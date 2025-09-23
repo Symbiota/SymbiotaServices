@@ -112,45 +112,13 @@
 
             <x-form-box for="amount_billed"> Amount Billed*
                 <x-form-input type="text" name="amount_billed"
-                    id="amount_billed"
-                    value="{{ $invoice->amount_billed ?? old('amount_billed') }}"></x-form-input>
+                    id="amount_billed" value="" readonly></x-form-input>
                 @error('amount_billed')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}
                     </p>
                 @enderror
             </x-form-box>
-
-            <script>
-                function calc_each_service_bill(id) {
-                    let qty_box = document.getElementById(
-                        'qty_' + id);
-                    let amount_owed_box = document.getElementById(
-                        'amount_owed_' + id);
-                    let price_per_unit = qty_box.getAttribute('service_price');
-                    let qty = qty_box.value;
-                    let amount_owed = price_per_unit * qty;
-                    amount_owed_box.value = amount_owed.toFixed(
-                        2);
-                }
-
-                function calc_total_amount_billed() {
-                    let total_box = document.getElementById('amount_billed');
-                    let total = 0;
-                    const checkboxes = document.querySelectorAll(
-                        '#service:checked');
-
-                    checkboxes.forEach(checkbox => {
-                        let amount_owed_box = document.getElementById(
-                            'amount_owed_' + checkbox.value);
-                        total += parseFloat(amount_owed_box.value);
-                    });
-
-                    total_box.value = total.toFixed(2);
-                }
-
-                calc_total_amount_billed()
-            </script>
 
             <x-form-box for="date_invoiced"> Date Invoiced
                 <x-form-input type="text" name="date_invoiced"
@@ -197,4 +165,5 @@
             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
     </div>
 
+    <script src="{{ asset('js/invoice-cost-calculator.js') }}"></script>
 </form>
