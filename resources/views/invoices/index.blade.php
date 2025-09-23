@@ -13,6 +13,14 @@
                 class="block px-4 py-6 border border-gray-500">
                 <ul><b>Invoice ID:</b> {{ $invoice->id }}</ul>
                 <ul><b>Contract ID:</b> {{ $invoice->contract_id }}</ul>
+                <ul><b>Customer:</b> {{ $invoice->contract->customer_id }} -
+                    {{ $invoice->contract->customer->name }}</ul>
+                @isset($invoice->contract->customer->department_name)
+                    <ul class="ml-8"><b>
+                            Department Name:</b>
+                        {{ $invoice->contract->customer->department_name }}
+                    </ul>
+                @endisset
                 <ul><b>Billing Start Date:</b> {{ $invoice->billing_start }}
                 </ul>
                 <ul><b>Billing End Date:</b> {{ $invoice->billing_end }}</ul>
@@ -29,7 +37,7 @@
                     @if (isset($invoice->date_paid))
                         {{ $invoice->date_paid }}
                     @else
-                        <span class="text-red-500">NOT PAID</span>
+                        <b class="text-red-500">NOT PAID</b>
                     @endif
                 </ul>
             </a>
