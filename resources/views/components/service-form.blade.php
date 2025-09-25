@@ -69,7 +69,7 @@
     <script>
         const price_per_unit = document.getElementById('price_per_unit');
 
-        price_per_unit.addEventListener('input', function(e) {
+        price_per_unit.addEventListener('input', function() {
             price_per_unit.value = price_per_unit.value.replace(/,/g, '');
         });
     </script>
