@@ -21,7 +21,7 @@ class InvoiceController extends Controller
         return view('invoices.show', [
             'invoice' => $invoice,
             'services' => Service::all(),
-            'contacts' => Contact::all(),
+            'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 
@@ -30,7 +30,7 @@ class InvoiceController extends Controller
         return view('invoices.create', [
             'contract' => $contract,
             'services' => Service::all(),
-            'contacts' => Contact::all()
+            'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 

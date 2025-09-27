@@ -18,7 +18,7 @@ class ContractController extends Controller
     {
         return view('contracts.show', [
             'contract' => $contract,
-            'contacts' => Contact::all(),
+            'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 
@@ -26,7 +26,7 @@ class ContractController extends Controller
     {
         return view('contracts.create', [
             'customer' => $customer,
-            'contacts' => Contact::all(),
+            'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 

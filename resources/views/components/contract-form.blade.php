@@ -24,16 +24,17 @@
                             // If on contract edit page, autofill contact id
                             <option
                                 value="{{ $contract->current_financial_contact_id }}">
-                                {{ $contract->current_financial_contact_id }}:
+                                {{ $contract->current_financial_contact->last_name }},
                                 {{ $contract->current_financial_contact->first_name }}
-                                {{ $contract->current_financial_contact->last_name }}
+                                - {{ $contract->current_financial_contact_id }}
                             </option>
                         @endisset
                         <option value=""></option>
                         @foreach ($contacts as $contact)
                             <option value="{{ $contact->id }}">
-                                {{ $contact->id }}: {{ $contact->first_name }}
-                                {{ $contact->last_name }}
+                                {{ $contact->last_name }},
+                                {{ $contact->first_name }} -
+                                {{ $contact->id }}
                             </option>
                         @endforeach
                     </select>
@@ -53,17 +54,17 @@
                         @isset($contract->pi_contact_id)
                             // If on contract edit page, autofill contact id
                             <option value="{{ $contract->pi_contact_id }}">
-                                {{ $contract->pi_contact_id }}:
+                                {{ $contract->pi_contact->last_name }},
                                 {{ $contract->pi_contact->first_name }}
-                                {{ $contract->pi_contact->last_name }}
+                                - {{ $contract->pi_contact_id }}
                             </option>
                         @endisset
                         <option value="" class=""></option>
                         @foreach ($contacts as $contact)
                             <option value="{{ $contact->id }}">
-                                {{ $contact->id }}:
-                                {{ $contact->first_name }}
-                                {{ $contact->last_name }}
+                                {{ $contact->last_name }},
+                                {{ $contact->first_name }} -
+                                {{ $contact->id }}
                             </option>
                         @endforeach
                     </select>
@@ -84,17 +85,17 @@
                         @isset($contract->technical_contact_id)
                             // If on contract edit page, autofill contact id
                             <option value="{{ $contract->technical_contact_id }}">
-                                {{ $contract->technical_contact_id }}:
+                                {{ $contract->technical_contact->last_name }},
                                 {{ $contract->technical_contact->first_name }}
-                                {{ $contract->technical_contact->last_name }}
+                                - {{ $contract->technical_contact_id }}
                             </option>
                         @endisset
                         <option value="" class=""></option>
                         @foreach ($contacts as $contact)
                             <option value="{{ $contact->id }}">
-                                {{ $contact->id }}:
-                                {{ $contact->first_name }}
-                                {{ $contact->last_name }}
+                                {{ $contact->last_name }},
+                                {{ $contact->first_name }} -
+                                {{ $contact->id }}
                             </option>
                         @endforeach
                     </select>

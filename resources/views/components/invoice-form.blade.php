@@ -24,9 +24,9 @@
                         @isset($invoice)
                             // On invoice edit page
                             <option value="{{ $invoice->financial_contact_id }}">
-                                {{ $invoice->financial_contact_id }}:
+                                {{ $invoice->financial_contact->last_name }},
                                 {{ $invoice->financial_contact->first_name }}
-                                {{ $invoice->financial_contact->last_name }}
+                                - {{ $invoice->financial_contact_id }}
                             </option>
                         @endisset
                         @isset($contract->current_financial_contact_id)
@@ -34,17 +34,17 @@
                             current financial contact
                             <option
                                 value="{{ $contract->current_financial_contact_id }}">
-                                {{ $contract->current_financial_contact_id }}:
+                                {{ $contract->current_financial_contact->last_name }},
                                 {{ $contract->current_financial_contact->first_name }}
-                                {{ $contract->current_financial_contact->last_name }}
+                                - {{ $contract->current_financial_contact_id }}
                             </option>
                         @endisset
                         <option value=""></option>
                         @foreach ($contacts as $contact)
                             <option value="{{ $contact->id }}">
-                                {{ $contact->id }}:
-                                {{ $contact->first_name }}
-                                {{ $contact->last_name }}
+                                {{ $contact->last_name }},
+                                {{ $contact->first_name }} -
+                                {{ $contact->id }}
                             </option>
                         @endforeach
                     </select>
