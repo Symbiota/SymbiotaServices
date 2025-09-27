@@ -11,23 +11,28 @@
         @foreach ($contracts as $contract)
             <a href="{{ route('contracts.show', $contract) }}"
                 class="px-4 py-6 border border-gray-500 flex justify-between items-center">
-                <div>
-                    <ul><b>Contract ID:</b> {{ $contract->id }}</ul>
-                    <ul><b>Customer:</b> {{ $contract->customer_id }} -
-                        {{ $contract->customer->name }}</ul>
+                <ul>
+                    <li><b>Contract ID:</b> {{ $contract->id }}</li>
+                    <li><b>Customer:</b> {{ $contract->customer_id }} -
+                        {{ $contract->customer->name }}</li>
                     @isset($contract->customer->department_name)
-                        <ul class="ml-8"><b>
+                        <li class="ml-8"><b>
                                 Department Name:</b>
                             {{ $contract->customer->department_name }}
-                        </ul>
+                        </li>
                     @endisset
+                    <li><b>Original
+                            Contact:</b> {{ $contract->original_contact_id }} -
+                        {{ $contract->original_contact->first_name }}
+                        {{ $contract->original_contact->last_name }}
+                    </li>
                     @isset($contract->pi_contact)
-                        <ul><b>PI Contact:</b>
+                        <li><b>PI Contact:</b> {{ $contract->pi_contact_id }} -
                             {{ $contract->pi_contact->first_name }}
                             {{ $contract->pi_contact->last_name }}
-                        </ul>
+                        </li>
                     @endisset
-                </div>
+                </ul>
                 <form method="POST"
                     action="{{ route('contracts.destroy', $contract) }}">
                     @csrf
