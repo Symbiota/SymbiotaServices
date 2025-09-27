@@ -91,15 +91,21 @@
                             name="services[{{ $service->id }}]" id="service"
                             value="{{ $service->id }}"
                             onchange="calc_total_amount_billed();"
-                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
+                            @if (isset($invoice)) {{ $invoice->services->find($service) ? 'checked' : '' }}
+                            @else
+                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
                         {{ $service->name }}
                         <br>
-                        <input type="number" value="1" step="any"
-                            min="0" name="qty[{{ $service->id }}]"
+                        <input type="number"
+                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
+                            @else
+                                value="{{ old('qty.' . $service->id, 1) }}" @endif
+                            step="any" min="0"
+                            name="qty[{{ $service->id }}]"
                             id="qty_{{ $service->id }}"
                             class="m-1 ml-4 mt-2 p-1 border border-gray-500"
                             service_price="{{ $service->price_per_unit }}"
-                            onchange="calc_each_service_bill({{ $service->id }}); calc_total_amount_billed();">
+                            onchange="calc_each_service_bill(); calc_total_amount_billed();">
                         $<input type="text"
                             id="amount_owed_{{ $service->id }}"
                             name="amount_owed[{{ $service->id }}]"
