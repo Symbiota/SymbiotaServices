@@ -14,14 +14,6 @@
 
     <div class="flex items-start">
 
-        <form method="post" action="{{ route('services.retire', $service) }}">
-            @csrf
-            @method('PATCH')
-            <x-ec-button onclick="return confirm('Retire this service?');"
-                class="!border-red-500 !text-red-500">Retire
-                Service</x-ec-button>
-        </form>
-
         <div class="flex items-center">
             <x-ec-button onclick="toggleView('edit-form')">Edit
                 Service</x-ec-button>
@@ -30,6 +22,14 @@
                 <p class="text-red-500 text-sm ml-3"> Error Editing Service</p>
             @endif
         </div>
+
+        <form method="post" action="{{ route('services.retire', $service) }}">
+            @csrf
+            @method('PATCH')
+            <x-ec-button onclick="return confirm('Retire this service?');"
+                class="!border-red-500 !text-red-500">Retire
+                Service</x-ec-button>
+        </form>
 
     </div>
 
