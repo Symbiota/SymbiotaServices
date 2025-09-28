@@ -16,7 +16,7 @@
             </x-form-box>
 
             <x-form-box for="financial_contact_id"> Financial Contact ID*
-                <x-form-selection-input name="financial_contact_id"
+                <x-form-input type="select" name="financial_contact_id"
                     id="financial_contact_id">
                     @isset($invoice)
                         // On invoice edit page
@@ -44,7 +44,7 @@
                             {{ $contact->id }}
                         </option>
                     @endforeach
-                </x-form-selection-input>
+                </x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}

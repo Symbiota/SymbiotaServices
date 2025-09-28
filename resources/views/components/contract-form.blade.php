@@ -15,7 +15,7 @@
             </x-form-box>
 
             <x-form-box for="financial_contact_id"> Financial Contact ID*
-                <x-form-selection-input name="financial_contact_id"
+                <x-form-input type="select" name="financial_contact_id"
                     id="financial_contact_id">
                     @isset($contract->current_financial_contact_id)
                         // If on contract edit page, autofill contact id
@@ -34,7 +34,7 @@
                             {{ $contact->id }}
                         </option>
                     @endforeach
-                </x-form-selection-input>
+                </x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}
@@ -43,7 +43,8 @@
             </x-form-box>
 
             <x-form-box for="pi_contact_id"> PI Contact ID
-                <x-form-selection-input name="pi_contact_id" id="pi_contact_id">
+                <x-form-input type="select" name="pi_contact_id"
+                    id="pi_contact_id">
                     @isset($contract->pi_contact_id)
                         // If on contract edit page, autofill contact id
                         <option value="{{ $contract->pi_contact_id }}">
@@ -60,7 +61,7 @@
                             {{ $contact->id }}
                         </option>
                     @endforeach
-                </x-form-selection-input>
+                </x-form-input>
                 @error('pi_contact_id')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}
@@ -69,7 +70,7 @@
             </x-form-box>
 
             <x-form-box for="technical_contact_id"> Technical Contact ID
-                <x-form-selection-input name="technical_contact_id"
+                <x-form-input type="select" name="technical_contact_id"
                     id="technical_contact_id">
                     @isset($contract->technical_contact_id)
                         // If on contract edit page, autofill contact id
@@ -87,7 +88,7 @@
                             {{ $contact->id }}
                         </option>
                     @endforeach
-                </x-form-selection-input>
+                </x-form-input>
                 @error('technical_contact_id')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}
