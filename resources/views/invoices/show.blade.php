@@ -19,6 +19,7 @@
         <li><b>Date Invoiced:</b> {{ $invoice->date_invoiced }}</li>
         <li><b>Date Paid:</b> {{ $invoice->date_paid }}</li>
         <li><b>Notes:</b> {{ $invoice->notes }}</li>
+        <x-timestamps :model="$invoice"></x-timestamps>
     </ul>
 
     <br>
