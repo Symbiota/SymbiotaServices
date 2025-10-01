@@ -27,12 +27,6 @@
                         <div>Price Per Unit: {{ $service->price_per_unit }}
                         </div>
                     </div>
-                    <form method="post"
-                        action="{{ route('services.retire', $service) }}">
-                        @csrf
-                        @method('PATCH')
-                        <x-ec-button>Retire</x-ec-button>
-                    </form>
                 </a>
             @endif
         @endforeach

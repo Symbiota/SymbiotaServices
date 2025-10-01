@@ -22,6 +22,8 @@ class ContractFactory extends Factory
             'customer_id' => $this->faker->randomElement(Customer::pluck('id')),
             'original_contact_id' => $this->faker->randomElement(Contact::pluck('id')),
             'current_financial_contact_id' => $this->faker->randomElement(Contact::pluck('id')),
+            'pi_contact_id' => $this->faker->optional()->randomElement(Contact::pluck('id')),
+            'technical_contact_id' => $this->faker->optional()->randomElement(Contact::pluck('id')),
             'darbi_header_ref_1' => $this->faker->word(),
             'darbi_header_ref_2' => $this->faker->word(),
             'darbi_special_instructions' => $this->faker->text(),

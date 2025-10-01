@@ -26,14 +26,16 @@
                 <x-form-input type="text" name="price_per_unit"
                     id="price_per_unit"
                     value="{{ $service->price_per_unit ?? old('price_per_unit') }}"></x-form-input>
-                @error('customer_id')
+                @error('price_per_unit')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="description"> Description*
-                <x-form-input type="text" name="description" id="description"
-                    value="{{ $service->description ?? old('description') }}"></x-form-input>
+                <textarea
+                    class="block min-w-0 w-[98.5%] grow py-1.5 pr-3 pl-1 ml-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500"
+                    name="description" id="description"
+                    value="{{ $service->description ?? old('description') }}"></textarea>
                 @error('description')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -65,4 +67,12 @@
         <button type="submit"
             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
     </div>
+
+    <script>
+        const price_per_unit = document.getElementById('price_per_unit');
+
+        price_per_unit.addEventListener('input', function() {
+            price_per_unit.value = price_per_unit.value.replace(/,/g, '');
+        });
+    </script>
 </form>
