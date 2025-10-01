@@ -18,7 +18,7 @@ class ContractController extends Controller
     {
         return view('contracts.show', [
             'contract' => $contract,
-            'contacts' => Contact::all(),
+            'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 
@@ -26,7 +26,7 @@ class ContractController extends Controller
     {
         return view('contracts.create', [
             'customer' => $customer,
-            'contacts' => Contact::all(),
+            'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 
@@ -34,10 +34,10 @@ class ContractController extends Controller
     {
         request()->validate([
             'customer_id' => ['required', 'exists:customers,id'],
-            'financial_contact_id' => ['required', 'numeric', 'exists:contacts,id'],
+            'financial_contact_id' => ['required', 'numeric:strict', 'exists:contacts,id'],
             'darbi_header_ref_1' => ['required'],
-            'pi_contact_id' => ['nullable', 'numeric', 'exists:contacts,id'],
-            'technical_contact_id' => ['nullable', 'numeric', 'exists:contacts,id'],
+            'pi_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
+            'technical_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
         ]);
 
         $contract = Contract::create([
@@ -59,10 +59,10 @@ class ContractController extends Controller
     {
         request()->validate([
             'customer_id' => ['required', 'exists:customers,id'],
-            'financial_contact_id' => ['required', 'numeric', 'exists:contacts,id'],
+            'financial_contact_id' => ['required', 'numeric:strict', 'exists:contacts,id'],
             'darbi_header_ref_1' => ['required'],
-            'pi_contact_id' => ['nullable', 'numeric', 'exists:contacts,id'],
-            'technical_contact_id' => ['nullable', 'numeric', 'exists:contacts,id'],
+            'pi_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
+            'technical_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
         ]);
 
         $contract->update([

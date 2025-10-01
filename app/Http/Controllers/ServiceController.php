@@ -18,8 +18,8 @@ class ServiceController extends Controller
     public function update(Service $service) {
         request()->validate([
             'name' => ['required'],
-            'darbi_item_number' => ['required', 'numeric'],
-            'price_per_unit' => ['required', 'numeric'],
+            'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
+            'price_per_unit' => ['required', 'numeric:strict'],
             'description' => ['required'],
         ]);
 
@@ -36,10 +36,11 @@ class ServiceController extends Controller
     }
 
     public function store() {
+        
         request()->validate([
             'name' => ['required'],
-            'darbi_item_number' => ['required', 'numeric'],
-            'price_per_unit' => ['required', 'numeric'],
+            'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
+            'price_per_unit' => ['required', 'numeric:strict'],
             'description' => ['required'],
         ]);
 

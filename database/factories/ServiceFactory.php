@@ -18,7 +18,7 @@ class ServiceFactory extends Factory
     {
         return [
             'name' => $this->faker->jobTitle(),
-            'darbi_item_number' => $this->faker->numberBetween(1, 10),
+            'darbi_item_number' => $this->faker->numerify('SYMBI#####'),
             'price_per_unit' => $this->faker->numberBetween(1, 9999),
             'description' => $this->faker->word(),
             'line_ref_1' => $this->faker->word(),

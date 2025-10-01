@@ -19,16 +19,15 @@
         <li><b>Date Invoiced:</b> {{ $invoice->date_invoiced }}</li>
         <li><b>Date Paid:</b> {{ $invoice->date_paid }}</li>
         <li><b>Notes:</b> {{ $invoice->notes }}</li>
+        <x-timestamps :model="$invoice"></x-timestamps>
     </ul>
 
     <br>
 
     <div class="flex items-start">
 
-        <div>
-            <a href="{{ route('invoices.exportCSV', $invoice) }}"<x-ec-button>Export
-                CSV</x-ec-button></a>
-        </div>
+        <a href="{{ route('invoices.exportCSV', $invoice) }}"<x-ec-button>Export
+            CSV</x-ec-button></a>
 
         <div class="flex items-center">
             <x-ec-button onclick="toggleView('edit-form')">Edit

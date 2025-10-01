@@ -8,17 +8,12 @@
         <li><b>Description:</b> {{ $service->description }}</li>
         <li><b>Line Reference 1:</b> {{ $service->line_ref_1 }}</li>
         <li><b>Line Reference 2:</b> {{ $service->line_ref_2 }}</li>
+        <x-timestamps :model="$service"></x-timestamps>
     </ul>
 
     <br>
 
     <div class="flex items-start">
-
-        <form method="post" action="{{ route('services.retire', $service) }}">
-            @csrf
-            @method('PATCH')
-            <x-ec-button>Retire Service</x-ec-button>
-        </form>
 
         <div class="flex items-center">
             <x-ec-button onclick="toggleView('edit-form')">Edit
@@ -28,6 +23,14 @@
                 <p class="text-red-500 text-sm ml-3"> Error Editing Service</p>
             @endif
         </div>
+
+        <form method="post" action="{{ route('services.retire', $service) }}">
+            @csrf
+            @method('PATCH')
+            <x-ec-button onclick="return confirm('Retire this service?');"
+                class="!border-red-500 !text-red-500">Retire
+                Service</x-ec-button>
+        </form>
 
     </div>
 

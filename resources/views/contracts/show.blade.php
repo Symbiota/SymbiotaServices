@@ -13,7 +13,7 @@
                     ID:</b>
                 {{ $contract->original_contact_id }} -
                 {{ $contract->original_contact->first_name }}
-                {{ $contract->original_contact->last_name }}</a></li>
+                {{ $contract->original_contact->last_name }}</a>
         </li>
         <li><a
                 href="{{ route('contacts.show', $contract->current_financial_contact) }}"><b
@@ -21,7 +21,7 @@
                     Financial Contact ID:</b>
                 {{ $contract->current_financial_contact_id }} -
                 {{ $contract->current_financial_contact->first_name }}
-                {{ $contract->current_financial_contact->last_name }}</a></li>
+                {{ $contract->current_financial_contact->last_name }}</a>
         </li>
         <li>
             @if (isset($contract->pi_contact_id))
@@ -35,7 +35,6 @@
             @else
                 <b>PI Contact ID:</b> None
             @endif
-        </li>
         </li>
         <li>
             @if (isset($contract->technical_contact_id))
@@ -51,14 +50,12 @@
                 <b>Technical Contact ID:</b> None
             @endif
         </li>
-        </li>
-        <li><b>DARBI Header Ref 1:</b> {{ $contract->darbi_header_ref_1 }}
-        </li>
-        <li><b>DARBI Header Ref 2:</b> {{ $contract->darbi_header_ref_2 }}
-        </li>
+        <li><b>DARBI Header Ref 1:</b> {{ $contract->darbi_header_ref_1 }}</li>
+        <li><b>DARBI Header Ref 2:</b> {{ $contract->darbi_header_ref_2 }}</li>
         <li><b>DARBI Special Instructions:</b>
             {{ $contract->darbi_special_instructions }}</li>
         <li><b>Notes:</b> {{ $contract->notes }}</li>
+        <x-timestamps :model="$contract"></x-timestamps>
     </ul>
 
     <br>
@@ -66,24 +63,21 @@
     <div class="flex items-start">
 
         <div class="flex-col items-center">
-            <x-ec-button onclick="toggleView('delete-form')">Delete
-                Contract</x-ec-button>
 
-            <div id="delete-form" style="display:none;" class="-mt-2">
-                <form method="POST"
-                    action="{{ route('contracts.destroy', $contract) }}">
-                    @csrf
-                    @method('DELETE')
-                    <br>
-                    <p class="ml-7 mb-3">Are you sure?</p>
-                    <x-ec-button type="submit"
-                        class="hover:text-red-500">YES</x-ec-button>
-                    <x-ec-button type="button"
-                        onclick="toggleView('delete-form')"
-                        class="hover:text-red-500">NO</x-ec-button>
-                </form>
-            </div>
+            <form method="POST"
+                action="{{ route('contracts.destroy', $contract) }}">
+                @csrf
+                @method('DELETE')
+                <x-ec-button type="submit"
+                    onclick="return confirm('Delete this contract?');">Delete
+                    Contract</x-ec-button>
+            </form>
+
         </div>
+
+        <a
+            href="{{ route('customers.exportCSV', ['customer' => $contract->customer, 'contract' => $contract]) }}"<x-ec-button>Export
+            Customer CSV</x-ec-button></a>
 
         <a href="{{ route('invoices.create', $contract) }}"<x-ec-button>Create
             Invoice</x-ec-button></a>

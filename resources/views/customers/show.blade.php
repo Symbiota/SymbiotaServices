@@ -17,12 +17,27 @@
                 <li><b>Zip Code:</b> {{ $customer->zip_code }}</li>
                 <li><b>Address Line 1:</b> {{ $customer->address_line_1 }}</li>
                 <li><b>Address Line 2:</b> {{ $customer->address_line_2 }}</li>
+                <x-timestamps :model="$customer"></x-timestamps>
             </ul>
         </div>
     @endfragment
 
     <br>
+    <div class="flex items-start">
+
+        <a href="{{ route('customers.exportCSV', $customer) }}"<x-ec-button
+            onclick="return confirm('ALERT: Bill to Contact values will not be filled in.\n\nTo do so, export Customer CSV from associated contract.');">Export
+            CSV</x-ec-button></a>
+
+        <a href="{{ route('contracts.create', $customer) }}"<x-ec-button>Create
+            Contract</x-ec-button></a>
+
+    </div>
+
+    <br>
+
     <div x-data="{ show: false }" @close-form.window="show=false">
+
         <button @click="show = true"
             class='relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300'>Edit
             Customer</button>
@@ -35,12 +50,6 @@
 
     <br>
 
-    <a href="{{ route('contracts.create', $customer) }}"<x-ec-button>Create
-        Contract</x-ec-button></a>
-
-    <br>
-    <br>
-
     <div>
         @foreach ($customer->contracts as $contract)
             <a href="{{ route('contracts.show', $contract) }}"
@@ -51,8 +60,10 @@
                     <b>Original Contact ID:</b>
                     {{ $contract->original_contact_id }}
                     <br>
-                    <b>Header Ref 1:</b> {{ $contract->darbi_header_ref_1 }}
-                    <b>Header Ref 2:</b> {{ $contract->darbi_header_ref_2 }}
+                    <b>Header Ref 1:</b>
+                    {{ $contract->darbi_header_ref_1 }}
+                    <b>Header Ref 2:</b>
+                    {{ $contract->darbi_header_ref_2 }}
                     <br>
                     <b>Special Instructions:</b>
                     {{ $contract->darbi_special_instructions }}

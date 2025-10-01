@@ -21,7 +21,7 @@ class InvoiceController extends Controller
         return view('invoices.show', [
             'invoice' => $invoice,
             'services' => Service::all(),
-            'contacts' => Contact::all(),
+            'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 
@@ -30,7 +30,7 @@ class InvoiceController extends Controller
         return view('invoices.create', [
             'contract' => $contract,
             'services' => Service::all(),
-            'contacts' => Contact::all()
+            'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 
@@ -41,7 +41,7 @@ class InvoiceController extends Controller
             'financial_contact_id' => ['required', 'exists:contacts,id'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
             'billing_end' => ['required', 'date_format:Y-m-d'],
-            'amount_billed' => ['required', 'numeric'],
+            'amount_billed' => ['required', 'numeric:strict'],
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
@@ -79,7 +79,7 @@ class InvoiceController extends Controller
             'financial_contact_id' => ['required', 'exists:contacts,id'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
             'billing_end' => ['required', 'date_format:Y-m-d'],
-            'amount_billed' => ['required', 'numeric'],
+            'amount_billed' => ['required', 'numeric:strict'],
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
@@ -127,7 +127,7 @@ class InvoiceController extends Controller
                 '',
                 date('m/d/Y'), // Current date
             ],
-            [],
+            [], [],
             [
             'BUSINESS UNIT - KUINT or RSINT',
             'BILLING UNIT/DEPARTMENT NAME',

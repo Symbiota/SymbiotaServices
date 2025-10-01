@@ -24,8 +24,8 @@ class InvoiceFactory extends Factory
             'billing_start' => $this->faker->dateTime(),
             'billing_end' => $this->faker->dateTime(),
             'amount_billed' => 0,
-            'date_invoiced' => $this->faker->dateTime(),
-            'date_paid' => $this->faker->dateTime(),
+            'date_invoiced' => $this->faker->optional(0.9)->dateTime(),
+            'date_paid' => $this->faker->optional(0.9)->dateTime(),
             'notes' => $this->faker->text(),
         ];
     }

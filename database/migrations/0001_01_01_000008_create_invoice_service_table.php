@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('invoice_service', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('invoice_id')->nullable()->index('fk_invoice_pk');
-            $table->unsignedInteger('service_id')->nullable()->index('fk_invoice_service_pk');
+            $table->unsignedInteger('invoice_id')->index('fk_invoice_pk');
+            $table->unsignedInteger('service_id')->index('fk_invoice_service_pk');
             $table->string('type', 50)->nullable();
             $table->decimal('qty', 20, 2)->nullable();
             $table->date('date_calculated')->nullable();

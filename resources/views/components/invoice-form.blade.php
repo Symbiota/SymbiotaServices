@@ -16,39 +16,35 @@
             </x-form-box>
 
             <x-form-box for="financial_contact_id"> Financial Contact ID*
-                <div
-                    class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 mt-2">
-                    <select name="financial_contact_id"
-                        id="financial_contact_id"
-                        class="bg-white block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500">
-                        @isset($invoice)
-                            // On invoice edit page
-                            <option value="{{ $invoice->financial_contact_id }}">
-                                {{ $invoice->financial_contact_id }}:
-                                {{ $invoice->financial_contact->first_name }}
-                                {{ $invoice->financial_contact->last_name }}
-                            </option>
-                        @endisset
-                        @isset($contract->current_financial_contact_id)
-                            // From contract view to invoice creation, autofill
-                            current financial contact
-                            <option
-                                value="{{ $contract->current_financial_contact_id }}">
-                                {{ $contract->current_financial_contact_id }}:
-                                {{ $contract->current_financial_contact->first_name }}
-                                {{ $contract->current_financial_contact->last_name }}
-                            </option>
-                        @endisset
-                        <option value=""></option>
-                        @foreach ($contacts as $contact)
-                            <option value="{{ $contact->id }}">
-                                {{ $contact->id }}:
-                                {{ $contact->first_name }}
-                                {{ $contact->last_name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                <x-form-input type="select" name="financial_contact_id"
+                    id="financial_contact_id">
+                    @isset($invoice)
+                        // On invoice edit page
+                        <option value="{{ $invoice->financial_contact_id }}">
+                            {{ $invoice->financial_contact->last_name }},
+                            {{ $invoice->financial_contact->first_name }}
+                            - {{ $invoice->financial_contact_id }}
+                        </option>
+                    @endisset
+                    @isset($contract->current_financial_contact_id)
+                        // From contract view to invoice creation, autofill
+                        current financial contact
+                        <option
+                            value="{{ $contract->current_financial_contact_id }}">
+                            {{ $contract->current_financial_contact->last_name }},
+                            {{ $contract->current_financial_contact->first_name }}
+                            - {{ $contract->current_financial_contact_id }}
+                        </option>
+                    @endisset
+                    <option value=""></option>
+                    @foreach ($contacts as $contact)
+                        <option value="{{ $contact->id }}">
+                            {{ $contact->last_name }},
+                            {{ $contact->first_name }} -
+                            {{ $contact->id }}
+                        </option>
+                    @endforeach
+                </x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}
@@ -91,15 +87,21 @@
                             name="services[{{ $service->id }}]" id="service"
                             value="{{ $service->id }}"
                             onchange="calc_total_amount_billed();"
-                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }}>
+                            @if (isset($invoice)) {{ $invoice->services->find($service) ? 'checked' : '' }}
+                            @else
+                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
                         {{ $service->name }}
                         <br>
-                        <input type="number" value="1" step="any"
-                            min="0" name="qty[{{ $service->id }}]"
+                        <input type="number"
+                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
+                            @else
+                                value="{{ old('qty.' . $service->id, 1) }}" @endif
+                            step="any" min="0"
+                            name="qty[{{ $service->id }}]"
                             id="qty_{{ $service->id }}"
                             class="m-1 ml-4 mt-2 p-1 border border-gray-500"
                             service_price="{{ $service->price_per_unit }}"
-                            onchange="calc_each_service_bill({{ $service->id }}); calc_total_amount_billed();">
+                            onchange="calc_each_service_bill(); calc_total_amount_billed();">
                         $<input type="text"
                             id="amount_owed_{{ $service->id }}"
                             name="amount_owed[{{ $service->id }}]"
@@ -112,45 +114,13 @@
 
             <x-form-box for="amount_billed"> Amount Billed*
                 <x-form-input type="text" name="amount_billed"
-                    id="amount_billed"
-                    value="{{ $invoice->amount_billed ?? old('amount_billed') }}"></x-form-input>
+                    id="amount_billed" value="" readonly></x-form-input>
                 @error('amount_billed')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}
                     </p>
                 @enderror
             </x-form-box>
-
-            <script>
-                function calc_each_service_bill(id) {
-                    let qty_box = document.getElementById(
-                        'qty_' + id);
-                    let amount_owed_box = document.getElementById(
-                        'amount_owed_' + id);
-                    let price_per_unit = qty_box.getAttribute('service_price');
-                    let qty = qty_box.value;
-                    let amount_owed = price_per_unit * qty;
-                    amount_owed_box.value = amount_owed.toFixed(
-                        2);
-                }
-
-                function calc_total_amount_billed() {
-                    let total_box = document.getElementById('amount_billed');
-                    let total = 0;
-                    const checkboxes = document.querySelectorAll(
-                        '#service:checked');
-
-                    checkboxes.forEach(checkbox => {
-                        let amount_owed_box = document.getElementById(
-                            'amount_owed_' + checkbox.value);
-                        total += parseFloat(amount_owed_box.value);
-                    });
-
-                    total_box.value = total.toFixed(2);
-                }
-
-                calc_total_amount_billed()
-            </script>
 
             <x-form-box for="date_invoiced"> Date Invoiced
                 <x-form-input type="text" name="date_invoiced"
@@ -197,4 +167,5 @@
             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
     </div>
 
+    <script src="{{ asset('js/invoice-cost-calculator.js') }}"></script>
 </form>

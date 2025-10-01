@@ -11,15 +11,34 @@
         @foreach ($contracts as $contract)
             <a href="{{ route('contracts.show', $contract) }}"
                 class="px-4 py-6 border border-gray-500 flex justify-between items-center">
-                <div>
-                    <strong>Contract ID: {{ $contract->id }}</strong> <br>
-                    <strong>Customer ID: {{ $contract->customer_id }}</strong>
-                </div>
+                <ul>
+                    <li><b>Contract ID:</b> {{ $contract->id }}</li>
+                    <li><b>Customer:</b> {{ $contract->customer_id }} -
+                        {{ $contract->customer->name }}</li>
+                    @isset($contract->customer->department_name)
+                        <li class="ml-8"><b>
+                                Department Name:</b>
+                            {{ $contract->customer->department_name }}
+                        </li>
+                    @endisset
+                    <li><b>Original
+                            Contact:</b> {{ $contract->original_contact_id }} -
+                        {{ $contract->original_contact->first_name }}
+                        {{ $contract->original_contact->last_name }}
+                    </li>
+                    @isset($contract->pi_contact)
+                        <li><b>PI Contact:</b> {{ $contract->pi_contact_id }} -
+                            {{ $contract->pi_contact->first_name }}
+                            {{ $contract->pi_contact->last_name }}
+                        </li>
+                    @endisset
+                </ul>
                 <form method="POST"
                     action="{{ route('contracts.destroy', $contract) }}">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="hover:text-red-500">
+                    <button type="submit" class="hover:text-red-500"
+                        onclick="return confirm('Delete this contract?');">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="white"
                             viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-6">
