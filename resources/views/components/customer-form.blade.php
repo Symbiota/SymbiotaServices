@@ -35,7 +35,7 @@
             </x-form-box>
 
             <x-form-box for="darbi_customer_account_number"> DARBI Customer
-                Account Number*
+                Account Number
                 <x-form-input type="text"
                     name="darbi_customer_account_number"
                     id="darbi_customer_account_number" placeholder="1234"
@@ -45,8 +45,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="darbi_site"> DARBI Site* (letter followed by 4
-                numbers)
+            <x-form-box for="darbi_site"> DARBI Site
                 <x-form-input type="text" name="darbi_site" id="darbi_site"
                     placeholder="A1234"
                     value="{{ $customer->darbi_site ?? '' }}"></x-form-input>

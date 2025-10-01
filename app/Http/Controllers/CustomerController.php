@@ -24,8 +24,8 @@ class CustomerController extends Controller
         try {
             $validated = $request->validate([
                 'name' => ['required', 'unique:customers,name'],
-                'darbi_customer_account_number' => ['required', 'numeric:strict', 'digits:4'],
-                'darbi_site' => ['required', 'regex:/^[a-zA-Z][0-9]{4}$/'],
+                'darbi_customer_account_number' => ['nullable'],
+                'darbi_site' => ['nullable'],
                 'address_line_1' => ['required'],
                 'city' => ['required'],
                 'state' => ['required'],
@@ -68,8 +68,8 @@ class CustomerController extends Controller
     {
         request()->validate([
             'name' => ['required'],
-            'darbi_customer_account_number' => ['required', 'numeric:strict', 'digits:4'],
-            'darbi_site' => ['required', 'regex:/^[a-zA-Z][0-9]{4}$/'],
+            'darbi_customer_account_number' => ['nullable'],
+            'darbi_site' => ['nullable'],
             'address_line_1' => ['required'],
             'city' => ['required'],
             'state' => ['required'],
