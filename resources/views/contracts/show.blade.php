@@ -13,7 +13,7 @@
                     ID:</b>
                 {{ $contract->original_contact_id }} -
                 {{ $contract->original_contact->first_name }}
-                {{ $contract->original_contact->last_name }}</a></li>
+                {{ $contract->original_contact->last_name }}</a>
         </li>
         <li><a
                 href="{{ route('contacts.show', $contract->current_financial_contact) }}"><b
@@ -21,7 +21,7 @@
                     Financial Contact ID:</b>
                 {{ $contract->current_financial_contact_id }} -
                 {{ $contract->current_financial_contact->first_name }}
-                {{ $contract->current_financial_contact->last_name }}</a></li>
+                {{ $contract->current_financial_contact->last_name }}</a>
         </li>
         <li>
             @if (isset($contract->pi_contact_id))
@@ -35,7 +35,6 @@
             @else
                 <b>PI Contact ID:</b> None
             @endif
-        </li>
         </li>
         <li>
             @if (isset($contract->technical_contact_id))
@@ -51,14 +50,12 @@
                 <b>Technical Contact ID:</b> None
             @endif
         </li>
-        </li>
-        <li><b>DARBI Header Ref 1:</b> {{ $contract->darbi_header_ref_1 }}
-        </li>
-        <li><b>DARBI Header Ref 2:</b> {{ $contract->darbi_header_ref_2 }}
-        </li>
+        <li><b>DARBI Header Ref 1:</b> {{ $contract->darbi_header_ref_1 }}</li>
+        <li><b>DARBI Header Ref 2:</b> {{ $contract->darbi_header_ref_2 }}</li>
         <li><b>DARBI Special Instructions:</b>
             {{ $contract->darbi_special_instructions }}</li>
         <li><b>Notes:</b> {{ $contract->notes }}</li>
+        <x-timestamps :model="$contract"></x-timestamps>
     </ul>
 
     <br>

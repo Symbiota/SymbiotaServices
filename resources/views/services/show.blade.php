@@ -8,6 +8,7 @@
         <li><b>Description:</b> {{ $service->description }}</li>
         <li><b>Line Reference 1:</b> {{ $service->line_ref_1 }}</li>
         <li><b>Line Reference 2:</b> {{ $service->line_ref_2 }}</li>
+        <x-timestamps :model="$service"></x-timestamps>
     </ul>
 
     <br>

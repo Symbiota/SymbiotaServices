@@ -17,6 +17,7 @@
                 <li><b>Zip Code:</b> {{ $customer->zip_code }}</li>
                 <li><b>Address Line 1:</b> {{ $customer->address_line_1 }}</li>
                 <li><b>Address Line 2:</b> {{ $customer->address_line_2 }}</li>
+                <x-timestamps :model="$customer"></x-timestamps>
             </ul>
         </div>
     @endfragment
