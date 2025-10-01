@@ -22,7 +22,7 @@ class CustomerFactory extends Factory
             'darbi_site' => "A1234",
             'correspondence' => $this->faker->email(),
             'notes' => $this->faker->text(),
-            'department_name' => $this->faker->company(),
+            'department_name' => $this->faker->optional()->company(),
             'address_line_1' => $this->faker->streetAddress(),
             'address_line_2' => $this->faker->secondaryAddress(),
             'city' => $this->faker->city(),
