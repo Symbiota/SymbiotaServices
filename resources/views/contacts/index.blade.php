@@ -5,8 +5,8 @@
         <x-ec-button onclick="toggleView('create-form')">Create
             Contact</x-ec-button>
 
-        @if ($errors->any())
-            <p class="text-red-500 text-sm ml-3"> Error Creating Contact</p>
+        @if ($errors->contact_errors->any())
+            <p class="text-red-500 text-sm ml-3">Error Creating Contact</p>
         @endif
     </div>
 

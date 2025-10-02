@@ -18,8 +18,8 @@
             <x-ec-button onclick="toggleView('edit-form')">Edit
                 Contact</x-ec-button>
 
-            @if ($errors->any())
-                <p class="text-red-500 text-sm ml-3"> Error Editing Contact
+            @if ($errors->contact_errors->any())
+                <p class="text-red-500 text-sm ml-3">Error Editing Contact
                 </p>
             @endif
         </div>
