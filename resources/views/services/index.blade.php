@@ -20,7 +20,9 @@
         @foreach ($services as $service)
             @if ($service->active_status == 1)
                 <a href="{{ route('services.show', $service) }}"
-                    class="px-4 py-6 border border-gray-500 flex justify-between items-center">
+                    class="px-4 py-6 border border-gray-500 flex justify-between items-center"
+                    hx-get="{{ route('services.show', $service) }}"
+                    hx-target="#modal" hx-swap="innerHTML">
                     <div>
                         <strong>{{ $service->name }}</strong>
                         <div>ID: {{ $service->id }}</div>
@@ -31,6 +33,11 @@
             @endif
         @endforeach
     </div>
+
+    @fragment('modal')
+        <div class="my-12 mx-auto p-12 bg-white rounded-sm max-w-200"
+            id="modal"></div>
+    @endfragment
 
     <br>
 
