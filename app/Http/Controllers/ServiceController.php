@@ -17,7 +17,7 @@ class ServiceController extends Controller
         $isHtmx = $request->hasHeader('HX-Request');
 
         return view('services.show', compact('service'))
-            ->fragment('solo-service');
+            ->fragmentIf($isHtmx, 'solo-service');
     }
 
     public function store()
