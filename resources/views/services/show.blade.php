@@ -1,5 +1,5 @@
 <x-table-layout heading="{{ $service->name }}">
-    @fragment('solo-service')
+    @fragment('show-service')
         <title>SERVICE: {{ $service->name }}</title>
 
         <ul>

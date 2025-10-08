@@ -14,10 +14,10 @@ class ServiceController extends Controller
 
     public function show(Request $request, Service $service)
     {
-        $isHtmx = $request->hasHeader('HX-Request');
+        $isHTMX = $request->hasHeader('HX-Request');
 
         return view('services.show', compact('service'))
-            ->fragmentIf($isHtmx, 'solo-service');
+            ->fragmentIf($isHTMX, 'show-service');
     }
 
     public function store()
