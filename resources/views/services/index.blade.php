@@ -16,10 +16,11 @@
 
     <br>
 
-    <div
-        id="modal-container"class="hidden block fixed top-0 left-0 w-full h-full bg-black/50">
-        <div class="my-12 mx-auto p-12 bg-white rounded-sm max-w-200"
-            id="modal"></div>
+    <div id="modal-container"
+        class="hidden fixed top-0 left-0 w-full h-full bg-black/50">
+        <x-ec-button onclick="toggleView('modal-container')">X</x-ec-button>
+        <div id="modal" class="my-12 mx-auto p-12 bg-white rounded-sm w-80">
+        </div>
     </div>
 
     <div class = "space-y-4">
