@@ -17,10 +17,12 @@
     <br>
 
     <div id="modal-container"
-        class="hidden fixed top-0 left-0 w-full h-full bg-black/50">
-        <x-ec-button onclick="toggleView('modal-container')">X</x-ec-button>
-        <div id="modal" class="my-12 mx-auto p-12 bg-white rounded-sm w-80">
+        class="flex items-center justify-center hidden fixed top-0 left-0 w-full h-full bg-black/50 z-10">
+        <div id="modal"
+            class="relative m-4 p-4 w-2/5 min-w-[40%]
+            max-w-[40%] rounded-lg bg-white shadow-sm">
         </div>
+        <x-ec-button onclick="toggleView('modal-container')">X</x-ec-button>
     </div>
 
     <div class = "space-y-4">
