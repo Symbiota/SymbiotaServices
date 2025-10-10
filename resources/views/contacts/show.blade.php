@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div id="edit-form" style="display:none;">
+    <div id="edit-form" class="hidden">
         <x-contact-form action="{{ route('contacts.update', $contact) }}"
             :contact="$contact">@method('PATCH')</x-contact-form>
     </div>

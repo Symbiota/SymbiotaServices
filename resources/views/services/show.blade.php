@@ -35,7 +35,7 @@
 
         </div>
 
-        <div id="edit-form" style="display:none;">
+        <div id="edit-form" class="hidden">
             <x-service-form :service="$service"
                 action="{{ route('services.update', $service) }}">@method('PATCH')</x-service-form>
         </div>

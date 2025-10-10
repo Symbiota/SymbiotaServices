@@ -10,7 +10,7 @@
         @endif
     </div>
 
-    <div id="create-form" style="display:none;">
+    <div id="create-form" class="hidden">
         <x-service-form action="{{ route('services.store') }}"></x-service-form>
     </div>
 
@@ -52,7 +52,7 @@
     <br>
     <br>
 
-    <div id="retired_services" class = "space-y-4" style="display:none;">
+    <div id="retired_services" class = "space-y-4" class="hidden">
         @foreach ($services as $service)
             @if ($service->active_status == 0)
                 <a href="{{ route('services.show', $service) }}"

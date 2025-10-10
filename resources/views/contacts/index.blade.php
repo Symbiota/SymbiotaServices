@@ -10,7 +10,7 @@
         @endif
     </div>
 
-    <div id="create-form" style="display:none;">
+    <div id="create-form" class="hidden">
         <x-contact-form action="{{ route('contacts.store') }}"></x-contact-form>
     </div>
 
