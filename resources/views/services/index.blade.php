@@ -16,13 +16,11 @@
 
     <br>
 
-    <div id="modal-container"
+    <div id="modal-container" onclick="toggleView('modal-container')"
         class="flex items-center justify-center hidden fixed top-0 left-0 w-full h-full bg-black/50 z-10">
-        <div id="modal"
-            class="relative m-4 p-4 w-2/5 min-w-[40%]
-            max-w-[40%] rounded-lg bg-white shadow-sm">
+        <div id="modal" onclick="event.stopPropagation()"
+            class="relative m-4 p-4 w-2/5 rounded-lg bg-white shadow-sm">
         </div>
-        <x-ec-button onclick="toggleView('modal-container')">X</x-ec-button>
     </div>
 
     <div class = "space-y-4">
@@ -56,7 +54,10 @@
         @foreach ($services as $service)
             @if ($service->active_status == 0)
                 <a href="{{ route('services.show', $service) }}"
-                    class="block px-4 py-6 border border-gray-500">
+                    class="block px-4 py-6 border border-gray-500"
+                    hx-get="{{ route('services.show', $service) }}"
+                    hx-target="#modal" hx-swap="innerHTML"
+                    onclick="toggleView('modal-container')">
                     <strong>{{ $service->name }}</strong>
                     <div>ID: {{ $service->id }}</div>
                 </a>
