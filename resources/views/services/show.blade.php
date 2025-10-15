@@ -2,6 +2,17 @@
     @fragment('show-service')
         <title>SERVICE: {{ $service->name }}</title>
 
+        @if ($isHTMX)
+            <header class="bg-white shadow-sm">
+                <div class="px-4 py-2 pb-4 mb-4">
+                    <h1
+                        class="text-3xl
+                    font-bold tracking-tight text-gray-900">
+                        {{ $service->name }}</h1>
+                </div>
+            </header>
+        @endif
+
         <ul>
             <li><b>Name:</b> {{ $service->name }}</li>
             <li><b>DARBI Item Number:</b> {{ $service->darbi_item_number }}</li>
