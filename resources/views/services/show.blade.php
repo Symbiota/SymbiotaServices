@@ -2,17 +2,8 @@
     @fragment('show-service')
         <title>SERVICE: {{ $service->name }}</title>
 
-        @if ($isHTMX)
-            <header class="bg-white shadow-sm">
-                <div class="px-4 py-2 pb-4 mb-4">
-                    <h1
-                        class="text-3xl
-                    font-bold tracking-tight text-gray-900">
-                        {{ $service->name }}</h1>
-                </div>
-            </header>
-        @endif
-
+        <x-modal-header :isHTMX="$isHTMX">{{ $service->name }}
+        </x-modal-header>
         <ul>
             <li><b>Name:</b> {{ $service->name }}</li>
             <li><b>DARBI Item Number:</b> {{ $service->darbi_item_number }}</li>
@@ -28,8 +19,14 @@
         <div class="flex items-start">
 
             <div class="flex items-center">
-                <x-ec-button onclick="toggleView('edit-form')">Edit
-                    Service</x-ec-button>
+                @if ($isHTMX)
+                    <x-ec-button hx-get="{{ route('services.edit', $service) }}"
+                        hx-target="#modal" hx-swap="innerHTML">Edit
+                        Service</x-ec-button>
+                @else
+                    <x-ec-button onclick="toggleView('edit-form')">Edit
+                        Service</x-ec-button>
+                @endif
 
                 @if ($errors->any())
                     <p class="text-red-500 text-sm ml-3"> Error Editing Service</p>

@@ -15,6 +15,7 @@ Route::get('/', function () {
 
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index')->middleware('auth');
 Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show')->middleware('auth');
+Route::get('/services/{service}/edit', [ServiceController::class, 'edit'])->name('services.edit')->middleware('auth');
 Route::patch('/services/{service}/update', [ServiceController::class, 'update'])->name('services.update')->middleware('auth');
 Route::post('/services/store', [ServiceController::class, 'store'])->name('services.store')->middleware('auth');
 Route::patch('/services/{service}/retire', [ServiceController::class, 'retire'])->name('services.retire')->middleware('auth');
