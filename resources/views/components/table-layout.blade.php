@@ -78,7 +78,7 @@
                     onclick="toggleView('modal-container')"
                     class="flex items-center justify-center hidden fixed top-0 left-0 w-full h-full bg-black/50 z-10">
                     <div id="modal" onclick="event.stopPropagation()"
-                        class="relative m-4 p-4 w-3/5 max-w-[80%] rounded-lg bg-white shadow-sm z-20 overflow-y-auto max-h-[90vh]">
+                        class="relative px-4 py-6 sm:px-6 lg:px-8 w-1/2 max-w-[80%] rounded-lg bg-white shadow-sm z-20 overflow-y-auto max-h-[90vh]">
                     </div>
                 </div>
 

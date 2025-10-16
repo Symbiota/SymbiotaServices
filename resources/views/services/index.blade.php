@@ -2,17 +2,14 @@
     <title>SERVICES PAGE</title>
 
     <div class="flex items-center">
-        <x-ec-button hx-get="{{ route('services.create') }}" hx-target="#modal"
-            hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
-            Service</x-ec-button>
+        <a href="{{ route('services.create') }}"><x-ec-button
+                hx-get="{{ route('services.create') }}" hx-target="#modal"
+                hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
+                Service</x-ec-button></a>
 
         @if ($errors->any())
             <p class="text-red-500 text-sm ml-3"> Error Creating Service</p>
         @endif
-    </div>
-
-    <div id="create-form" class="hidden">
-        <x-service-form action="{{ route('services.store') }}"></x-service-form>
     </div>
 
     <br>
