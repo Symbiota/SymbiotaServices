@@ -14,6 +14,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index')->middleware('auth');
+Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create')->middleware('auth');
 Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show')->middleware('auth');
 Route::get('/services/{service}/edit', [ServiceController::class, 'edit'])->name('services.edit')->middleware('auth');
 Route::patch('/services/{service}/update', [ServiceController::class, 'update'])->name('services.update')->middleware('auth');

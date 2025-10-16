@@ -19,17 +19,13 @@
         <div class="flex items-start">
 
             <div class="flex items-center">
-                @if ($isHTMX)
-                    <x-ec-button hx-get="{{ route('services.edit', $service) }}"
-                        hx-target="#modal" hx-swap="innerHTML">Edit
-                        Service</x-ec-button>
-                @else
-                    <x-ec-button onclick="toggleView('edit-form')">Edit
-                        Service</x-ec-button>
-                @endif
+                <x-ec-button onclick="toggleView('edit-form')">Edit
+                    Service</x-ec-button>
 
                 @if ($errors->any())
-                    <p class="text-red-500 text-sm ml-3"> Error Editing Service</p>
+                    <p class="text-red-500
+                        text-sm ml-3">
+                        Error Editing Service</p>
                 @endif
             </div>
 
