@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class ServiceController extends Controller
 {
@@ -41,19 +41,28 @@ class ServiceController extends Controller
     {
         $isHTMX = $request->hasHeader('HX-Request');
 
-        $data = $request->validateWithBag('service_create_errors', [
-            'name' => ['required'],
-            'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
-            'price_per_unit' => ['required', 'numeric:strict'],
-            'description' => ['required'],
-            'line_ref_1' => ['nullable'],
-            'line_ref_2' => ['nullable'],
-        ]);
+        try {
+            $data = $request->validate([
+                'name' => ['required'],
+                'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
+                'price_per_unit' => ['required', 'numeric:strict'],
+                'description' => ['required'],
+                'line_ref_1' => ['nullable'],
+                'line_ref_2' => ['nullable'],
+            ]);
 
-        $service = Service::create($data);
+            $service = Service::create($data);
 
-        return view('services.show', compact('service', 'isHTMX'))
-            ->fragmentIf($isHTMX, 'show-service');
+            return view('services.show', compact('service', 'isHTMX'))
+                ->fragmentIf($isHTMX, 'show-service');
+        } catch (ValidationException $e) {
+
+            if ($isHTMX) {
+                return view('services.create')->withErrors($e->errors())
+                    ->fragment('modal');
+            }
+            throw $e;
+        }
     }
 
     public function update(Request $request, Service $service)
