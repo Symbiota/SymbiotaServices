@@ -51,12 +51,8 @@ class ServiceController extends Controller
 
         $service = Service::create($data);
 
-        if ($isHTMX) {
-            return view('services.show', compact('service', 'isHTMX'))
-                ->fragments(['show-service', 'modal']);
-        }
-
-        return redirect()->route('services.show', $service);
+        return view('services.show', compact('service', 'isHTMX'))
+            ->fragmentIf($isHTMX, 'show-service');
     }
 
     public function update(Request $request, Service $service)
