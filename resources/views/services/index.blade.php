@@ -7,7 +7,7 @@
                 hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
                 Service</x-ec-button></a>
 
-        @if ($errors->any())
+        @if ($errors->service_create_errors->any())
             <p class="text-red-500 text-sm ml-3"> Error Creating Service</p>
         @endif
     </div>

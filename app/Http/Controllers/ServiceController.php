@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
 {
@@ -40,13 +41,13 @@ class ServiceController extends Controller
     {
         $isHTMX = $request->hasHeader('HX-Request');
 
-        $data = $request->validate([
+        $data = $request->validateWithBag('service_create_errors', [
             'name' => ['required'],
             'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
             'price_per_unit' => ['required', 'numeric:strict'],
             'description' => ['required'],
             'line_ref_1' => ['nullable'],
-            'line_ref_3' => ['nullable'],
+            'line_ref_2' => ['nullable'],
         ]);
 
         $service = Service::create($data);
@@ -63,7 +64,7 @@ class ServiceController extends Controller
             'price_per_unit' => ['required', 'numeric:strict'],
             'description' => ['required'],
             'line_ref_1' => ['nullable'],
-            'line_ref_3' => ['nullable'],
+            'line_ref_2' => ['nullable'],
         ]);
 
         $service->update($data);
