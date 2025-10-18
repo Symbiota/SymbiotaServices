@@ -36,44 +36,41 @@ class ServiceController extends Controller
             ->fragmentIf($isHTMX, 'edit-service');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        request()->validate([
+        $isHTMX = $request->hasHeader('HX-Request');
+
+        $data = $request->validate([
             'name' => ['required'],
             'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
             'price_per_unit' => ['required', 'numeric:strict'],
             'description' => ['required'],
+            'line_ref_1' => ['nullable'],
+            'line_ref_3' => ['nullable'],
         ]);
 
-        $service = Service::create([
-            'name' => request('name'),
-            'darbi_item_number' => request('darbi_item_number'),
-            'price_per_unit' => request('price_per_unit'),
-            'description' => request('description'),
-            'line_ref_1' => request('line_ref_1'),
-            'line_ref_2' => request('line_ref_2'),
-        ]);
+        $service = Service::create($data);
+
+        if ($isHTMX) {
+            return view('services.show', compact('service', 'isHTMX'))
+                ->fragments(['show-service', 'modal']);
+        }
 
         return redirect()->route('services.show', $service);
     }
 
-    public function update(Service $service)
+    public function update(Request $request, Service $service)
     {
-        request()->validate([
+        $data = $request->validate([
             'name' => ['required'],
             'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
             'price_per_unit' => ['required', 'numeric:strict'],
             'description' => ['required'],
+            'line_ref_1' => ['nullable'],
+            'line_ref_3' => ['nullable'],
         ]);
 
-        $service->update([
-            'name' => request('name'),
-            'darbi_item_number' => request('darbi_item_number'),
-            'price_per_unit' => request('price_per_unit'),
-            'description' => request('description'),
-            'line_ref_1' => request('line_ref_1'),
-            'line_ref_2' => request('line_ref_2'),
-        ]);
+        $service->update($data);
 
         return redirect()->route('services.show', $service);
     }
