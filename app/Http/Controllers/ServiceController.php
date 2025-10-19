@@ -58,8 +58,8 @@ class ServiceController extends Controller
         } catch (ValidationException $e) {
 
             if ($isHTMX) {
-                return view('services.create')->withErrors($e->errors())
-                    ->fragment('modal');
+                return view('services.create', compact('isHTMX'))->withErrors($e->errors())
+                    ->fragment('create-service');
             }
             throw $e;
         }
