@@ -67,18 +67,25 @@ class ServiceController extends Controller
 
     public function update(Request $request, Service $service)
     {
-        $data = $request->validate([
-            'name' => ['required'],
-            'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
-            'price_per_unit' => ['required', 'numeric:strict'],
-            'description' => ['required'],
-            'line_ref_1' => ['nullable'],
-            'line_ref_2' => ['nullable'],
-        ]);
+        $isHTMX = $request->hasHeader('HX-Request');
 
-        $service->update($data);
-
-        return redirect()->route('services.show', $service);
+        try {
+            $data = $request->validate([
+                'name' => ['required'],
+                'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
+                'price_per_unit' => ['required', 'numeric:strict'],
+                'description' => ['required'],
+                'line_ref_1' => ['nullable'],
+                'line_ref_2' => ['nullable'],
+            ]);
+            $service->update($data);
+            return view('services.show', compact('service', 'isHTMX'))->fragmentIf($isHTMX, 'show-service');
+        } catch (ValidationException $e) {
+            if ($isHTMX) {
+                return view('services.show', compact('service', 'isHTMX'))->withErrors($e->errors())->fragment('show-service');
+            }
+            throw $e;
+        }
     }
 
     public function retire(Service $service)

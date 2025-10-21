@@ -40,8 +40,16 @@
         </div>
 
         <div id="edit-form" class="hidden">
-            <x-service-form :service="$service"
-                action="{{ route('services.update', $service) }}">@method('PATCH')</x-service-form>
+            @if ($isHTMX)
+                <x-service-form class="-mt-4" :errors="$errors" :service="$service"
+                    hx-post="{{ route('services.update', $service) }}"
+                    hx-target="#modal"
+                    hx-swap="innerHTML">@method('PATCH')</x-service-form>
+            @else
+                <x-service-form :service="$service"
+                    action="{{ route('services.update', $service) }}">@method('PATCH')</x-service-form>
+            @endif
+
         </div>
         <br>
     @endfragment
