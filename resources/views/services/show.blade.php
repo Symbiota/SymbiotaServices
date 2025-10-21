@@ -41,7 +41,7 @@
 
         <div id="edit-form" class="hidden">
             @if ($isHTMX)
-                <x-service-form class="-mt-4" :errors="$errors" :service="$service"
+                <x-service-form class="-mt-2" :errors="$errors" :service="$service"
                     hx-post="{{ route('services.update', $service) }}"
                     hx-target="#modal"
                     hx-swap="innerHTML">@method('PATCH')</x-service-form>
