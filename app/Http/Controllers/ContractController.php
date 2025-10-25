@@ -19,6 +19,7 @@ class ContractController extends Controller
         return view('contracts.show', [
             'contract' => $contract,
             'contacts' => Contact::all()->sortBy('last_name'),
+            'customers' => Customer::all()->sortBy('name'),
         ]);
     }
 
@@ -27,54 +28,48 @@ class ContractController extends Controller
         return view('contracts.create', [
             'customer' => $customer,
             'contacts' => Contact::all()->sortBy('last_name'),
+            'customers' => Customer::all()->sortBy('name'),
         ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        request()->validate([
+        $data = $request->validate([
             'customer_id' => ['required', 'exists:customers,id'],
             'financial_contact_id' => ['required', 'numeric:strict', 'exists:contacts,id'],
-            'darbi_header_ref_1' => ['required'],
             'pi_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
             'technical_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
+            'darbi_header_ref_1' => ['required'],
+            'darbi_header_ref_2' => ['nullable'],
+            'darbi_special_instructions' => ['nullable'],
+            'notes' => ['nullable'],
         ]);
 
-        $contract = Contract::create([
-            'customer_id' => request('customer_id'),
-            'original_contact_id' => request('financial_contact_id'),
-            'current_financial_contact_id' => request('financial_contact_id'),
-            'pi_contact_id' => request('pi_contact_id'),
-            'technical_contact_id' => request('technical_contact_id'),
-            'darbi_header_ref_1' => request('darbi_header_ref_1'),
-            'darbi_header_ref_2' => request('darbi_header_ref_2'),
-            'darbi_special_instructions' => request('darbi_special_instructions'),
-            'notes' => request('notes'),
-        ]);
+        $data += ['original_contact_id' => $data['financial_contact_id'], 'current_financial_contact_id' => $data['financial_contact_id']];
+        unset($data['financial_contact_id']);
+
+        $contract = Contract::create($data);
 
         return redirect()->route('contracts.show', $contract);
     }
 
-    public function update(Contract $contract)
+    public function update(Request $request, Contract $contract)
     {
-        request()->validate([
+        $data = $request->validate([
             'customer_id' => ['required', 'exists:customers,id'],
             'financial_contact_id' => ['required', 'numeric:strict', 'exists:contacts,id'],
-            'darbi_header_ref_1' => ['required'],
             'pi_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
             'technical_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
+            'darbi_header_ref_1' => ['required'],
+            'darbi_header_ref_2' => ['nullable'],
+            'darbi_special_instructions' => ['nullable'],
+            'notes' => ['nullable'],
         ]);
 
-        $contract->update([
-            'customer_id' => request('customer_id'),
-            'current_financial_contact_id' => request('financial_contact_id'),
-            'pi_contact_id' => request('pi_contact_id'),
-            'technical_contact_id' => request('technical_contact_id'),
-            'darbi_header_ref_1' => request('darbi_header_ref_1'),
-            'darbi_header_ref_2' => request('darbi_header_ref_2'),
-            'darbi_special_instructions' => request('darbi_special_instructions'),
-            'notes' => request('notes'),
-        ]);
+        $data += ['current_financial_contact_id' => $data['financial_contact_id']];
+        unset($data['financial_contact_id']);
+
+        $contract->update($data);
 
         return redirect()->route('contracts.show', $contract);
     }
