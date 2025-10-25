@@ -6,8 +6,25 @@
         <div class="border-b border-gray-900/10 pb-12">
 
             <x-form-box for="customer_id"> Customer ID*
-                <x-form-input type="text" name="customer_id" id="customer_id"
-                    value="{{ $contract->customer_id ?? ($customer->id ?? old('customer_id')) }}"></x-form-input>
+                <x-form-input type="select" name="customer_id" id="customer_id">
+                    @isset($contract->customer_id)
+                        <option value="{{ $contract->customer_id }}">
+                            {{ $contract->customer->name }}
+                            - {{ $contract->customer_id }}
+                        </option>
+                    @endisset
+                    @isset($customer)
+                        <option value="{{ $customer->id }}">
+                            {{ $customer->name }} - {{ $customer->id }}
+                        </option>
+                    @endisset
+                    <option value=""></option>
+                    @foreach ($customers as $customer)
+                        <option value="{{ $customer->id }}">
+                            {{ $customer->name }} - {{ $customer->id }}
+                        </option>
+                    @endforeach
+                </x-form-input>
                 @error('customer_id')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}</p>
