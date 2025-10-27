@@ -173,7 +173,7 @@ class CustomerController extends Controller
 
         // fclose($handle); // @TODO likely comment this back in
 
-        return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
+        return response()->download(public_path($sanitizedFilename)); //->deleteFileAfterSend(true); //@TODO comment back in likely
     }
     
 }
