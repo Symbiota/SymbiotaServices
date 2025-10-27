@@ -171,7 +171,7 @@ class CustomerController extends Controller
 
         fputcsv($handle, $data);
 
-        fclose($handle);
+        // fclose($handle); // @TODO likely comment this back in
 
         return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
     }
