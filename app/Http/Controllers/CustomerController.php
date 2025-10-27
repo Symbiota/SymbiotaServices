@@ -115,9 +115,8 @@ class CustomerController extends Controller
     {
         $filename = 'customer_request_' . $customer->name . '.csv';
         
-        // Storage::disk('public')->put($filename, ); // @TODO laravelize this
         $sanitizedFilename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename);
-        $handle = fopen($sanitizedFilename, 'w');
+        $handle = fopen($sanitizedFilename, 'w'); // @TODO laravelize this?
 
         $headers = [
             ['Submitted  by (Required)',],
@@ -171,9 +170,9 @@ class CustomerController extends Controller
 
         fputcsv($handle, $data);
 
-        // fclose($handle); // @TODO likely comment this back in
+        fclose($handle);
 
-        return response()->download(public_path($sanitizedFilename)); //->deleteFileAfterSend(true); //@TODO comment back in likely
+        return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
     }
     
 }

@@ -13,9 +13,11 @@
 git clone https://github.com/Symbiota/SymbiotaServices.git
 cd SymbiotaServices
 npm install && npm run build
-composer run dev
+composer install
 cp .env.example .env
 ```
+
+If you're running a local dev instance, you may need to run `composer run dev`.
 
 Open an editor and edit .env to use mariadb. Something like this:
 
@@ -46,6 +48,8 @@ Run the database migration:
 `php artisan migrate`
 
 Note that there's an .htaccess file in the public directory. It may need to be removed for local instances and customized in other environments as needed. This is the configuration that we have working currently in the dev001 server, which has an alias to the /Services path.
+
+Also note that permissions for the `storage/` and `public/` directories may need to be relaxed: `chmod -R g+rw,o+rw storage public`.
 
 ## About Laravel
 
