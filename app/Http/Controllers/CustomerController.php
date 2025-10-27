@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 
 class CustomerController extends Controller
 {
@@ -113,7 +114,10 @@ class CustomerController extends Controller
     public function exportCSV(Customer $customer, Contract $contract)
     {
         $filename = 'customer_request_' . $customer->name . '.csv';
-        $handle = fopen($filename, 'w');
+        
+        // Storage::disk('public')->put($filename, ); // @TODO laravelize this
+        $sanitizedFilename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename);
+        $handle = fopen($sanitizedFilename, 'w');
 
         $headers = [
             ['Submitted  by (Required)',],
@@ -169,7 +173,7 @@ class CustomerController extends Controller
 
         fclose($handle);
 
-        return response()->download(public_path($filename))->deleteFileAfterSend(true);
+        return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
     }
     
 }
