@@ -28,6 +28,7 @@ Route::patch('/contracts/{contract}/update', [ContractController::class, 'update
 
 Route::patch('/customers/{customer}/update', [CustomerController::class, 'update'])->name('customers.update')->middleware('auth');
 Route::post('/customers/create', [CustomerController::class, 'create'])->name('customers.create')->middleware('auth');
+Route::get('/customers/search', [CustomerController::class, 'search'])->name('customers.search')->middleware('auth');
 Route::delete('/customers/{customer}/delete', [CustomerController::class, 'destroy'])->name('customers.delete')->middleware('auth');
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index')->middleware('auth');
 Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show')->middleware('auth');
