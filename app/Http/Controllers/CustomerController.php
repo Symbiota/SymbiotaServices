@@ -17,7 +17,7 @@ class CustomerController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        return view('customers.index', ['customers' =>  Customer::where('name', 'like', "%$search%")->get()->sortBy('name')]);
+        return view('customers.index', ['customers' => Customer::where('name', 'like', "%$search%")->get()->sortBy('name')]);
     }
 
     public function show(Customer $customer)

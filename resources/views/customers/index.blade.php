@@ -1,29 +1,34 @@
 <x-table-layout heading="Customers">
     <title>CUSTOMERS PAGE</title>
 
-    <div class="flex items-center">
-        <div x-data = "{ show: false, clearForm() {
+    <div x-data = "{ show: false, clearForm() {
             const form = document.getElementById('customer-create-form');
             if (form) {
                 form.reset();
             }
         } }"
-            id="create-form" @close-form.window="show=false"
-            @create-success.window="clearForm()">
+        id="create-form" @close-form.window="show=false"
+        @create-success.window="clearForm()">
+
+        <div class="flex items-center">
+
             <button @click="show = true"
                 class='relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300'>
                 Create Customer
             </button>
-            <x-customer-form :formMethod="'POST'"
-                :formEndpoint="route('customers.create')"></x-customer-form>
+
+            <form class="ml-auto" action="{{ route('customers.search') }}"
+                method="GET">
+                <input
+                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300"
+                    type="text" name="search"
+                    placeholder="Search Customers">
+                <x-ec-button class="!ml-1">⌕</x-ec-button>
+            </form>
+
         </div>
 
-        <form class="ml-4"action="{{ route('customers.search') }}"
-            method="GET">
-            <input type="text" name="search" placeholder="Search Customers">
-            <input type="image" name="submit"
-                src="{{ asset('/images/find.png') }}">
-        </form>
+        <x-customer-form :formMethod="'POST'" :formEndpoint="route('customers.create')"></x-customer-form>
     </div>
 
     <br>
