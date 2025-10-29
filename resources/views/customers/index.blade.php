@@ -45,8 +45,12 @@
                 </div>
             @endif
             @if (count($customers) == 0)
-                <p class="px-4 py-1 text-center text-2xl text-gray-700">No customers
-                    found.</p>
+                <div class="px-4 text-center text-2xl text-gray-700">
+                    <p>No customers found.</p>
+                    <a class="text-blue-700 underline decoration-2 inline-block mt-3"
+                        href="{{ route('customers.index') }}">Back to
+                        Customers Page</a>
+                </div>
             @endif
             @foreach ($customers as $customer)
                 <a href="{{ route('customers.show', $customer) }}"
