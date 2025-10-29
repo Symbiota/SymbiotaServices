@@ -44,6 +44,10 @@
                     </ul>
                 </div>
             @endif
+            @if (count($customers) == 0)
+                <p class="px-4 py-1 text-center text-2xl text-gray-700">No customers
+                    found.</p>
+            @endif
             @foreach ($customers as $customer)
                 <a href="{{ route('customers.show', $customer) }}"
                     class="block px-4 py-6 border border-gray-500">
