@@ -17,7 +17,13 @@
         <li><b>Billing End Date:</b> {{ $invoice->billing_end }}</li>
         <li><b>Total Amount Billed:</b> ${{ $invoice->amount_billed }}</li>
         <li><b>Date Invoiced:</b> {{ $invoice->date_invoiced }}</li>
-        <li><b>Date Paid:</b> {{ $invoice->date_paid }}</li>
+        <li><b>Date Paid:</b>
+            @if (isset($invoice->date_paid))
+                {{ $invoice->date_paid }}
+            @else
+                <b class="text-red-500">NOT PAID</b>
+            @endif
+        </li>
         <li><b>Notes:</b> {{ $invoice->notes }}</li>
         <x-timestamps :model="$invoice"></x-timestamps>
     </ul>
