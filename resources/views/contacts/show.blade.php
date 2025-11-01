@@ -18,14 +18,14 @@
             <x-ec-button onclick="toggleView('edit-form')">Edit
                 Contact</x-ec-button>
 
-            @if ($errors->any())
-                <p class="text-red-500 text-sm ml-3"> Error Editing Contact
+            @if ($errors->contact_errors->any())
+                <p class="text-red-500 text-sm ml-3">Error Editing Contact
                 </p>
             @endif
         </div>
     </div>
 
-    <div id="edit-form" style="display:none;">
+    <div id="edit-form" class="hidden">
         <x-contact-form action="{{ route('contacts.update', $contact) }}"
             :contact="$contact">@method('PATCH')</x-contact-form>
     </div>

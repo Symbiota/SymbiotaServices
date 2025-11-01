@@ -2,16 +2,14 @@
     <title>SERVICES PAGE</title>
 
     <div class="flex items-center">
-        <x-ec-button onclick="toggleView('create-form')">Create
-            Service</x-ec-button>
+        <a href="{{ route('services.create') }}"><x-ec-button
+                hx-get="{{ route('services.create') }}" hx-target="#modal"
+                hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
+                Service</x-ec-button></a>
 
         @if ($errors->any())
             <p class="text-red-500 text-sm ml-3"> Error Creating Service</p>
         @endif
-    </div>
-
-    <div id="create-form" style="display:none;">
-        <x-service-form action="{{ route('services.store') }}"></x-service-form>
     </div>
 
     <br>
@@ -20,7 +18,10 @@
         @foreach ($services as $service)
             @if ($service->active_status == 1)
                 <a href="{{ route('services.show', $service) }}"
-                    class="px-4 py-6 border border-gray-500 flex justify-between items-center">
+                    class="px-4 py-6 border border-gray-500 flex justify-between items-center"
+                    hx-get="{{ route('services.show', $service) }}"
+                    hx-target="#modal" hx-swap="innerHTML"
+                    onclick="toggleView('modal-container')">
                     <div>
                         <strong>{{ $service->name }}</strong>
                         <div>ID: {{ $service->id }}</div>
@@ -40,11 +41,14 @@
     <br>
     <br>
 
-    <div id="retired_services" class = "space-y-4" style="display:none;">
+    <div id="retired_services" class = "space-y-4" class="hidden">
         @foreach ($services as $service)
             @if ($service->active_status == 0)
                 <a href="{{ route('services.show', $service) }}"
-                    class="block px-4 py-6 border border-gray-500">
+                    class="block px-4 py-6 border border-gray-500"
+                    hx-get="{{ route('services.show', $service) }}"
+                    hx-target="#modal" hx-swap="innerHTML"
+                    onclick="toggleView('modal-container')">
                     <strong>{{ $service->name }}</strong>
                     <div>ID: {{ $service->id }}</div>
                 </a>
