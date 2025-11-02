@@ -13,7 +13,7 @@
                             - {{ $contract->customer_id }}
                         </option>
                     @endisset
-                    @isset($customer)
+                    @isset($customer->id)
                         <option value="{{ $customer->id }}">
                             {{ $customer->name }} - {{ $customer->id }}
                         </option>
