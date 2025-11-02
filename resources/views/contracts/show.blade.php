@@ -94,7 +94,7 @@
 
     </div>
 
-    <div id="edit-form" style="display:none;">
+    <div id="edit-form" class="hidden">
         <x-contract-form :contract="$contract" :customers="$customers" :contacts="$contacts"
             action="{{ route('contracts.update', $contract) }}">@method('PATCH')</x-contract-form>
     </div>
