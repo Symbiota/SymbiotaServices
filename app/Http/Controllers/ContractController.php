@@ -35,7 +35,7 @@ class ContractController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'customer_id' => ['required', 'exists:customers,id'],
+            'customer_id' => ['required', 'exists:customers,name'],
             'financial_contact_id' => ['required', 'numeric:strict', 'exists:contacts,id'],
             'pi_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
             'technical_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
@@ -48,6 +48,9 @@ class ContractController extends Controller
         $data += ['original_contact_id' => $data['financial_contact_id'], 'current_financial_contact_id' => $data['financial_contact_id']];
         unset($data['financial_contact_id']);
 
+        $customer = Customer::where('name', $data['customer_id'])->firstOrFail();
+        $data['customer_id'] = $customer->id;
+
         $contract = Contract::create($data);
 
         return redirect()->route('contracts.show', $contract);
@@ -56,7 +59,7 @@ class ContractController extends Controller
     public function update(Request $request, Contract $contract)
     {
         $data = $request->validate([
-            'customer_id' => ['required', 'exists:customers,id'],
+            'customer_id' => ['required', 'exists:customers,name'],
             'financial_contact_id' => ['required', 'numeric:strict', 'exists:contacts,id'],
             'pi_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
             'technical_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
@@ -65,10 +68,13 @@ class ContractController extends Controller
             'darbi_special_instructions' => ['nullable'],
             'notes' => ['nullable'],
         ]);
-
+        
         $data += ['current_financial_contact_id' => $data['financial_contact_id']];
         unset($data['financial_contact_id']);
 
+        $customer = Customer::where('name', $data['customer_id'])->firstOrFail();
+        $data['customer_id'] = $customer->id;
+        
         $contract->update($data);
 
         return redirect()->route('contracts.show', $contract);
