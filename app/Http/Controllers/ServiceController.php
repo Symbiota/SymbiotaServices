@@ -46,7 +46,7 @@ class ServiceController extends Controller
                 'name' => ['required'],
                 'darbi_item_number' => ['required',],
                 'price_per_unit' => ['required', 'numeric:strict'],
-                'description' => ['required'],
+                'description' => ['nullable'],
                 'line_ref_1' => ['nullable'],
                 'line_ref_2' => ['nullable'],
             ]);
@@ -74,7 +74,7 @@ class ServiceController extends Controller
                 'name' => ['required'],
                 'darbi_item_number' => ['required'],
                 'price_per_unit' => ['required', 'numeric:strict'],
-                'description' => ['required'],
+                'description' => ['nullable'],
                 'line_ref_1' => ['nullable'],
                 'line_ref_2' => ['nullable'],
             ]);
