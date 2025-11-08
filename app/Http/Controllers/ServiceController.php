@@ -44,7 +44,7 @@ class ServiceController extends Controller
         try {
             $data = $request->validate([
                 'name' => ['required'],
-                'darbi_item_number' => ['required',],
+                'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
                 'price_per_unit' => ['required', 'numeric:strict'],
                 'description' => ['nullable'],
                 'line_ref_1' => ['nullable'],
@@ -72,7 +72,7 @@ class ServiceController extends Controller
         try {
             $data = $request->validate([
                 'name' => ['required'],
-                'darbi_item_number' => ['required'],
+                'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
                 'price_per_unit' => ['required', 'numeric:strict'],
                 'description' => ['nullable'],
                 'line_ref_1' => ['nullable'],
