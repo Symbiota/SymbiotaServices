@@ -110,8 +110,10 @@ class InvoiceController extends Controller
 
     public function exportCSV(Invoice $invoice)
     {
-        $filename = 'invoice_' . $invoice->id . '.csv';
-        $handle = fopen($filename, 'w');
+        $filename = 'BillingInformation_' . $invoice->contract->customer->name . '_' . date('Y-m-d') . '.csv';
+
+        $sanitizedFilename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename);
+        $handle = fopen($sanitizedFilename, 'w');
 
         $headers = [
             ['Submitted  by (Required)',],
@@ -154,17 +156,17 @@ class InvoiceController extends Controller
         }
 
         $data = [
-            'KUINT/RSINT', // BUSINESS UNIT - KUINT or RSINT
-            $invoice->contract->customer->department_name,
-            $invoice->contract->customer->name,
+            'RSINT', // BUSINESS UNIT - KUINT or RSINT
+            'KUCR Symbiota', // BILLING UNIT/DEPARTMENT NAME
+            '1 - ' . $invoice->contract->customer->name,
             $invoice->contract->customer->darbi_customer_account_number,
             $invoice->contract->customer->darbi_site,
             $invoice->financial_contact->first_name . ' ' . $invoice->financial_contact->last_name, // NOTE: Invoice Financial Contact
             $invoice->services[0]->darbi_item_number,
             $invoice->services[0]->description,
-            '', // SALESPERSON
+            'Nico Franz', // SALESPERSON
             $invoice->services[0]->pivot->qty,
-            '', // UOM
+            'EA', // UOM
             $invoice->services[0]->price_per_unit,
             '$' . $invoice->services[0]->pivot->amount_owed,
             $invoice->billing_start, // NOTE: Billings Notes has MM/DD/YYYY, current settings is YYYY-MM-DD
@@ -174,7 +176,7 @@ class InvoiceController extends Controller
             $invoice->services[0]->line_ref_1,
             $invoice->services[0]->line_ref_2,
             $invoice->contract->darbi_special_instructions,
-            'Internal invoice ID: ' . $invoice->id,
+            'Symbiota Internal Invoice ID: #' . $invoice->id,
         ];
 
         fputcsv($handle, $data);
@@ -207,7 +209,7 @@ class InvoiceController extends Controller
 
         fclose($handle);
 
-        return response()->download(public_path($filename))->deleteFileAfterSend(true);
+        return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
     }
 
 }
