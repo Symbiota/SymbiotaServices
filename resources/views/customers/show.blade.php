@@ -1,4 +1,4 @@
-<x-table-layout heading="{{ $customer->name }}">
+<x-table-layout heading="{!! $customer->name !!}">
     <title>CUSTOMER: {{ $customer->name }}</title>
 
     @fragment('customer-list')
