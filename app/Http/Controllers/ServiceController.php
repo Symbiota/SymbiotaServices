@@ -53,8 +53,8 @@ class ServiceController extends Controller
 
             $service = Service::create($data);
 
-            return view('services.show', compact('service', 'isHTMX'))
-                ->fragmentIf($isHTMX, 'show-service');
+            return response(null, 204)
+                ->header('HX-Redirect', route('services.index'));
         } catch (ValidationException $e) {
 
             if ($isHTMX) {
