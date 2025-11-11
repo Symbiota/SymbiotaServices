@@ -17,40 +17,32 @@ class ContactController extends Controller
         return view('contacts.show', ['contact' => $contact]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        request()->validateWithBag('contact_errors', [
+        $data = $request->validateWithBag('contact_errors', [
             'first_name' => ['required'],
             'last_name' => ['required'],
             'email' => ['required', 'email'],
+            'phone_number' => ['nullable'],
+            'notes' => ['nullable'],
         ]);
 
-        Contact::create([
-            'first_name' => request('first_name'),
-            'last_name' => request('last_name'),
-            'email' => request('email'),
-            'phone_number' => request('phone_number'),
-            'notes' => request('notes'),
-        ]);
+        Contact::create($data);
 
         return redirect()->back();
     }
 
-    public function update(Contact $contact)
+    public function update(Request $request, Contact $contact)
     {
-        request()->validateWithBag('contact_errors', [
+        $data = $request->validateWithBag('contact_errors', [
             'first_name' => ['required'],
             'last_name' => ['required'],
             'email' => ['required', 'email'],
+            'phone_number' => ['nullable'],
+            'notes' => ['nullable'],
         ]);
 
-        $contact->update([
-            'first_name' => request('first_name'),
-            'last_name' => request('last_name'),
-            'email' => request('email'),
-            'phone_number' => request('phone_number'),
-            'notes' => request('notes'),
-        ]);
+        $contact->update($data);
 
         return redirect()->route('contacts.show', $contact);
     }
