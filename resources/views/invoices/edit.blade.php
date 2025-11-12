@@ -3,11 +3,12 @@
         <x-modal-header :isHTMX="$isHTMX">Edit Invoice {{ $invoice->id }}:
         </x-modal-header>
         @if ($isHTMX)
-            <x-invoice-form :invoice="$invoice" :services="$services" :contacts="$contacts"
-                hx-post="{{ route('invoices.update', $invoice) }}" hx-target="#modal"
-                hx-swap="innerHTML">@method('PATCH')</x-invoice-form>
+            <x-invoice-form hx-post="{{ route('invoices.update', $invoice) }}"
+                hx-target="#modal" hx-swap="innerHTML" :errors="$errors"
+                :invoice="$invoice" :services="$services"
+                :contacts="$contacts">@method('PATCH')</x-invoice-form>
         @else
-            <x-invoice-form action="{{ route('invoices.edit', $invoice) }}"
+            <x-invoice-form action="{{ route('invoices.update', $invoice) }}"
                 class="-mt-8" :invoice="$invoice" :services="$services"
                 :contacts="$contacts">@method('PATCH')</x-service-form>
         @endif

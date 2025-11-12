@@ -7,7 +7,7 @@ use App\Models\Service;
 use App\Models\Contract;
 use App\Models\Contact;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Validation\ValidationException;
 
 class InvoiceController extends Controller
 {
@@ -57,7 +57,7 @@ class InvoiceController extends Controller
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
-            'notes' => ['nullable']
+            'notes' => ['nullable'],
         ]);
 
         $invoice = Invoice::create($data);
@@ -78,34 +78,51 @@ class InvoiceController extends Controller
 
     public function update(Request $request, Invoice $invoice)
     {
-        $data = $request->validate([
-            'contract_id' => ['required', 'exists:contracts,id'],
-            'financial_contact_id' => ['required', 'exists:contacts,id'],
-            'billing_start' => ['required', 'date_format:Y-m-d'],
-            'billing_end' => ['required', 'date_format:Y-m-d'],
-            'amount_billed' => ['required', 'numeric:strict'],
-            'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
-            'date_paid' => ['nullable', 'date_format:Y-m-d'],
-            'services' => ['required'],
-            'notes' => ['nullable']
-        ]);
+        $isHTMX = $request->hasHeader('HX-Request');
 
-        $invoice->update($data);
+        try {
+            $data = $request->validate([
+                'contract_id' => ['required', 'exists:contracts,id'],
+                'financial_contact_id' => ['required', 'exists:contacts,id'],
+                'billing_start' => ['required', 'date_format:Y-m-d'],
+                'billing_end' => ['required', 'date_format:Y-m-d'],
+                'amount_billed' => ['required', 'numeric:strict'],
+                'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
+                'date_paid' => ['nullable', 'date_format:Y-m-d'],
+                'services' => ['required'],
+                'notes' => ['nullable'],
+            ]);
 
-        $invoice->services()->detach();
+            $invoice->update($data);
+            $invoice->services()->detach();
+            $services = request('services');
+            $qtys = request('qty');
+            $amounts_owed = request('amount_owed');
 
-        $services = request('services');
-        $qtys = request('qty');
-        $amounts_owed = request('amount_owed');
+            $serviceData = [];
+            foreach ($services as $service_id) {
+                $serviceData[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id]];
+            }
+            
+            $invoice->services()->attach($serviceData);
 
-        $data = [];
-        foreach ($services as $service_id) {
-            $data[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id]];
+            if ($isHTMX) {
+                return response(null, 204)->header('HX-Redirect', route('invoices.show', $invoice));
+            }
+            return redirect()->route('invoices.show', $invoice);
+
+        } catch (ValidationException $e) {
+
+            if ($isHTMX) {
+                return view('invoices.edit', [
+                'isHTMX' => $isHTMX,
+                'invoice' => $invoice,
+                'services' => Service::all(),
+                'contacts' => Contact::all()->sortBy('last_name'),
+                ])->withErrors($e->errors())->fragment('edit-invoice');
+            }
+            throw $e;
         }
-
-        $invoice->services()->attach($data);
-
-        return redirect()->route('invoices.show', $invoice);
     }
 
     public function exportCSV(Invoice $invoice)
