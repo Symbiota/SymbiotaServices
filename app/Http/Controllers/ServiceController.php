@@ -29,14 +29,6 @@ class ServiceController extends Controller
             ->fragmentIf($isHTMX, 'create-service');
     }
 
-    public function edit(Request $request, Service $service)
-    {
-        $isHTMX = $request->hasHeader('HX-Request');
-
-        return view('services.edit', compact('service', 'isHTMX'))
-            ->fragmentIf($isHTMX, 'edit-service');
-    }
-
     public function store(Request $request)
     {
         $isHTMX = $request->hasHeader('HX-Request');

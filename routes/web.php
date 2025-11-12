@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/invoices/create/{contract?}', [InvoiceController::class, 'create'])->name('invoices.create');
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
     Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('invoices.show');
+    Route::get('/invoices/{invoice}/edit', [InvoiceController::class, 'edit'])->name('invoices.edit');
     Route::get('/invoices/{invoice}/exportCSV', [InvoiceController::class, 'exportCSV'])->name('invoices.exportCSV');
     Route::post('/invoices/store', [InvoiceController::class, 'store'])->name('invoices.store');
     Route::patch('/invoices/{invoice}/update', [InvoiceController::class, 'update'])->name('invoices.update');

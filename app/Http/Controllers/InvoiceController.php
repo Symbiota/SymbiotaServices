@@ -34,9 +34,21 @@ class InvoiceController extends Controller
         ]);
     }
 
-    public function store()
+    public function edit(Request $request, Invoice $invoice)
     {
-        request()->validate([
+        $isHTMX = $request->hasHeader('HX-Request');
+
+        return view('invoices.edit', [
+            'isHTMX' => $isHTMX,
+            'invoice' => $invoice,
+            'services' => Service::all(),
+            'contacts' => Contact::all()->sortBy('last_name'),
+        ])->fragmentIf($isHTMX, 'edit-invoice');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
             'financial_contact_id' => ['required', 'exists:contacts,id'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
@@ -45,18 +57,10 @@ class InvoiceController extends Controller
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
+            'notes' => ['nullable']
         ]);
 
-        $invoice = Invoice::create([
-            'contract_id' => request('contract_id'),
-            'financial_contact_id' => request('financial_contact_id'),
-            'billing_start' => request('billing_start'),
-            'billing_end' => request('billing_end'),
-            'amount_billed' => request('amount_billed'),
-            'date_invoiced' => request('date_invoiced'),
-            'date_paid' => request('date_paid'),
-            'notes' => request('notes'),
-        ]);
+        $invoice = Invoice::create($data);
 
         $services = request('services');
         $qtys = request('qty');
@@ -72,9 +76,9 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.show', $invoice);
     }
 
-    public function update(Invoice $invoice)
+    public function update(Request $request, Invoice $invoice)
     {
-        request()->validate([
+        $data = $request->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
             'financial_contact_id' => ['required', 'exists:contacts,id'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
@@ -83,18 +87,10 @@ class InvoiceController extends Controller
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
+            'notes' => ['nullable']
         ]);
 
-        $invoice->update([
-            'contract_id' => request('contract_id'),
-            'financial_contact_id' => request('financial_contact_id'),
-            'billing_start' => request('billing_start'),
-            'billing_end' => request('billing_end'),
-            'amount_billed' => request('amount_billed'),
-            'date_invoiced' => request('date_invoiced'),
-            'date_paid' => request('date_paid'),
-            'notes' => request('notes'),
-        ]);
+        $invoice->update($data);
 
         $invoice->services()->detach();
 

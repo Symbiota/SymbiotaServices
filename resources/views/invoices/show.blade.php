@@ -36,8 +36,12 @@
             CSV</x-ec-button></a>
 
         <div class="flex items-center">
-            <x-ec-button onclick="toggleView('edit-form')">Edit
-                Invoice</x-ec-button>
+            <a href="{{ route('invoices.edit', $invoice) }}">
+                <x-ec-button hx-get="{{ route('invoices.edit', $invoice) }}"
+                    hx-target="#modal" hx-swap="innerHTML"
+                    onclick="toggleView('modal-container')">Edit
+                    Invoice</x-ec-button>
+            </a>
 
             @if ($errors->any())
                 <p class="text-red-500 text-sm ml-3"> Error Editing Invoice
@@ -45,12 +49,6 @@
             @endif
         </div>
 
-    </div>
-
-    <div id="edit-form" class="hidden">
-        <x-invoice-form action="{{ route('invoices.update', $invoice) }}"
-            :invoice="$invoice" :services="$services"
-            :contacts="$contacts">@method('PATCH')</x-invoice-form>
     </div>
 
     <br>
