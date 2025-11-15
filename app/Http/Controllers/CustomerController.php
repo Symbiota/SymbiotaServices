@@ -113,7 +113,8 @@ class CustomerController extends Controller
 
     public function exportCSV(Customer $customer, Contract $contract)
     {
-        $filename = 'CustomerRequest_' . $customer->name . '_' . date('Y-m-d') . '.csv';
+        $customer_name = preg_replace('/\s+/', '', $customer->name);
+        $filename = 'CustomerRequest_' . $customer_name . '_' . date('Y-m-d') . '.csv';
         
         $sanitizedFilename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename);
         $handle = fopen($sanitizedFilename, 'w'); // @TODO laravelize this?
