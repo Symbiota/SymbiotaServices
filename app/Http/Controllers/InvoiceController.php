@@ -168,7 +168,7 @@ class InvoiceController extends Controller
             $invoice->services[0]->pivot->qty,
             'EA', // UOM
             $invoice->services[0]->price_per_unit,
-            '$' . $invoice->services[0]->pivot->amount_owed,
+            '$ ' . $invoice->services[0]->pivot->amount_owed,
             $invoice->billing_start, // NOTE: Billings Notes has MM/DD/YYYY, current settings is YYYY-MM-DD
             $invoice->billing_end,
             $invoice->contract->darbi_header_ref_1,
@@ -190,11 +190,11 @@ class InvoiceController extends Controller
             '',
             $invoice->services[$i]->darbi_item_number,
             $invoice->services[$i]->description,
-            '',
+            'Nico Franz',
             $invoice->services[$i]->pivot->qty,
-            '',
+            'EA',
             $invoice->services[$i]->price_per_unit,
-            '$' . $invoice->services[$i]->pivot->amount_owed,
+            '$ ' . $invoice->services[$i]->pivot->amount_owed,
             '',
             '',
             '',
