@@ -35,9 +35,9 @@
                 @endforeach
             </datalist>
 
-            <x-customer-form :formMethod="'POST'"
-                :formEndpoint="route('customers.create')"></x-customer-form>
         </div>
+
+        <x-customer-form :formMethod="'POST'" :formEndpoint="route('customers.create')"></x-customer-form>
 
         <br>
 
