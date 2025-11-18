@@ -31,7 +31,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="description"> Description
+            <x-form-box for="description"> Description*
                 <textarea
                     class="block min-w-0 w-[98.5%] grow py-1.5 pr-3 pl-1 ml-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500"
                     name="description" id="description">{{ $service->description ?? (old('description') ?? request()->input('description')) }}</textarea>

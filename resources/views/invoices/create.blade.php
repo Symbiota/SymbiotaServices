@@ -3,8 +3,8 @@
 
     <div class="flex items-start">
         <div class="w-4/5">
-            <x-invoice-form class="-mt-8" :contract="$contract" :contracts="$contracts"
-                :services="$services" :contacts="$contacts"
+            <x-invoice-form class="-mt-8" :contract="$contract" :services="$services"
+                :contacts="$contacts"
                 action="{{ route('invoices.store') }}"></x-invoice-form>
         </div>
 

@@ -6,14 +6,8 @@
         <div class="border-b border-gray-900/10 pb-12">
 
             <x-form-box for="contract_id"> Contract ID*
-                <x-form-input type="select" name="contract_id" id="contract_id">
-                    @foreach ($contracts as $contract)
-                        <option value="{{ $contract->id }}">
-                            {{ $contract->customer->name }} -
-                            {{ $contract->id }}
-                        </option>
-                    @endforeach
-                </x-form-input>
+                <x-form-input type="text" name="contract_id" id="contract_id"
+                    value="{{ $invoice->contract_id ?? ($contract->id ?? old('contract_id')) }}"></x-form-input>
                 @error('contract_id')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}
