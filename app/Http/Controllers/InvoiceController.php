@@ -110,7 +110,8 @@ class InvoiceController extends Controller
 
     public function exportCSV(Invoice $invoice)
     {
-        $filename = 'BillingInformation_' . $invoice->contract->customer->name . '_' . date('Y-m-d') . '.csv';
+        $customer_name = preg_replace('/\s+/', '', $invoice->contract->customer->name);
+        $filename = 'BillingInformation_' . $customer_name . '_' . date('Y-m-d') . '.csv';
 
         $sanitizedFilename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename);
         $handle = fopen($sanitizedFilename, 'w');
