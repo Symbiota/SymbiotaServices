@@ -5,9 +5,17 @@
     <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
 
-            <x-form-box for="customer_id"> Customer ID*
-                <x-form-input type="text" name="customer_id" id="customer_id"
-                    value="{{ $contract->customer_id ?? ($customer->id ?? old('customer_id')) }}"></x-form-input>
+            <x-form-box for="customer_id"> Customer Name*
+                <x-form-input type="type" list="customer-datalist"
+                    name="customer_id" id="customer_id"
+                    value="{{ $contract->customer->name ?? ($customer->name ?? old('customer_id')) }}">
+                </x-form-input>
+                <datalist id="customer-datalist">
+                    @foreach ($customers as $customer)
+                        <option value="{{ $customer->name }}">
+                            {{ $customer->name }}</option>
+                    @endforeach
+                </datalist>
                 @error('customer_id')
                     <p class="text-red-500 text-sm ml-3">
                         {{ $message }}</p>
