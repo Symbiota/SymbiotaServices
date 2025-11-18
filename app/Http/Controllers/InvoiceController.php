@@ -18,8 +18,14 @@ class InvoiceController extends Controller
 
     public function show(Invoice $invoice)
     {
+        $contracts = Contract::select('contracts.*')
+            ->join('customers', 'customers.id', '=', 'contracts.customer_id')
+            ->orderBy('customers.name')
+            ->get();
+
         return view('invoices.show', [
             'invoice' => $invoice,
+            'contracts'=> $contracts,
             'services' => Service::all(),
             'contacts' => Contact::all()->sortBy('last_name'),
         ]);
@@ -27,16 +33,22 @@ class InvoiceController extends Controller
 
     public function create(Contract $contract)
     {
+        $contracts = Contract::select('contracts.*')
+            ->join('customers', 'customers.id', '=', 'contracts.customer_id')
+            ->orderBy('customers.name')
+            ->get();
+
         return view('invoices.create', [
             'contract' => $contract,
+            'contracts' => $contracts,
             'services' => Service::all(),
             'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        request()->validate([
+        $data = $request->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
             'financial_contact_id' => ['required', 'exists:contacts,id'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
@@ -45,18 +57,10 @@ class InvoiceController extends Controller
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
+            'notes' => ['nullable'],
         ]);
 
-        $invoice = Invoice::create([
-            'contract_id' => request('contract_id'),
-            'financial_contact_id' => request('financial_contact_id'),
-            'billing_start' => request('billing_start'),
-            'billing_end' => request('billing_end'),
-            'amount_billed' => request('amount_billed'),
-            'date_invoiced' => request('date_invoiced'),
-            'date_paid' => request('date_paid'),
-            'notes' => request('notes'),
-        ]);
+        $invoice = Invoice::create($data);
 
         $services = request('services');
         $qtys = request('qty');
@@ -72,9 +76,9 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.show', $invoice);
     }
 
-    public function update(Invoice $invoice)
+    public function update(Request $request, Invoice $invoice)
     {
-        request()->validate([
+        $data = $request->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
             'financial_contact_id' => ['required', 'exists:contacts,id'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
@@ -83,18 +87,10 @@ class InvoiceController extends Controller
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
+            'notes' => ['nullable'],
         ]);
 
-        $invoice->update([
-            'contract_id' => request('contract_id'),
-            'financial_contact_id' => request('financial_contact_id'),
-            'billing_start' => request('billing_start'),
-            'billing_end' => request('billing_end'),
-            'amount_billed' => request('amount_billed'),
-            'date_invoiced' => request('date_invoiced'),
-            'date_paid' => request('date_paid'),
-            'notes' => request('notes'),
-        ]);
+        $invoice->update($data);
 
         $invoice->services()->detach();
 
@@ -114,8 +110,11 @@ class InvoiceController extends Controller
 
     public function exportCSV(Invoice $invoice)
     {
-        $filename = 'invoice_' . $invoice->id . '.csv';
-        $handle = fopen($filename, 'w');
+        $customer_name = preg_replace('/\s+/', '', $invoice->contract->customer->name);
+        $filename = 'BillingInformation_' . $customer_name . '_' . date('Y-m-d') . '.csv';
+
+        $sanitizedFilename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename);
+        $handle = fopen($sanitizedFilename, 'w');
 
         $headers = [
             ['Submitted  by (Required)',],
@@ -158,19 +157,19 @@ class InvoiceController extends Controller
         }
 
         $data = [
-            'KUINT/RSINT', // BUSINESS UNIT - KUINT or RSINT
-            $invoice->contract->customer->department_name,
-            $invoice->contract->customer->name,
+            'RSINT', // BUSINESS UNIT - KUINT or RSINT
+            'KUCR Symbiota', // BILLING UNIT/DEPARTMENT NAME
+            '1 - ' . $invoice->contract->customer->name,
             $invoice->contract->customer->darbi_customer_account_number,
             $invoice->contract->customer->darbi_site,
             $invoice->financial_contact->first_name . ' ' . $invoice->financial_contact->last_name, // NOTE: Invoice Financial Contact
             $invoice->services[0]->darbi_item_number,
             $invoice->services[0]->description,
-            '', // SALESPERSON
+            'Nico Franz', // SALESPERSON
             $invoice->services[0]->pivot->qty,
-            '', // UOM
+            'EA', // UOM
             $invoice->services[0]->price_per_unit,
-            '$' . $invoice->services[0]->pivot->amount_owed,
+            '$ ' . $invoice->services[0]->pivot->amount_owed,
             $invoice->billing_start, // NOTE: Billings Notes has MM/DD/YYYY, current settings is YYYY-MM-DD
             $invoice->billing_end,
             $invoice->contract->darbi_header_ref_1,
@@ -178,7 +177,7 @@ class InvoiceController extends Controller
             $invoice->services[0]->line_ref_1,
             $invoice->services[0]->line_ref_2,
             $invoice->contract->darbi_special_instructions,
-            'Internal invoice ID: ' . $invoice->id,
+            'Symbiota Internal Invoice ID: #' . $invoice->id,
         ];
 
         fputcsv($handle, $data);
@@ -192,11 +191,11 @@ class InvoiceController extends Controller
             '',
             $invoice->services[$i]->darbi_item_number,
             $invoice->services[$i]->description,
-            '',
+            'Nico Franz',
             $invoice->services[$i]->pivot->qty,
-            '',
+            'EA',
             $invoice->services[$i]->price_per_unit,
-            '$' . $invoice->services[$i]->pivot->amount_owed,
+            '$ ' . $invoice->services[$i]->pivot->amount_owed,
             '',
             '',
             '',
@@ -211,7 +210,7 @@ class InvoiceController extends Controller
 
         fclose($handle);
 
-        return response()->download(public_path($filename))->deleteFileAfterSend(true);
+        return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
     }
 
 }
