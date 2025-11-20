@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description', 300)->default('');
+            $table->string('description', 300)->default('')->nullable();
             $table->decimal('price_per_unit', 20, 2)->default(0);
             $table->string('darbi_item_number', 20)->default('');
             $table->boolean('active_status')->default(true);
