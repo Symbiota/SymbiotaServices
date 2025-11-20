@@ -3,7 +3,8 @@
 
     <div class="flex items-start">
         <div class="w-4/5">
-            <x-contract-form class="-mt-8" :customer="$customer" :contacts="$contacts"
+            <x-contract-form class="-mt-8" :customer="$customer" :customers="$customers"
+                :contacts="$contacts"
                 action="{{ route('contracts.store') }}"></x-contract-form>
         </div>
 
@@ -18,7 +19,7 @@
                 @endif
             </div>
 
-            <div id="create-form" style="display:none;">
+            <div id="create-form" class="hidden">
                 <x-contact-form
                     action="{{ route('contacts.store') }}"></x-contact-form>
             </div>

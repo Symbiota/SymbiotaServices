@@ -19,7 +19,7 @@
                     <div class="flex items-center">
                         <div class="shrink-0">
                             <img class="h-12 w-17 bg-white rounded-xl"
-                                src="{{ asset('LogoSymbiotaPNG.png') }}"
+                                src="{{ asset('/images/LogoSymbiotaPNG.png') }}"
                                 alt="Symbiota" />
                         </div>
                         <div class="ml-10 flex items-baseline space-x-4">
@@ -73,6 +73,13 @@
         </header>
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <div id="modal-container"
+                    onclick="toggleView('modal-container')"
+                    class="flex items-center justify-center hidden fixed top-0 left-0 w-full h-full bg-black/50 z-10">
+                    <div id="modal" onclick="event.stopPropagation()"
+                        class="relative px-4 py-6 sm:px-6 lg:px-8 w-1/2 max-w-[80%] rounded-lg bg-white shadow-sm z-20 overflow-y-auto max-h-[90vh]">
+                    </div>
+                </div>
                 <!-- Your content -->
                 {{ $slot }}
             </div>
