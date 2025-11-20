@@ -6,6 +6,11 @@
         <li><a href="{{ route('contracts.show', $invoice->contract) }}">
                 <b class="text-blue-700 underline decoration-2">
                     Contract ID:</b> {{ $invoice->contract_id }}</a></li>
+        <li><a
+                href="{{ route('customers.show', $invoice->contract->customer) }}"><b
+                    class="text-blue-700 underline decoration-2">Customer ID:</b>
+                {{ $invoice->contract->customer->id }} -
+                {{ $invoice->contract->customer->name }}</a></li>
         <li><a href="{{ route('contacts.show', $invoice->financial_contact) }}">
                 <b class="text-blue-700 underline decoration-2">Financial Contact
                     ID:</b>
@@ -49,6 +54,12 @@
             @endif
         </div>
 
+    </div>
+
+    <div id="edit-form" class="hidden">
+        <x-invoice-form action="{{ route('invoices.update', $invoice) }}"
+            :invoice="$invoice" :services="$services" :contracts="$contracts"
+            :contacts="$contacts">@method('PATCH')</x-invoice-form>
     </div>
 
     <br>

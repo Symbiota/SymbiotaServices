@@ -34,14 +34,19 @@ class ServiceController extends Controller
         $isHTMX = $request->hasHeader('HX-Request');
 
         try {
-            $data = $request->validate([
-                'name' => ['required'],
-                'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
-                'price_per_unit' => ['required', 'numeric:strict'],
-                'description' => ['required'],
-                'line_ref_1' => ['nullable'],
-                'line_ref_2' => ['nullable'],
-            ]);
+            $data = $request->validate(
+                [
+                    'name' => ['required'],
+                    'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
+                    'price_per_unit' => ['required', 'numeric:strict'],
+                    'description' => ['nullable'],
+                    'line_ref_1' => ['nullable'],
+                    'line_ref_2' => ['nullable'],
+                ],
+                [
+                    'darbi_item_number.regex' => 'DARBI Item Number should be SYMBI + 5 digits.'
+                ]
+            );
 
             $service = Service::create($data);
 
@@ -51,7 +56,6 @@ class ServiceController extends Controller
             return redirect()->route('services.index');
 
         } catch (ValidationException $e) {
-
             if ($isHTMX) {
                 return view('services.create', compact('isHTMX'))->withErrors($e->errors())
                     ->fragment('create-service');
@@ -65,14 +69,19 @@ class ServiceController extends Controller
         $isHTMX = $request->hasHeader('HX-Request');
 
         try {
-            $data = $request->validate([
-                'name' => ['required'],
-                'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
-                'price_per_unit' => ['required', 'numeric:strict'],
-                'description' => ['required'],
-                'line_ref_1' => ['nullable'],
-                'line_ref_2' => ['nullable'],
-            ]);
+            $data = $request->validate(
+                [
+                    'name' => ['required'],
+                    'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/'],
+                    'price_per_unit' => ['required', 'numeric:strict'],
+                    'description' => ['nullable'],
+                    'line_ref_1' => ['nullable'],
+                    'line_ref_2' => ['nullable'],
+                ],
+                [
+                    'darbi_item_number.regex' => 'DARBI Item Number should be SYMBI + 5 digits.'
+                ]
+            );
             $service->update($data);
             return view('services.show', compact('service', 'isHTMX'))->fragmentIf($isHTMX, 'show-service');
             
