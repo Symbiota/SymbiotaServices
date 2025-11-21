@@ -126,6 +126,9 @@ class InvoiceController extends Controller
                 'invoice' => $invoice,
                 'services' => Service::all(),
                 'contacts' => Contact::all()->sortBy('last_name'),
+                'contracts' => Contract::select('contracts.*')
+                    ->join('customers', 'customers.id', '=', 'contracts.customer_id')
+                    ->orderBy('customers.name')->get(),
                 ])->withErrors($e->errors())->fragment('edit-invoice');
             }
             throw $e;
