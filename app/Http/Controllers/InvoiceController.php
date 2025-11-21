@@ -18,16 +18,8 @@ class InvoiceController extends Controller
 
     public function show(Invoice $invoice)
     {
-        $contracts = Contract::select('contracts.*')
-            ->join('customers', 'customers.id', '=', 'contracts.customer_id')
-            ->orderBy('customers.name')
-            ->get();
-
         return view('invoices.show', [
             'invoice' => $invoice,
-            'contracts'=> $contracts,
-            'services' => Service::all(),
-            'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 
@@ -55,6 +47,9 @@ class InvoiceController extends Controller
             'invoice' => $invoice,
             'services' => Service::all(),
             'contacts' => Contact::all()->sortBy('last_name'),
+            'contracts' => Contract::select('contracts.*')
+                ->join('customers', 'customers.id', '=', 'contracts.customer_id')
+                ->orderBy('customers.name')->get(),
         ])->fragmentIf($isHTMX, 'edit-invoice');
     }
 
