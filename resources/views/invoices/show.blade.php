@@ -47,11 +47,6 @@
                     onclick="toggleView('modal-container')">Edit
                     Invoice</x-ec-button>
             </a>
-
-            @if ($errors->any())
-                <p class="text-red-500 text-sm ml-3"> Error Editing Invoice
-                </p>
-            @endif
         </div>
 
     </div>

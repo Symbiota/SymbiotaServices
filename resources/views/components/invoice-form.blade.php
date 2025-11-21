@@ -164,6 +164,11 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
+        @if ($errors->any())
+            <p class="text-red-500 text-sm ml-3"> Error Editing Invoice
+            </p>
+        @endif
+
         <a @if (request()->is('invoices/create/*')) href="{{ route('contracts.show', $contract) }}"
         @elseif (isset($invoice)) href="{{ route('invoices.show', $invoice) }}"
         @else href="{{ route('invoices.index') }}" @endif
