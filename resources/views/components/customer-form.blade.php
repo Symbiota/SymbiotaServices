@@ -54,15 +54,6 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="correspondence"> Correspondence
-                <x-form-input type="text" name="correspondence"
-                    id="correspondence" placeholder="email@email.com"
-                    value="{{ $customer->correspondence ?? '' }}"></x-form-input>
-                @error('correspondence')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
-                @enderror
-            </x-form-box>
-
             <x-form-box for="address_line_1"> Billing Address Line 1*
                 <x-form-input type="text" name="address_line_1"
                     id="address_line_1" placeholder=""

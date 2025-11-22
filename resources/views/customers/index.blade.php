@@ -64,8 +64,12 @@
                     <a href="{{ route('customers.show', $customer) }}"
                         class="block px-4 py-6 border border-gray-500">
                         <strong>{{ $customer->name }}</strong>
-                        <div>{{ $customer->darbi_customer_account_number }}:
-                            {{ $customer->correspondence }}</div>
+                        @isset($customer->department_name)
+                            <div>Department: {{ $customer->department_name }}</div>
+                        @endisset
+                        <div>DARBI Account
+                            Number: {{ $customer->darbi_customer_account_number }}
+                        </div>
                         <form hx-delete={{ route('customers.delete', $customer) }}
                             hx-target="#customer-list-div" hx-swap="outerHTML"
                             hx-confirm="Are you sure you want to delete this customer? All of their contracts would also be deleted."
