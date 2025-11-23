@@ -91,11 +91,6 @@
 
     </div>
 
-    <div id="edit-form" class="hidden">
-        <x-contract-form :contract="$contract" :customers="$customers" :contacts="$contacts"
-            action="{{ route('contracts.update', $contract) }}">@method('PATCH')</x-contract-form>
-    </div>
-
     <br>
 
     @foreach ($contract->invoices as $invoice)
