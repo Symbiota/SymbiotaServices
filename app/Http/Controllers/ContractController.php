@@ -32,6 +32,18 @@ class ContractController extends Controller
         ]);
     }
 
+    public function edit(Request $request, Contract $contract)
+    {
+        $isHTMX = $request->hasHeader('HX-Request');
+
+        return view('contracts.edit', [
+            'isHTMX' => $isHTMX,
+            'contract' => $contract,
+            'contacts' => Contact::all()->sortBy('last_name'),
+            'customers' => Customer::all()->sortBy('name'),
+        ])->fragmentIf($isHTMX, 'edit-contract');
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([

@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/contracts/create/{customer?}', 'create')->name('contracts.create');
         Route::get('/contracts', 'index')->name('contracts.index');
         Route::get('/contracts/{contract}', 'show')->name('contracts.show');
+        Route::get('/contracts/{contract}/edit', 'edit')->name('contracts.edit');
         Route::post('/contracts/store', 'store')->name('contracts.store');
         Route::delete('/contracts/{contract}/delete', 'destroy')->name('contracts.destroy');
         Route::patch('/contracts/{contract}/update', 'update')->name('contracts.update');

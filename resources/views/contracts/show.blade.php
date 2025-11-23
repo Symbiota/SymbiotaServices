@@ -63,7 +63,6 @@
     <div class="flex items-start">
 
         <div class="flex-col items-center">
-
             <form method="POST"
                 action="{{ route('contracts.destroy', $contract) }}">
                 @csrf
@@ -72,24 +71,22 @@
                     onclick="return confirm('Delete this contract?');">Delete
                     Contract</x-ec-button>
             </form>
-
         </div>
 
         <a
-            href="{{ route('customers.exportCSV', ['customer' => $contract->customer, 'contract' => $contract]) }}"<x-ec-button>Export
-            Customer CSV</x-ec-button></a>
+            href="{{ route('customers.exportCSV', ['customer' => $contract->customer, 'contract' => $contract]) }}"><x-ec-button>Export
+                Customer CSV</x-ec-button></a>
 
-        <a href="{{ route('invoices.create', $contract) }}"<x-ec-button>Create
-            Invoice</x-ec-button></a>
+        <a href="{{ route('invoices.create', $contract) }}"><x-ec-button>Create
+                Invoice</x-ec-button></a>
 
         <div class="flex items-center">
-            <x-ec-button onclick="toggleView('edit-form')">Edit
-                Contract</x-ec-button>
-
-            @if ($errors->any())
-                <p class="text-red-500 text-sm ml-3"> Error Editing Contract
-                </p>
-            @endif
+            <a href="{{ route('contracts.edit', $contract) }}">
+                <x-ec-button hx-get="{{ route('contracts.edit', $contract) }}"
+                    hx-target="#modal" hx-swap="innerHTML"
+                    onclick="toggleView('modal-container')">Edit
+                    Contract</x-ec-button>
+            </a>
         </div>
 
     </div>
