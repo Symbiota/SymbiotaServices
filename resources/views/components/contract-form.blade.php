@@ -150,11 +150,6 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
-        @if ($errors->any())
-            <p class="text-red-500 text-sm ml-3"> Error Editing Contract
-            </p>
-        @endif
-
         <a @if (request()->is('contracts/create/*')) href="{{ route('customers.show', $customer) }}"
         @elseif (isset($contract)) href="{{ route('contracts.show', $contract) }}"
         @else href="{{ route('contracts.index') }}" @endif
