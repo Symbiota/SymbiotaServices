@@ -39,7 +39,7 @@
 
         </div>
 
-        <div id="edit-form" class="hidden">
+        <div id="edit-form" class="{{ $errors->any() ? '' : 'hidden' }}">
             @if ($isHTMX)
                 <x-service-form class="-mt-2" :errors="$errors" :service="$service"
                     hx-post="{{ route('services.update', $service) }}"
