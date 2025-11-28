@@ -1,7 +1,7 @@
 <x-table-layout heading="Contracts">
     <title>CONTRACTS PAGE</title>
 
-    <a href="{{ route('contracts.create') }}"> <x-ec-button>Create
+    <a href="{{ route('contracts.create') }}"><x-ec-button>Create
             Contract</x-ec-button></a>
 
     <br>

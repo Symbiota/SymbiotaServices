@@ -28,47 +28,28 @@ class CustomerController extends Controller
 
     public function create(Request $request)
     {
-        try {
-            $validated = $request->validate([
-                'name' => ['required', 'unique:customers,name'],
-                'darbi_customer_account_number' => ['nullable'],
-                'darbi_site' => ['nullable'],
-                'address_line_1' => ['required'],
-                'city' => ['required'],
-                'state' => ['required'],
-                'zip_code' => ['required'],
-                'country' => ['required'],
-            ]);
-            if ($validated) {
-                Customer::create([
-                    'name' => request('name'),
-                    'darbi_customer_account_number' => request('darbi_customer_account_number'),
-                    'darbi_site' => request('darbi_site'),
-                    'correspondence' => request('correspondence'),
-                    'department_name' => request('department_name'),
-                    'address_line_1' => request('address_line_1'),
-                    'address_line_2' => request('address_line_2'),
-                    'city' => request('city'),
-                    'state' => request('state'),
-                    'zip_code' => request('zip_code'),
-                    'country' => request('country'),
-                    'notes' => request('notes'),
-                ]);
-                $customers = Customer::all();
-                $viewHtml = view('customers.index', compact('customers'))->fragment('customer-list');
-                return response($viewHtml)->header(
-                    'HX-Trigger',
-                    json_encode([
-                        'toast' => 'Customer successfully created!',
-                        'close-form' => true,
-                        'create-success' => true,
-                    ]),
-                );
-            }
-        } catch (ValidationException $e) {
-            $customers = Customer::all();
-            return view('customers.index', compact('customers'))->withErrors($e->errors())->fragment('customer-list');
-        }
+        return view('customers.create');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'unique:customers,name'],
+            'department_name' => ['nullable'],
+            'darbi_customer_account_number' => ['nullable'],
+            'darbi_site' => ['nullable'],
+            'address_line_1' => ['required'],
+            'address_line_2' => ['nullable'],
+            'city' => ['required'],
+            'state' => ['required'],
+            'zip_code' => ['required'],
+            'country' => ['required'],
+            'notes' => ['nullable'],
+        ]);
+
+        $customer = Customer::create($data);
+
+        return redirect()->route('customers.show', $customer);
     }
 
     public function update(Customer $customer)
@@ -121,13 +102,17 @@ class CustomerController extends Controller
     {
         $customer_name = preg_replace('/\s+/', '', $customer->name);
         $filename = 'CustomerRequest_' . $customer_name . '_' . date('Y-m-d') . '.csv';
-        
+
         $sanitizedFilename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename);
         $handle = fopen($sanitizedFilename, 'w'); // @TODO laravelize this?
 
         $headers = [
             ['Submitted  by (Required)',],
-            ['NAME', 'EMAIL', 'PHONE', 'REQUEST DATE',
+            [
+                'NAME',
+                'EMAIL',
+                'PHONE',
+                'REQUEST DATE',
             ],
             [
                 auth()->user()->name, // Works, inputs user name
@@ -135,22 +120,23 @@ class CustomerController extends Controller
                 '',
                 date('m/d/Y'), // Current date
             ],
-            [], [],
+            [],
+            [],
             [
-            'Requested Action',
-            'Customer Name - Department/PI/External Customer',
-            'Department Name - Department/Division/Store Number',
-            'Address Line 1 - Street Address',
-            'Address Line 2 - Building, Suite, Room',
-            'City',
-            'State',
-            'Postal Code',
-            'Country',
-            'Bill To Contact First Name',
-            'Bill To Contact Last Name',
-            'Bill To Contact Email Address',
-            'Does customer require additional attachments? (Create Site with single contact)',
-            'NOTES:',
+                'Requested Action',
+                'Customer Name - Department/PI/External Customer',
+                'Department Name - Department/Division/Store Number',
+                'Address Line 1 - Street Address',
+                'Address Line 2 - Building, Suite, Room',
+                'City',
+                'State',
+                'Postal Code',
+                'Country',
+                'Bill To Contact First Name',
+                'Bill To Contact Last Name',
+                'Bill To Contact Email Address',
+                'Does customer require additional attachments? (Create Site with single contact)',
+                'NOTES:',
             ],
         ];
 
@@ -181,5 +167,4 @@ class CustomerController extends Controller
 
         return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
     }
-    
 }

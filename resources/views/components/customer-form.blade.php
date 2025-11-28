@@ -1,17 +1,6 @@
-@props(['formMethod', 'formEndpoint', 'customer'])
-
-@php
-    $htmxMethodAttribute = match ($formMethod) {
-        'POST' => "hx-post=\"{$formEndpoint}\"",
-        'PATCH' => "hx-patch=\"{$formEndpoint}\"",
-        default => '',
-    };
-@endphp
-<!doctype html>
-
-<form id="customer-create-form" {!! $htmxMethodAttribute !!}
-    hx-target="#customer-list-div" hx-swap="outerHTML" x-show = "show">
+<form {{ $attributes->merge(['method' => 'POST']) }}>
     @csrf
+    {{ $slot }}
 
     <div class="space-y-12" x-show="show">
         <div class="border-b border-gray-900/10 pb-12">
@@ -59,7 +48,8 @@
                     id="correspondence" placeholder="email@email.com"
                     value="{{ $customer->correspondence ?? '' }}"></x-form-input>
                 @error('correspondence')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
@@ -68,7 +58,8 @@
                     id="address_line_1" placeholder=""
                     value="{{ $customer->address_line_1 ?? '' }}"></x-form-input>
                 @error('address_line_1')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
@@ -77,7 +68,8 @@
                     id="address_line_2" placeholder=""
                     value="{{ $customer->address_line_2 ?? '' }}"></x-form-input>
                 @error('address_line_2')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
@@ -86,7 +78,8 @@
                     placeholder=""
                     value="{{ $customer->city ?? '' }}"></x-form-input>
                 @error('city')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
@@ -95,7 +88,8 @@
                     placeholder=""
                     value="{{ $customer->state ?? '' }}"></x-form-input>
                 @error('state')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
@@ -104,7 +98,8 @@
                     placeholder=""
                     value="{{ $customer->zip_code ?? '' }}"></x-form-input>
                 @error('zip_code')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
@@ -113,7 +108,8 @@
                     placeholder=""
                     value="{{ $customer->country ?? '' }}"></x-form-input>
                 @error('country')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
@@ -122,7 +118,8 @@
                     placeholder="Extra Notes"
                     value="{{ $customer->notes ?? '' }}"></x-form-input>
                 @error('notes')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
@@ -131,14 +128,9 @@
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
         <button type="button"
-            @click="show = false;
-            const el = document.getElementById('error-list');
-            if (el) { el.replaceChildren(); }"
-            class="text-sm/6
-            font-semibold text-gray-900">Cancel</button>
+            class="text-sm/6 font-semibold text-gray-900">Cancel</button>
+
         <button type="submit"
-            @click="const el = document.getElementById('error-list');
-            if (el) { el.replaceChildren(); }"
             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
     </div>
 </form>

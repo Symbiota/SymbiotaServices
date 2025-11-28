@@ -43,10 +43,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::controller(CustomerController::class)->group(function () {
         Route::patch('/customers/{customer}/update', 'update')->name('customers.update');
-        Route::post('/customers/create', 'create')->name('customers.create');
+        Route::get('/customers/create', 'create')->name('customers.create');
         Route::get('/customers/search', 'search')->name('customers.search');
         Route::delete('/customers/{customer}/delete', 'destroy')->name('customers.delete');
         Route::get('/customers', 'index')->name('customers.index');
+        Route::post('/customers/store', 'store')->name('customers.store');
         Route::get('/customers/{customer}', 'show')->name('customers.show');
         Route::get('/customers/{customer}/exportCSV/{contract?}', 'exportCSV')->name('customers.exportCSV');
     });
