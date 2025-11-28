@@ -7,47 +7,42 @@
 
             <x-form-box for="first_name"> First Name*
                 <x-form-input type="text" name="first_name" id="first_name"
-                    value="{{ $contact->first_name ?? old('first_name') }}"></x-form-input>
+                    value="{{ $contact->first_name ?? (old('first_name') ?? request()->input('first_name')) }}"></x-form-input>
                 @error('first_name', 'contact_errors')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="last_name"> Last Name*
                 <x-form-input type="text" name="last_name" id="last_name"
-                    value="{{ $contact->last_name ?? old('last_name') }}"></x-form-input>
+                    value="{{ $contact->last_name ?? (old('last_name') ?? request()->input('last_name')) }}"></x-form-input>
                 @error('last_name', 'contact_errors')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="email"> Email Address*
                 <x-form-input type="email" name="email" id="email"
-                    value="{{ $contact->email ?? old('email') }}"></x-form-input>
+                    value="{{ $contact->email ?? (old('email') ?? request()->input('email')) }}"></x-form-input>
                 @error('email', 'contact_errors')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="phone_number"> Phone Number
                 <x-form-input type="text" name="phone_number"
                     id="phone_number"
-                    value="{{ $contact->phone_number ?? old('phone_number') }}"></x-form-input>
+                    value="{{ $contact->phone_number ?? (old('phone_number') ?? request()->input('phone_number')) }}"></x-form-input>
                 @error('phone_number', 'contact_errors')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="notes"> Notes
                 <x-form-input type="text" name="notes" id="notes"
-                    value="{{ $contact->notes ?? old('notes') }}"></x-form-input>
+                    value="{{ $contact->notes ?? (old('notes') ?? request()->input('notes')) }}"></x-form-input>
                 @error('notes', 'contact_errors')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 

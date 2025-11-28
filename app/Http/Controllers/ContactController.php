@@ -21,19 +21,41 @@ class ContactController extends Controller
             ->fragmentIf($isHTMX, 'show-contact');
     }
 
+    public function create(Request $request)
+    {
+        $isHTMX = $request->hasHeader('HX-Request');
+
+        return view('contacts.create', compact('isHTMX'))
+            ->fragmentIf($isHTMX, 'create-contact');
+    }
+
     public function store(Request $request)
     {
-        $data = $request->validateWithBag('contact_errors', [
-            'first_name' => ['required'],
-            'last_name' => ['required'],
-            'email' => ['required', 'email'],
-            'phone_number' => ['nullable'],
-            'notes' => ['nullable'],
-        ]);
+        $isHTMX = $request->hasHeader('HX-Request');
 
-        Contact::create($data);
+        try {
+            $data = $request->validateWithBag('contact_errors', [
+                'first_name' => ['required'],
+                'last_name' => ['required'],
+                'email' => ['required', 'email'],
+                'phone_number' => ['nullable'],
+                'notes' => ['nullable'],
+            ]);
 
-        return redirect()->back();
+            Contact::create($data);
+
+            if ($isHTMX) {
+                return response(null, 204)->header('HX-Redirect', route('contacts.index'));
+            }
+            return redirect()->route('contacts.index');
+
+        } catch (ValidationException $e) {
+            if ($isHTMX) {
+                return view('contacts.create', compact('isHTMX'))->withErrors($e->errors(), 'contact_errors')
+                    ->fragment('create-contact');
+            }
+            throw $e;
+        }
     }
 
     public function update(Request $request, Contact $contact)
