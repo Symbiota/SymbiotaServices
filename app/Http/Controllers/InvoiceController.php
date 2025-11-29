@@ -110,25 +110,24 @@ class InvoiceController extends Controller
             foreach ($services as $service_id) {
                 $serviceData[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id]];
             }
-            
+
             $invoice->services()->attach($serviceData);
 
             if ($isHTMX) {
                 return response(null, 204)->header('HX-Redirect', route('invoices.show', $invoice));
             }
             return redirect()->route('invoices.show', $invoice);
-
         } catch (ValidationException $e) {
 
             if ($isHTMX) {
                 return view('invoices.edit', [
-                'isHTMX' => $isHTMX,
-                'invoice' => $invoice,
-                'services' => Service::all(),
-                'contacts' => Contact::all()->sortBy('last_name'),
-                'contracts' => Contract::select('contracts.*')
-                    ->join('customers', 'customers.id', '=', 'contracts.customer_id')
-                    ->orderBy('customers.name')->get(),
+                    'isHTMX' => $isHTMX,
+                    'invoice' => $invoice,
+                    'services' => Service::all(),
+                    'contacts' => Contact::all()->sortBy('last_name'),
+                    'contracts' => Contract::select('contracts.*')
+                        ->join('customers', 'customers.id', '=', 'contracts.customer_id')
+                        ->orderBy('customers.name')->get(),
                 ])->withErrors($e->errors())->fragment('edit-invoice');
             }
             throw $e;
@@ -145,7 +144,11 @@ class InvoiceController extends Controller
 
         $headers = [
             ['Submitted  by (Required)',],
-            ['NAME', 'EMAIL', 'PHONE', 'REQUEST DATE',
+            [
+                'NAME',
+                'EMAIL',
+                'PHONE',
+                'REQUEST DATE',
             ],
             [
                 auth()->user()->name, // Works, inputs user name
@@ -153,29 +156,30 @@ class InvoiceController extends Controller
                 '',
                 date('m/d/Y'), // Current date
             ],
-            [], [],
+            [],
+            [],
             [
-            'BUSINESS UNIT - KUINT or RSINT',
-            'BILLING UNIT/DEPARTMENT NAME',
-            'CUSTOMER NAME',
-            'CUSTOMER ACCOUNT NUMBER',
-            'CUSTOMER SITE NUMBER',
-            'CUSTOMER CONTACT',
-            'ITEM NUMBER',
-            'ITEM DESCRIPTION',
-            'SALESPERSON',
-            'QUANTITY',
-            'UOM',
-            'PRICE',
-            'LINE TOTAL',
-            'BILL FROM DATE',
-            'BILL TO DATE',
-            'HEADER REFERENCE 1',
-            'HEADER REFERENCE 2',
-            'LINE REFERENCE 1',
-            'LINE REFERENCE 2',
-            'SPECIAL INSTRUCTIONS',
-            'NOTES: INCLUDE INVOICE NUMBER AND LINE NUMBER IF CREDIT MEMO',
+                'BUSINESS UNIT - KUINT or RSINT',
+                'BILLING UNIT/DEPARTMENT NAME',
+                'CUSTOMER NAME',
+                'CUSTOMER ACCOUNT NUMBER',
+                'CUSTOMER SITE NUMBER',
+                'CUSTOMER CONTACT',
+                'ITEM NUMBER',
+                'ITEM DESCRIPTION',
+                'SALESPERSON',
+                'QUANTITY',
+                'UOM',
+                'PRICE',
+                'LINE TOTAL',
+                'BILL FROM DATE',
+                'BILL TO DATE',
+                'HEADER REFERENCE 1',
+                'HEADER REFERENCE 2',
+                'LINE REFERENCE 1',
+                'LINE REFERENCE 2',
+                'SPECIAL INSTRUCTIONS',
+                'NOTES: INCLUDE INVOICE NUMBER AND LINE NUMBER IF CREDIT MEMO',
             ],
         ];
 
@@ -210,27 +214,29 @@ class InvoiceController extends Controller
         fputcsv($handle, $data);
 
         for ($i = 1; $i < count($invoice->services); $i++) {
-            $item_row = ['',
-            '',
-            '',
-            '',
-            '',
-            '',
-            $invoice->services[$i]->darbi_item_number,
-            $invoice->services[$i]->description,
-            'Nico Franz',
-            $invoice->services[$i]->pivot->qty,
-            'EA',
-            $invoice->services[$i]->price_per_unit,
-            '$ ' . $invoice->services[$i]->pivot->amount_owed,
-            '',
-            '',
-            '',
-            '',
-            $invoice->services[$i]->line_ref_1,
-            $invoice->services[$i]->line_ref_2,
-            '',
-            '',];
+            $item_row = [
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                $invoice->services[$i]->darbi_item_number,
+                $invoice->services[$i]->description,
+                'Nico Franz',
+                $invoice->services[$i]->pivot->qty,
+                'EA',
+                $invoice->services[$i]->price_per_unit,
+                '$ ' . $invoice->services[$i]->pivot->amount_owed,
+                '',
+                '',
+                '',
+                '',
+                $invoice->services[$i]->line_ref_1,
+                $invoice->services[$i]->line_ref_2,
+                '',
+                '',
+            ];
 
             fputcsv($handle, $item_row);
         }
@@ -239,5 +245,4 @@ class InvoiceController extends Controller
 
         return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
     }
-
 }
