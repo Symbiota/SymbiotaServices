@@ -40,14 +40,17 @@
             @endif
             @foreach ($customers as $customer)
                 <a href="{{ route('customers.show', $customer) }}"
-                    class="block px-4 py-6 border border-gray-500">
-                    <strong>{{ $customer->name }}</strong>
-                    <div>{{ $customer->darbi_customer_account_number }}:
-                        {{ $customer->correspondence }}</div>
+                    class="block px-4 py-6 border border-gray-500 flex justify-between items-center">
+                    <ul>
+                        <li><b>{{ $customer->name }}</b></li>
+                        <li>{{ $customer->darbi_customer_account_number }}:
+                            {{ $customer->correspondence }}</li>
+                    </ul>
                     <form hx-delete={{ route('customers.delete', $customer) }}
                         hx-target="#customer-list-div" hx-swap="outerHTML"
                         hx-confirm="Are you sure you want to delete this customer? All of their contracts would also be deleted."
-                        hx-indicator="#loading-spinner-{{ $customer->id }}">
+                        hx-indicator="#loading-spinner-{{ $customer->id }}"
+                        class="flex items-center">
                         @csrf
                         <button type="submit" class="hover:text-red-500">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="white"
