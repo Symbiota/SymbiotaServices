@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/customers/create', 'create')->name('customers.create');
         Route::get('/customers/search', 'search')->name('customers.search');
         Route::delete('/customers/{customer}/delete', 'destroy')->name('customers.delete');
+        Route::get('/customers/{customer}/edit', 'edit')->name('customers.edit');
         Route::get('/customers', 'index')->name('customers.index');
         Route::post('/customers/store', 'store')->name('customers.store');
         Route::get('/customers/{customer}', 'show')->name('customers.show');
@@ -69,5 +70,4 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/contacts/{contact}/update', 'update')->name('contacts.update');
         Route::post('/contacts/store', 'store')->name('contacts.store');
     });
-
 });
