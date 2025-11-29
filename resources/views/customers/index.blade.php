@@ -40,7 +40,7 @@
             @endif
             @foreach ($customers as $customer)
                 <a href="{{ route('customers.show', $customer) }}"
-                    class="block px-4 py-6 border border-gray-500 flex justify-between items-center">
+                    class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                     <ul>
                         <li><b>{{ $customer->name }}</b></li>
                         <li>{{ $customer->darbi_customer_account_number }}:
