@@ -119,7 +119,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="darbi_special_instructions">DARBI Special
+            <x-form-box for="darbi_special_instructions"> DARBI Special
                 Instructions
                 <x-form-input type="text" name="darbi_special_instructions"
                     id="darbi_special_instructions"
