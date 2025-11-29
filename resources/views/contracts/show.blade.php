@@ -80,14 +80,12 @@
         <a href="{{ route('invoices.create', $contract) }}"><x-ec-button>Create
                 Invoice</x-ec-button></a>
 
-        <div class="flex items-center">
-            <a href="{{ route('contracts.edit', $contract) }}">
-                <x-ec-button hx-get="{{ route('contracts.edit', $contract) }}"
-                    hx-target="#modal" hx-swap="innerHTML"
-                    onclick="toggleView('modal-container')">Edit
-                    Contract</x-ec-button>
-            </a>
-        </div>
+        <a href="{{ route('contracts.edit', $contract) }}">
+            <x-ec-button hx-get="{{ route('contracts.edit', $contract) }}"
+                hx-target="#modal" hx-swap="innerHTML"
+                onclick="toggleView('modal-container')">Edit
+                Contract</x-ec-button>
+        </a>
 
     </div>
 
