@@ -9,8 +9,7 @@
                 <x-form-input type="text" name="first_name" id="first_name"
                     value="{{ $contact->first_name ?? old('first_name') }}"></x-form-input>
                 @error('first_name')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -18,8 +17,7 @@
                 <x-form-input type="text" name="last_name" id="last_name"
                     value="{{ $contact->last_name ?? old('last_name') }}"></x-form-input>
                 @error('last_name')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -27,8 +25,7 @@
                 <x-form-input type="email" name="email" id="email"
                     value="{{ $contact->email ?? old('email') }}"></x-form-input>
                 @error('email')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -37,17 +34,16 @@
                     id="phone_number"
                     value="{{ $contact->phone_number ?? old('phone_number') }}"></x-form-input>
                 @error('phone_number')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="notes"> Notes
                 <x-form-input type="text" name="notes" id="notes"
+                    placeholder="Internal use notes about this contact (will not export to CSV)"
                     value="{{ $contact->notes ?? old('notes') }}"></x-form-input>
                 @error('notes')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
