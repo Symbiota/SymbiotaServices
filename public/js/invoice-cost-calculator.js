@@ -1,5 +1,4 @@
 function select_checkbox(id) {
-    console.log(id);
     checkbox = document.querySelector('[data-id="' + id + '"]');
     checkbox.checked = true;
 }
