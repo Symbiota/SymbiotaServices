@@ -1,3 +1,9 @@
+function select_checkbox(id) {
+    console.log(id);
+    checkbox = document.querySelector('[data-id="' + id + '"]');
+    checkbox.checked = true;
+}
+
 function calc_each_service_bill() {
     for (let id = 1; id <= document.querySelectorAll('#service').length; id++) {
         const qty_box = document.getElementById('qty_' + id);

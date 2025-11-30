@@ -92,10 +92,10 @@
                         <input type="checkbox"
                             name="services[{{ $service->id }}]" id="service"
                             value="{{ $service->id }}"
+                            data-id="{{ $service->id }}"
                             onchange="calc_total_amount_billed();"
                             @if (isset($invoice)) {{ $invoice->services->find($service) ? 'checked' : '' }}
-                            @else
-                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
+                            @else {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
                         {{ $service->name }}
                         <br>
                         <input type="number"
@@ -107,7 +107,7 @@
                             id="qty_{{ $service->id }}"
                             class="m-1 ml-4 mt-2 p-1 border border-gray-500"
                             service_price="{{ $service->price_per_unit }}"
-                            onchange="calc_each_service_bill(); calc_total_amount_billed();">
+                            onchange="select_checkbox({{ $service->id }}); calc_each_service_bill(); calc_total_amount_billed();">
                         $<input type="text"
                             id="amount_owed_{{ $service->id }}"
                             name="amount_owed[{{ $service->id }}]"
