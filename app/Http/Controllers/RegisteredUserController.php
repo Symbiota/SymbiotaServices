@@ -16,7 +16,7 @@ class RegisteredUserController extends Controller
 
     public function edit()
     {
-        return view('update', ['user' => auth()->user()]);
+        return view('account', ['user' => auth()->user()]);
     }
 
     public function store(Request $request)
@@ -38,12 +38,14 @@ class RegisteredUserController extends Controller
     public function update(Request $request, User $user)
     {
         $data = $request->validate([
-            'name' => ['required'],
+            'name' => ['required', \Illuminate\Validation\Rule::unique('users')->ignore($user->id)],
             'email' => ['required', 'email'],
             'password' => ['required'],
             'password' => ['required', 'confirmed'],
         ]);
 
         $user->update($data);
+
+        return view('account');
     }
 }

@@ -1,7 +1,7 @@
 <x-table-layout heading="Edit User Account">
     <title>Edit User Account</title>
 
-    <form method="POST" action="{{ route('user.update') }}">
+    <form method="POST" action="{{ route('user.update', $user) }}">
         @csrf
 
         <div class="space-y-12">
