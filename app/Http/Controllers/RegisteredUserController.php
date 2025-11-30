@@ -35,17 +35,17 @@ class RegisteredUserController extends Controller
         return redirect('/');
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', \Illuminate\Validation\Rule::unique('users')->ignore($user->id)],
+            'name' => ['required', \Illuminate\Validation\Rule::unique('users')->ignore(auth()->user()->id)],
             'email' => ['required', 'email'],
             'password' => ['required'],
             'password' => ['required', 'confirmed'],
         ]);
 
-        $user->update($data);
+        auth()->user()->update($data);
 
-        return view('account');
+        return redirect()->route('user.edit', ['user' => auth()->user()]);
     }
 }

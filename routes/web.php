@@ -22,7 +22,7 @@ Route::post('/logout', [SessionController::class, 'destroy'])->name('session.des
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/user', [RegisteredUserController::class, 'edit'])->name('user.edit');
-    Route::post('/user/update', [RegisteredUserController::class, 'update'])->name('user.update');
+    Route::patch('/user/update', [RegisteredUserController::class, 'update'])->name('user.update');
 
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
     Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create');
