@@ -21,6 +21,9 @@ Route::post('/login', [SessionController::class, 'store'])->name('session.store'
 Route::post('/logout', [SessionController::class, 'destroy'])->name('session.destroy');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/user', [RegisteredUserController::class, 'edit'])->name('user.edit');
+    Route::post('/user/update', [RegisteredUserController::class, 'update'])->name('user.update');
+
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
     Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create');
     Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');

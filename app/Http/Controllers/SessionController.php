@@ -14,29 +14,27 @@ class SessionController extends Controller
         return view('login');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $validatedAttributes = request()->validate([
+        $data = $request->validate([
             'email' => ['required', 'email', 'exists:users,email'],
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($validatedAttributes)) {
+        if (Auth::attempt($data)) {
             request()->session()->regenerate();
             return redirect('/');
-        }
-        else {
+        } else {
             return back()->withErrors([
                 'password' => ['Wrong password.']
             ])->withInput();
         }
-    
     }
 
     public function destroy()
     {
         Auth::logout();
-        
+
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
