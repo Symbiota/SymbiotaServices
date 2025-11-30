@@ -67,7 +67,7 @@ class CustomerController extends Controller
         $isHTMX = $request->hasHeader('HX-Request');
         try {
             $data = $request->validate([
-                'name' => ['required'],
+                'name' => ['required', \Illuminate\Validation\Rule::unique('customers')->ignore($customer->id)],
                 'department_name' => ['nullable'],
                 'darbi_customer_account_number' => ['nullable'],
                 'darbi_site' => ['nullable'],
