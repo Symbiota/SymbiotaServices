@@ -1,5 +1,5 @@
 <x-table-layout heading="Contract: {{ $contract->id }}">
-    <title>Contract: {{ $contract->id }}</title>
+    <title>Contract: {{ $contract->id }} - SymbiotaServices</title>
 
     <ul>
         <li><b>Contract ID:</b> {{ $contract->id }}</li>

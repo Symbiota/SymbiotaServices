@@ -1,5 +1,5 @@
 <x-table-layout heading="Contacts">
-    <title>CONTACTS PAGE</title>
+    <title>Contacts - SymbiotaServices</title>
 
     <div class="flex items-center">
         <x-ec-button onclick="toggleView('create-form')">Create

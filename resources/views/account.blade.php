@@ -1,5 +1,5 @@
 <x-table-layout heading="Edit User Account">
-    <title>Edit User Account</title>
+    <title>Edit Account - SymbiotaServices</title>
 
     <form method="POST" action="{{ route('user.update') }}">
         @csrf

@@ -1,5 +1,6 @@
 <x-table-layout heading="Contact: {{ $contact->id }}">
-    <title>Contact: {{ $contact->id }}</title>
+    <title>Contact: {{ $contact->first_name }} {{ $contact->last_name }} -
+        SymbiotaServices</title>
 
     <ul>
         <li><b>Contact ID:</b> {{ $contact->id }}</li>

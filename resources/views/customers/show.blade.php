@@ -1,5 +1,5 @@
 <x-table-layout heading="{!! $customer->name !!}">
-    <title>CUSTOMER: {{ $customer->name }}</title>
+    <title>Customer: {{ $customer->name }} - SymbiotaServices</title>
 
     @fragment('customer-list')
         <div id="customer-list-div">

@@ -1,5 +1,5 @@
 <x-table-layout heading="Customers">
-    <title>CUSTOMERS PAGE</title>
+    <title>Customers - SymbiotaServices</title>
 
     <div x-data = "{ show: false, clearForm() {
             const form = document.getElementById('customer-create-form');
