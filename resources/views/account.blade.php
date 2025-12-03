@@ -1,16 +1,40 @@
-<x-table-layout heading="Edit User Account">
+<x-table-layout heading="User Account:">
+    @fragment('show-user')
     <title>Edit Account - SymbiotaServices</title>
 
-    <form method="POST" action="{{ route('user.update') }}">
+    <ul>
+        <li><b>Username:</b> {{ $user->name }}</li>
+        <li><b>Email:</b> {{ $user->email }}</li>
+        <x-timestamps :model="$user"></x-timestamps>
+    </ul>
+
+    <br>
+
+    <div class="flex items-start">
+        <div class="flex items-center">
+            <x-ec-button onclick="toggleView('edit-form')">Edit
+                User</x-ec-button>
+
+            @if ($errors->any())
+                <p class="text-red-500
+                        text-sm ml-3">
+                    Error Editing User</p>
+            @endif
+        </div>
+    </div>
+
+    <form method="POST" id="edit-form"
+        class="{{ $errors->any() ? '' : 'hidden' }}"
+        action="{{ route('user.update') }}">
         @csrf
         @method('PATCH')
 
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
 
-                <x-form-box for="name" class="-mt-8"> Name*
+                <x-form-box for="name"> Name*
                     <x-form-input type="text" name="name" id="name"
-                        value="{{ $user->name }}"></x-form-input>
+                        value="{{ old('name') ?? $user->name }}"></x-form-input>
                     @error('name')
                         <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                     @enderror
@@ -18,9 +42,10 @@
 
                 <x-form-box for="email"> Email*
                     <x-form-input type="text" name="email" id="email"
-                        value="{{ $user->email }}"></x-form-input>
+                        value="{{ old('email') ?? $user->email }}"></x-form-input>
                     @error('email')
-                        <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                        <p class="text-red-500 text-sm ml-3">{{ $message }}
+                        </p>
                     @enderror
                 </x-form-box>
 
@@ -28,7 +53,8 @@
                     <x-form-input type="password" name="password" id="password"
                         value=""></x-form-input>
                     @error('password')
-                        <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                        <p class="text-red-500 text-sm ml-3">{{ $message }}
+                        </p>
                     @enderror
                 </x-form-box>
 
@@ -36,7 +62,8 @@
                     <x-form-input type="password" name="password_confirmation"
                         id="password_confirmation"></x-form-input>
                     @error('password_confirmation')
-                        <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                        <p class="text-red-500 text-sm ml-3">{{ $message }}
+                        </p>
                     @enderror
                 </x-form-box>
 
@@ -52,4 +79,5 @@
         </div>
     </form>
 
+    @endfragment('show-user')
 </x-table-layout>

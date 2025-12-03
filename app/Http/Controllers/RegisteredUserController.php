@@ -22,7 +22,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required'],
+            'name' => ['required', 'unique:users,name'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required'],
             'password' => ['required', 'confirmed'],
@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', \Illuminate\Validation\Rule::unique('users')->ignore(auth()->user()->id)],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', \Illuminate\Validation\Rule::unique('users')->ignore(auth()->user()->id)],
             'password' => ['required'],
             'password' => ['required', 'confirmed'],
         ]);
