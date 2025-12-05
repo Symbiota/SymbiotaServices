@@ -1,6 +1,7 @@
 <x-table-layout heading="User Account:">
     @fragment('show-user')
     <title>Edit Account - SymbiotaServices</title>
+    <x-modal-header :isHTMX="$isHTMX">User Account:</x-modal-header>
 
     <ul>
         <li><b>Username:</b> {{ $user->name }}</li>
@@ -25,7 +26,11 @@
 
     <form method="POST" id="edit-form"
         class="{{ $errors->any() ? '' : 'hidden' }}"
-        action="{{ route('user.update') }}">
+        @if ($isHTMX) :errors="$errors"
+        hx-target="#modal"
+        hx-swap="innerHTML scroll:top"
+        @else
+        action="{{ route('user.update') }}" @endif>
         @csrf
         @method('PATCH')
 

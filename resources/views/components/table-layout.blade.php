@@ -57,8 +57,11 @@
                                     class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Log
                                     Out</button>
                             </form>
-                            <a href="{{ route('user.edit') }}"
-                                class="{{ request()->is('account') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">☰</a>
+                            <a href="{{ route('user.show') }}"
+                                class="{{ request()->is('account') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium"
+                                hx-get="{{ route('user.show') }}"
+                                hx-target="#modal" hx-swap="innerHTML"
+                                onclick="toggleView('modal-container')">☰</a>
                         @endauth
                     </div>
 

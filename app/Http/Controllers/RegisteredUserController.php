@@ -14,9 +14,13 @@ class RegisteredUserController extends Controller
         return view('register');
     }
 
-    public function edit()
+    public function show(Request $request)
     {
-        return view('account', ['user' => auth()->user()]);
+        $isHTMX = $request->hasHeader('HX-Request');
+        return view('account', [
+            'isHTMX' => $isHTMX,
+            'user' => auth()->user()
+        ])->fragmentIf($isHTMX, 'show-user');
     }
 
     public function store(Request $request)
@@ -46,6 +50,6 @@ class RegisteredUserController extends Controller
 
         auth()->user()->update($data);
 
-        return redirect()->route('user.edit', ['user' => auth()->user()]);
+        return redirect()->route('user.show', ['user' => auth()->user()]);
     }
 }

@@ -21,7 +21,7 @@ Route::post('/login', [SessionController::class, 'store'])->name('session.store'
 Route::post('/logout', [SessionController::class, 'destroy'])->name('session.destroy');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/user', [RegisteredUserController::class, 'edit'])->name('user.edit');
+    Route::get('/user', [RegisteredUserController::class, 'show'])->name('user.show');
     Route::patch('/user/update', [RegisteredUserController::class, 'update'])->name('user.update');
 
     Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
