@@ -40,28 +40,21 @@
         <a href="{{ route('invoices.exportCSV', $invoice) }}"<x-ec-button>Export
             CSV</x-ec-button></a>
 
-        <div class="flex items-center">
-            <x-ec-button onclick="toggleView('edit-form')">Edit
+        <a href="{{ route('invoices.edit', $invoice) }}">
+            <x-ec-button hx-get="{{ route('invoices.edit', $invoice) }}"
+                hx-target="#modal" hx-swap="innerHTML"
+                onclick="toggleView('modal-container')">Edit
                 Invoice</x-ec-button>
+        </a>
 
-            @if ($errors->any())
-                <p class="text-red-500 text-sm ml-3"> Error Editing Invoice
-                </p>
-            @endif
-        </div>
-
-    </div>
-
-    <div id="edit-form" class="hidden">
-        <x-invoice-form action="{{ route('invoices.update', $invoice) }}"
-            :invoice="$invoice" :services="$services" :contracts="$contracts"
-            :contacts="$contacts">@method('PATCH')</x-invoice-form>
     </div>
 
     <br>
 
     @foreach ($invoice->services as $service)
-        <a href="{{ route('services.show', $service) }}">
+        <a href="{{ route('services.show', $service) }}"
+            hx-get="{{ route('services.show', $service) }}" hx-target="#modal"
+            hx-swap="innerHTML" onclick="toggleView('modal-container')">
             <ul class="block px-4 py-2 border border-gray-500">
                 <li><b>
                         @if ($service->active_status == 0)
@@ -77,7 +70,7 @@
                 <li><b>Price per unit:</b> ${{ $service->price_per_unit }}</li>
                 <br>
                 <li><b>Quantity:</b> {{ $service->pivot->qty }}</li>
-                <li><b>Amount Paid:</b> ${{ $service->pivot->amount_owed }}
+                <li><b>Amount Due:</b> ${{ $service->pivot->amount_owed }}
                 </li>
             </ul>
         </a>

@@ -37,9 +37,20 @@ class DatabaseSeeder extends Seeder
         $invoices = Invoice::factory(20)->create();
 
         $invoices->each(function ($invoice) use ($services) {
-            $invoice->services()->attach(
-                $services->random(rand(1, 5))->pluck('id')->toArray()
-            );
+            $selectedServices = $services->random(rand(1, 6));
+            $amountBilled = 0;
+
+            foreach ($selectedServices as $service) {
+                $qty = rand(1, 6);
+                $amountOwed = $qty * $service->price_per_unit; 
+                $amountBilled += $amountOwed;
+
+                $invoice->services()->attach($service->id, [
+                    'qty' => $qty,
+                    'amount_owed' => $amountOwed,
+                ]);
+            }
+            $invoice->update(['amount_billed' => $amountBilled]);
         });
     }
 }

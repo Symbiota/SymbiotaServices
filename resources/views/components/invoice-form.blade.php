@@ -7,10 +7,17 @@
 
             <x-form-box for="contract_id"> Contract ID*
                 <x-form-input type="select" name="contract_id" id="contract_id">
-                    @foreach ($contracts as $contract)
-                        <option value="{{ $contract->id }}">
-                            {{ $contract->customer->name }} -
-                            {{ $contract->id }}
+                    @isset($invoice)
+                        <option value="{{ $invoice->contract_id }}">
+                            {{ $invoice->contract->customer->name }}
+                            - {{ $invoice->contract_id }}
+                        </option>
+                    @endisset
+                    <option value=""></option>
+                    @foreach ($contracts as $o_contract)
+                        <option value="{{ $o_contract->id }}">
+                            {{ $o_contract->customer->name }} -
+                            {{ $o_contract->id }}
                         </option>
                     @endforeach
                 </x-form-input>
@@ -146,6 +153,11 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
+        @if ($errors->any())
+            <p class="text-red-500 text-sm ml-3"> Error Editing Invoice
+            </p>
+        @endif
+
         <a @if (request()->is('invoices/create/*')) href="{{ route('contracts.show', $contract) }}"
         @elseif (isset($invoice)) href="{{ route('invoices.show', $invoice) }}"
         @else href="{{ route('invoices.index') }}" @endif

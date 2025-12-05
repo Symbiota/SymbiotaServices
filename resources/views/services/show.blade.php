@@ -1,6 +1,6 @@
 <x-table-layout heading="{{ $service->name }}">
     @fragment('show-service')
-        <title>SERVICE: {{ $service->name }}</title>
+        <title>Service: {{ $service->name }}</title>
 
         <x-modal-header :isHTMX="$isHTMX">{{ $service->name }}
         </x-modal-header>
@@ -39,12 +39,12 @@
 
         </div>
 
-        <div id="edit-form" class="hidden">
+        <div id="edit-form" class="{{ $errors->any() ? '' : 'hidden' }}">
             @if ($isHTMX)
                 <x-service-form class="-mt-2" :errors="$errors" :service="$service"
                     hx-post="{{ route('services.update', $service) }}"
                     hx-target="#modal"
-                    hx-swap="innerHTML">@method('PATCH')</x-service-form>
+                    hx-swap="innerHTML scroll:top">@method('PATCH')</x-service-form>
             @else
                 <x-service-form :service="$service"
                     action="{{ route('services.update', $service) }}">@method('PATCH')</x-service-form>
