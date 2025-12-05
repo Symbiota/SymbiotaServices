@@ -102,7 +102,7 @@
                 1*
                 <x-form-input type="text" name="darbi_header_ref_1"
                     id="darbi_header_ref_1"
-                    placeholder="CCH2 Symbiota Portal (20 character max)"
+                    placeholder="Portal name, e.g. &quot;CCH2 Symbiota Portal&quot; (20 character max)"
                     value="{{ $contract->darbi_header_ref_1 ?? old('darbi_header_ref_1') }}"></x-form-input>
                 @error('darbi_header_ref_1')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
