@@ -7,17 +7,22 @@
 
             <x-form-box for="contract_id"> Contract ID*
                 <x-form-input type="select" name="contract_id" id="contract_id">
-                    @foreach ($contracts as $contract)
-                        <option value="{{ $contract->id }}">
-                            {{ $contract->customer->name }} -
-                            {{ $contract->id }}
+                    @isset($invoice)
+                        <option value="{{ $invoice->contract_id }}">
+                            {{ $invoice->contract->customer->name }}
+                            - {{ $invoice->contract_id }}
+                        </option>
+                    @endisset
+                    <option value=""></option>
+                    @foreach ($contracts as $o_contract)
+                        <option value="{{ $o_contract->id }}">
+                            {{ $o_contract->customer->name }} -
+                            {{ $o_contract->id }}
                         </option>
                     @endforeach
                 </x-form-input>
                 @error('contract_id')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -52,9 +57,7 @@
                     @endforeach
                 </x-form-input>
                 @error('financial_contact_id')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -63,9 +66,7 @@
                     id="billing_start" placeholder="YYYY-MM-DD"
                     value="{{ $invoice->billing_start ?? old('billing_start') }}"></x-form-input>
                 @error('billing_start')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -74,9 +75,7 @@
                     placeholder="YYYY-MM-DD"
                     value="{{ $invoice->billing_end ?? old('billing_end') }}"></x-form-input>
                 @error('billing_end')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -92,28 +91,26 @@
                         <input type="checkbox"
                             name="services[{{ $service->id }}]" id="service"
                             value="{{ $service->id }}"
+                            data-id="{{ $service->id }}"
                             onchange="calc_total_amount_billed();"
                             @if (isset($invoice)) {{ $invoice->services->find($service) ? 'checked' : '' }}
-                            @else
-                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
+                            @else {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
                         {{ $service->name }}
                         <br>
                         <input type="number"
-                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
-                            @else
-                                value="{{ old('qty.' . $service->id, 1) }}" @endif
-                            step="any" min="0"
-                            name="qty[{{ $service->id }}]"
-                            id="qty_{{ $service->id }}"
                             class="m-1 ml-4 mt-2 p-1 border border-gray-500"
+                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
+                            @else value="{{ old('qty.' . $service->id, 1) }}" @endif
+                            step="any" min="0"
+                            id="qty_{{ $service->id }}"
+                            name="qty[{{ $service->id }}]"
                             service_price="{{ $service->price_per_unit }}"
-                            onchange="calc_each_service_bill(); calc_total_amount_billed();">
+                            onchange="select_checkbox({{ $service->id }}); calc_each_service_bill(); calc_total_amount_billed();">
                         $<input type="text"
+                            class="m-1 mt-2 p-1 border border-gray-500"
                             id="amount_owed_{{ $service->id }}"
                             name="amount_owed[{{ $service->id }}]"
-                            value="{{ $service->price_per_unit }}"
-                            class="m-1 mt-2 p-1 border border-gray-500"
-                            readonly>
+                            value="{{ $service->price_per_unit }}" readonly>
                     </div>
                 @endforeach
             </x-form-box>
@@ -122,9 +119,7 @@
                 <x-form-input type="text" name="amount_billed"
                     id="amount_billed" value="" readonly></x-form-input>
                 @error('amount_billed')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -133,9 +128,7 @@
                     id="date_invoiced" placeholder="YYYY-MM-DD"
                     value="{{ $invoice->date_invoiced ?? old('date_invoiced') }}"></x-form-input>
                 @error('date_invoiced')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -144,9 +137,7 @@
                     placeholder="YYYY-MM-DD"
                     value="{{ $invoice->date_paid ?? old('date_paid') }}"></x-form-input>
                 @error('date_paid')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -154,9 +145,7 @@
                 <x-form-input type="text" name="notes" id="notes"
                     value="{{ $invoice->notes ?? old('notes') }}"></x-form-input>
                 @error('notes')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -164,6 +153,11 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
+        @if ($errors->any())
+            <p class="text-red-500 text-sm ml-3"> Error Editing Invoice
+            </p>
+        @endif
+
         <a @if (request()->is('invoices/create/*')) href="{{ route('contracts.show', $contract) }}"
         @elseif (isset($invoice)) href="{{ route('invoices.show', $invoice) }}"
         @else href="{{ route('invoices.index') }}" @endif

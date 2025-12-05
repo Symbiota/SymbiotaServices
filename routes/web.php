@@ -21,37 +21,53 @@ Route::post('/login', [SessionController::class, 'store'])->name('session.store'
 Route::post('/logout', [SessionController::class, 'destroy'])->name('session.destroy');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
-    Route::get('/services/create', [ServiceController::class, 'create'])->name('services.create');
-    Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
-    Route::patch('/services/{service}/update', [ServiceController::class, 'update'])->name('services.update');
-    Route::post('/services/store', [ServiceController::class, 'store'])->name('services.store');
-    Route::patch('/services/{service}/retire', [ServiceController::class, 'retire'])->name('services.retire');
 
-    Route::get('/contracts/create/{customer?}', [ContractController::class, 'create'])->name('contracts.create');
-    Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index');
-    Route::get('/contracts/{contract}', [ContractController::class, 'show'])->name('contracts.show');
-    Route::post('/contracts/store', [ContractController::class, 'store'])->name('contracts.store');
-    Route::delete('/contracts/{contract}/delete', [ContractController::class, 'destroy'])->name('contracts.destroy');
-    Route::patch('/contracts/{contract}/update', [ContractController::class, 'update'])->name('contracts.update');
+    Route::controller(ServiceController::class)->group(function () {
+        Route::get('/services', 'index')->name('services.index');
+        Route::get('/services/create', 'create')->name('services.create');
+        Route::get('/services/{service}', 'show')->name('services.show');
+        Route::patch('/services/{service}/update', 'update')->name('services.update');
+        Route::post('/services/store', 'store')->name('services.store');
+        Route::patch('/services/{service}/retire', 'retire')->name('services.retire');
+    });
 
-    Route::patch('/customers/{customer}/update', [CustomerController::class, 'update'])->name('customers.update');
-    Route::post('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
-    Route::get('/customers/search', [CustomerController::class, 'search'])->name('customers.search');
-    Route::delete('/customers/{customer}/delete', [CustomerController::class, 'destroy'])->name('customers.delete');
-    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
-    Route::get('/customers/{customer}/exportCSV/{contract?}', [CustomerController::class, 'exportCSV'])->name('customers.exportCSV');
+    Route::controller(ContractController::class)->group(function () {
+        Route::get('/contracts/create/{customer?}', 'create')->name('contracts.create');
+        Route::get('/contracts', 'index')->name('contracts.index');
+        Route::get('/contracts/{contract}', 'show')->name('contracts.show');
+        Route::get('/contracts/{contract}/edit', 'edit')->name('contracts.edit');
+        Route::post('/contracts/store', 'store')->name('contracts.store');
+        Route::delete('/contracts/{contract}/delete', 'destroy')->name('contracts.destroy');
+        Route::patch('/contracts/{contract}/update', 'update')->name('contracts.update');
+    });
 
-    Route::get('/invoices/create/{contract?}', [InvoiceController::class, 'create'])->name('invoices.create');
-    Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
-    Route::get('/invoices/{invoice}', [InvoiceController::class, 'show'])->name('invoices.show');
-    Route::get('/invoices/{invoice}/exportCSV', [InvoiceController::class, 'exportCSV'])->name('invoices.exportCSV');
-    Route::post('/invoices/store', [InvoiceController::class, 'store'])->name('invoices.store');
-    Route::patch('/invoices/{invoice}/update', [InvoiceController::class, 'update'])->name('invoices.update');
+    Route::controller(CustomerController::class)->group(function () {
+        Route::patch('/customers/{customer}/update', 'update')->name('customers.update');
+        Route::get('/customers/create', 'create')->name('customers.create');
+        Route::get('/customers/search', 'search')->name('customers.search');
+        Route::delete('/customers/{customer}/delete', 'destroy')->name('customers.delete');
+        Route::get('/customers/{customer}/edit', 'edit')->name('customers.edit');
+        Route::get('/customers', 'index')->name('customers.index');
+        Route::post('/customers/store', 'store')->name('customers.store');
+        Route::get('/customers/{customer}', 'show')->name('customers.show');
+        Route::get('/customers/{customer}/exportCSV/{contract?}', 'exportCSV')->name('customers.exportCSV');
+    });
 
-    Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
-    Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
-    Route::patch('/contacts/{contact}/update', [ContactController::class, 'update'])->name('contacts.update');
-    Route::post('/contacts/store', [ContactController::class, 'store'])->name('contacts.store');
+    Route::controller(InvoiceController::class)->group(function () {
+        Route::get('/invoices/create/{contract?}', 'create')->name('invoices.create');
+        Route::get('/invoices', 'index')->name('invoices.index');
+        Route::get('/invoices/{invoice}', 'show')->name('invoices.show');
+        Route::get('/invoices/{invoice}/edit', 'edit')->name('invoices.edit');
+        Route::get('/invoices/{invoice}/exportCSV', 'exportCSV')->name('invoices.exportCSV');
+        Route::post('/invoices/store', 'store')->name('invoices.store');
+        Route::patch('/invoices/{invoice}/update', 'update')->name('invoices.update');
+    });
+
+    Route::controller(ContactController::class)->group(function () {
+        Route::get('/contacts', 'index')->name('contacts.index');
+        Route::get('/contacts/create', 'create')->name('contacts.create');
+        Route::get('/contacts/{contact}', 'show')->name('contacts.show');
+        Route::patch('/contacts/{contact}/update', 'update')->name('contacts.update');
+        Route::post('/contacts/store', 'store')->name('contacts.store');
+    });
 });

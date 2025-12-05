@@ -29,14 +29,6 @@ class ServiceController extends Controller
             ->fragmentIf($isHTMX, 'create-service');
     }
 
-    public function edit(Request $request, Service $service)
-    {
-        $isHTMX = $request->hasHeader('HX-Request');
-
-        return view('services.edit', compact('service', 'isHTMX'))
-            ->fragmentIf($isHTMX, 'edit-service');
-    }
-
     public function store(Request $request)
     {
         $isHTMX = $request->hasHeader('HX-Request');
@@ -58,8 +50,10 @@ class ServiceController extends Controller
 
             $service = Service::create($data);
 
-            return view('services.show', compact('service', 'isHTMX'))
-                ->fragmentIf($isHTMX, 'show-service');
+            if ($isHTMX) {
+                return response(null, 204)->header('HX-Redirect', route('services.index'));
+            }
+            return redirect()->route('services.index');
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('services.create', compact('isHTMX'))->withErrors($e->errors())

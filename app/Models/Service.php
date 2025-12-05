@@ -27,5 +27,4 @@ class Service extends Model
     {
         return $this->belongsToMany(Invoice::class)->withPivot('qty', 'amount_owed');
     }
-
 }
