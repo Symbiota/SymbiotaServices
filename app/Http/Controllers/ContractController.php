@@ -84,28 +84,27 @@ class ContractController extends Controller
                 'darbi_special_instructions' => ['nullable'],
                 'notes' => ['nullable'],
             ]);
-            
+
             $data += ['current_financial_contact_id' => $data['financial_contact_id']];
             unset($data['financial_contact_id']);
 
             $customer = Customer::where('name', $data['customer_id'])->firstOrFail();
             $data['customer_id'] = $customer->id;
-            
+
             $contract->update($data);
 
             if ($isHTMX) {
                 return response(null, 204)->header('HX-Redirect', route('contracts.show', $contract));
             }
             return redirect()->route('contracts.show', $contract);
-
         } catch (ValidationException $e) {
 
             if ($isHTMX) {
                 return view('contracts.edit', [
-                'isHTMX' => $isHTMX,
-                'contract' => $contract,
-                'contacts' => Contact::all()->sortBy('last_name'),
-                'customers' => Customer::all()->sortBy('name'),
+                    'isHTMX' => $isHTMX,
+                    'contract' => $contract,
+                    'contacts' => Contact::all()->sortBy('last_name'),
+                    'customers' => Customer::all()->sortBy('name'),
                 ])->withErrors($e->errors())->fragment('edit-contract');
             }
             throw $e;

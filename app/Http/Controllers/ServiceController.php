@@ -54,7 +54,6 @@ class ServiceController extends Controller
                 return response(null, 204)->header('HX-Redirect', route('services.index'));
             }
             return redirect()->route('services.index');
-
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('services.create', compact('isHTMX'))->withErrors($e->errors())
@@ -84,7 +83,6 @@ class ServiceController extends Controller
             );
             $service->update($data);
             return view('services.show', compact('service', 'isHTMX'))->fragmentIf($isHTMX, 'show-service');
-            
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('services.show', compact('service', 'isHTMX'))->withErrors($e->errors())->fragment('show-service');

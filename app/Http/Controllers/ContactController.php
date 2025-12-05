@@ -48,7 +48,6 @@ class ContactController extends Controller
                 return response(null, 204)->header('HX-Redirect', route('contacts.index'));
             }
             return redirect()->route('contacts.index');
-
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('contacts.create', compact('isHTMX'))->withErrors($e->errors(), 'contact_errors')
@@ -74,13 +73,11 @@ class ContactController extends Controller
             $contact->update($data);
 
             return view('contacts.show', compact('contact', 'isHTMX'))->fragmentIf($isHTMX, 'show-contact');
-
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('contacts.show', compact('contact', 'isHTMX'))->withErrors($e->errors(), 'contact_errors')->fragment('show-contact');
             }
             throw $e;
         }
-
     }
 }
