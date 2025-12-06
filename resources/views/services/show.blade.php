@@ -17,15 +17,12 @@
         <br>
 
         <div class="flex items-start">
-
             <div class="flex items-center">
                 <x-ec-button onclick="toggleView('edit-form')">Edit
                     Service</x-ec-button>
 
                 @if ($errors->any())
-                    <p class="text-red-500
-                        text-sm ml-3">
-                        Error Editing Service</p>
+                    <p class="text-red-500 text-sm ml-3">Error Editing Service</p>
                 @endif
             </div>
 
@@ -36,7 +33,6 @@
                     class="!border-red-500 !text-red-500">Retire
                     Service</x-ec-button>
             </form>
-
         </div>
 
         <div id="edit-form" class="{{ $errors->any() ? '' : 'hidden' }}">
@@ -51,7 +47,6 @@
             @endif
 
         </div>
-        <br>
     @endfragment
 
 </x-table-layout>
