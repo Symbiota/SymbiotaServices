@@ -43,8 +43,12 @@
                     class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                     <ul>
                         <li><b>{{ $customer->name }}</b></li>
-                        <li>{{ $customer->darbi_customer_account_number }}:
-                            {{ $customer->correspondence }}</li>
+                        @isset($customer->department_name)
+                            <li>Department: {{ $customer->department_name }}</li>
+                        @endisset
+                        <li>DARBI Account Number:
+                            {{ $customer->darbi_customer_account_number }}
+                        </li>
                     </ul>
                     <form hx-delete={{ route('customers.delete', $customer) }}
                         hx-target="#customer-list-div" hx-swap="outerHTML"
