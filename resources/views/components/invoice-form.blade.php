@@ -82,7 +82,7 @@
             <x-form-box for="services_field">
                 <div class="flex items-center">Select Services*
                     @error('services')
-                        <p class="text-red-500 text-sm ml-6"> {{ $message }}
+                        <p class="text-red-500 text-sm ml-6">{{ $message }}
                         </p>
                     @enderror
                 </div>
@@ -111,6 +111,14 @@
                             id="amount_owed_{{ $service->id }}"
                             name="amount_owed[{{ $service->id }}]"
                             value="{{ $service->price_per_unit }}" readonly>
+                        <input type="text"
+                            class="m-1 mt-2 p-1 border border-gray-500 ml-4"
+                            id="line_ref_1" name="line_ref_1"
+                            placeholder="Line Ref 1">
+                        <input type="text"
+                            class="m-1 mt-2 p-1 border border-gray-500"
+                            id="line_ref_2" name="line_ref_2"
+                            placeholder="Line Ref 2">
                     </div>
                 @endforeach
             </x-form-box>
@@ -153,10 +161,6 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
-        @if ($errors->any())
-            <p class="text-red-500 text-sm ml-3"> Error Editing Invoice
-            </p>
-        @endif
 
         <a @if (request()->is('invoices/create/*')) href="{{ route('contracts.show', $contract) }}"
         @elseif (isset($invoice)) href="{{ route('invoices.show', $invoice) }}"
