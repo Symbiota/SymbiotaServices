@@ -209,8 +209,8 @@ class InvoiceController extends Controller
             $invoice->billing_end,
             $invoice->contract->darbi_header_ref_1,
             $invoice->contract->darbi_header_ref_2,
-            $invoice->services[0]->line_ref_1,
-            $invoice->services[0]->line_ref_2,
+            $invoice->services[0]->pivot->line_ref_1,
+            $invoice->services[0]->pivot->line_ref_2,
             $invoice->contract->darbi_special_instructions,
             'Symbiota Internal Invoice ID: #' . $invoice->id,
         ];
@@ -236,8 +236,8 @@ class InvoiceController extends Controller
                 '',
                 '',
                 '',
-                $invoice->services[$i]->line_ref_1,
-                $invoice->services[$i]->line_ref_2,
+                $invoice->services[$i]->pivot->line_ref_1,
+                $invoice->services[$i]->pivot->line_ref_2,
                 '',
                 '',
             ];
