@@ -72,13 +72,15 @@ class InvoiceController extends Controller
         $services = request('services');
         $qtys = request('qty');
         $amounts_owed = request('amount_owed');
+        $line_ref_1 = request('line_ref_1');
+        $line_ref_2 = request('line_ref_2');
 
-        $data = [];
+        $serviceData = [];
         foreach ($services as $service_id) {
-            $data[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id]];
+            $serviceData[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id], 'line_ref_1' => $line_ref_1[$service_id], 'line_ref_2' => $line_ref_2[$service_id]];
         }
 
-        $invoice->services()->attach($data);
+        $invoice->services()->attach($serviceData);
 
         return redirect()->route('invoices.show', $invoice);
     }
@@ -105,10 +107,12 @@ class InvoiceController extends Controller
             $services = request('services');
             $qtys = request('qty');
             $amounts_owed = request('amount_owed');
+            $line_ref_1 = request('line_ref_1');
+            $line_ref_2 = request('line_ref_2');
 
             $serviceData = [];
             foreach ($services as $service_id) {
-                $serviceData[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id]];
+                $serviceData[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id], 'line_ref_1' => $line_ref_1[$service_id], 'line_ref_2' => $line_ref_2[$service_id]];
             }
 
             $invoice->services()->attach($serviceData);

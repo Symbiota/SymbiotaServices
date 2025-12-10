@@ -102,8 +102,8 @@
                             @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
                             @else value="{{ old('qty.' . $service->id, 1) }}" @endif
                             step="any" min="0"
-                            id="qty_{{ $service->id }}"
                             name="qty[{{ $service->id }}]"
+                            id="qty_{{ $service->id }}"
                             service_price="{{ $service->price_per_unit }}"
                             onchange="select_checkbox({{ $service->id }}); calc_each_service_bill(); calc_total_amount_billed();">
                         $<input type="text"
@@ -113,12 +113,12 @@
                             value="{{ $service->price_per_unit }}" readonly>
                         <input type="text"
                             class="m-1 mt-2 p-1 border border-gray-500 ml-4"
-                            id="line_ref_1" name="line_ref_1"
-                            placeholder="Line Ref 1">
+                            name="line_ref_1[{{ $service->id }}]"
+                            id="line_ref_1" placeholder="Line Ref 1">
                         <input type="text"
                             class="m-1 mt-2 p-1 border border-gray-500"
-                            id="line_ref_2" name="line_ref_2"
-                            placeholder="Line Ref 2">
+                            name="line_ref_2[{{ $service->id }}]"
+                            id="line_ref_2" placeholder="Line Ref 2">
                     </div>
                 @endforeach
             </x-form-box>
