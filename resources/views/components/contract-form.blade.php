@@ -17,8 +17,7 @@
                     @endforeach
                 </datalist>
                 @error('customer_id')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -44,8 +43,7 @@
                     @endforeach
                 </x-form-input>
                 @error('financial_contact_id')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}
                     </p>
                 @enderror
             </x-form-box>
@@ -71,9 +69,7 @@
                     @endforeach
                 </x-form-input>
                 @error('pi_contact_id')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -98,9 +94,7 @@
                     @endforeach
                 </x-form-input>
                 @error('technical_contact_id')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -108,41 +102,40 @@
                 1*
                 <x-form-input type="text" name="darbi_header_ref_1"
                     id="darbi_header_ref_1"
+                    placeholder="Portal name, e.g. &quot;CCH2 Symbiota Portal&quot; (20 character max)"
                     value="{{ $contract->darbi_header_ref_1 ?? old('darbi_header_ref_1') }}"></x-form-input>
                 @error('darbi_header_ref_1')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="darbi_header_ref_2"> DARBI Header Ref 2
                 <x-form-input type="text" name="darbi_header_ref_2"
                     id="darbi_header_ref_2"
+                    placeholder="Optional additional description of service (20 characters max)"
                     value="{{ $contract->darbi_header_ref_2 ?? old('darbi_header_ref_2') }}"></x-form-input>
                 @error('darbi_header_ref_2')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
-            <x-form-box for="darbi_special_instructions"> DARBI
-                Special
+            <x-form-box for="darbi_special_instructions"> DARBI Special
                 Instructions
                 <x-form-input type="text" name="darbi_special_instructions"
                     id="darbi_special_instructions"
+                    placeholder="Corresponds to KU_Symbiota_Quote_NMNH_20250423c.pdf"
                     value="{{ $contract->darbi_special_instructions ?? old('darbi_special_instructions') }}"></x-form-input>
                 @error('darbi_special_instructions')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="notes"> Notes
                 <x-form-input type="text" name="notes" id="notes"
+                    placeholder="Notes to be included in the Customer Request CSV"
                     value="{{ $contract->notes ?? old('notes') }}"></x-form-input>
                 @error('notes')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
