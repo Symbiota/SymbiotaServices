@@ -19,6 +19,7 @@ class ContactFactory extends Factory
         return [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
+            'phone_number' => $this->faker->optional(0.5)->phoneNumber(),
             'email' => $this->faker->email(),
             'notes' => $this->faker->text(),
         ];
