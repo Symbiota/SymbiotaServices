@@ -114,11 +114,15 @@
                         <input type="text"
                             class="m-1 mt-2 p-1 border border-gray-500 ml-4"
                             name="line_ref_1[{{ $service->id }}]"
-                            id="line_ref_1" placeholder="Line Ref 1">
+                            id="line_ref_1" placeholder="Line Ref 1"
+                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_1 ?? '' }}"
+                            @else value="{{ old('line_ref_1.' . $service->id) }}" @endif>
                         <input type="text"
                             class="m-1 mt-2 p-1 border border-gray-500"
                             name="line_ref_2[{{ $service->id }}]"
-                            id="line_ref_2" placeholder="Line Ref 2">
+                            id="line_ref_2" placeholder="Line Ref 2"
+                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_2 ?? '' }}"
+                            @else value="{{ old('line_ref_2.' . $service->id) }}" @endif">
                     </div>
                 @endforeach
             </x-form-box>
