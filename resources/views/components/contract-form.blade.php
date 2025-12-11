@@ -21,26 +21,19 @@
                 @enderror
             </x-form-box>
 
+            <datalist id="contact-datalist">
+                @foreach ($contacts as $contact)
+                    <option
+                        value="{{ $contact->last_name }}, {{ $contact->first_name }}">
+                        {{ $contact->last_name }}, {{ $contact->first_name }}
+                    </option>
+                @endforeach
+            </datalist>
+
             <x-form-box for="financial_contact_id"> Financial Contact ID*
-                <x-form-input type="select" name="financial_contact_id"
-                    id="financial_contact_id">
-                    @isset($contract->current_financial_contact_id)
-                        // If on contract edit page, autofill contact id
-                        <option
-                            value="{{ $contract->current_financial_contact_id }}">
-                            {{ $contract->current_financial_contact->last_name }},
-                            {{ $contract->current_financial_contact->first_name }}
-                            - {{ $contract->current_financial_contact_id }}
-                        </option>
-                    @endisset
-                    <option value=""></option>
-                    @foreach ($contacts as $contact)
-                        <option value="{{ $contact->id }}">
-                            {{ $contact->last_name }},
-                            {{ $contact->first_name }} -
-                            {{ $contact->id }}
-                        </option>
-                    @endforeach
+                <x-form-input type="type" list="contact-datalist"
+                    name="financial_contact_id" id="financial_contact_id"
+                    value="">
                 </x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}
@@ -98,8 +91,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="darbi_header_ref_1"> DARBI Header Ref
-                1*
+            <x-form-box for="darbi_header_ref_1"> DARBI Header Ref 1*
                 <x-form-input type="text" name="darbi_header_ref_1"
                     id="darbi_header_ref_1"
                     placeholder="Portal name, e.g. &quot;CCH2 Symbiota Portal&quot; (20 character max)"

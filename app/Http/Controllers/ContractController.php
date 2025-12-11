@@ -43,11 +43,17 @@ class ContractController extends Controller
         ])->fragmentIf($isHTMX, 'edit-contract');
     }
 
+    public function getContactFromName($name)
+    {
+        $full_name = explode(', ', $name);
+        return Contact::where('first_name', $full_name[1])->where('last_name', $full_name[0])->firstOrFail();
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
             'customer_id' => ['required', 'exists:customers,name'],
-            'financial_contact_id' => ['required', 'numeric:strict', 'exists:contacts,id'],
+            'financial_contact_id' => ['required'],
             'pi_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
             'technical_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
             'darbi_header_ref_1' => ['required'],
@@ -55,6 +61,11 @@ class ContractController extends Controller
             'darbi_special_instructions' => ['nullable'],
             'notes' => ['nullable'],
         ]);
+
+        $full_name = explode(', ', $request->input('financial_contact_id'));
+        $financial_contact = Contact::where('first_name', $full_name[1])->where('last_name', $full_name[0])->firstOrFail();
+
+        $data['financial_contact_id'] = $financial_contact->id;
 
         $data += ['original_contact_id' => $data['financial_contact_id'], 'current_financial_contact_id' => $data['financial_contact_id']];
         unset($data['financial_contact_id']);
@@ -74,7 +85,7 @@ class ContractController extends Controller
         try {
             $data = $request->validate([
                 'customer_id' => ['required', 'exists:customers,name'],
-                'financial_contact_id' => ['required', 'numeric:strict', 'exists:contacts,id'],
+                'financial_contact_id' => ['required'],
                 'pi_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
                 'technical_contact_id' => ['nullable', 'numeric:strict', 'exists:contacts,id'],
                 'darbi_header_ref_1' => ['required'],
@@ -83,7 +94,10 @@ class ContractController extends Controller
                 'notes' => ['nullable'],
             ]);
 
-            $data += ['current_financial_contact_id' => $data['financial_contact_id']];
+            $full_name = explode(', ', $request->input('financial_contact_id'));
+            $financial_contact = Contact::where('first_name', $full_name[1])->where('last_name', $full_name[0])->firstOrFail();
+
+            $data += ['current_financial_contact_id' => $financial_contact->id];
             unset($data['financial_contact_id']);
 
             $customer = Customer::where('name', $data['customer_id'])->firstOrFail();
