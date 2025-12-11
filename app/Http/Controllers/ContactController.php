@@ -42,6 +42,8 @@ class ContactController extends Controller
                 'notes' => ['nullable'],
             ]);
 
+            $data += ['full_name' => ($data['first_name'] . ' ' . $data['last_name'])];
+
             Contact::create($data);
 
             if ($isHTMX) {
@@ -69,6 +71,8 @@ class ContactController extends Controller
                 'phone_number' => ['nullable'],
                 'notes' => ['nullable'],
             ]);
+
+            $data += ['full_name' => ($data['first_name'] . ' ' . $data['last_name'])];
 
             $contact->update($data);
 
