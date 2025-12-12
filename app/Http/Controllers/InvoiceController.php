@@ -67,6 +67,9 @@ class InvoiceController extends Controller
             'notes' => ['nullable'],
         ]);
 
+        $financial_contact = Contact::where('full_name', $data['financial_contact_id'])->firstOrFail();
+        $data['financial_contact_id'] = $financial_contact->id;
+
         $invoice = Invoice::create($data);
 
         $services = request('services');
@@ -90,7 +93,7 @@ class InvoiceController extends Controller
         try {
             $data = $request->validate([
                 'contract_id' => ['required', 'exists:contracts,id'],
-                'financial_contact_id' => ['required', 'exists:contacts,id'],
+                'financial_contact_id' => ['required', 'exists:contacts,full_name'],
                 'billing_start' => ['required', 'date_format:Y-m-d'],
                 'billing_end' => ['required', 'date_format:Y-m-d'],
                 'amount_billed' => ['required', 'numeric:strict'],
@@ -99,6 +102,9 @@ class InvoiceController extends Controller
                 'services' => ['required'],
                 'notes' => ['nullable'],
             ]);
+
+            $financial_contact = Contact::where('full_name', $data['financial_contact_id'])->firstOrFail();
+            $data['financial_contact_id'] = $financial_contact->id;
 
             $invoice->update($data);
             $invoice->services()->detach();
