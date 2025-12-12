@@ -13,6 +13,12 @@
                             - {{ $invoice->contract_id }}
                         </option>
                     @endisset
+                    @isset($contract->customer->name)
+                        <option value="{{ $contract->id }}">
+                            {{ $contract->customer->name }}
+                            - {{ $contract->id }}
+                        </option>
+                    @endisset
                     <option value=""></option>
                     @foreach ($contracts as $o_contract)
                         <option value="{{ $o_contract->id }}">
