@@ -91,7 +91,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="darbi_header_ref_1"> DARBI Header Ref 1*
+            <x-form-box for="darbi_header_ref_1"> DARBI Header Ref 1
                 <x-form-input type="text" name="darbi_header_ref_1"
                     id="darbi_header_ref_1"
                     placeholder="Portal name, e.g. &quot;CCH2 Symbiota Portal&quot; (20 character max)"
