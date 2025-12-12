@@ -7,7 +7,8 @@
                 Customer</x-ec-button></a>
 
         <div class="flex items-center ml-auto">
-            <a href="{{ route('customers.index') }}" <x-ec-button class="!mr-2">⮌
+            <a href="{{ route('customers.index') }}" <x-ec-button
+                class="!mr-2">Reset
                 </x-ec-button></a>
             <form action="{{ route('customers.search') }}" method="GET">
                 <input
