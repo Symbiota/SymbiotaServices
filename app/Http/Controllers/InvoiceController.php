@@ -67,8 +67,8 @@ class InvoiceController extends Controller
             'notes' => ['nullable'],
         ]);
 
-        $financial_contact = Contact::where('full_name', $data['financial_contact_id'])->firstOrFail();
-        $data['financial_contact_id'] = $financial_contact->id;
+        $financialContact = Contact::where('full_name', $data['financial_contact_id'])->firstOrFail();
+        $data['financial_contact_id'] = $financialContact->id;
 
         $invoice = Invoice::create($data);
 
@@ -103,8 +103,8 @@ class InvoiceController extends Controller
                 'notes' => ['nullable'],
             ]);
 
-            $financial_contact = Contact::where('full_name', $data['financial_contact_id'])->firstOrFail();
-            $data['financial_contact_id'] = $financial_contact->id;
+            $financialContact = Contact::where('full_name', $data['financial_contact_id'])->firstOrFail();
+            $data['financial_contact_id'] = $financialContact->id;
 
             $invoice->update($data);
             $invoice->services()->detach();
