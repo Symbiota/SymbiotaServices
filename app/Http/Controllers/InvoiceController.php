@@ -57,7 +57,7 @@ class InvoiceController extends Controller
     {
         $data = $request->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
-            'financial_contact_id' => ['required', 'exists:contacts,id'],
+            'financial_contact_id' => ['required', 'exists:contacts,full_name'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
             'billing_end' => ['required', 'date_format:Y-m-d'],
             'amount_billed' => ['required', 'numeric:strict'],
