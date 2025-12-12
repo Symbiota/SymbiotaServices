@@ -42,9 +42,8 @@ class ContactController extends Controller
                 'notes' => ['nullable'],
             ]);
 
-            $data += ['full_name' => ($data['first_name'] . ' ' . $data['last_name'])];
-
-            Contact::create($data);
+            $contact = Contact::create($data);
+            $contact->update(['full_name' => $contact->last_name . ', ' . $contact->first_name . ' - ' . $contact->id]);
 
             if ($isHTMX) {
                 return response(null, 204)->header('HX-Redirect', route('contacts.index'));
@@ -72,7 +71,7 @@ class ContactController extends Controller
                 'notes' => ['nullable'],
             ]);
 
-            $data += ['full_name' => ($data['first_name'] . ' ' . $data['last_name'])];
+            $data += ['full_name' => ($data['last_name'] . ', ' . $data['first_name'] . ' - ' . $contact->id)];
 
             $contact->update($data);
 

@@ -24,9 +24,9 @@
             <datalist id="contact-datalist">
                 @foreach ($contacts as $contact)
                     <option
-                        value="{{ $contact->last_name }}, {{ $contact->first_name }}">
-                        {{ $contact->last_name }}, {{ $contact->first_name }}
-                    </option>
+                        value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
+                        {{ $contact->last_name }}, {{ $contact->first_name }} -
+                        {{ $contact->id }}</option>
                 @endforeach
             </datalist>
 

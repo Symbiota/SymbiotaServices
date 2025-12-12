@@ -25,7 +25,6 @@ class ContactFactory extends Factory
             'phone_number' => $this->faker->optional(0.5)->phoneNumber(),
             'email' => $this->faker->email(),
             'notes' => $this->faker->text(),
-            'full_name' => $firstName . ' ' . $lastName,
         ];
     }
 }
