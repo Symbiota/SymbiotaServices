@@ -10,8 +10,11 @@
 
         <div class="w-1/5">
             <div class="flex items-center">
-                <x-ec-button onclick="toggleView('create-form')">Create
-                    Contact</x-ec-button>
+                <a href="{{ route('contacts.create') }}"><x-ec-button
+                        hx-get="{{ route('contacts.create') }}" hx-target="#modal"
+                        hx-swap="innerHTML"
+                        onclick="toggleView('modal-container')">Create
+                        Contact</x-ec-button></a>
 
                 @if ($errors->contact_errors->any())
                     <p class="text-red-500 text-sm ml-3"> Error Creating Contact
