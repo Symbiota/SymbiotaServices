@@ -141,6 +141,26 @@
                 @enderror
             </x-form-box>
 
+            <x-form-box for="darbi_header_ref_1"> DARBI Header Ref 1
+                <x-form-input type="text" name="darbi_header_ref_1"
+                    id="darbi_header_ref_1"
+                    placeholder="Portal name, e.g. &quot;CCH2 Symbiota Portal&quot; (20 character max)"
+                    value="{{ $invoice->darbi_header_ref_1 ?? ($contract->darbi_header_ref_1 ?? old('darbi_header_ref_1')) }}"></x-form-input>
+                @error('darbi_header_ref_1')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="darbi_header_ref_2"> DARBI Header Ref 2
+                <x-form-input type="text" name="darbi_header_ref_2"
+                    id="darbi_header_ref_2"
+                    placeholder="Optional additional description of service (20 characters max)"
+                    value="{{ $invoice->darbi_header_ref_2 ?? ($contract->darbi_header_ref_2 ?? old('darbi_header_ref_2')) }}"></x-form-input>
+                @error('darbi_header_ref_2')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
             <x-form-box for="notes"> Notes
                 <x-form-input type="text" name="notes" id="notes"
                     value="{{ $invoice->notes ?? old('notes') }}"></x-form-input>

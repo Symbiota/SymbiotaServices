@@ -20,6 +20,8 @@ class Invoice extends Model
         'amount_billed',
         'date_invoiced',
         'date_paid',
+        'darbi_header_ref_1',
+        'darbi_header_ref_2',
         'notes',
     ];
 
