@@ -6,8 +6,8 @@
         <div class="border-b border-gray-900/10 pb-12">
 
             <x-form-box for="customer_id"> Customer Name*
-                <x-form-input type="type" list="customer-datalist"
-                    name="customer_id" id="customer_id"
+                <x-form-input list="customer-datalist" name="customer_id"
+                    id="customer_id"
                     value="{{ $contract->customer->name ?? ($customer->name ?? old('customer_id')) }}">
                 </x-form-input>
                 <datalist id="customer-datalist">
@@ -31,9 +31,9 @@
             </datalist>
 
             <x-form-box for="financial_contact_id"> Financial Contact ID*
-                <x-form-input type="type" list="contact-datalist"
+                <x-form-input list="contact-datalist"
                     name="financial_contact_id" id="financial_contact_id"
-                    value="">
+                    value="{{ $contract->current_financial_contact->full_name ?? old('financial_contact_id') }}">
                 </x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}
