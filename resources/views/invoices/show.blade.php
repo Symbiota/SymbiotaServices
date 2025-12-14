@@ -56,11 +56,9 @@
             hx-get="{{ route('services.show', $service) }}" hx-target="#modal"
             hx-swap="innerHTML" onclick="toggleView('modal-container')">
             <ul class="block px-4 py-2 border border-gray-500">
-                <li><b>
-                        @if ($service->active_status == 0)
-                            (RETIRED)
-                        @endif
-                    </b></li>
+                @if ($service->active_status == 0)
+                    <li><b>(RETIRED)</b></li>
+                @endif
                 <li><b>Name:</b> {{ $service->name }}</li>
                 <li><b>Service ID:</b> {{ $service->id }}</li>
                 <li><b>DARBI Item Number:</b>
@@ -68,6 +66,12 @@
                 </li>
                 <li><b>Description:</b> {{ $service->description }}</li>
                 <li><b>Price per unit:</b> ${{ $service->price_per_unit }}</li>
+                @isset($service->pivot->line_ref_1)
+                    <li><b>Line Ref 1:</b> {{ $service->pivot->line_ref_1 }}</li>
+                @endisset
+                @isset($service->pivot->line_ref_2)
+                    <li><b>Line Ref 2:</b> {{ $service->pivot->line_ref_2 }}</li>
+                @endisset
                 <br>
                 <li><b>Quantity:</b> {{ $service->pivot->qty }}</li>
                 <li><b>Amount Due:</b> ${{ $service->pivot->amount_owed }}

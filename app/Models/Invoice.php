@@ -32,7 +32,7 @@ class Invoice extends Model
     // Invoices have a many-to-many relationship with services (items)
     public function services()
     {
-        return $this->belongsToMany(Service::class)->withPivot('qty', 'amount_owed');
+        return $this->belongsToMany(Service::class)->withPivot('qty', 'amount_owed', 'line_ref_1', 'line_ref_2');
     }
 
     // An invoice belongs to one contact
