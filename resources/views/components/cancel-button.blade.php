@@ -6,5 +6,5 @@
         onclick="toggleView('modal-container');">Cancel</button>
 @else
     <a class="text-sm/6 font-semibold text-gray-900"
-        href="{{ url()->previous() }}">Cancel</a>
+        href="{{ $slot }}">Cancel</a>
 @endif
