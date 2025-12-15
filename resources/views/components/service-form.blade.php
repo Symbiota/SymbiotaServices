@@ -40,22 +40,6 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="line_ref_1"> Line Reference 1
-                <x-form-input type="text" name="line_ref_1" id="line_ref_1"
-                    value="{{ $service->line_ref_1 ?? (old('line_ref_1') ?? request()->input('line_ref_1')) }}"></x-form-input>
-                @error('line_ref_1')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
-                @enderror
-            </x-form-box>
-
-            <x-form-box for="line_ref_2"> Line Reference 2
-                <x-form-input type="text" name="line_ref_2" id="line_ref_2"
-                    value="{{ $service->line_ref_2 ?? (old('line_ref_2') ?? request()->input('line_ref_2')) }}"></x-form-input>
-                @error('line_ref_2')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
-                @enderror
-            </x-form-box>
-
         </div>
     </div>
 

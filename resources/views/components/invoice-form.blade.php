@@ -66,7 +66,7 @@
             <x-form-box for="services_field">
                 <div class="flex items-center">Select Services*
                     @error('services')
-                        <p class="text-red-500 text-sm ml-6"> {{ $message }}
+                        <p class="text-red-500 text-sm ml-6">{{ $message }}
                         </p>
                     @enderror
                 </div>
@@ -86,8 +86,8 @@
                             @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
                             @else value="{{ old('qty.' . $service->id, 1) }}" @endif
                             step="any" min="0"
-                            id="qty_{{ $service->id }}"
                             name="qty[{{ $service->id }}]"
+                            id="qty_{{ $service->id }}"
                             service_price="{{ $service->price_per_unit }}"
                             onchange="select_checkbox({{ $service->id }}); calc_each_service_bill(); calc_total_amount_billed();">
                         $<input type="text"
@@ -95,6 +95,18 @@
                             id="amount_owed_{{ $service->id }}"
                             name="amount_owed[{{ $service->id }}]"
                             value="{{ $service->price_per_unit }}" readonly>
+                        <input type="text"
+                            class="m-1 mt-2 p-1 border border-gray-500 ml-4"
+                            name="line_ref_1[{{ $service->id }}]"
+                            id="line_ref_1" placeholder="Line Ref 1"
+                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_1 ?? '' }}"
+                            @else value="{{ old('line_ref_1.' . $service->id) }}" @endif>
+                        <input type="text"
+                            class="m-1 mt-2 p-1 border border-gray-500"
+                            name="line_ref_2[{{ $service->id }}]"
+                            id="line_ref_2" placeholder="Line Ref 2"
+                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_2 ?? '' }}"
+                            @else value="{{ old('line_ref_2.' . $service->id) }}" @endif">
                     </div>
                 @endforeach
             </x-form-box>
@@ -137,10 +149,6 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
-        @if ($errors->any())
-            <p class="text-red-500 text-sm ml-3"> Error Editing Invoice
-            </p>
-        @endif
 
         <a @if (request()->is('invoices/create/*')) href="{{ route('contracts.show', $contract) }}"
         @elseif (isset($invoice)) href="{{ route('invoices.show', $invoice) }}"
