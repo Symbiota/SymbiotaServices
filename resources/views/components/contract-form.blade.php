@@ -149,7 +149,7 @@
                 {{ route('contracts.show', $contract) }}
             @elseif (request()->routeIs('contracts.create') && !empty($customer->id))
                 {{ route('customers.show', $customer) }}
-            @elseif (request()->routeIs('contracts.create' && empty($customer->id)))
+            @elseif (request()->routeIs('contracts.create'))
                 {{ route('contracts.index') }}
             @endif
         </x-cancel-button>
