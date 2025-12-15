@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/customers/{customer}/edit', 'edit')->name('customers.edit');
         Route::get('/customers', 'index')->name('customers.index');
         Route::post('/customers/store', 'store')->name('customers.store');
-        Route::get('/customers/{customer?}', 'show')->name('customers.show');
+        Route::get('/customers/{customer}', 'show')->name('customers.show');
         Route::get('/customers/{customer}/exportCSV/{contract?}', 'exportCSV')->name('customers.exportCSV');
     });
 
