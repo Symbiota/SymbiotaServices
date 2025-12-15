@@ -22,6 +22,16 @@
 
         <div class="flex items-start">
             <div class="flex items-center">
+
+                <form method="POST"
+                    action="{{ route('contacts.destroy', $contact) }}">
+                    @csrf
+                    @method('DELETE')
+                    <x-ec-button type="submit" class="!border-red-500 !text-red-500"
+                        onclick="return confirm('Delete this contact?');">Delete
+                        Contact</x-ec-button>
+                </form>
+
                 <x-ec-button onclick="toggleView('edit-form')">Edit
                     Contact</x-ec-button>
 
