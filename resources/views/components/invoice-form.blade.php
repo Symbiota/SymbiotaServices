@@ -7,54 +7,47 @@
 
             <x-form-box for="contract_id"> Contract ID*
                 <x-form-input type="select" name="contract_id" id="contract_id">
-                    @foreach ($contracts as $contract)
+                    @isset($invoice)
+                        <option value="{{ $invoice->contract_id }}">
+                            {{ $invoice->contract->customer->name }}
+                            - {{ $invoice->contract_id }}
+                        </option>
+                    @endisset
+                    @isset($contract->customer->name)
                         <option value="{{ $contract->id }}">
-                            {{ $contract->customer->name }} -
-                            {{ $contract->id }}
+                            {{ $contract->customer->name }}
+                            - {{ $contract->id }}
+                        </option>
+                    @endisset
+                    <option value=""></option>
+                    @foreach ($contracts as $o_contract)
+                        <option value="{{ $o_contract->id }}">
+                            {{ $o_contract->customer->name }} -
+                            {{ $o_contract->id }}
                         </option>
                     @endforeach
                 </x-form-input>
                 @error('contract_id')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
+            <datalist id="contact-datalist">
+                @foreach ($contacts as $contact)
+                    <option
+                        value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
+                        {{ $contact->last_name }}, {{ $contact->first_name }}
+                        - {{ $contact->id }}</option>
+                @endforeach
+            </datalist>
+
             <x-form-box for="financial_contact_id"> Financial Contact ID*
-                <x-form-input type="select" name="financial_contact_id"
-                    id="financial_contact_id">
-                    @isset($invoice)
-                        // On invoice edit page
-                        <option value="{{ $invoice->financial_contact_id }}">
-                            {{ $invoice->financial_contact->last_name }},
-                            {{ $invoice->financial_contact->first_name }}
-                            - {{ $invoice->financial_contact_id }}
-                        </option>
-                    @endisset
-                    @isset($contract->current_financial_contact_id)
-                        // From contract view to invoice creation, autofill
-                        current financial contact
-                        <option
-                            value="{{ $contract->current_financial_contact_id }}">
-                            {{ $contract->current_financial_contact->last_name }},
-                            {{ $contract->current_financial_contact->first_name }}
-                            - {{ $contract->current_financial_contact_id }}
-                        </option>
-                    @endisset
-                    <option value=""></option>
-                    @foreach ($contacts as $contact)
-                        <option value="{{ $contact->id }}">
-                            {{ $contact->last_name }},
-                            {{ $contact->first_name }} -
-                            {{ $contact->id }}
-                        </option>
-                    @endforeach
+                <x-form-input list="contact-datalist"
+                    name="financial_contact_id" id="financial_contact_id"
+                    value="{{ $invoice->financial_contact->full_name ?? ($contract->current_financial_contact->full_name ?? old('financial_contact_id')) }}">
                 </x-form-input>
                 @error('financial_contact_id')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -63,9 +56,7 @@
                     id="billing_start" placeholder="YYYY-MM-DD"
                     value="{{ $invoice->billing_start ?? old('billing_start') }}"></x-form-input>
                 @error('billing_start')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -74,16 +65,14 @@
                     placeholder="YYYY-MM-DD"
                     value="{{ $invoice->billing_end ?? old('billing_end') }}"></x-form-input>
                 @error('billing_end')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="services_field">
                 <div class="flex items-center">Select Services*
                     @error('services')
-                        <p class="text-red-500 text-sm ml-6"> {{ $message }}
+                        <p class="text-red-500 text-sm ml-6">{{ $message }}
                         </p>
                     @enderror
                 </div>
@@ -92,28 +81,38 @@
                         <input type="checkbox"
                             name="services[{{ $service->id }}]" id="service"
                             value="{{ $service->id }}"
+                            data-id="{{ $service->id }}"
                             onchange="calc_total_amount_billed();"
                             @if (isset($invoice)) {{ $invoice->services->find($service) ? 'checked' : '' }}
-                            @else
-                            {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
+                            @else {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
                         {{ $service->name }}
                         <br>
                         <input type="number"
+                            class="m-1 ml-4 mt-2 p-1 border border-gray-500"
                             @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
-                            @else
-                                value="{{ old('qty.' . $service->id, 1) }}" @endif
+                            @else value="{{ old('qty.' . $service->id, 1) }}" @endif
                             step="any" min="0"
                             name="qty[{{ $service->id }}]"
                             id="qty_{{ $service->id }}"
-                            class="m-1 ml-4 mt-2 p-1 border border-gray-500"
                             service_price="{{ $service->price_per_unit }}"
-                            onchange="calc_each_service_bill(); calc_total_amount_billed();">
+                            onchange="select_checkbox({{ $service->id }}); calc_each_service_bill(); calc_total_amount_billed();">
                         $<input type="text"
+                            class="m-1 mt-2 p-1 border border-gray-500"
                             id="amount_owed_{{ $service->id }}"
                             name="amount_owed[{{ $service->id }}]"
-                            value="{{ $service->price_per_unit }}"
+                            value="{{ $service->price_per_unit }}" readonly>
+                        <input type="text"
+                            class="m-1 mt-2 p-1 border border-gray-500 ml-4"
+                            name="line_ref_1[{{ $service->id }}]"
+                            id="line_ref_1" placeholder="Line Ref 1"
+                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_1 ?? '' }}"
+                            @else value="{{ old('line_ref_1.' . $service->id) }}" @endif>
+                        <input type="text"
                             class="m-1 mt-2 p-1 border border-gray-500"
-                            readonly>
+                            name="line_ref_2[{{ $service->id }}]"
+                            id="line_ref_2" placeholder="Line Ref 2"
+                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_2 ?? '' }}"
+                            @else value="{{ old('line_ref_2.' . $service->id) }}" @endif">
                     </div>
                 @endforeach
             </x-form-box>
@@ -122,9 +121,7 @@
                 <x-form-input type="text" name="amount_billed"
                     id="amount_billed" value="" readonly></x-form-input>
                 @error('amount_billed')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -133,9 +130,7 @@
                     id="date_invoiced" placeholder="YYYY-MM-DD"
                     value="{{ $invoice->date_invoiced ?? old('date_invoiced') }}"></x-form-input>
                 @error('date_invoiced')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -144,9 +139,27 @@
                     placeholder="YYYY-MM-DD"
                     value="{{ $invoice->date_paid ?? old('date_paid') }}"></x-form-input>
                 @error('date_paid')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="darbi_header_ref_1"> DARBI Header Ref 1
+                <x-form-input type="text" name="darbi_header_ref_1"
+                    id="darbi_header_ref_1"
+                    placeholder="Portal name, e.g. &quot;CCH2 Symbiota Portal&quot; (20 character max)"
+                    value="{{ $invoice->darbi_header_ref_1 ?? ($contract->darbi_header_ref_1 ?? old('darbi_header_ref_1')) }}"></x-form-input>
+                @error('darbi_header_ref_1')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
+            </x-form-box>
+
+            <x-form-box for="darbi_header_ref_2"> DARBI Header Ref 2
+                <x-form-input type="text" name="darbi_header_ref_2"
+                    id="darbi_header_ref_2"
+                    placeholder="Optional additional description of service (20 characters max)"
+                    value="{{ $invoice->darbi_header_ref_2 ?? ($contract->darbi_header_ref_2 ?? old('darbi_header_ref_2')) }}"></x-form-input>
+                @error('darbi_header_ref_2')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -154,9 +167,7 @@
                 <x-form-input type="text" name="notes" id="notes"
                     value="{{ $invoice->notes ?? old('notes') }}"></x-form-input>
                 @error('notes')
-                    <p class="text-red-500 text-sm ml-3">
-                        {{ $message }}
-                    </p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
@@ -164,10 +175,16 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
-        <a @if (request()->is('invoices/create/*')) href="{{ route('contracts.show', $contract) }}"
-        @elseif (isset($invoice)) href="{{ route('invoices.show', $invoice) }}"
-        @else href="{{ route('invoices.index') }}" @endif
-            class="text-sm/6 font-semibold text-gray-900">Cancel</a>
+
+        <x-cancel-button>
+            @if (request()->routeIs('invoices.edit'))
+                {{ route('invoices.show', $invoice) }}
+            @elseif (request()->routeIs('invoices.create') && !empty($contract->id))
+                {{ route('contracts.show', $contract) }}
+            @elseif (request()->routeIs('invoices.create'))
+                {{ route('invoices.index') }}
+            @endif
+        </x-cancel-button>
 
         <button type="submit"
             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>

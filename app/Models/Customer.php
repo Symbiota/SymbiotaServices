@@ -18,7 +18,6 @@ class Customer extends Model
         'name',
         'darbi_customer_account_number',
         'darbi_site',
-        'correspondence',
         'notes',
         'department_name',
         'address_line_1',

@@ -24,19 +24,17 @@ class SessionController extends Controller
         if (Auth::attempt($validatedAttributes)) {
             request()->session()->regenerate();
             return redirect('/');
-        }
-        else {
+        } else {
             return back()->withErrors([
                 'password' => ['Wrong password.']
             ])->withInput();
         }
-    
     }
 
     public function destroy()
     {
         Auth::logout();
-        
+
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 

@@ -18,9 +18,12 @@
                 {{ $invoice->financial_contact->first_name }}
                 {{ $invoice->financial_contact->last_name }}</a>
         </li>
+        <br>
         <li><b>Billing Start Date:</b> {{ $invoice->billing_start }}</li>
         <li><b>Billing End Date:</b> {{ $invoice->billing_end }}</li>
+        <br>
         <li><b>Total Amount Billed:</b> ${{ $invoice->amount_billed }}</li>
+        <br>
         <li><b>Date Invoiced:</b> {{ $invoice->date_invoiced }}</li>
         <li><b>Date Paid:</b>
             @if (isset($invoice->date_paid))
@@ -29,6 +32,9 @@
                 <b class="text-red-500">NOT PAID</b>
             @endif
         </li>
+        <br>
+        <li><b>DARBI Header Ref 1:</b> {{ $invoice->darbi_header_ref_1 }}</li>
+        <li><b>DARBI Header Ref 2:</b> {{ $invoice->darbi_header_ref_2 }}</li>
         <li><b>Notes:</b> {{ $invoice->notes }}</li>
         <x-timestamps :model="$invoice"></x-timestamps>
     </ul>
@@ -40,34 +46,25 @@
         <a href="{{ route('invoices.exportCSV', $invoice) }}"<x-ec-button>Export
             CSV</x-ec-button></a>
 
-        <div class="flex items-center">
-            <x-ec-button onclick="toggleView('edit-form')">Edit
+        <a href="{{ route('invoices.edit', $invoice) }}">
+            <x-ec-button hx-get="{{ route('invoices.edit', $invoice) }}"
+                hx-target="#modal" hx-swap="innerHTML"
+                onclick="toggleView('modal-container')">Edit
                 Invoice</x-ec-button>
+        </a>
 
-            @if ($errors->any())
-                <p class="text-red-500 text-sm ml-3"> Error Editing Invoice
-                </p>
-            @endif
-        </div>
-
-    </div>
-
-    <div id="edit-form" class="hidden">
-        <x-invoice-form action="{{ route('invoices.update', $invoice) }}"
-            :invoice="$invoice" :services="$services" :contracts="$contracts"
-            :contacts="$contacts">@method('PATCH')</x-invoice-form>
     </div>
 
     <br>
 
     @foreach ($invoice->services as $service)
-        <a href="{{ route('services.show', $service) }}">
+        <a href="{{ route('services.show', $service) }}"
+            hx-get="{{ route('services.show', $service) }}" hx-target="#modal"
+            hx-swap="innerHTML" onclick="toggleView('modal-container')">
             <ul class="block px-4 py-2 border border-gray-500">
-                <li><b>
-                        @if ($service->active_status == 0)
-                            (RETIRED)
-                        @endif
-                    </b></li>
+                @if ($service->active_status == 0)
+                    <li><b>(RETIRED)</b></li>
+                @endif
                 <li><b>Name:</b> {{ $service->name }}</li>
                 <li><b>Service ID:</b> {{ $service->id }}</li>
                 <li><b>DARBI Item Number:</b>
@@ -75,9 +72,15 @@
                 </li>
                 <li><b>Description:</b> {{ $service->description }}</li>
                 <li><b>Price per unit:</b> ${{ $service->price_per_unit }}</li>
+                @isset($service->pivot->line_ref_1)
+                    <li><b>Line Ref 1:</b> {{ $service->pivot->line_ref_1 }}</li>
+                @endisset
+                @isset($service->pivot->line_ref_2)
+                    <li><b>Line Ref 2:</b> {{ $service->pivot->line_ref_2 }}</li>
+                @endisset
                 <br>
                 <li><b>Quantity:</b> {{ $service->pivot->qty }}</li>
-                <li><b>Amount Paid:</b> ${{ $service->pivot->amount_owed }}
+                <li><b>Amount Due:</b> ${{ $service->pivot->amount_owed }}
                 </li>
             </ul>
         </a>

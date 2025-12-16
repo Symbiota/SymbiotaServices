@@ -32,20 +32,13 @@
         <a href="{{ route('contracts.create', $customer) }}"<x-ec-button>Create
             Contract</x-ec-button></a>
 
-    </div>
+        <a href="{{ route('customers.edit', $customer) }}">
+            <x-ec-button hx-get="{{ route('customers.edit', $customer) }}"
+                hx-target="#modal" hx-swap="innerHTML"
+                onclick="toggleView('modal-container')">Edit
+                Customer</x-ec-button>
+        </a>
 
-    <br>
-
-    <div x-data="{ show: false }" @close-form.window="show=false">
-
-        <button @click="show = true"
-            class='relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300'>Edit
-            Customer</button>
-
-        <div id="edit-form" x-show="show">
-            <x-customer-form :customer="$customer" :formMethod="'PATCH'"
-                :formEndpoint="route('customers.update', $customer)"></x-customer-form>
-        </div>
     </div>
 
     <br>

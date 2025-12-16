@@ -28,91 +28,78 @@ class CustomerController extends Controller
 
     public function create(Request $request)
     {
-        try {
-            $validated = $request->validate([
-                'name' => ['required', 'unique:customers,name'],
-                'darbi_customer_account_number' => ['nullable'],
-                'darbi_site' => ['nullable'],
-                'address_line_1' => ['required'],
-                'city' => ['required'],
-                'state' => ['required'],
-                'zip_code' => ['required'],
-                'country' => ['required'],
-            ]);
-            if ($validated) {
-                Customer::create([
-                    'name' => request('name'),
-                    'darbi_customer_account_number' => request('darbi_customer_account_number'),
-                    'darbi_site' => request('darbi_site'),
-                    'correspondence' => request('correspondence'),
-                    'department_name' => request('department_name'),
-                    'address_line_1' => request('address_line_1'),
-                    'address_line_2' => request('address_line_2'),
-                    'city' => request('city'),
-                    'state' => request('state'),
-                    'zip_code' => request('zip_code'),
-                    'country' => request('country'),
-                    'notes' => request('notes'),
-                ]);
-                $customers = Customer::all();
-                $viewHtml = view('customers.index', compact('customers'))->fragment('customer-list');
-                return response($viewHtml)->header(
-                    'HX-Trigger',
-                    json_encode([
-                        'toast' => 'Customer successfully created!',
-                        'close-form' => true,
-                        'create-success' => true,
-                    ]),
-                );
-            }
-        } catch (ValidationException $e) {
-            $customers = Customer::all();
-            return view('customers.index', compact('customers'))->withErrors($e->errors())->fragment('customer-list');
-        }
+        return view('customers.create');
     }
 
-    public function update(Customer $customer)
+    public function edit(Request $request, Customer $customer)
     {
-        request()->validate([
-            'name' => ['required'],
+        $isHTMX = $request->hasHeader('HX-Request');
+
+        return view('customers.edit', [
+            'isHTMX' => $isHTMX,
+            'customer' => $customer,
+        ])->fragmentIf($isHTMX, 'edit-customer');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'unique:customers,name'],
+            'department_name' => ['nullable'],
             'darbi_customer_account_number' => ['nullable'],
             'darbi_site' => ['nullable'],
             'address_line_1' => ['required'],
+            'address_line_2' => ['nullable'],
             'city' => ['required'],
             'state' => ['required'],
             'zip_code' => ['required'],
             'country' => ['required'],
+            'notes' => ['nullable'],
         ]);
 
-        $customer->update([
-            'name' => request('name'),
-            'darbi_customer_account_number' => request('darbi_customer_account_number'),
-            'darbi_site' => request('darbi_site'),
-            'correspondence' => request('correspondence'),
-            'department_name' => request('department_name'),
-            'address_line_1' => request('address_line_1'),
-            'address_line_2' => request('address_line_2'),
-            'city' => request('city'),
-            'state' => request('state'),
-            'zip_code' => request('zip_code'),
-            'country' => request('country'),
-            'notes' => request('notes'),
-        ]);
+        $customer = Customer::create($data);
 
-        $viewHtml = view('customers.show', compact('customer'))->fragment('customer-list');
-        return response($viewHtml)->header(
-            'HX-Trigger',
-            json_encode([
-                'toast' => 'Customer successfully updated!',
-                'close-form' => true,
-            ]),
-        );
+        return redirect()->route('customers.show', $customer);
     }
 
-    public function destroy($id)
+    public function update(Request $request, Customer $customer)
     {
-        $targetCustomer = Customer::find($id);
-        $targetCustomer->delete();
+        $isHTMX = $request->hasHeader('HX-Request');
+        try {
+            $data = $request->validate([
+                'name' => ['required', \Illuminate\Validation\Rule::unique('customers')->ignore($customer->id)],
+                'department_name' => ['nullable'],
+                'darbi_customer_account_number' => ['nullable'],
+                'darbi_site' => ['nullable'],
+                'address_line_1' => ['required'],
+                'address_line_2' => ['nullable'],
+                'city' => ['required'],
+                'state' => ['required'],
+                'zip_code' => ['required'],
+                'country' => ['required'],
+                'notes' => ['nullable'],
+            ]);
+
+            $customer->update($data);
+
+            if ($isHTMX) {
+                return response(null, 204)->header('HX-Redirect', route('customers.show', $customer));
+            }
+            return redirect()->route('customers.show', $customer);
+        } catch (ValidationException $e) {
+            if ($isHTMX) {
+                return view('customers.edit', [
+                    'isHTMX' => $isHTMX,
+                    'customer' => $customer,
+                ])->withErrors($e->errors())->fragment('edit-customer');
+            }
+            throw $e;
+        }
+    }
+
+    public function destroy(Customer $customer)
+    {
+        $customer->delete();
         $customers = Customer::all();
         return view('customers.index', compact('customers'))->fragment('customer-list');
     }
@@ -127,7 +114,11 @@ class CustomerController extends Controller
 
         $headers = [
             ['Submitted  by (Required)',],
-            ['NAME', 'EMAIL', 'PHONE', 'REQUEST DATE',
+            [
+                'NAME',
+                'EMAIL',
+                'PHONE',
+                'REQUEST DATE',
             ],
             [
                 auth()->user()->name, // Works, inputs user name
@@ -135,22 +126,23 @@ class CustomerController extends Controller
                 '',
                 date('m/d/Y'), // Current date
             ],
-            [], [],
+            [],
+            [],
             [
-            'Requested Action',
-            'Customer Name - Department/PI/External Customer',
-            'Department Name - Department/Division/Store Number',
-            'Address Line 1 - Street Address',
-            'Address Line 2 - Building, Suite, Room',
-            'City',
-            'State',
-            'Postal Code',
-            'Country',
-            'Bill To Contact First Name',
-            'Bill To Contact Last Name',
-            'Bill To Contact Email Address',
-            'Does customer require additional attachments? (Create Site with single contact)',
-            'NOTES:',
+                'Requested Action',
+                'Customer Name - Department/PI/External Customer',
+                'Department Name - Department/Division/Store Number',
+                'Address Line 1 - Street Address',
+                'Address Line 2 - Building, Suite, Room',
+                'City',
+                'State',
+                'Postal Code',
+                'Country',
+                'Bill To Contact First Name',
+                'Bill To Contact Last Name',
+                'Bill To Contact Email Address',
+                'Does customer require additional attachments? (Create Site with single contact)',
+                'NOTES:',
             ],
         ];
 
@@ -181,5 +173,4 @@ class CustomerController extends Controller
 
         return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
     }
-    
 }
