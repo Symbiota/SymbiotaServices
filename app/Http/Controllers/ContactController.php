@@ -84,8 +84,13 @@ class ContactController extends Controller
         }
     }
 
-    public function destroy(Contact $contact)
+    public function destroy(Request $request, Contact $contact)
     {
+        //$isHTMX = $request->hasHeader('HX-Request');
+        dd($contact->contracts_by_original_contact);
+        if ($contact->contracts_by_original_contact || $contact->invoices) {
+            //return view('contacts.show', compact('contact', 'isHTMX'))->with('error', 'Cannot delete contacts attached to invoices/contacts.')->fragment('show-contact');
+        }
         $contact->delete();
         return redirect()->route('contacts.index');
     }
