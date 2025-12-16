@@ -11,5 +11,7 @@
     @endguest
     @auth
         <p>Welcome to Symbiota Services!</p>
+        <br>
+        <p>Current version: {{ config('app.version') }}</p>
     @endauth
 </x-table-layout>

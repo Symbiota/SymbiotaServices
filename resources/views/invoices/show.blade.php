@@ -18,9 +18,12 @@
                 {{ $invoice->financial_contact->first_name }}
                 {{ $invoice->financial_contact->last_name }}</a>
         </li>
+        <br>
         <li><b>Billing Start Date:</b> {{ $invoice->billing_start }}</li>
         <li><b>Billing End Date:</b> {{ $invoice->billing_end }}</li>
+        <br>
         <li><b>Total Amount Billed:</b> ${{ $invoice->amount_billed }}</li>
+        <br>
         <li><b>Date Invoiced:</b> {{ $invoice->date_invoiced }}</li>
         <li><b>Date Paid:</b>
             @if (isset($invoice->date_paid))
@@ -29,6 +32,9 @@
                 <b class="text-red-500">NOT PAID</b>
             @endif
         </li>
+        <br>
+        <li><b>DARBI Header Ref 1:</b> {{ $invoice->darbi_header_ref_1 }}</li>
+        <li><b>DARBI Header Ref 2:</b> {{ $invoice->darbi_header_ref_2 }}</li>
         <li><b>Notes:</b> {{ $invoice->notes }}</li>
         <x-timestamps :model="$invoice"></x-timestamps>
     </ul>

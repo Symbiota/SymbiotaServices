@@ -64,6 +64,8 @@ class InvoiceController extends Controller
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
+            'darbi_header_ref_1' => ['nullable'],
+            'darbi_header_ref_2' => ['nullable'],
             'notes' => ['nullable'],
         ]);
 
@@ -102,6 +104,8 @@ class InvoiceController extends Controller
                 'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
                 'date_paid' => ['nullable', 'date_format:Y-m-d'],
                 'services' => ['required'],
+                'darbi_header_ref_1' => ['nullable'],
+                'darbi_header_ref_2' => ['nullable'],
                 'notes' => ['nullable'],
             ]);
 
@@ -213,8 +217,8 @@ class InvoiceController extends Controller
             '$ ' . $invoice->services[0]->pivot->amount_owed,
             $invoice->billing_start, // NOTE: Billings Notes has MM/DD/YYYY, current settings is YYYY-MM-DD
             $invoice->billing_end,
-            $invoice->contract->darbi_header_ref_1,
-            $invoice->contract->darbi_header_ref_2,
+            $invoice->darbi_header_ref_1,
+            $invoice->darbi_header_ref_2,
             $invoice->services[0]->pivot->line_ref_1,
             $invoice->services[0]->pivot->line_ref_2,
             $invoice->contract->darbi_special_instructions,
