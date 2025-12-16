@@ -24,8 +24,9 @@
             <div class="flex items-center">
 
                 <form method="POST"
-                    hx-post="{{ route('contacts.destroy', $contact) }}"
-                    hx-target="#modal" hx-swap="innerHTML scroll:top">
+                    @if ($isHTMX) hx-post="{{ route('contacts.destroy', $contact) }}"
+                    hx-target="#modal" hx-swap="innerHTML scroll:top"
+                    @else action="{{ route('contacts.destroy', $contact) }}" @endif>
                     @csrf
                     @method('DELETE') <x-ec-button type="submit"
                         class="!border-red-500 !text-red-500"
