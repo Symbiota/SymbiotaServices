@@ -12,6 +12,6 @@
     @auth
         <p>Welcome to Symbiota Services!</p>
         <br>
-        <p>Current version: v1.0.1</p>
+        <p>Current version: {{ config('app.version') }}</p>
     @endauth
 </x-table-layout>
