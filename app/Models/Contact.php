@@ -47,6 +47,16 @@ class Contact extends Model
         return $this->hasMany(Contract::class, 'technical_contact_id');
     }
 
+    public function contracts()
+    {
+        return collect([
+            'contracts_by_original_contact' => $this->contracts_by_original_contact,
+            'contracts_by_current_financial_contact' => $this->contracts_by_current_financial_contact,
+            'contracts_by_pi_contact' => $this->contracts_by_pi_contact,
+            'contracts_by_technical_contact' => $this->contracts_by_technical_contact,
+        ]);
+    }
+
     // Multiple invoices can be linked to one contact
     public function invoices()
     {
