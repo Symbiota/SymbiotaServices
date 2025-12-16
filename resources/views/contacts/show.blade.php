@@ -47,6 +47,11 @@
         @error('delete_error')
             <br>
             <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+            @foreach ($contact->invoices as $invoice)
+                <a class="text-red-500 text-sm ml-3 underline"
+                    href="{{ route('invoices.show', $invoice) }}">Invoice:
+                    {{ $invoice->id }}</a>
+            @endforeach
         @enderror
 
         <div id="edit-form"
