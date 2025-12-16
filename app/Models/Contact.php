@@ -20,6 +20,7 @@ class Contact extends Model
         'email',
         'phone_number',
         'notes',
+        'full_name'
     ];
 
     // Multiple contracts can be linked to one contact

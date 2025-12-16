@@ -32,35 +32,19 @@
                 @enderror
             </x-form-box>
 
+            <datalist id="contact-datalist">
+                @foreach ($contacts as $contact)
+                    <option
+                        value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
+                        {{ $contact->last_name }}, {{ $contact->first_name }}
+                        - {{ $contact->id }}</option>
+                @endforeach
+            </datalist>
+
             <x-form-box for="financial_contact_id"> Financial Contact ID*
-                <x-form-input type="select" name="financial_contact_id"
-                    id="financial_contact_id">
-                    @isset($invoice)
-                        // On invoice edit page
-                        <option value="{{ $invoice->financial_contact_id }}">
-                            {{ $invoice->financial_contact->last_name }},
-                            {{ $invoice->financial_contact->first_name }}
-                            - {{ $invoice->financial_contact_id }}
-                        </option>
-                    @endisset
-                    @isset($contract->current_financial_contact_id)
-                        // From contract view to invoice creation, autofill
-                        current financial contact
-                        <option
-                            value="{{ $contract->current_financial_contact_id }}">
-                            {{ $contract->current_financial_contact->last_name }},
-                            {{ $contract->current_financial_contact->first_name }}
-                            - {{ $contract->current_financial_contact_id }}
-                        </option>
-                    @endisset
-                    <option value=""></option>
-                    @foreach ($contacts as $contact)
-                        <option value="{{ $contact->id }}">
-                            {{ $contact->last_name }},
-                            {{ $contact->first_name }} -
-                            {{ $contact->id }}
-                        </option>
-                    @endforeach
+                <x-form-input list="contact-datalist"
+                    name="financial_contact_id" id="financial_contact_id"
+                    value="{{ $invoice->financial_contact->full_name ?? ($contract->current_financial_contact->full_name ?? old('financial_contact_id')) }}">
                 </x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>

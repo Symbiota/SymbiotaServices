@@ -57,7 +57,7 @@ class InvoiceController extends Controller
     {
         $data = $request->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
-            'financial_contact_id' => ['required', 'exists:contacts,id'],
+            'financial_contact_id' => ['required', 'exists:contacts,full_name'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
             'billing_end' => ['required', 'date_format:Y-m-d'],
             'amount_billed' => ['required', 'numeric:strict'],
@@ -68,6 +68,9 @@ class InvoiceController extends Controller
             'darbi_header_ref_2' => ['nullable'],
             'notes' => ['nullable'],
         ]);
+
+        $financialContact = Contact::where('full_name', $data['financial_contact_id'])->firstOrFail();
+        $data['financial_contact_id'] = $financialContact->id;
 
         $invoice = Invoice::create($data);
 
@@ -94,7 +97,7 @@ class InvoiceController extends Controller
         try {
             $data = $request->validate([
                 'contract_id' => ['required', 'exists:contracts,id'],
-                'financial_contact_id' => ['required', 'exists:contacts,id'],
+                'financial_contact_id' => ['required', 'exists:contacts,full_name'],
                 'billing_start' => ['required', 'date_format:Y-m-d'],
                 'billing_end' => ['required', 'date_format:Y-m-d'],
                 'amount_billed' => ['required', 'numeric:strict'],
@@ -105,6 +108,9 @@ class InvoiceController extends Controller
                 'darbi_header_ref_2' => ['nullable'],
                 'notes' => ['nullable'],
             ]);
+
+            $financialContact = Contact::where('full_name', $data['financial_contact_id'])->firstOrFail();
+            $data['financial_contact_id'] = $financialContact->id;
 
             $invoice->update($data);
             $invoice->services()->detach();
