@@ -7,7 +7,8 @@
                 Customer</x-ec-button></a>
 
         <div class="flex items-center ml-auto">
-            <a href="{{ route('customers.index') }}" <x-ec-button class="!mr-2">⮌
+            <a href="{{ route('customers.index') }}" <x-ec-button
+                class="!mr-2">Reset
                 </x-ec-button></a>
             <form action="{{ route('customers.search') }}" method="GET">
                 <input
@@ -26,30 +27,7 @@
 
     </div>
 
-        <div class="flex items-center">
-
-            <button @click="show = true"
-                class='relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300'>
-                Create Customer
-            </button>
-
-            <div class="flex items-center ml-auto">
-                <a href="{{ route('customers.index') }}" <x-ec-button
-                    class="!mr-2">⮌</x-ec-button></a>
-                <form action="{{ route('customers.search') }}" method="GET">
-                    <input
-                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300"
-                        type="text" name="search"
-                        placeholder="Search Customers" list="customer-datalist">
-                    <x-ec-button class="!ml-1">⌕</x-ec-button>
-                </form>
-            </div>
-
-            <datalist id="customer-datalist">
-                @foreach ($customers as $customer)
-                    <option value="{{ $customer->name }}"></option>
-                @endforeach
-            </datalist>
+    <br>
 
     @fragment('customer-list')
         <div class="space-y-4" id="customer-list-div">
@@ -66,8 +44,12 @@
                     class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                     <ul>
                         <li><b>{{ $customer->name }}</b></li>
-                        <li>{{ $customer->darbi_customer_account_number }}:
-                            {{ $customer->correspondence }}</li>
+                        @isset($customer->department_name)
+                            <li>Department: {{ $customer->department_name }}</li>
+                        @endisset
+                        <li>DARBI Account Number:
+                            {{ $customer->darbi_customer_account_number }}
+                        </li>
                     </ul>
                     <form hx-delete={{ route('customers.delete', $customer) }}
                         hx-target="#customer-list-div" hx-swap="outerHTML"
@@ -89,5 +71,6 @@
                 </a>
             @endforeach
         </div>
+    @endfragment
 
 </x-table-layout>

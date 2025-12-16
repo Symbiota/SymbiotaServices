@@ -11,9 +11,9 @@
                     value="{{ $contract->customer->name ?? ($customer->name ?? old('customer_id')) }}">
                 </x-form-input>
                 <datalist id="customer-datalist">
-                    @foreach ($customers as $customer)
-                        <option value="{{ $customer->name }}">
-                            {{ $customer->name }}</option>
+                    @foreach ($customers as $o_customer)
+                        <option value="{{ $o_customer->name }}">
+                            {{ $o_customer->name }}</option>
                     @endforeach
                 </datalist>
                 @error('customer_id')
@@ -104,10 +104,16 @@
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
-        <a @if (request()->is('contracts/create/*')) href="{{ route('customers.show', $customer) }}"
-        @elseif (isset($contract)) href="{{ route('contracts.show', $contract) }}"
-        @else href="{{ route('contracts.index') }}" @endif
-            class="text-sm/6 font-semibold text-gray-900">Cancel</a>
+
+        <x-cancel-button>
+            @if (request()->routeIs('contracts.edit'))
+                {{ route('contracts.show', $contract) }}
+            @elseif (request()->routeIs('contracts.create') && !empty($customer->id))
+                {{ route('customers.show', $customer) }}
+            @elseif (request()->routeIs('contracts.create'))
+                {{ route('contracts.index') }}
+            @endif
+        </x-cancel-button>
 
         <button type="submit"
             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
