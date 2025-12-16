@@ -88,11 +88,10 @@ class ContactController extends Controller
     {
         $isHTMX = $request->hasHeader('HX-Request');
 
-        dd($contact->contracts()->filter->isNotEmpty()->isNotEmpty());
         if ($contact->contracts()->filter->isNotEmpty()->isNotEmpty() || $contact->invoices()->exists()) { // If contact is attached to contracts/invoices, return error
-            return redirect()->route('contacts.index');
-            //return view('contacts.show', compact('contact', 'isHTMX'))->with('error', 'Cannot delete contacts attached to invoices/contacts.')->fragment('show-contact');
+            return view('contacts.show', compact('contact', 'isHTMX'))->withErrors(['delete_error' => 'Cannot delete contacts attached to contracts and/or invoices.'])->fragmentIf($isHTMX, 'show-contact');
         }
+
         $contact->delete();
         return redirect()->route('contacts.index');
     }

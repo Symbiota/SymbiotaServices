@@ -24,10 +24,11 @@
             <div class="flex items-center">
 
                 <form method="POST"
-                    action="{{ route('contacts.destroy', $contact) }}">
+                    hx-post="{{ route('contacts.destroy', $contact) }}"
+                    hx-target="#modal" hx-swap="innerHTML scroll:top">
                     @csrf
-                    @method('DELETE')
-                    <x-ec-button type="submit" class="!border-red-500 !text-red-500"
+                    @method('DELETE') <x-ec-button type="submit"
+                        class="!border-red-500 !text-red-500"
                         onclick="return confirm('Delete this contact?');">Delete
                         Contact</x-ec-button>
                 </form>
@@ -41,6 +42,11 @@
                 @endif
             </div>
         </div>
+
+        @error('delete_error')
+            <br>
+            <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+        @enderror
 
         <div id="edit-form"
             class="{{ $errors->contact_errors->any() ? '' : 'hidden' }}">
