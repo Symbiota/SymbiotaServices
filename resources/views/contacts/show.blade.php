@@ -37,6 +37,9 @@
                 <x-ec-button onclick="toggleView('edit-form')">Edit
                     Contact</x-ec-button>
 
+                <x-ec-button onclick="toggleView('show-attachments')">Show
+                    Attachments</x-ec-button>
+
                 @if ($errors->contact_errors->any())
                     <p class="text-red-500 text-sm ml-3">Error Editing Contact
                     </p>
@@ -44,15 +47,40 @@
             </div>
         </div>
 
+        <br>
+
         @error('delete_error')
+            <div class="text-red-500 text-sm ml-3">
+                <p>{{ $message }}</p>
+            </div>
+        @enderror
+
+        <div id="show-attachments" class="hidden">
+            <div class="underline flex gap-4">
+                @foreach ($contact->contracts_by_original_contact as $o_contract)
+                    <a href="{{ route('contracts.show', $o_contract) }}">Original
+                        Contact: {{ $o_contract->id }}</a>
+                @endforeach
+                @foreach ($contact->contracts_by_current_financial_contact as $cf_contract)
+                    <a href="{{ route('contracts.show', $cf_contract) }}">Current
+                        Financial Contact: {{ $cf_contract->id }}</a>
+                @endforeach
+                @foreach ($contact->contracts_by_pi_contact as $pi_contract)
+                    <a href="{{ route('contracts.show', $pi_contract) }}">Pi
+                        Contact: {{ $pi_contract->id }}</a>
+                @endforeach
+                @foreach ($contact->contracts_by_technical_contact as $t_contract)
+                    <a href="{{ route('contracts.show', $t_contract) }}">Technical
+                        Contact: {{ $t_contract->id }}</a>
+                @endforeach
+            </div>
             <br>
-            <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
             @foreach ($contact->invoices as $invoice)
-                <a class="text-red-500 text-sm ml-3 underline"
+                <a class="mr-4 underline"
                     href="{{ route('invoices.show', $invoice) }}">Invoice:
                     {{ $invoice->id }}</a>
             @endforeach
-        @enderror
+        </div>
 
         <div id="edit-form"
             class="{{ $errors->contact_errors->any() ? '' : 'hidden' }}">
