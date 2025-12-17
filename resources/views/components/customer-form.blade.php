@@ -105,7 +105,7 @@
 
             <x-form-box for="notes"> Notes
                 <x-form-input type="text" name="notes" id="notes"
-                    placeholder="Extra Notes"
+                    placeholder="Extra notes to display in customer request CSV"
                     value="{{ $customer->notes ?? '' }}"></x-form-input>
                 @error('notes')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}
