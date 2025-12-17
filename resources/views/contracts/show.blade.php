@@ -3,30 +3,40 @@
 
     <ul>
         <li><b>Contract ID:</b> {{ $contract->id }}</li>
-        <li><a href="{{ route('customers.show', $contract->customer) }}"><b
-                    class="text-blue-700 underline decoration-2">Customer
-                    ID:</b>
+        <li><a href="{{ route('customers.show', $contract->customer) }}">
+                <b class="text-blue-700 underline decoration-2">Customer ID:</b>
                 {{ $contract->customer_id }} -
                 {{ $contract->customer->name }}</a></li>
-        <li><a href="{{ route('contacts.show', $contract->original_contact) }}"><b
-                    class="text-blue-700 underline decoration-2">Original Contact
+
+        <li><a href="{{ route('contacts.show', $contract->original_contact) }}"
+                hx-get="{{ route('contacts.show', $contract->original_contact) }}"
+                hx-target="#modal" hx-swap="innerHTML"
+                onclick="toggleView('modal-container')">
+                <b class="text-blue-700 underline decoration-2">Original Contact
                     ID:</b>
                 {{ $contract->original_contact_id }} -
                 {{ $contract->original_contact->first_name }}
                 {{ $contract->original_contact->last_name }}</a>
         </li>
-        <li><a
-                href="{{ route('contacts.show', $contract->current_financial_contact) }}"><b
-                    class="text-blue-700 underline decoration-2">Current
+
+        <li><a href="{{ route('contacts.show', $contract->current_financial_contact) }}"
+                hx-get="{{ route('contacts.show', $contract->current_financial_contact) }}"
+                hx-target="#modal" hx-swap="innerHTML"
+                onclick="toggleView('modal-container')">
+                <b class="text-blue-700 underline decoration-2">Current
                     Financial Contact ID:</b>
                 {{ $contract->current_financial_contact_id }} -
                 {{ $contract->current_financial_contact->first_name }}
                 {{ $contract->current_financial_contact->last_name }}</a>
         </li>
+
         <li>
             @if (isset($contract->pi_contact_id))
-                <a href="{{ route('contacts.show', $contract->pi_contact) }}"><b
-                        class="text-blue-700 underline decoration-2">PI Contact
+                <a href="{{ route('contacts.show', $contract->pi_contact) }}"
+                    hx-get="{{ route('contacts.show', $contract->pi_contact) }}"
+                    hx-target="#modal" hx-swap="innerHTML"
+                    onclick="toggleView('modal-container')">
+                    <b class="text-blue-700 underline decoration-2">PI Contact
                         ID:</b>
                     {{ $contract->pi_contact_id }} -
                     {{ $contract->pi_contact->first_name }}
@@ -36,11 +46,14 @@
                 <b>PI Contact ID:</b> None
             @endif
         </li>
+
         <li>
             @if (isset($contract->technical_contact_id))
-                <a
-                    href="{{ route('contacts.show', $contract->technical_contact) }}"><b
-                        class="text-blue-700 underline decoration-2">Technical
+                <a href="{{ route('contacts.show', $contract->technical_contact) }}"
+                    hx-get="{{ route('contacts.show', $contract->technical_contact) }}"
+                    hx-target="#modal" hx-swap="innerHTML"
+                    onclick="toggleView('modal-container')">
+                    <b class="text-blue-700 underline decoration-2">Technical
                         Contact ID:</b>
                     {{ $contract->technical_contact_id }} -
                     {{ $contract->technical_contact->first_name }}
@@ -50,6 +63,7 @@
                 <b>Technical Contact ID:</b> None
             @endif
         </li>
+
         <li><b>DARBI Header Ref 1:</b> {{ $contract->darbi_header_ref_1 }}</li>
         <li><b>DARBI Header Ref 2:</b> {{ $contract->darbi_header_ref_2 }}</li>
         <li><b>DARBI Special Instructions:</b>
