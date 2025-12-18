@@ -64,8 +64,8 @@ class InvoiceController extends Controller
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
-            'darbi_header_ref_1' => ['nullable'],
-            'darbi_header_ref_2' => ['nullable'],
+            'darbi_header_ref_1' => ['nullable', 'max:20'],
+            'darbi_header_ref_2' => ['nullable', 'max:20'],
             'notes' => ['nullable'],
         ]);
 
@@ -104,8 +104,8 @@ class InvoiceController extends Controller
                 'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
                 'date_paid' => ['nullable', 'date_format:Y-m-d'],
                 'services' => ['required'],
-                'darbi_header_ref_1' => ['nullable'],
-                'darbi_header_ref_2' => ['nullable'],
+                'darbi_header_ref_1' => ['nullable', 'max:20'],
+                'darbi_header_ref_2' => ['nullable', 'max:20'],
                 'notes' => ['nullable'],
             ]);
 
