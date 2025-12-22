@@ -54,7 +54,8 @@
                                 action="{{ route('session.destroy') }}">
                                 @csrf
                                 <button type="submit"
-                                    class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Log
+                                    class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                                    onclick="return confirm('Log out?');">Log
                                     Out</button>
                             </form>
                             <a href="{{ route('user.show') }}"

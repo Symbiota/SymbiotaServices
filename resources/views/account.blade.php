@@ -26,7 +26,7 @@
 
     <form method="POST" id="edit-form"
         class="{{ $errors->any() ? '' : 'hidden' }}"
-        @if ($isHTMX) :errors="$errors"
+        @if ($isHTMX) hx-post="{{ route('user.update') }}"
         hx-target="#modal"
         hx-swap="innerHTML scroll:top"
         @else
