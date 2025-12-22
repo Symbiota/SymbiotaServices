@@ -13,8 +13,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('user.create');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('user.store');
 
 Route::get('/login', [SessionController::class, 'create'])->name('session.create');
 Route::post('/login', [SessionController::class, 'store'])->name('session.store');

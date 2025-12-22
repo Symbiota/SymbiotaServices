@@ -12,13 +12,13 @@ class RegisteredUserController extends Controller
 {
     public function create()
     {
-        return view('register');
+        return view('user.create');
     }
 
     public function show(Request $request)
     {
         $isHTMX = $request->hasHeader('HX-Request');
-        return view('account', [
+        return view('user.show', [
             'isHTMX' => $isHTMX,
             'user' => auth()->user()
         ])->fragmentIf($isHTMX, 'show-user');
@@ -54,10 +54,10 @@ class RegisteredUserController extends Controller
 
             auth()->user()->update($data);
 
-            return view('account', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->fragmentIf($isHTMX, 'show-user');
+            return view('user.show', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->fragmentIf($isHTMX, 'show-user');
         } catch (ValidationException $e) {
             if ($isHTMX) {
-                return view('account', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->withErrors($e->errors())->fragmentIf($isHTMX, 'show-user');
+                return view('user.show', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->withErrors($e->errors())->fragmentIf($isHTMX, 'show-user');
             }
             throw $e;
         }

@@ -1,7 +1,7 @@
 <x-table-layout heading="Register New Account">
     <title>Register New Account - SymbiotaServices</title>
 
-    <form method="POST" action="{{ route('register.store') }}">
+    <form method="POST" action="{{ route('user.store') }}">
         @csrf
 
         <div class="space-y-12">
