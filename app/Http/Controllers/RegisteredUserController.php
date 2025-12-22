@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
 
 class RegisteredUserController extends Controller
 {
@@ -41,15 +42,24 @@ class RegisteredUserController extends Controller
 
     public function update(Request $request)
     {
-        $data = $request->validate([
-            'name' => ['required', \Illuminate\Validation\Rule::unique('users')->ignore(auth()->user()->id)],
-            'email' => ['required', 'email', \Illuminate\Validation\Rule::unique('users')->ignore(auth()->user()->id)],
-            'password' => ['required'],
-            'password' => ['required', 'confirmed'],
-        ]);
+        $isHTMX = $request->hasHeader('HX-Request');
 
-        auth()->user()->update($data);
+        try {
+            $data = $request->validate([
+                'name' => ['required', \Illuminate\Validation\Rule::unique('users')->ignore(auth()->user()->id)],
+                'email' => ['required', 'email', \Illuminate\Validation\Rule::unique('users')->ignore(auth()->user()->id)],
+                'password' => ['required'],
+                'password' => ['required', 'confirmed'],
+            ]);
 
-        return redirect()->route('user.show', ['user' => auth()->user()]);
+            auth()->user()->update($data);
+
+            return view('account', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->fragmentIf($isHTMX, 'show-user');
+        } catch (ValidationException $e) {
+            if ($isHTMX) {
+                return view('account', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->withErrors($e->errors())->fragmentIf($isHTMX, 'show-user');
+            }
+            throw $e;
+        }
     }
 }
