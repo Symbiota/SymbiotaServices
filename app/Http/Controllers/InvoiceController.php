@@ -229,12 +229,12 @@ class InvoiceController extends Controller
 
         for ($i = 1; $i < count($invoice->services); $i++) {
             $item_row = [
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
+                'RSINT',
+                'KUCR Symbiota',
+                '1 - ' . $invoice->contract->customer->name,
+                $invoice->contract->customer->darbi_customer_account_number,
+                $invoice->contract->customer->darbi_site,
+                $invoice->financial_contact->first_name . ' ' . $invoice->financial_contact->last_name,
                 $invoice->services[$i]->darbi_item_number,
                 $invoice->services[$i]->description,
                 'Nico Franz',
@@ -242,14 +242,14 @@ class InvoiceController extends Controller
                 'EA',
                 $invoice->services[$i]->price_per_unit,
                 '$ ' . $invoice->services[$i]->pivot->amount_owed,
-                '',
-                '',
-                '',
-                '',
+                $invoice->billing_start,
+                $invoice->billing_end,
+                $invoice->darbi_header_ref_1,
+                $invoice->darbi_header_ref_2,
                 $invoice->services[$i]->pivot->line_ref_1,
                 $invoice->services[$i]->pivot->line_ref_2,
-                '',
-                '',
+                $invoice->contract->darbi_special_instructions,
+                'Symbiota Internal Invoice ID: #' . $invoice->id,
             ];
 
             fputcsv($handle, $item_row);
