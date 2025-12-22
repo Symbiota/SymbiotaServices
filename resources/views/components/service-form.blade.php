@@ -40,28 +40,12 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="line_ref_1"> Line Reference 1
-                <x-form-input type="text" name="line_ref_1" id="line_ref_1"
-                    value="{{ $service->line_ref_1 ?? (old('line_ref_1') ?? request()->input('line_ref_1')) }}"></x-form-input>
-                @error('line_ref_1')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
-                @enderror
-            </x-form-box>
-
-            <x-form-box for="line_ref_2"> Line Reference 2
-                <x-form-input type="text" name="line_ref_2" id="line_ref_2"
-                    value="{{ $service->line_ref_2 ?? (old('line_ref_2') ?? request()->input('line_ref_2')) }}"></x-form-input>
-                @error('line_ref_2')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
-                @enderror
-            </x-form-box>
-
         </div>
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
-        <a href=""
-            class="text-sm/6 font-semibold text-gray-900">Cancel</a>
+
+        <x-cancel-button>{{ route('services.index') }}</x-cancel-button>
 
         <button type="submit"
             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>

@@ -5,7 +5,7 @@
         @if ($isHTMX)
             <x-service-form :errors="$errors" class="-mt-4"
                 hx-post="{{ route('services.store') }}" hx-target="#modal"
-                hx-swap="innerHTML"></x-service-form>
+                hx-swap="innerHTML scroll:top"></x-service-form>
         @else
             <x-service-form class="-mt-8"
                 action="{{ route('services.store') }}"></x-service-form>

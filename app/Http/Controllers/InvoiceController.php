@@ -7,7 +7,7 @@ use App\Models\Service;
 use App\Models\Contract;
 use App\Models\Contact;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Validation\ValidationException;
 
 class InvoiceController extends Controller
 {
@@ -18,16 +18,8 @@ class InvoiceController extends Controller
 
     public function show(Invoice $invoice)
     {
-        $contracts = Contract::select('contracts.*')
-            ->join('customers', 'customers.id', '=', 'contracts.customer_id')
-            ->orderBy('customers.name')
-            ->get();
-
         return view('invoices.show', [
             'invoice' => $invoice,
-            'contracts'=> $contracts,
-            'services' => Service::all(),
-            'contacts' => Contact::all()->sortBy('last_name'),
         ]);
     }
 
@@ -46,66 +38,114 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function edit(Request $request, Invoice $invoice)
+    {
+        $isHTMX = $request->hasHeader('HX-Request');
+
+        return view('invoices.edit', [
+            'isHTMX' => $isHTMX,
+            'invoice' => $invoice,
+            'services' => Service::all(),
+            'contacts' => Contact::all()->sortBy('last_name'),
+            'contracts' => Contract::select('contracts.*')
+                ->join('customers', 'customers.id', '=', 'contracts.customer_id')
+                ->orderBy('customers.name')->get(),
+        ])->fragmentIf($isHTMX, 'edit-invoice');
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
             'contract_id' => ['required', 'exists:contracts,id'],
-            'financial_contact_id' => ['required', 'exists:contacts,id'],
+            'financial_contact_id' => ['required', 'exists:contacts,full_name'],
             'billing_start' => ['required', 'date_format:Y-m-d'],
             'billing_end' => ['required', 'date_format:Y-m-d'],
             'amount_billed' => ['required', 'numeric:strict'],
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
+            'darbi_header_ref_1' => ['nullable'],
+            'darbi_header_ref_2' => ['nullable'],
             'notes' => ['nullable'],
         ]);
+
+        $financialContact = Contact::where('full_name', $data['financial_contact_id'])->firstOrFail();
+        $data['financial_contact_id'] = $financialContact->id;
 
         $invoice = Invoice::create($data);
 
         $services = request('services');
         $qtys = request('qty');
         $amounts_owed = request('amount_owed');
+        $line_ref_1 = request('line_ref_1');
+        $line_ref_2 = request('line_ref_2');
 
-        $data = [];
+        $serviceData = [];
         foreach ($services as $service_id) {
-            $data[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id]];
+            $serviceData[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id], 'line_ref_1' => $line_ref_1[$service_id], 'line_ref_2' => $line_ref_2[$service_id]];
         }
 
-        $invoice->services()->attach($data);
+        $invoice->services()->attach($serviceData);
 
         return redirect()->route('invoices.show', $invoice);
     }
 
     public function update(Request $request, Invoice $invoice)
     {
-        $data = $request->validate([
-            'contract_id' => ['required', 'exists:contracts,id'],
-            'financial_contact_id' => ['required', 'exists:contacts,id'],
-            'billing_start' => ['required', 'date_format:Y-m-d'],
-            'billing_end' => ['required', 'date_format:Y-m-d'],
-            'amount_billed' => ['required', 'numeric:strict'],
-            'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
-            'date_paid' => ['nullable', 'date_format:Y-m-d'],
-            'services' => ['required'],
-            'notes' => ['nullable'],
-        ]);
+        $isHTMX = $request->hasHeader('HX-Request');
 
-        $invoice->update($data);
+        try {
+            $data = $request->validate([
+                'contract_id' => ['required', 'exists:contracts,id'],
+                'financial_contact_id' => ['required', 'exists:contacts,full_name'],
+                'billing_start' => ['required', 'date_format:Y-m-d'],
+                'billing_end' => ['required', 'date_format:Y-m-d'],
+                'amount_billed' => ['required', 'numeric:strict'],
+                'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
+                'date_paid' => ['nullable', 'date_format:Y-m-d'],
+                'services' => ['required'],
+                'darbi_header_ref_1' => ['nullable'],
+                'darbi_header_ref_2' => ['nullable'],
+                'notes' => ['nullable'],
+            ]);
 
-        $invoice->services()->detach();
+            $financialContact = Contact::where('full_name', $data['financial_contact_id'])->firstOrFail();
+            $data['financial_contact_id'] = $financialContact->id;
 
-        $services = request('services');
-        $qtys = request('qty');
-        $amounts_owed = request('amount_owed');
+            $invoice->update($data);
+            $invoice->services()->detach();
+            $services = request('services');
+            $qtys = request('qty');
+            $amounts_owed = request('amount_owed');
+            $line_ref_1 = request('line_ref_1');
+            $line_ref_2 = request('line_ref_2');
 
-        $data = [];
-        foreach ($services as $service_id) {
-            $data[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id]];
+            $serviceData = [];
+            foreach ($services as $service_id) {
+                $serviceData[$service_id] = ['qty' => $qtys[$service_id], 'amount_owed' => $amounts_owed[$service_id], 'line_ref_1' => $line_ref_1[$service_id], 'line_ref_2' => $line_ref_2[$service_id]];
+            }
+
+            $invoice->services()->attach($serviceData);
+
+            if ($isHTMX) {
+                return response(null, 204)->header('HX-Redirect', route('invoices.show', $invoice));
+            }
+            return redirect()->route('invoices.show', $invoice);
+        } catch (ValidationException $e) {
+
+            if ($isHTMX) {
+                return view('invoices.edit', [
+                    'isHTMX' => $isHTMX,
+                    'invoice' => $invoice,
+                    'services' => Service::all(),
+                    'contacts' => Contact::all()->sortBy('last_name'),
+                    'contracts' => Contract::select('contracts.*')
+                        ->join('customers', 'customers.id', '=', 'contracts.customer_id')
+                        ->orderBy('customers.name')->get(),
+                ])->withErrors($e->errors())->fragment('edit-invoice');
+            }
+            throw $e;
         }
-
-        $invoice->services()->attach($data);
-
-        return redirect()->route('invoices.show', $invoice);
     }
 
     public function exportCSV(Invoice $invoice)
@@ -118,7 +158,11 @@ class InvoiceController extends Controller
 
         $headers = [
             ['Submitted  by (Required)',],
-            ['NAME', 'EMAIL', 'PHONE', 'REQUEST DATE',
+            [
+                'NAME',
+                'EMAIL',
+                'PHONE',
+                'REQUEST DATE',
             ],
             [
                 auth()->user()->name, // Works, inputs user name
@@ -126,29 +170,30 @@ class InvoiceController extends Controller
                 '',
                 date('m/d/Y'), // Current date
             ],
-            [], [],
+            [],
+            [],
             [
-            'BUSINESS UNIT - KUINT or RSINT',
-            'BILLING UNIT/DEPARTMENT NAME',
-            'CUSTOMER NAME',
-            'CUSTOMER ACCOUNT NUMBER',
-            'CUSTOMER SITE NUMBER',
-            'CUSTOMER CONTACT',
-            'ITEM NUMBER',
-            'ITEM DESCRIPTION',
-            'SALESPERSON',
-            'QUANTITY',
-            'UOM',
-            'PRICE',
-            'LINE TOTAL',
-            'BILL FROM DATE',
-            'BILL TO DATE',
-            'HEADER REFERENCE 1',
-            'HEADER REFERENCE 2',
-            'LINE REFERENCE 1',
-            'LINE REFERENCE 2',
-            'SPECIAL INSTRUCTIONS',
-            'NOTES: INCLUDE INVOICE NUMBER AND LINE NUMBER IF CREDIT MEMO',
+                'BUSINESS UNIT - KUINT or RSINT',
+                'BILLING UNIT/DEPARTMENT NAME',
+                'CUSTOMER NAME',
+                'CUSTOMER ACCOUNT NUMBER',
+                'CUSTOMER SITE NUMBER',
+                'CUSTOMER CONTACT',
+                'ITEM NUMBER',
+                'ITEM DESCRIPTION',
+                'SALESPERSON',
+                'QUANTITY',
+                'UOM',
+                'PRICE',
+                'LINE TOTAL',
+                'BILL FROM DATE',
+                'BILL TO DATE',
+                'HEADER REFERENCE 1',
+                'HEADER REFERENCE 2',
+                'LINE REFERENCE 1',
+                'LINE REFERENCE 2',
+                'SPECIAL INSTRUCTIONS',
+                'NOTES: INCLUDE INVOICE NUMBER AND LINE NUMBER IF CREDIT MEMO',
             ],
         ];
 
@@ -172,10 +217,10 @@ class InvoiceController extends Controller
             '$ ' . $invoice->services[0]->pivot->amount_owed,
             $invoice->billing_start, // NOTE: Billings Notes has MM/DD/YYYY, current settings is YYYY-MM-DD
             $invoice->billing_end,
-            $invoice->contract->darbi_header_ref_1,
-            $invoice->contract->darbi_header_ref_2,
-            $invoice->services[0]->line_ref_1,
-            $invoice->services[0]->line_ref_2,
+            $invoice->darbi_header_ref_1,
+            $invoice->darbi_header_ref_2,
+            $invoice->services[0]->pivot->line_ref_1,
+            $invoice->services[0]->pivot->line_ref_2,
             $invoice->contract->darbi_special_instructions,
             'Symbiota Internal Invoice ID: #' . $invoice->id,
         ];
@@ -183,27 +228,29 @@ class InvoiceController extends Controller
         fputcsv($handle, $data);
 
         for ($i = 1; $i < count($invoice->services); $i++) {
-            $item_row = ['',
-            '',
-            '',
-            '',
-            '',
-            '',
-            $invoice->services[$i]->darbi_item_number,
-            $invoice->services[$i]->description,
-            'Nico Franz',
-            $invoice->services[$i]->pivot->qty,
-            'EA',
-            $invoice->services[$i]->price_per_unit,
-            '$ ' . $invoice->services[$i]->pivot->amount_owed,
-            '',
-            '',
-            '',
-            '',
-            $invoice->services[$i]->line_ref_1,
-            $invoice->services[$i]->line_ref_2,
-            '',
-            '',];
+            $item_row = [
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                $invoice->services[$i]->darbi_item_number,
+                $invoice->services[$i]->description,
+                'Nico Franz',
+                $invoice->services[$i]->pivot->qty,
+                'EA',
+                $invoice->services[$i]->price_per_unit,
+                '$ ' . $invoice->services[$i]->pivot->amount_owed,
+                '',
+                '',
+                '',
+                '',
+                $invoice->services[$i]->pivot->line_ref_1,
+                $invoice->services[$i]->pivot->line_ref_2,
+                '',
+                '',
+            ];
 
             fputcsv($handle, $item_row);
         }
@@ -212,5 +259,4 @@ class InvoiceController extends Controller
 
         return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
     }
-
 }
