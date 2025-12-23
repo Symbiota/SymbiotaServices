@@ -30,6 +30,8 @@ class InvoiceController extends Controller
             ->orderBy('customers.name')
             ->get();
 
+        $invoice['billing_start'] = $invoice['billing_end'] = $invoice['date_invoiced'] = $invoice['date_paid'] = '';
+
         return view('invoices.create', [
             'contract' => $contract,
             'invoice' => $invoice,
