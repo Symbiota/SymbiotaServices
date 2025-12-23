@@ -92,41 +92,44 @@
     <br>
 
     @foreach ($contract->invoices as $invoice)
-        <a href="{{ route('invoices.create', [$contract, $invoice]) }}"><x-ec-button>Duplicate
-                Invoice</x-ec-button></a>
-        <a href="{{ route('invoices.show', $invoice) }}">
-            <ul class="block px-4 py-2 border border-gray-500">
-                <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
-                <li><b>Contract ID:</b> {{ $invoice->contract_id }}
-                </li>
-                <li><b>Billing Start Date:</b>
-                    {{ $invoice->billing_start }}
-                </li>
-                <li><b>Billing End Date:</b>
-                    {{ $invoice->billing_end }}
-                </li>
-                <li><b>Total Amount Billed:</b> ${{ $invoice->amount_billed }}
-                </li>
-                <li><b>Date Invoiced:</b> {{ $invoice->date_invoiced }}
-                </li>
-                <li><b>Date Paid:</b>
-                    @if (isset($invoice->date_paid))
-                        {{ $invoice->date_paid }}
-                    @else
-                        <b class="text-red-500">NOT PAID</b>
-                    @endif
-                </li>
-                <li><b>Notes:</b> {{ $invoice->notes }}</li>
-                <b>Services:</b>
-                @foreach ($invoice->services as $service)
-                    <p class="ml-8">
-                        {{ $service->name }}:
-                        ${{ $service->pivot->amount_owed }}
-                        ({{ $service->pivot->qty }})
-                    </p>
-                @endforeach
-            </ul>
-        </a>
+        <div class="block px-4 py-2 border border-gray-500">
+            <a href="{{ route('invoices.create', [$contract, $invoice]) }}"
+                class="flex float-right mt-2"><x-ec-button>Duplicate
+                    Invoice</x-ec-button></a>
+            <a href="{{ route('invoices.show', $invoice) }}">
+                <ul>
+                    <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
+                    <li><b>Contract ID:</b> {{ $invoice->contract_id }}
+                    </li>
+                    <li><b>Billing Start Date:</b>
+                        {{ $invoice->billing_start }}</li>
+                    <li><b>Billing End Date:</b>
+                        {{ $invoice->billing_end }}
+                    </li>
+                    <li><b>Total Amount Billed:</b>
+                        ${{ $invoice->amount_billed }}
+                    </li>
+                    <li><b>Date Invoiced:</b> {{ $invoice->date_invoiced }}
+                    </li>
+                    <li><b>Date Paid:</b>
+                        @if (isset($invoice->date_paid))
+                            {{ $invoice->date_paid }}
+                        @else
+                            <b class="text-red-500">NOT PAID</b>
+                        @endif
+                    </li>
+                    <li><b>Notes:</b> {{ $invoice->notes }}</li>
+                    <b>Services:</b>
+                    @foreach ($invoice->services as $service)
+                        <p class="ml-8">
+                            {{ $service->name }}:
+                            ${{ $service->pivot->amount_owed }}
+                            ({{ $service->pivot->qty }})
+                        </p>
+                    @endforeach
+                </ul>
+            </a>
+        </div>
         <br>
     @endforeach
 
