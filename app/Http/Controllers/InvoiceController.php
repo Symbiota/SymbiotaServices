@@ -23,7 +23,7 @@ class InvoiceController extends Controller
         ]);
     }
 
-    public function create(Contract $contract)
+    public function create(Contract $contract, Invoice $invoice)
     {
         $contracts = Contract::select('contracts.*')
             ->join('customers', 'customers.id', '=', 'contracts.customer_id')
@@ -32,6 +32,7 @@ class InvoiceController extends Controller
 
         return view('invoices.create', [
             'contract' => $contract,
+            'invoice' => $invoice,
             'contracts' => $contracts,
             'services' => Service::all(),
             'contacts' => Contact::all()->sortBy('last_name'),

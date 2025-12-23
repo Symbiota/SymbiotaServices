@@ -92,6 +92,8 @@
     <br>
 
     @foreach ($contract->invoices as $invoice)
+        <a href="{{ route('invoices.create', [$contract, $invoice]) }}"><x-ec-button>Create
+                Invoice</x-ec-button></a>
         <a href="{{ route('invoices.show', $invoice) }}">
             <ul class="block px-4 py-2 border border-gray-500">
                 <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
