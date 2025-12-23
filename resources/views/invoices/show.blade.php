@@ -46,6 +46,10 @@
         <a href="{{ route('invoices.exportCSV', $invoice) }}"<x-ec-button>Export
             CSV</x-ec-button></a>
 
+        <a
+            href="{{ route('invoices.create', [$invoice->contract, $invoice]) }}"><x-ec-button>Duplicate
+                Invoice</x-ec-button></a>
+
         <a href="{{ route('invoices.edit', $invoice) }}">
             <x-ec-button hx-get="{{ route('invoices.edit', $invoice) }}"
                 hx-target="#modal" hx-swap="innerHTML"
