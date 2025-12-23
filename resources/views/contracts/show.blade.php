@@ -73,19 +73,18 @@
             </form>
         </div>
 
-        <a
-            href="{{ route('customers.exportCSV', ['customer' => $contract->customer, 'contract' => $contract]) }}"><x-ec-button>Export
-                Customer CSV</x-ec-button></a>
+        <x-ec-button
+            href="{{ route('customers.exportCSV', ['customer' => $contract->customer, 'contract' => $contract]) }}">Export
+            Customer CSV</x-ec-button>
 
-        <a href="{{ route('invoices.create', $contract) }}"><x-ec-button>Create
-                Invoice</x-ec-button></a>
+        <x-ec-button href="{{ route('invoices.create', $contract) }}">Create
+            Invoice</x-ec-button>
 
-        <a href="{{ route('contracts.edit', $contract) }}">
-            <x-ec-button hx-get="{{ route('contracts.edit', $contract) }}"
-                hx-target="#modal" hx-swap="innerHTML"
-                onclick="toggleView('modal-container')">Edit
-                Contract</x-ec-button>
-        </a>
+        <x-ec-button href="{{ route('contracts.edit', $contract) }}"
+            hx-get="{{ route('contracts.edit', $contract) }}"
+            hx-target="#modal" hx-swap="innerHTML"
+            onclick="toggleView('modal-container')">Edit
+            Contract</x-ec-button>
 
     </div>
 
@@ -93,9 +92,10 @@
 
     @foreach ($contract->invoices as $invoice)
         <div class="block px-4 py-2 border border-gray-500">
-            <a href="{{ route('invoices.create', [$contract, $invoice]) }}"
-                class="flex float-right mt-2"><x-ec-button>Duplicate
-                    Invoice</x-ec-button></a>
+            <x-ec-button
+                href="{{ route('invoices.create', [$contract, $invoice]) }}"
+                class="flex float-right mt-2">Duplicate
+                Invoice</x-ec-button>
             <a href="{{ route('invoices.show', $invoice) }}">
                 <ul>
                     <li><b>Invoice ID:</b> {{ $invoice->id }}</li>

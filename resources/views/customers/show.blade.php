@@ -25,19 +25,17 @@
     <br>
     <div class="flex items-start">
 
-        <a href="{{ route('customers.exportCSV', $customer) }}"<x-ec-button
+        <x-ec-button href="{{ route('customers.exportCSV', $customer) }}"
             onclick="return confirm('ALERT: Bill to Contact values will not be filled in.\n\nTo do so, export Customer CSV from associated contract.');">Export
-            CSV</x-ec-button></a>
+            CSV</x-ec-button>
 
-        <a href="{{ route('contracts.create', $customer) }}"<x-ec-button>Create
-            Contract</x-ec-button></a>
+        <x-ec-button href="{{ route('contracts.create', $customer) }}">Create
+            Contract</x-ec-button>
 
-        <a href="{{ route('customers.edit', $customer) }}">
-            <x-ec-button hx-get="{{ route('customers.edit', $customer) }}"
-                hx-target="#modal" hx-swap="innerHTML"
-                onclick="toggleView('modal-container')">Edit
-                Customer</x-ec-button>
-        </a>
+        <x-ec-button href="{{ route('customers.edit', $customer) }}"
+            hx-get="{{ route('customers.edit', $customer) }}" hx-target="#modal"
+            hx-swap="innerHTML" onclick="toggleView('modal-container')">Edit
+            Customer</x-ec-button>
 
     </div>
 
