@@ -23,15 +23,18 @@ class InvoiceController extends Controller
         ]);
     }
 
-    public function create(Contract $contract)
+    public function create(Contract $contract, Invoice $invoice)
     {
         $contracts = Contract::select('contracts.*')
             ->join('customers', 'customers.id', '=', 'contracts.customer_id')
             ->orderBy('customers.name')
             ->get();
 
+        $invoice['billing_start'] = $invoice['billing_end'] = $invoice['date_invoiced'] = $invoice['date_paid'] = null;
+
         return view('invoices.create', [
             'contract' => $contract,
+            'invoice' => $invoice,
             'contracts' => $contracts,
             'services' => Service::all(),
             'contacts' => Contact::all()->sortBy('last_name'),
