@@ -18,10 +18,7 @@ class RegisteredUserController extends Controller
     public function show(Request $request)
     {
         $isHTMX = $request->hasHeader('HX-Request');
-        return view('user.show', [
-            'isHTMX' => $isHTMX,
-            'user' => auth()->user()
-        ])->fragmentIf($isHTMX, 'show-user');
+        return view('user.show', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->fragmentIf($isHTMX, 'show-user');
     }
 
     public function store(Request $request)
@@ -45,9 +42,28 @@ class RegisteredUserController extends Controller
         $isHTMX = $request->hasHeader('HX-Request');
 
         try {
-            $data = $request->validate([
+            $data = $request->validateWithBag('user_errors', [
                 'name' => ['required', \Illuminate\Validation\Rule::unique('users')->ignore(auth()->user()->id)],
                 'email' => ['required', 'email', \Illuminate\Validation\Rule::unique('users')->ignore(auth()->user()->id)],
+            ]);
+
+            auth()->user()->update($data);
+
+            return view('user.show', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->fragmentIf($isHTMX, 'show-user');
+        } catch (ValidationException $e) {
+            if ($isHTMX) {
+                return view('user.show', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->withErrors($e->errors(), 'user_errors')->fragmentIf($isHTMX, 'show-user');
+            }
+            throw $e;
+        }
+    }
+
+    public function changePassword(Request $request)
+    {
+        $isHTMX = $request->hasHeader('HX-Request');
+
+        try {
+            $data = $request->validateWithBag('password_errors', [
                 'password' => ['required'],
                 'password' => ['required', 'confirmed'],
             ]);
@@ -57,7 +73,7 @@ class RegisteredUserController extends Controller
             return view('user.show', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->fragmentIf($isHTMX, 'show-user');
         } catch (ValidationException $e) {
             if ($isHTMX) {
-                return view('user.show', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->withErrors($e->errors())->fragmentIf($isHTMX, 'show-user');
+                return view('user.show', ['isHTMX' => $isHTMX, 'user' => auth()->user()])->withErrors($e->errors(), 'password_errors')->fragmentIf($isHTMX, 'show-user');
             }
             throw $e;
         }

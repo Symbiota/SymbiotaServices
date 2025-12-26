@@ -23,6 +23,7 @@ Route::post('/logout', [SessionController::class, 'destroy'])->name('session.des
 Route::middleware(['auth'])->group(function () {
     Route::get('/user', [RegisteredUserController::class, 'show'])->name('user.show');
     Route::patch('/user/update', [RegisteredUserController::class, 'update'])->name('user.update');
+    Route::patch('/user/changePassword', [RegisteredUserController::class, 'changePassword'])->name('user.changePassword');
 
     Route::controller(ServiceController::class)->group(function () {
         Route::get('/services', 'index')->name('services.index');
