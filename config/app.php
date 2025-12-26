@@ -123,4 +123,24 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | This value is the version of your application, automatically retrieved
+    | from the latest git tag in the repository. Falls back to 'dev' if no
+    | tags are found or git is not available.
+    |
+    */
+
+    'version' => env('APP_VERSION', function() {
+        try {
+            // Get the latest git tag
+            $version = trim(shell_exec('git describe --tags --abbrev=0 2>/dev/null'));
+            return $version ?: 'dev';
+        } catch (Exception $e) {
+            return 'dev';
+        }
+    }),
 ];
