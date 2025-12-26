@@ -128,12 +128,12 @@ return [
     | Application Version
     |--------------------------------------------------------------------------
     |
-    | This value is the version of your application, automatically retrieved
+    | Automatically retrieved
     | from the latest git tag in the repository. Falls back to 'dev' if no
     | tags are found or git is not available.
     |
-    */
-
+    |*/
+    
     'version' => env('APP_VERSION', function() {
         try {
             // Get the latest git tag
