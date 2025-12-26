@@ -12,10 +12,12 @@
     <br>
 
     <div class="flex items-center">
-        <x-ec-button onclick="toggleView('edit-form')">Edit
+        <x-ec-button
+            onclick="toggleView('edit-form');document.getElementById('password-form').classList.add('hidden');">Edit
             User</x-ec-button>
 
-        <x-ec-button onclick="toggleView('password-form')">Change
+        <x-ec-button
+            onclick="toggleView('password-form');document.getElementById('edit-form').classList.add('hidden');">Change
             Password</x-ec-button>
 
         @if ($errors->any())
@@ -57,7 +59,7 @@
         </div>
 
         <div class="mt-6 flex items-center justify-end gap-x-6">
-            <x-cancel-button>{{ route('home') }}</x-cancel-button>
+            <x-cancel-button></x-cancel-button>
 
             <button type="submit"
                 class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
