@@ -25,10 +25,6 @@
     <br>
     <div class="flex items-start">
 
-        <x-ec-button href="{{ route('customers.exportCSV', $customer) }}"
-            onclick="return confirm('ALERT: Bill to Contact values will not be filled in.\n\nTo do so, export Customer CSV from associated contract.');">Export
-            CSV</x-ec-button>
-
         <x-ec-button href="{{ route('contracts.create', $customer) }}">Create
             Contract</x-ec-button>
 
