@@ -1,5 +1,5 @@
 <x-table-layout heading="Invoices">
-    <title>INVOICES PAGE</title>
+    <title>Invoices - SymbiotaServices</title>
 
     <x-ec-button href="{{ route('invoices.create') }}">Create
         Invoice</x-ec-button>

@@ -1,5 +1,5 @@
 <x-table-layout heading="Invoice: {{ $invoice->id }}">
-    <title>Invoice: {{ $invoice->id }}</title>
+    <title>Invoice: {{ $invoice->id }} - SymbiotaServices</title>
 
     <ul>
         <li><b>Invoice ID:</b> {{ $invoice->id }}</li>

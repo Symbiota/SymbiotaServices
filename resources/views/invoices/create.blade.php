@@ -1,5 +1,5 @@
 <x-table-layout heading="Create Invoice">
-    <title>CREATE INVOICE</title>
+    <title>Create Invoice - SymbiotaServices</title>
 
     <div class="flex items-start">
         <div class="w-4/5">

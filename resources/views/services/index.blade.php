@@ -1,5 +1,5 @@
 <x-table-layout heading="Services">
-    <title>SERVICES PAGE</title>
+    <title>Services - SymbiotaServices</title>
 
     <div class="flex items-center">
         <x-ec-button href="{{ route('services.create') }}"

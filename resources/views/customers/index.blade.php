@@ -1,5 +1,5 @@
 <x-table-layout heading="Customers">
-    <title>CUSTOMERS PAGE</title>
+    <title>Customers - SymbiotaServices</title>
 
     <div class="flex items-center">
 

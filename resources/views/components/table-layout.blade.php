@@ -43,7 +43,7 @@
 
                     <div class="ml-10 flex items-baseline space-x-4">
                         @guest
-                            <a href="{{ route('register') }}"
+                            <a href="{{ route('user.create') }}"
                                 class="{{ request()->is('register') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Register</a>
                             <a href="{{ route('session.create') }}"
                                 class="{{ request()->is('login') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Log
@@ -54,10 +54,15 @@
                                 action="{{ route('session.destroy') }}">
                                 @csrf
                                 <button type="submit"
-                                    class="text-white hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Log
+                                    class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                                    onclick="return confirm('Log out?');">Log
                                     Out</button>
-
                             </form>
+                            <a href="{{ route('user.show') }}"
+                                class="{{ request()->is('account') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium"
+                                hx-get="{{ route('user.show') }}"
+                                hx-target="#modal" hx-swap="innerHTML"
+                                onclick="toggleView('modal-container')">☰</a>
                         @endauth
                     </div>
 

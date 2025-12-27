@@ -13,14 +13,17 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('user.create');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('user.store');
 
 Route::get('/login', [SessionController::class, 'create'])->name('session.create');
 Route::post('/login', [SessionController::class, 'store'])->name('session.store');
 Route::post('/logout', [SessionController::class, 'destroy'])->name('session.destroy');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/user', [RegisteredUserController::class, 'show'])->name('user.show');
+    Route::patch('/user/update', [RegisteredUserController::class, 'update'])->name('user.update');
+    Route::patch('/user/changePassword', [RegisteredUserController::class, 'changePassword'])->name('user.changePassword');
 
     Route::controller(ServiceController::class)->group(function () {
         Route::get('/services', 'index')->name('services.index');
