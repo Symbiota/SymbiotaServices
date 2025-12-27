@@ -25,15 +25,13 @@
     <br>
     <div class="flex items-start">
 
-        <a href="{{ route('contracts.create', $customer) }}"<x-ec-button>Create
-            Contract</x-ec-button></a>
+        <x-ec-button href="{{ route('contracts.create', $customer) }}">Create
+            Contract</x-ec-button>
 
-        <a href="{{ route('customers.edit', $customer) }}">
-            <x-ec-button hx-get="{{ route('customers.edit', $customer) }}"
-                hx-target="#modal" hx-swap="innerHTML"
-                onclick="toggleView('modal-container')">Edit
-                Customer</x-ec-button>
-        </a>
+        <x-ec-button href="{{ route('customers.edit', $customer) }}"
+            hx-get="{{ route('customers.edit', $customer) }}" hx-target="#modal"
+            hx-swap="innerHTML" onclick="toggleView('modal-container')">Edit
+            Customer</x-ec-button>
 
     </div>
 

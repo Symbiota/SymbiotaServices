@@ -2,10 +2,10 @@
     <title>SERVICES PAGE</title>
 
     <div class="flex items-center">
-        <a href="{{ route('services.create') }}"><x-ec-button
-                hx-get="{{ route('services.create') }}" hx-target="#modal"
-                hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
-                Service</x-ec-button></a>
+        <x-ec-button href="{{ route('services.create') }}"
+            hx-get="{{ route('services.create') }}" hx-target="#modal"
+            hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
+            Service</x-ec-button>
     </div>
 
     <br>

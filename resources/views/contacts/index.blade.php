@@ -2,10 +2,10 @@
     <title>CONTACTS PAGE</title>
 
     <div class="flex items-center">
-        <a href="{{ route('contacts.create') }}"><x-ec-button
-                hx-get="{{ route('contacts.create') }}" hx-target="#modal"
-                hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
-                Contact</x-ec-button></a>
+        <x-ec-button href="{{ route('contacts.create') }}"
+            hx-get="{{ route('contacts.create') }}" hx-target="#modal"
+            hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
+            Contact</x-ec-button>
     </div>
 
     <br>
