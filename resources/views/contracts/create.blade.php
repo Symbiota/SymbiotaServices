@@ -1,5 +1,5 @@
 <x-table-layout heading="Create Contract">
-    <title>CREATE CONTRACT</title>
+    <title>Create Contract - SymbiotaServices</title>
 
     <div class="flex items-start">
         <div class="w-4/5">

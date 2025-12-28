@@ -1,8 +1,8 @@
 <x-table-layout heading="Contracts">
-    <title>CONTRACTS PAGE</title>
+    <title>Contracts - SymbiotaServices</title>
 
-    <a href="{{ route('contracts.create') }}"><x-ec-button>Create
-            Contract</x-ec-button></a>
+    <x-ec-button href="{{ route('contracts.create') }}">Create
+        Contract</x-ec-button>
 
     <br>
     <br>

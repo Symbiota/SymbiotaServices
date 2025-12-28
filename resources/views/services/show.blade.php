@@ -1,6 +1,6 @@
 <x-table-layout heading="{{ $service->name }}">
     @fragment('show-service')
-        <title>Service: {{ $service->name }}</title>
+        <title>Service: {{ $service->name }} - SymbiotaServices</title>
 
         <x-modal-header :isHTMX="$isHTMX">{{ $service->name }}
         </x-modal-header>
