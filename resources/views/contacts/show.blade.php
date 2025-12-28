@@ -50,8 +50,9 @@
         <br>
 
         @error('delete_error')
-            <div class="text-red-500 text-sm ml-3">
+            <div class="text-red-500 text-sm ml-3 -mt-2">
                 <p>{{ $message }}</p>
+                <br>
             </div>
         @enderror
 
@@ -80,10 +81,11 @@
                     href="{{ route('invoices.show', $invoice) }}">Invoice:
                     {{ $invoice->id }}</a>
             @endforeach
+            <br><br>
         </div>
 
         <div id="edit-form"
-            class="{{ $errors->contact_errors->any() ? '' : 'hidden' }}">
+            class="{{ $errors->contact_errors->any() ? '' : 'hidden' }} -mt-6">
             @if ($isHTMX)
                 <x-contact-form class="-mt-2" :errors="$errors" :contact="$contact"
                     hx-post="{{ route('contacts.update', $contact) }}"

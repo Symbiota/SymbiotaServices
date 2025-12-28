@@ -93,6 +93,9 @@ class ContactController extends Controller
         }
 
         $contact->delete();
+        if ($isHTMX) {
+            return response(null, 204)->header('HX-Redirect', route('contacts.index'));
+        }
         return redirect()->route('contacts.index');
     }
 }
