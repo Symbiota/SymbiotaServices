@@ -32,7 +32,15 @@
 
     <br>
 
-    <div class = "space-y-4">
+    <div class="space-y-4">
+        @if (count($contacts) == 0)
+            <div class="px-4 text-center text-2xl text-gray-700">
+                <p>No contacts found.</p>
+                <a class="text-blue-700 underline decoration-2 inline-block mt-3"
+                    href="{{ route('contacts.index') }}">Back to Contacts
+                    Page</a>
+            </div>
+        @endif
         @foreach ($contacts as $contact)
             <a href="{{ route('contacts.show', $contact) }}"
                 class="block px-4 py-6 border border-gray-500"
