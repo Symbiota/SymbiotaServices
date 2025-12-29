@@ -10,13 +10,16 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return view('contacts.index', ['contacts' => Contact::all()]);
+        return view('contacts.index', ['contacts' => Contact::all(), 'allContactsList' => Contact::all()]);
     }
 
     public function search(Request $request)
     {
         $search = $request->input('search');
-        return view('contacts.index', ['contacts' => Contact::whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%$search%"])->get()->sortBy('last_name')]);
+        return view('contacts.index', [
+            'contacts' => Contact::whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%$search%"])->get()->sortBy('last_name'),
+            'allContactsList' => Contact::all()
+        ]);
     }
 
     public function show(Request $request, Contact $contact)
