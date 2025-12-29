@@ -13,6 +13,12 @@ class ContactController extends Controller
         return view('contacts.index', ['contacts' => Contact::all()]);
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        return view('contacts.index', ['contacts' => Contact::whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%$search%"])->get()->sortBy('last_name')]);
+    }
+
     public function show(Request $request, Contact $contact)
     {
         $isHTMX = $request->hasHeader('HX-Request');
