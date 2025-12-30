@@ -76,8 +76,11 @@ class ContactController extends Controller
             $contact->update($data);
 
             $contacts = Contact::all();
+            $contactIndex = view('contacts.index', compact('contacts'))->fragment('contact-list');
 
-            return view('contacts.show', compact('isHTMX', 'contact', 'contacts'))->fragmentsIf($isHTMX, ['show-contact', 'contact-list']);
+            $modalShow = view('contacts.show', compact('contact', 'isHTMX'))->fragmentIf($isHTMX, 'show-contact');
+
+            return response($contactIndex . $modalShow);
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('contacts.show', compact('contact', 'isHTMX'))->withErrors($e->errors(), 'contact_errors')->fragment('show-contact');

@@ -11,7 +11,7 @@
     <br>
 
     @fragment('contact-list')
-        <div class="space-y-4" hx-swap-oob="true">
+        <div class="space-y-4" id="contact-list-div" hx-swap-oob="true">
             @foreach ($contacts as $contact)
                 <a href="{{ route('contacts.show', $contact) }}"
                     class="block px-4 py-6 border border-gray-500"
