@@ -46,7 +46,9 @@ class ContactController extends Controller
             $contact->update(['full_name' => $contact->last_name . ', ' . $contact->first_name . ' - ' . $contact->id]);
 
             if ($isHTMX) {
-                if (url()->previousPath() == '/invoices/create') {
+                if (url()->previousPath() != 'contacts/store') {
+                    // Close modal
+                    // Update contacts input form
                     return response(null, 204)->header('HX-Redirect', route('invoices.create'));
                 }
                 return response(null, 204)->header('HX-Redirect', route('contacts.index'));
