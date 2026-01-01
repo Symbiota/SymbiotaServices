@@ -46,9 +46,12 @@ class ContactController extends Controller
             $contact->update(['full_name' => $contact->last_name . ', ' . $contact->first_name . ' - ' . $contact->id]);
 
             if ($isHTMX) {
-                return response(null, 204)->header('HX-Redirect', route('contacts.index'));
+                $contacts = Contact::all();
+                $contactIndex = view('contacts.index', compact('contacts'))->fragment('contact-list');
+                $modalShow = view('contacts.show', compact('contact', 'isHTMX'))->fragment('show-contact');
+                return response($contactIndex . $modalShow);
             }
-            return redirect()->route('contacts.index');
+            return redirect()->route('contacts.show', $contact);
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('contacts.create', compact('isHTMX'))->withErrors($e->errors(), 'contact_errors')
