@@ -17,16 +17,14 @@ class ServiceController extends Controller
     {
         $isHTMX = $request->hasHeader('HX-Request');
 
-        return view('services.show', compact('service', 'isHTMX'))
-            ->fragmentIf($isHTMX, 'show-service');
+        return view('services.show', compact('service', 'isHTMX'))->fragmentIf($isHTMX, 'show-service');
     }
 
     public function create(Request $request)
     {
         $isHTMX = $request->hasHeader('HX-Request');
 
-        return view('services.create', compact('isHTMX'))
-            ->fragmentIf($isHTMX, 'create-service');
+        return view('services.create', compact('isHTMX'))->fragmentIf($isHTMX, 'create-service');
     }
 
     public function store(Request $request)
@@ -49,9 +47,12 @@ class ServiceController extends Controller
             $service = Service::create($data);
 
             if ($isHTMX) {
-                return response(null, 204)->header('HX-Redirect', route('services.index'));
+                $services = service::all();
+                $serviceIndex = view('services.index', compact('services'))->fragment('service-list');
+                $modalShow = view('services.show', compact('service', 'isHTMX'))->fragment('show-service');
+                return response($serviceIndex . $modalShow);
             }
-            return redirect()->route('services.index');
+            return redirect()->route('services.show', $service);
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('services.create', compact('isHTMX'))->withErrors($e->errors())
@@ -78,7 +79,15 @@ class ServiceController extends Controller
                 ]
             );
             $service->update($data);
-            return view('services.show', compact('service', 'isHTMX'))->fragmentIf($isHTMX, 'show-service');
+
+            if ($isHTMX) {
+                $services = Service::all();
+                $serviceIndex = view('services.index', compact('services'))->fragment('service-list');
+                $modalShow = view('services.show', compact('service', 'isHTMX'))->fragment('show-service');
+                return response($serviceIndex . $modalShow);
+            }
+
+            return redirect()->route('services.show', $service);
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('services.show', compact('service', 'isHTMX'))->withErrors($e->errors())->fragment('show-service');

@@ -17,16 +17,14 @@ class ContactController extends Controller
     {
         $isHTMX = $request->hasHeader('HX-Request');
 
-        return view('contacts.show', compact('contact', 'isHTMX'))
-            ->fragmentIf($isHTMX, 'show-contact');
+        return view('contacts.show', compact('contact', 'isHTMX'))->fragmentIf($isHTMX, 'show-contact');
     }
 
     public function create(Request $request)
     {
         $isHTMX = $request->hasHeader('HX-Request');
 
-        return view('contacts.create', compact('isHTMX'))
-            ->fragmentIf($isHTMX, 'create-contact');
+        return view('contacts.create', compact('isHTMX'))->fragmentIf($isHTMX, 'create-contact');
     }
 
     public function store(Request $request)
