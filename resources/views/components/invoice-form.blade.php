@@ -32,24 +32,30 @@
                 @enderror
             </x-form-box>
 
-            <datalist id="contact-datalist">
-                @foreach ($contacts as $contact)
-                    <option
-                        value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
-                        {{ $contact->last_name }}, {{ $contact->first_name }}
-                        - {{ $contact->id }}</option>
-                @endforeach
-            </datalist>
+            @fragment('invoice-contact-input')
+                <div id="invoice-contact-input-div">
+                    <datalist id="contact-datalist">
+                        @foreach ($contacts as $contact)
+                            <option
+                                value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
+                                {{ $contact->last_name }},
+                                {{ $contact->first_name }}
+                                - {{ $contact->id }}</option>
+                        @endforeach
+                    </datalist>
 
-            <x-form-box for="financial_contact_id"> Financial Contact ID*
-                <x-form-input list="contact-datalist"
-                    name="financial_contact_id" id="financial_contact_id"
-                    value="{{ $invoice->financial_contact->full_name ?? ($contract->current_financial_contact->full_name ?? old('financial_contact_id')) }}">
-                </x-form-input>
-                @error('financial_contact_id')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
-                @enderror
-            </x-form-box>
+                    <x-form-box for="financial_contact_id"> Financial Contact ID*
+                        <x-form-input list="contact-datalist"
+                            name="financial_contact_id" id="financial_contact_id"
+                            value="{{ $invoice->financial_contact->full_name ?? ($contract->current_financial_contact->full_name ?? old('financial_contact_id')) }}">
+                        </x-form-input>
+                        @error('financial_contact_id')
+                            <p class="text-red-500 text-sm ml-3">{{ $message }}
+                            </p>
+                        @enderror
+                    </x-form-box>
+                </div>
+            @endfragment
 
             <x-form-box for="billing_start"> Billing Start*
                 <x-form-input type="text" name="billing_start"
