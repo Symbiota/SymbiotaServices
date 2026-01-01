@@ -30,8 +30,4 @@
         </div>
     @endfragment
 
-    <script>
-        htmx.logAll();
-    </script>
-
 </x-table-layout>

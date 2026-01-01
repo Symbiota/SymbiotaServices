@@ -86,7 +86,6 @@ class ServiceController extends Controller
                 $modalShow = view('services.show', compact('service', 'isHTMX'))->fragment('show-service');
                 return response($serviceIndex . $modalShow);
             }
-
             return redirect()->route('services.show', $service);
         } catch (ValidationException $e) {
             if ($isHTMX) {
@@ -98,9 +97,7 @@ class ServiceController extends Controller
 
     public function retire(Service $service)
     {
-        $service->update([
-            'active_status' => 0,
-        ]);
+        $service->update(['active_status' => !$service->active_status]);
         return redirect()->route('services.index');
     }
 }

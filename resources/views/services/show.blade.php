@@ -29,9 +29,15 @@
             <form method="post" action="{{ route('services.retire', $service) }}">
                 @csrf
                 @method('PATCH')
-                <x-ec-button onclick="return confirm('Retire this service?');"
-                    class="!border-red-500 !text-red-500">Retire
-                    Service</x-ec-button>
+                @if ($service->active_status)
+                    <x-ec-button onclick="return confirm('Retire this service?');"
+                        class="!border-red-500 !text-red-500">Retire
+                        Service</x-ec-button>
+                @else
+                    <x-ec-button
+                        onclick="return confirm('Unretire this service?');">Unretire
+                        Service</x-ec-button>
+                @endif
             </form>
         </div>
 
