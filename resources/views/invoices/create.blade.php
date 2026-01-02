@@ -15,16 +15,6 @@
                     hx-swap="innerHTML"
                     onclick="toggleView('modal-container')">Create
                     Contact</x-ec-button>
-
-                @if ($errors->contact_errors->any())
-                    <p class="text-red-500 text-sm ml-3"> Error Creating Contact
-                    </p>
-                @endif
-            </div>
-
-            <div id="create-form" class="hidden">
-                <x-contact-form
-                    action="{{ route('contacts.store') }}"></x-contact-form>
             </div>
 
         </div>

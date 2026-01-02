@@ -46,6 +46,12 @@ class ContactController extends Controller
             if ($isHTMX) {
                 $contacts = Contact::all();
                 $modalShow = view('contacts.show', compact('contact', 'isHTMX'))->fragment('show-contact');
+                $contactIndex = view('contacts.index', compact('contacts'))->fragment('contact-list');
+                $invoiceContactInput = view('invoices.create', ['contracts' => Contract::all(), 'contacts'])->fragment('invoice-contact-input');
+
+                return response($contactIndex . $modalShow);
+
+                /*
                 $url = $request->header('HX-Current-URL');
                 if (str_contains($url, 'invoices')) {
                     $invoiceContactInput = view('invoices.create', compact('contacts'))->fragment('invoice-contact-input');
@@ -54,6 +60,7 @@ class ContactController extends Controller
                     $contactIndex = view('contacts.index', compact('contacts'))->fragment('contact-list');
                     return response($modalShow . $contactIndex);
                 }
+                */
             }
             return redirect()->route('contacts.show', $contact);
         } catch (ValidationException $e) {

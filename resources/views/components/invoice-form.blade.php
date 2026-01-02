@@ -33,7 +33,7 @@
             </x-form-box>
 
             @fragment('invoice-contact-input')
-                <div id="invoice-contact-input-div">
+                <div id="invoice-contact-input-div" hx-swap-oob="true">
                     <datalist id="contact-datalist">
                         @foreach ($contacts as $contact)
                             <option
