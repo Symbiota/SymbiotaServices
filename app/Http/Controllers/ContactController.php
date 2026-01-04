@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Service;
 use App\Models\Contract;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -56,19 +57,13 @@ class ContactController extends Controller
                     'services' => Service::all(),
                     'contacts' => Contact::all()->sortBy('last_name'),
                 ])->fragment('invoice-contact-input');
+                $contractContactInput = view('contracts.create', [
+                    'customer' => null,
+                    'contacts' => Contact::all()->sortBy('last_name'),
+                    'customers' => Customer::all()->sortBy('name'),
+                ])->fragment('contract-contact-input');
 
-                return response($contactIndex . $invoiceContactInput . $modalShow);
-
-                /*
-                $url = $request->header('HX-Current-URL');
-                if (str_contains($url, 'invoices')) {
-                    $invoiceContactInput = view('invoices.create', compact('contacts'))->fragment('invoice-contact-input');
-                    return response($modalShow . $invoiceContactInput);
-                } elseif (str_contains($url, 'contacts')) {
-                    $contactIndex = view('contacts.index', compact('contacts'))->fragment('contact-list');
-                    return response($modalShow . $contactIndex);
-                }
-                */
+                return response($contactIndex . $invoiceContactInput . $contractContactInput . $modalShow);
             }
             return redirect()->route('contacts.show', $contact);
         } catch (ValidationException $e) {
