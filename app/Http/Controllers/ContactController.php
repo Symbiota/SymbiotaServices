@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\Service;
+use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -47,9 +49,15 @@ class ContactController extends Controller
                 $contacts = Contact::all();
                 $modalShow = view('contacts.show', compact('contact', 'isHTMX'))->fragment('show-contact');
                 $contactIndex = view('contacts.index', compact('contacts'))->fragment('contact-list');
-                $invoiceContactInput = view('invoices.create', ['contracts' => Contract::all(), 'contacts'])->fragment('invoice-contact-input');
+                $invoiceContactInput = view('invoices.create', [
+                    'contract' => null,
+                    'invoice' => null,
+                    'contracts' => Contract::all(),
+                    'services' => Service::all(),
+                    'contacts' => Contact::all()->sortBy('last_name'),
+                ])->fragment('invoice-contact-input');
 
-                return response($contactIndex . $modalShow);
+                return response($contactIndex . $invoiceContactInput . $modalShow);
 
                 /*
                 $url = $request->header('HX-Current-URL');
