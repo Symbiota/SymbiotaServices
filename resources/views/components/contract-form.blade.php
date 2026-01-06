@@ -23,7 +23,6 @@
 
             @fragment('contract-contact-input')
                 <div id="contract-contact-input-div" hx-swap-oob="true">
-
                     <datalist id="contact-datalist">
                         @foreach ($contacts as $contact)
                             <option
