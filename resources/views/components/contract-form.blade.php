@@ -22,17 +22,15 @@
             </x-form-box>
 
             @fragment('contract-contact-input')
-                <div id="contract-contact-input-div" hx-swap-oob="true">
-                    <datalist id="contact-datalist">
-                        @foreach ($contacts as $contact)
-                            <option
-                                value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
-                                {{ $contact->last_name }},
-                                {{ $contact->first_name }} -
-                                {{ $contact->id }}</option>
-                        @endforeach
-                    </datalist>
-                </div>
+                <datalist id="contact-datalist" hx-swap-oob="true">
+                    @foreach ($contacts as $contact)
+                        <option
+                            value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
+                            {{ $contact->last_name }},
+                            {{ $contact->first_name }} -
+                            {{ $contact->id }}</option>
+                    @endforeach
+                </datalist>
             @endfragment
 
             <x-form-box for="financial_contact_id"> Financial Contact ID*
