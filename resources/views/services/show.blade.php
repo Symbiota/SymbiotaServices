@@ -26,7 +26,7 @@
                 @endif
             </div>
 
-            <form method="post" action="{{ route('services.retire', $service) }}">
+            <form method="POST" action="{{ route('services.retire', $service) }}">
                 @csrf
                 @method('PATCH')
                 @if ($service->active_status)

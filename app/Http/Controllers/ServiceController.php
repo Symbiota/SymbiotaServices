@@ -78,6 +78,7 @@ class ServiceController extends Controller
                     'darbi_item_number.regex' => 'DARBI Item Number should be SYMBI + 5 digits.'
                 ]
             );
+
             $service->update($data);
 
             if ($isHTMX) {

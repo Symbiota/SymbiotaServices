@@ -17,7 +17,11 @@ class Service extends Model
         'description',
         'price_per_unit',
         'darbi_item_number',
-        'active_status'
+        'active_status',
+    ];
+
+    protected $attributes = [
+        'active_status' => true,
     ];
 
     // Services have a many-to-many relationship with invoices
