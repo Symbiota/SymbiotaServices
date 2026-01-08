@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/contacts', 'index')->name('contacts.index');
         Route::get('/contacts/create', 'create')->name('contacts.create');
         Route::get('/contacts/{contact}', 'show')->name('contacts.show');
+        Route::delete('/contacts/{contact}/delete', 'destroy')->name('contacts.destroy');
         Route::patch('/contacts/{contact}/update', 'update')->name('contacts.update');
         Route::post('/contacts/store', 'store')->name('contacts.store');
     });

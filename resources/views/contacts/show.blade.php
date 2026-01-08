@@ -22,8 +22,23 @@
 
         <div class="flex items-start">
             <div class="flex items-center">
+
+                <form method="POST"
+                    @if ($isHTMX) hx-post="{{ route('contacts.destroy', $contact) }}"
+                    hx-target="#modal" hx-swap="innerHTML scroll:top"
+                    @else action="{{ route('contacts.destroy', $contact) }}" @endif>
+                    @csrf
+                    @method('DELETE') <x-ec-button type="submit"
+                        class="!border-red-500 !text-red-500"
+                        onclick="return confirm('Delete this contact?');">Delete
+                        Contact</x-ec-button>
+                </form>
+
                 <x-ec-button onclick="toggleView('edit-form')">Edit
                     Contact</x-ec-button>
+
+                <x-ec-button onclick="toggleView('show-attachments')">Show
+                    Attachments</x-ec-button>
 
                 @if ($errors->contact_errors->any())
                     <p class="text-red-500 text-sm ml-3">Error Editing Contact
@@ -32,8 +47,45 @@
             </div>
         </div>
 
+        <br>
+
+        @error('delete_error')
+            <div class="text-red-500 text-sm ml-3 -mt-2">
+                <p>{{ $message }}</p>
+                <br>
+            </div>
+        @enderror
+
+        <div id="show-attachments" class="hidden">
+            <div class="underline flex gap-4">
+                @foreach ($contact->contracts_by_original_contact as $o_contract)
+                    <a href="{{ route('contracts.show', $o_contract) }}">Original
+                        Contact: {{ $o_contract->id }}</a>
+                @endforeach
+                @foreach ($contact->contracts_by_current_financial_contact as $cf_contract)
+                    <a href="{{ route('contracts.show', $cf_contract) }}">Current
+                        Financial Contact: {{ $cf_contract->id }}</a>
+                @endforeach
+                @foreach ($contact->contracts_by_pi_contact as $pi_contract)
+                    <a href="{{ route('contracts.show', $pi_contract) }}">Pi
+                        Contact: {{ $pi_contract->id }}</a>
+                @endforeach
+                @foreach ($contact->contracts_by_technical_contact as $t_contract)
+                    <a href="{{ route('contracts.show', $t_contract) }}">Technical
+                        Contact: {{ $t_contract->id }}</a>
+                @endforeach
+            </div>
+            <br>
+            @foreach ($contact->invoices as $invoice)
+                <a class="mr-4 underline"
+                    href="{{ route('invoices.show', $invoice) }}">Invoice:
+                    {{ $invoice->id }}</a>
+            @endforeach
+            <br><br>
+        </div>
+
         <div id="edit-form"
-            class="{{ $errors->contact_errors->any() ? '' : 'hidden' }}">
+            class="{{ $errors->contact_errors->any() ? '' : 'hidden' }} -mt-6">
             @if ($isHTMX)
                 <x-contact-form class="-mt-2" :errors="$errors" :contact="$contact"
                     hx-post="{{ route('contacts.update', $contact) }}"
