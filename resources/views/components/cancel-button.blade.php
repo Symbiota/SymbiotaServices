@@ -1,4 +1,6 @@
-@if (request()->routeIs('services.show') || request()->routeIs('contracts.show'))
+@if (request()->routeIs('services.show') ||
+        request()->routeIs('contracts.show') ||
+        request()->routeIs('user.show'))
     <button type="button" class="text-sm/6 font-semibold text-gray-900"
         onclick="toggleView('edit-form');">Cancel</button>
 @elseif (request()->hasHeader('HX-Request'))

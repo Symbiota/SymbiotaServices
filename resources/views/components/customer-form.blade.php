@@ -7,7 +7,7 @@
 
             <x-form-box for="name"> Name*
                 <x-form-input type="text" name="name" id="name"
-                    placeholder="Hollis Stacy"
+                    placeholder="University of Kansas"
                     value="{{ $customer->name ?? '' }}"></x-form-input>
                 @error('name')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -16,7 +16,8 @@
 
             <x-form-box for="department_name"> Department Name
                 <x-form-input type="text" name="department_name"
-                    id="department_name" placeholder=""
+                    id="department_name"
+                    placeholder="Department of Ecology and Evolutionary Biology "
                     value="{{ $customer->department_name ?? '' }}"></x-form-input>
                 @error('department_name')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -43,9 +44,9 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="address_line_1"> Billing Address Line 1*
+            <x-form-box for="address_line_1"> Address Line 1*
                 <x-form-input type="text" name="address_line_1"
-                    id="address_line_1" placeholder=""
+                    id="address_line_1" placeholder="1234 Main Street"
                     value="{{ $customer->address_line_1 ?? '' }}"></x-form-input>
                 @error('address_line_1')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}
@@ -53,9 +54,10 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="address_line_2"> Billing Address Line 2
+            <x-form-box for="address_line_2"> Address Line 2
                 <x-form-input type="text" name="address_line_2"
-                    id="address_line_2" placeholder=""
+                    id="address_line_2"
+                    placeholder="E.g., building, suite, room, etc."
                     value="{{ $customer->address_line_2 ?? '' }}"></x-form-input>
                 @error('address_line_2')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}
@@ -105,7 +107,7 @@
 
             <x-form-box for="notes"> Notes
                 <x-form-input type="text" name="notes" id="notes"
-                    placeholder="Extra Notes"
+                    placeholder="Extra notes to display in customer request CSV"
                     value="{{ $customer->notes ?? '' }}"></x-form-input>
                 @error('notes')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}

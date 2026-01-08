@@ -1,5 +1,5 @@
 <x-table-layout heading="Log into Account">
-    <title>LOGIN ACCOUNT</title>
+    <title>Log into SymbiotaServices</title>
 
     <form method="POST" action="{{ route('session.store') }}">
         @csrf

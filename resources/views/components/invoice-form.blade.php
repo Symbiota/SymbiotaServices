@@ -7,7 +7,7 @@
 
             <x-form-box for="contract_id"> Contract ID*
                 <x-form-input type="select" name="contract_id" id="contract_id">
-                    @isset($invoice)
+                    @isset($invoice->contract_id)
                         <option value="{{ $invoice->contract_id }}">
                             {{ $invoice->contract->customer->name }}
                             - {{ $invoice->contract_id }}

@@ -1,5 +1,5 @@
 <x-table-layout heading="Invoice: {{ $invoice->id }}">
-    <title>Invoice: {{ $invoice->id }}</title>
+    <title>Invoice: {{ $invoice->id }} - SymbiotaServices</title>
 
     <ul>
         <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
@@ -47,15 +47,17 @@
 
     <div class="flex items-start">
 
-        <a href="{{ route('invoices.exportCSV', $invoice) }}"<x-ec-button>Export
-            CSV</x-ec-button></a>
+        <x-ec-button href="{{ route('invoices.exportCSV', $invoice) }}">Export
+            CSV</x-ec-button>
 
-        <a href="{{ route('invoices.edit', $invoice) }}">
-            <x-ec-button hx-get="{{ route('invoices.edit', $invoice) }}"
-                hx-target="#modal" hx-swap="innerHTML"
-                onclick="toggleView('modal-container')">Edit
-                Invoice</x-ec-button>
-        </a>
+        <x-ec-button
+            href="{{ route('invoices.create', [$invoice->contract, $invoice]) }}">Duplicate
+            Invoice</x-ec-button>
+
+        <x-ec-button href="{{ route('invoices.edit', $invoice) }}"
+            hx-get="{{ route('invoices.edit', $invoice) }}" hx-target="#modal"
+            hx-swap="innerHTML" onclick="toggleView('modal-container')">Edit
+            Invoice</x-ec-button>
 
     </div>
 
