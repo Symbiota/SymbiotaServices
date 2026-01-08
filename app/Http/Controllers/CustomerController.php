@@ -12,15 +12,16 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        return view('customers.index', ['customers' => Customer::all()->sortBy('name'), 'allCustomersList' => Customer::all()->sortBy('name')]);
+        $customers = Customer::orderBy('name')->get();
+        return view('customers.index', ['customers' => $customers, 'allCustomersList' => $customers]);
     }
 
     public function search(Request $request)
     {
         $search = $request->input('search');
         return view('customers.index', [
-            'customers' => Customer::where('name', 'like', "%$search%")->get()->sortBy('name'),
-            'allCustomersList' => Customer::all()->sortBy('name')
+            'customers' => Customer::where('name', 'like', "%$search%")->orderBy('name')->get(),
+            'allCustomersList' => Customer::orderBy('name')->get()
         ]);
     }
 
