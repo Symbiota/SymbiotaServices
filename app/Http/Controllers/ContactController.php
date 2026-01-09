@@ -55,12 +55,12 @@ class ContactController extends Controller
                     'invoice' => null,
                     'contracts' => Contract::all(),
                     'services' => Service::all(),
-                    'contacts' => Contact::all()->sortBy('last_name'),
+                    'contacts' => Contact::orderBy('last_name')->get(),
                 ])->fragment('invoice-contact-input');
                 $contractContactInput = view('contracts.create', [
                     'customer' => null,
-                    'contacts' => Contact::all()->sortBy('last_name'),
-                    'customers' => Customer::all()->sortBy('name'),
+                    'contacts' => Contact::orderBy('last_name')->get(),
+                    'customers' => Customer::orderBy('name')->get(),
                 ])->fragment('contract-contact-input');
 
                 return response($contactIndex . $invoiceContactInput . $contractContactInput . $modalShow);
