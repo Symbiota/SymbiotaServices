@@ -13,7 +13,10 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = Customer::orderBy('name')->get();
-        return view('customers.index', ['customers' => $customers, 'allCustomersList' => $customers]);
+        return view('customers.index', [
+            'customers' => $customers,
+            'allCustomersList' => $customers
+        ])->fragmentIf(request()->hasHeader('HX-Request'), 'customer-list');
     }
 
     public function search(Request $request)
@@ -22,7 +25,7 @@ class CustomerController extends Controller
         return view('customers.index', [
             'customers' => Customer::where('name', 'like', "%$search%")->orderBy('name')->get(),
             'allCustomersList' => Customer::orderBy('name')->get()
-        ]);
+        ])->fragmentIf(request()->hasHeader('HX-Request'), 'customer-list');
     }
 
     public function show(Customer $customer)
