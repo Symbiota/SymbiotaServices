@@ -11,7 +11,8 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::all();
-        return view('contacts.index', ['contacts' => $contacts, 'allContactsList' => $contacts]);
+        return view('contacts.index', ['contacts' => $contacts, 'allContactsList' => $contacts])
+            ->fragmentIf(request()->hasHeader('HX-Request'), 'contact-list');
     }
 
     public function search(Request $request)
@@ -20,7 +21,7 @@ class ContactController extends Controller
         return view('contacts.index', [
             'contacts' => Contact::whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%$search%"])->orderBy('last_name')->get(),
             'allContactsList' => Contact::all()
-        ]);
+        ])->fragmentIf(request()->hasHeader('HX-Request'), 'contact-list');
     }
 
     public function show(Request $request, Contact $contact)
