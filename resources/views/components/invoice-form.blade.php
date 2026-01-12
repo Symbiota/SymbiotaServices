@@ -87,13 +87,13 @@
                             value="{{ $service->id }}"
                             data-id="{{ $service->id }}"
                             onchange="calc_total_amount_billed();"
-                            @if (isset($invoice)) {{ $invoice->services->find($service) ? 'checked' : '' }}
-                            @else {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
+                            @if (!empty($invoice->id)) {{ $invoice->services->find($service) ? 'checked' : '' }}
+                            @else {{ old('services.' . $service->id) ? 'checked' : '' }} @endif>
                         {{ $service->name }}
                         <br>
                         <input type="number"
                             class="m-1 ml-4 mt-2 p-1 border border-gray-500"
-                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
+                            @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
                             @else value="{{ old('qty.' . $service->id, 1) }}" @endif
                             step="any" min="0"
                             name="qty[{{ $service->id }}]"
