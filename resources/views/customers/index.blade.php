@@ -9,13 +9,14 @@
         <div class="flex items-center ml-auto">
             <x-ec-button href="{{ route('customers.index') }}"
                 hx-get="{{ route('customers.index') }}"
-                hx-target="#customer-list-div" class="!mr-2">Reset</x-ec-button>
+                hx-target="#customer-list-div" class="!mr-2"
+                onclick="document.getElementById('searchbox').value = ''">Reset</x-ec-button>
             <form hx-get="{{ route('customers.search') }}"
                 hx-target="#customer-list-div">
                 <input
-                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-700 dark:active:bg-gray-700 dark:active:text-gray-300"
-                    type="text" name="search" placeholder="Search Customers"
-                    list="customer-datalist">
+                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                    type="text" name="search" id="searchbox"
+                    placeholder="Search Customers" list="customer-datalist">
                 <x-ec-button class="!ml-1">Search</x-ec-button>
             </form>
         </div>
@@ -38,8 +39,9 @@
                     <a class="text-blue-700 underline decoration-2 inline-block mt-3"
                         href="{{ route('customers.index') }}"
                         hx-get="{{ route('customers.index') }}"
-                        hx-target="#customer-list-div"">Back to
-                        Customers Page</a>
+                        hx-target="#customer-list-div"
+                        onclick="document.getElementById('searchbox').value = ''">
+                        Back to Customers Page</a>
                 </div>
             @endif
             @foreach ($customers as $customer)
