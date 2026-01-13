@@ -77,44 +77,96 @@
                     @enderror
                 </div>
                 @foreach ($services as $service)
-                    <div class="p-4 border border-gray-500">
-                        <input type="checkbox"
-                            name="services[{{ $service->id }}]" id="service"
-                            value="{{ $service->id }}"
-                            data-id="{{ $service->id }}"
-                            onchange="calc_total_amount_billed();"
-                            @if (isset($invoice)) {{ $invoice->services->find($service) ? 'checked' : '' }}
+                    @if ($service->active_status == 1)
+                        <div class="p-4 border border-gray-500">
+                            <input type="checkbox"
+                                name="services[{{ $service->id }}]"
+                                id="service" value="{{ $service->id }}"
+                                data-id="{{ $service->id }}"
+                                onchange="calc_total_amount_billed();"
+                                @if (isset($invoice)) {{ $invoice->services->find($service) ? 'checked' : '' }}
                             @else {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
-                        {{ $service->name }}
-                        <br>
-                        <input type="number"
-                            class="m-1 ml-4 mt-2 p-1 border border-gray-500"
-                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
+                            {{ $service->name }}
+                            <br>
+                            <input type="number"
+                                class="m-1 ml-4 mt-2 p-1 border border-gray-500"
+                                @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
                             @else value="{{ old('qty.' . $service->id, 1) }}" @endif
-                            step="any" min="0"
-                            name="qty[{{ $service->id }}]"
-                            id="qty_{{ $service->id }}"
-                            service_price="{{ $service->price_per_unit }}"
-                            onchange="select_checkbox({{ $service->id }}); calc_each_service_bill(); calc_total_amount_billed();">
-                        $<input type="text"
-                            class="m-1 mt-2 p-1 border border-gray-500"
-                            id="amount_owed_{{ $service->id }}"
-                            name="amount_owed[{{ $service->id }}]"
-                            value="{{ $service->price_per_unit }}" readonly>
-                        <input type="text"
-                            class="m-1 mt-2 p-1 border border-gray-500 ml-4"
-                            name="line_ref_1[{{ $service->id }}]"
-                            id="line_ref_1" placeholder="Line Ref 1"
-                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_1 ?? '' }}"
+                                step="any" min="0"
+                                name="qty[{{ $service->id }}]"
+                                id="qty_{{ $service->id }}"
+                                service_price="{{ $service->price_per_unit }}"
+                                onchange="select_checkbox({{ $service->id }}); calc_each_service_bill(); calc_total_amount_billed();">
+                            $<input type="text"
+                                class="m-1 mt-2 p-1 border border-gray-500"
+                                id="amount_owed_{{ $service->id }}"
+                                name="amount_owed[{{ $service->id }}]"
+                                value="{{ $service->price_per_unit }}"
+                                readonly>
+                            <input type="text"
+                                class="m-1 mt-2 p-1 border border-gray-500 ml-4"
+                                name="line_ref_1[{{ $service->id }}]"
+                                id="line_ref_1" placeholder="Line Ref 1"
+                                @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_1 ?? '' }}"
                             @else value="{{ old('line_ref_1.' . $service->id) }}" @endif>
-                        <input type="text"
-                            class="m-1 mt-2 p-1 border border-gray-500"
-                            name="line_ref_2[{{ $service->id }}]"
-                            id="line_ref_2" placeholder="Line Ref 2"
-                            @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_2 ?? '' }}"
+                            <input type="text"
+                                class="m-1 mt-2 p-1 border border-gray-500"
+                                name="line_ref_2[{{ $service->id }}]"
+                                id="line_ref_2" placeholder="Line Ref 2"
+                                @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_2 ?? '' }}"
                             @else value="{{ old('line_ref_2.' . $service->id) }}" @endif">
-                    </div>
+                        </div>
+                    @endif
                 @endforeach
+                <br>
+                <x-ec-button type="button"
+                    onclick="toggleView('retired_services')">Retired
+                    Services</x-ec-button>
+                <br><br>
+                <div id="retired_services" class="hidden">
+                    @foreach ($services as $service)
+                        @if ($service->active_status == 0)
+                            <div class="p-4 border border-gray-500">
+                                <input type="checkbox"
+                                    name="services[{{ $service->id }}]"
+                                    id="service" value="{{ $service->id }}"
+                                    data-id="{{ $service->id }}"
+                                    onchange="calc_total_amount_billed();"
+                                    @if (isset($invoice)) {{ $invoice->services->find($service) ? 'checked' : '' }}
+                            @else {{ in_array($service->id, old('services', [])) ? 'checked' : '' }} @endif>
+                                {{ $service->name }}
+                                <br>
+                                <input type="number"
+                                    class="m-1 ml-4 mt-2 p-1 border border-gray-500"
+                                    @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
+                            @else value="{{ old('qty.' . $service->id, 1) }}" @endif
+                                    step="any" min="0"
+                                    name="qty[{{ $service->id }}]"
+                                    id="qty_{{ $service->id }}"
+                                    service_price="{{ $service->price_per_unit }}"
+                                    onchange="select_checkbox({{ $service->id }}); calc_each_service_bill(); calc_total_amount_billed();">
+                                $<input type="text"
+                                    class="m-1 mt-2 p-1 border border-gray-500"
+                                    id="amount_owed_{{ $service->id }}"
+                                    name="amount_owed[{{ $service->id }}]"
+                                    value="{{ $service->price_per_unit }}"
+                                    readonly>
+                                <input type="text"
+                                    class="m-1 mt-2 p-1 border border-gray-500 ml-4"
+                                    name="line_ref_1[{{ $service->id }}]"
+                                    id="line_ref_1" placeholder="Line Ref 1"
+                                    @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_1 ?? '' }}"
+                            @else value="{{ old('line_ref_1.' . $service->id) }}" @endif>
+                                <input type="text"
+                                    class="m-1 mt-2 p-1 border border-gray-500"
+                                    name="line_ref_2[{{ $service->id }}]"
+                                    id="line_ref_2" placeholder="Line Ref 2"
+                                    @if (isset($invoice)) value="{{ $invoice->services->find($service)->pivot->line_ref_2 ?? '' }}"
+                            @else value="{{ old('line_ref_2.' . $service->id) }}" @endif">
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
             </x-form-box>
 
             <x-form-box for="amount_billed"> Amount Billed*
