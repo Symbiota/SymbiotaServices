@@ -48,7 +48,10 @@ class ServiceController extends Controller
             );
 
             $service = Service::create($data);
-            DB::table('services_history')->insert($data += ['service_id' => $service->id]);
+
+            $history = $service->getAttributes();
+            unset($history['id']);
+            DB::table('services_history')->insert($history += ['service_id' => $service->id]);
 
             if ($isHTMX) {
                 return response(null, 204)->header('HX-Redirect', route('services.index'));
