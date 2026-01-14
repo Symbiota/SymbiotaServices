@@ -128,7 +128,8 @@
                     Services</x-ec-button>
                 <br>
 
-                <div id="retired_services" class="hidden">
+                <div id="retired_services"
+                    class="{{ $invoice->services->contains('active_status', false) ? '' : 'hidden' }}">
                     <br>
                     @foreach ($inactiveServices as $service)
                         <div class="p-4 border border-gray-500">
@@ -139,7 +140,7 @@
                                 onchange="calc_total_amount_billed();"
                                 @if (!empty($invoice->id)) {{ $invoice->services->find($service) ? 'checked' : '' }}
                             @else {{ old('services.' . $service->id) ? 'checked' : '' }} @endif>
-                            {{ $service->name }}
+                            {{ $service->name }} <b>(RETIRED)</b>
                             <br>
                             <input type="number"
                                 class="m-1 ml-4 mt-2 p-1 border border-gray-500"
