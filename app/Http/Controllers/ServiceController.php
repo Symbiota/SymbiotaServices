@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
@@ -47,6 +48,7 @@ class ServiceController extends Controller
             );
 
             $service = Service::create($data);
+            DB::table('services_history')->insert($data += ['service_id' => $service->id]);
 
             if ($isHTMX) {
                 return response(null, 204)->header('HX-Redirect', route('services.index'));
