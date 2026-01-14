@@ -82,7 +82,13 @@ class ServiceController extends Controller
                     'darbi_item_number.regex' => 'DARBI Item Number should be SYMBI + 5 digits.'
                 ]
             );
+
             $service->update($data);
+
+            $history = $service->getAttributes();
+            unset($history['id']);
+            DB::table('services_history')->insert($history += ['service_id' => $service->id]);
+
             return view('services.show', compact('service', 'isHTMX'))->fragmentIf($isHTMX, 'show-service');
         } catch (ValidationException $e) {
             if ($isHTMX) {
