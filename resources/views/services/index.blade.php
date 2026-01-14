@@ -32,12 +32,12 @@
             </div>
 
             <br>
-            <x-ec-button class="!-ml-1"
+            <x-ec-button class="!ml-0"
                 onclick="toggleView('retired_services')">Retired
                 Services</x-ec-button>
             <br><br>
 
-            <div id="retired_services" class="space-y-4" class="hidden">
+            <div id="retired_services" class="space-y-4 hidden">
                 @foreach ($services as $service)
                     @if ($service->active_status == 0)
                         <a href="{{ route('services.show', $service) }}"
