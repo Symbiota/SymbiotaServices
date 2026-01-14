@@ -76,7 +76,7 @@
             @endphp
 
             <x-form-box for="services_field">
-                <div class="flex items-center">Select Services*
+                <div class="flex items-center mb-2">Select Services*
                     @error('services')
                         <p class="text-red-500 text-sm ml-6">{{ $message }}
                         </p>
@@ -121,14 +121,15 @@
                             @else value="{{ old('line_ref_2.' . $service->id) }}" @endif">
                     </div>
                 @endforeach
-                <br>
 
-                <x-ec-button type="button"
+                <br>
+                <x-ec-button type="button" class="!ml-0"
                     onclick="toggleView('retired_services')">Retired
                     Services</x-ec-button>
-                <br><br>
+                <br>
 
                 <div id="retired_services" class="hidden">
+                    <br>
                     @foreach ($inactiveServices as $service)
                         <div class="p-4 border border-gray-500">
                             <input type="checkbox"
