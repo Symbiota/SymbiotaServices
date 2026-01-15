@@ -17,8 +17,9 @@ class ServiceController extends Controller
     public function show(Request $request, Service $service)
     {
         $isHTMX = $request->hasHeader('HX-Request');
+        $history = DB::table('services_history')->where('service_id', $service->id)->get();
 
-        return view('services.show', compact('service', 'isHTMX'))
+        return view('services.show', compact('service', 'isHTMX', 'history'))
             ->fragmentIf($isHTMX, 'show-service');
     }
 

@@ -33,6 +33,9 @@
                     class="!border-red-500 !text-red-500">Retire
                     Service</x-ec-button>
             </form>
+
+            <x-ec-button onclick="toggleView('update-history')">Update
+                History</x-ec-button>
         </div>
 
         <div id="edit-form" class="{{ $errors->any() ? '' : 'hidden' }}">
@@ -45,7 +48,21 @@
                 <x-service-form :service="$service"
                     action="{{ route('services.update', $service) }}">@method('PATCH')</x-service-form>
             @endif
+        </div>
 
+        <div id="update-history" class="hidden">
+            @foreach ($history as $historyItem)
+                <br>
+                <ul <li><b>Name:</b> {{ $historyItem->name }}</li>
+                    <li><b>DARBI Item Number:</b>
+                        {{ $historyItem->darbi_item_number }}
+                    </li>
+                    <li><b>Price per Unit:</b> {{ $historyItem->price_per_unit }}
+                    </li>
+                    <li><b>Description:</b> {{ $historyItem->description }}</li>
+                    <x-timestamps :model="$historyItem"></x-timestamps>
+                </ul>
+            @endforeach
         </div>
     @endfragment
 
