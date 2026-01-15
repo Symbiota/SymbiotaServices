@@ -53,7 +53,8 @@
         <div id="update-history" class="hidden">
             @foreach ($service->history() as $historyItem)
                 <br>
-                <ul <li><b>Name:</b> {{ $historyItem->name }}</li>
+                <ul>
+                    <li><b>Name:</b> {{ $historyItem->name }}</li>
                     <li><b>DARBI Item Number:</b>
                         {{ $historyItem->darbi_item_number }}
                     </li>
@@ -63,7 +64,13 @@
                     <li><b>Status:</b>
                         {{ $historyItem->active_status ? 'Active' : 'Retired' }}
                     </li>
-                    <x-timestamps :model="$historyItem"></x-timestamps>
+                    @if ($loop->index == 0)
+                        <li class="mt-1 text-sm italic">Date Created:
+                            {{ $historyItem->created_at }}</li>
+                    @else
+                        <li class="mt-1 text-sm italic">Date Updated:
+                            {{ $historyItem->updated_at }}</li>
+                    @endif
                 </ul>
             @endforeach
         </div>
