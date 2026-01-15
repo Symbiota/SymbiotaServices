@@ -32,4 +32,10 @@ class Service extends Model
         unset($history['id']);
         return $history += ['service_id' => $this->id];
     }
+
+    public function history()
+    {
+        $history = DB::table('services_history')->where('service_id', $this->id)->get();
+        return $history;
+    }
 }

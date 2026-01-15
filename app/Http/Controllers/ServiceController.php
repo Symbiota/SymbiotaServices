@@ -17,9 +17,8 @@ class ServiceController extends Controller
     public function show(Request $request, Service $service)
     {
         $isHTMX = $request->hasHeader('HX-Request');
-        $history = DB::table('services_history')->where('service_id', $service->id)->get();
 
-        return view('services.show', compact('service', 'isHTMX', 'history'))
+        return view('services.show', compact('service', 'isHTMX'))
             ->fragmentIf($isHTMX, 'show-service');
     }
 
@@ -83,9 +82,8 @@ class ServiceController extends Controller
 
             $service->update($data);
             DB::table('services_history')->insert($service->historyEntry());
-            $history = DB::table('services_history')->where('service_id', $service->id)->get();
 
-            return view('services.show', compact('service', 'isHTMX', 'history'))->fragmentIf($isHTMX, 'show-service');
+            return view('services.show', compact('service', 'isHTMX'))->fragmentIf($isHTMX, 'show-service');
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('services.show', compact('service', 'isHTMX'))->withErrors($e->errors())->fragment('show-service');
@@ -99,6 +97,7 @@ class ServiceController extends Controller
         $service->update([
             'active_status' => 0,
         ]);
+        DB::table('services_history')->insert($service->historyEntry());
         return redirect()->route('services.index');
     }
 }

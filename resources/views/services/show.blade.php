@@ -51,7 +51,7 @@
         </div>
 
         <div id="update-history" class="hidden">
-            @foreach ($history as $historyItem)
+            @foreach ($service->history() as $historyItem)
                 <br>
                 <ul <li><b>Name:</b> {{ $historyItem->name }}</li>
                     <li><b>DARBI Item Number:</b>
@@ -60,6 +60,9 @@
                     <li><b>Price per Unit:</b> {{ $historyItem->price_per_unit }}
                     </li>
                     <li><b>Description:</b> {{ $historyItem->description }}</li>
+                    <li><b>Status:</b>
+                        {{ $historyItem->active_status ? 'Active' : 'Retired' }}
+                    </li>
                     <x-timestamps :model="$historyItem"></x-timestamps>
                 </ul>
             @endforeach
