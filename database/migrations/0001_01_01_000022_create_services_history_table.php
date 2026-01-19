@@ -15,11 +15,11 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('service_id');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
-            $table->string('name');
-            $table->string('description', 300)->default('')->nullable();
-            $table->decimal('price_per_unit', 20, 2)->default(0);
-            $table->string('darbi_item_number', 20)->default('');
-            $table->boolean('active_status')->default(true);
+            $table->string('name')->nullable();
+            $table->string('description', 300)->nullable();
+            $table->decimal('price_per_unit', 20, 2)->nullable();
+            $table->string('darbi_item_number', 20)->nullable();
+            $table->boolean('active_status')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
         });

@@ -48,7 +48,11 @@ class ServiceController extends Controller
             );
 
             $service = Service::create($data);
-            DB::table('services_history')->insert($service->historyEntry());
+
+            $history = $service->getAttributes();
+            unset($history['id']);
+            $history += ['service_id' => $service->id];
+            DB::table('services_history')->insert($history);
 
             if ($isHTMX) {
                 return response(null, 204)->header('HX-Redirect', route('services.index'));
@@ -81,7 +85,11 @@ class ServiceController extends Controller
             );
 
             $service->update($data);
-            DB::table('services_history')->insert($service->historyEntry());
+
+            $history = $service->getChanges();
+            unset($history['id']);
+            $history += ['service_id' => $service->id];
+            DB::table('services_history')->insert($history);
 
             return view('services.show', compact('service', 'isHTMX'))->fragmentIf($isHTMX, 'show-service');
         } catch (ValidationException $e) {

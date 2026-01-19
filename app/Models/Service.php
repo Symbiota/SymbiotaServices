@@ -20,17 +20,14 @@ class Service extends Model
         'active_status'
     ];
 
+    protected $attributes = [
+        'active_status' => true,
+    ];
+
     // Services have a many-to-many relationship with invoices
     public function invoices()
     {
         return $this->belongsToMany(Invoice::class)->withPivot('qty', 'amount_owed', 'line_ref_1', 'line_ref_2');
-    }
-
-    public function historyEntry()
-    {
-        $history = $this->getAttributes();
-        unset($history['id']);
-        return $history += ['service_id' => $this->id];
     }
 
     public function history()
