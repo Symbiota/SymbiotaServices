@@ -23,15 +23,43 @@ class Contact extends Model
         'full_name'
     ];
 
-    // Multiple contracts can be linked to one contact
+    // Multiple contracts can be linked to one contact by the original_contact_id
+    public function contracts_by_original_contact()
+    {
+        return $this->hasMany(Contract::class, 'original_contact_id');
+    }
+
+    // Multiple contracts can be linked to one contact by the current_financial_contact_id
+    public function contracts_by_current_financial_contact()
+    {
+        return $this->hasMany(Contract::class, 'current_financial_contact_id');
+    }
+
+    // Multiple contracts can be linked to one contact by the pi_contact_id
+    public function contracts_by_pi_contact()
+    {
+        return $this->hasMany(Contract::class, 'pi_contact_id');
+    }
+
+    // Multiple contracts can be linked to one contact by the original_contact_id
+    public function contracts_by_technical_contact()
+    {
+        return $this->hasMany(Contract::class, 'technical_contact_id');
+    }
+
     public function contracts()
     {
-        return $this->hasMany(Contract::class);
+        return collect([
+            'contracts_by_original_contact' => $this->contracts_by_original_contact,
+            'contracts_by_current_financial_contact' => $this->contracts_by_current_financial_contact,
+            'contracts_by_pi_contact' => $this->contracts_by_pi_contact,
+            'contracts_by_technical_contact' => $this->contracts_by_technical_contact,
+        ]);
     }
 
     // Multiple invoices can be linked to one contact
     public function invoices()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->hasMany(Invoice::class, 'financial_contact_id');
     }
 }
