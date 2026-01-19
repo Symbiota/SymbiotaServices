@@ -12,13 +12,20 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        return view('customers.index', ['customers' => Customer::all()->sortBy('name')]);
+        $customers = Customer::orderBy('name')->get();
+        return view('customers.index', [
+            'customers' => $customers,
+            'allCustomersList' => $customers
+        ])->fragmentIf(request()->hasHeader('HX-Request'), 'customer-list');
     }
 
     public function search(Request $request)
     {
         $search = $request->input('search');
-        return view('customers.index', ['customers' => Customer::where('name', 'like', "%$search%")->get()->sortBy('name')]);
+        return view('customers.index', [
+            'customers' => Customer::where('name', 'like', "%$search%")->orderBy('name')->get(),
+            'allCustomersList' => Customer::orderBy('name')->get()
+        ])->fragmentIf(request()->hasHeader('HX-Request'), 'customer-list');
     }
 
     public function show(Customer $customer)
@@ -108,7 +115,7 @@ class CustomerController extends Controller
     {
         $customer_name = preg_replace('/\s+/', '', $customer->name);
         $filename = 'CustomerRequest_' . $customer_name . '_' . date('Y-m-d') . '.csv';
-        
+
         $sanitizedFilename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename);
         $handle = fopen($sanitizedFilename, 'w'); // @TODO laravelize this?
 
