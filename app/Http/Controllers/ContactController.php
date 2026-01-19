@@ -56,7 +56,7 @@ class ContactController extends Controller
 
             if ($isHTMX) {
                 $contacts = Contact::all();
-                $contactIndex = view('contacts.index', compact('contacts'))->fragment('contact-list');
+                $contactIndex = view('contacts.index', ['contacts' => $contacts, 'allContactsList' => $contacts])->fragment('contact-list');
                 $modalShow = view('contacts.show', compact('contact', 'isHTMX'))->fragment('show-contact');
                 return response($contactIndex . $modalShow);
             }
@@ -89,7 +89,7 @@ class ContactController extends Controller
 
             if ($isHTMX) {
                 $contacts = Contact::all();
-                $contactIndex = view('contacts.index', compact('contacts'))->fragment('contact-list');
+                $contactIndex = view('contacts.index', ['contacts' => $contacts, 'allContactsList' => $contacts])->fragment('contact-list');
                 $modalShow = view('contacts.show', compact('contact', 'isHTMX'))->fragment('show-contact');
                 return response($contactIndex . $modalShow);
             }
