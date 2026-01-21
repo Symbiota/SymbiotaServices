@@ -34,8 +34,43 @@
                     Service</x-ec-button>
             </form>
 
-            <x-ec-button onclick="toggleView('update-history')">Update
+            <x-ec-button onclick="toggleView('update-history')">View
                 History</x-ec-button>
+        </div>
+
+        <div id="update-history" class="hidden">
+            @foreach ($service->history() as $historyItem)
+                <br>
+                <ul>
+                    @if ($loop->index == 0)
+                        <li class="mb-1 text-sm italic">Date Created:
+                            {{ $historyItem->created_at }}</li>
+                    @else
+                        <li class="mb-1 text-sm italic">Date Updated:
+                            {{ $historyItem->updated_at }}</li>
+                    @endif
+                    @isset($historyItem->name)
+                        <li><b>Name:</b> {{ $historyItem->name }}</li>
+                    @endisset
+                    @isset($historyItem->darbi_item_number)
+                        <li><b>DARBI Item Number:</b>
+                            {{ $historyItem->darbi_item_number }}
+                        </li>
+                    @endisset
+                    @isset($historyItem->price_per_unit)
+                        <li><b>Price per Unit:</b> {{ $historyItem->price_per_unit }}
+                        </li>
+                    @endisset
+                    @isset($historyItem->description)
+                        <li><b>Description:</b> {{ $historyItem->description }}</li>
+                    @endisset
+                    @isset($historyItem->active_status)
+                        <li><b>Status:</b>
+                            {{ $historyItem->active_status ? 'Active' : 'Retired' }}
+                        </li>
+                    @endisset
+                </ul>
+            @endforeach
         </div>
 
         <div id="edit-form" class="{{ $errors->any() ? '' : 'hidden' }}">
@@ -48,31 +83,6 @@
                 <x-service-form :service="$service"
                     action="{{ route('services.update', $service) }}">@method('PATCH')</x-service-form>
             @endif
-        </div>
-
-        <div id="update-history" class="hidden">
-            @foreach ($service->history() as $historyItem)
-                <br>
-                <ul>
-                    <li><b>Name:</b> {{ $historyItem->name }}</li>
-                    <li><b>DARBI Item Number:</b>
-                        {{ $historyItem->darbi_item_number }}
-                    </li>
-                    <li><b>Price per Unit:</b> {{ $historyItem->price_per_unit }}
-                    </li>
-                    <li><b>Description:</b> {{ $historyItem->description }}</li>
-                    <li><b>Status:</b>
-                        {{ $historyItem->active_status ? 'Active' : 'Retired' }}
-                    </li>
-                    @if ($loop->index == 0)
-                        <li class="mt-1 text-sm italic">Date Created:
-                            {{ $historyItem->created_at }}</li>
-                    @else
-                        <li class="mt-1 text-sm italic">Date Updated:
-                            {{ $historyItem->updated_at }}</li>
-                    @endif
-                </ul>
-            @endforeach
         </div>
     @endfragment
 
