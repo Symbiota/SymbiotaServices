@@ -87,9 +87,14 @@ class ServiceController extends Controller
             $service->update($data);
 
             $history = $service->getChanges();
-            unset($history['id']);
-            $history += ['service_id' => $service->id];
-            DB::table('services_history')->insert($history);
+            if ($history) {
+                unset($history['id']);
+                $history += ['service_id' => $service->id];
+                if ($key = array_search(null, $history)) {
+                    $history[$key] = '[was removed]';
+                }
+                DB::table('services_history')->insert($history);
+            }
 
             return view('services.show', compact('service', 'isHTMX'))->fragmentIf($isHTMX, 'show-service');
         } catch (ValidationException $e) {
@@ -105,7 +110,12 @@ class ServiceController extends Controller
         $service->update([
             'active_status' => 0,
         ]);
-        DB::table('services_history')->insert($service->historyEntry());
+
+        $history = $service->getChanges();
+        unset($history['id']);
+        $history += ['service_id' => $service->id];
+        DB::table('services_history')->insert($history);
+
         return redirect()->route('services.index');
     }
 }
