@@ -49,7 +49,7 @@ class ContactController extends Controller
             $data = $request->validateWithBag('contact_errors', [
                 'first_name' => ['required'],
                 'last_name' => ['required'],
-                'email' => ['required', 'email'],
+                'email' => ['required', 'email', 'unique:contacts,email'],
                 'phone_number' => ['nullable'],
                 'notes' => ['nullable'],
             ]);
@@ -94,7 +94,7 @@ class ContactController extends Controller
             $data = $request->validateWithBag('contact_errors', [
                 'first_name' => ['required'],
                 'last_name' => ['required'],
-                'email' => ['required', 'email'],
+                'email' => ['required', 'email', \Illuminate\Validation\Rule::unique('contacts')->ignore($contact->id)],
                 'phone_number' => ['nullable'],
                 'notes' => ['nullable'],
             ]);
