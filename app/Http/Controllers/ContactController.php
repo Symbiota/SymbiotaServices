@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\Service;
+use App\Models\Contract;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -56,9 +59,22 @@ class ContactController extends Controller
 
             if ($isHTMX) {
                 $contacts = Contact::all();
-                $contactIndex = view('contacts.index', ['contacts' => $contacts, 'allContactsList' => $contacts])->fragment('contact-list');
                 $modalShow = view('contacts.show', compact('contact', 'isHTMX'))->fragment('show-contact');
-                return response($contactIndex . $modalShow);
+                $contactIndex = view('contacts.index', ['contacts' => $contacts, 'allContactsList' => $contacts])->fragment('contact-list');
+                $invoiceContactInput = view('invoices.create', [
+                    'contract' => null,
+                    'invoice' => null,
+                    'contracts' => Contract::all(),
+                    'services' => Service::all(),
+                    'contacts' => Contact::orderBy('last_name')->get(),
+                ])->fragment('invoice-contact-input');
+                $contractContactInput = view('contracts.create', [
+                    'customer' => null,
+                    'contacts' => Contact::orderBy('last_name')->get(),
+                    'customers' => Customer::orderBy('name')->get(),
+                ])->fragment('contract-contact-input');
+
+                return response($contactIndex . $invoiceContactInput . $contractContactInput . $modalShow);
             }
             return redirect()->route('contacts.show', $contact);
         } catch (ValidationException $e) {

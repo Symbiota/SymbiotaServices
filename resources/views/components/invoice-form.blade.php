@@ -21,7 +21,8 @@
                     @endisset
                     <option value=""></option>
                     @foreach ($contracts as $o_contract)
-                        <option value="{{ $o_contract->id }}">
+                        <option value="{{ $o_contract->id }}"
+                            @selected(old('contract_id') == $o_contract->id)>
                             {{ $o_contract->customer->name }} -
                             {{ $o_contract->id }}
                         </option>
@@ -32,14 +33,17 @@
                 @enderror
             </x-form-box>
 
-            <datalist id="contact-datalist">
-                @foreach ($contacts as $contact)
-                    <option
-                        value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
-                        {{ $contact->last_name }}, {{ $contact->first_name }}
-                        - {{ $contact->id }}</option>
-                @endforeach
-            </datalist>
+            @fragment('invoice-contact-input')
+                <datalist id="contact-datalist" hx-swap-oob="true">
+                    @foreach ($contacts as $contact)
+                        <option
+                            value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
+                            {{ $contact->last_name }},
+                            {{ $contact->first_name }} - {{ $contact->id }}
+                        </option>
+                    @endforeach
+                </datalist>
+            @endfragment
 
             <x-form-box for="financial_contact_id"> Financial Contact ID*
                 <x-form-input list="contact-datalist"
@@ -129,7 +133,7 @@
                 <br>
 
                 <div id="retired_services"
-                    class="{{ $invoice->services->contains('active_status', false) ? '' : 'hidden' }}">
+                    class="{{ isset($invoice) && $invoice->services && $invoice->services->contains('active_status', false) ? '' : 'hidden' }}">
                     <br>
                     @foreach ($inactiveServices as $service)
                         <div class="p-4 border border-gray-500">
