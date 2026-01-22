@@ -40,6 +40,7 @@ class Contract extends Model
     public function original_contact()
     {
         return $this->belongsTo(Contact::class, 'original_contact_id');
+        // return $this->hasOne(Contact::class, 'id', 'original_contact_id');
     }
 
     // Current financial id linked to a contact

@@ -1,5 +1,5 @@
 <x-table-layout heading="Create Contract">
-    <title>CREATE CONTRACT</title>
+    <title>Create Contract - SymbiotaServices</title>
 
     <div class="flex items-start">
         <div class="w-4/5">
@@ -8,22 +8,10 @@
                 action="{{ route('contracts.store') }}"></x-contract-form>
         </div>
 
-        <div class="w-1/5">
-            <div class="flex items-center">
-                <x-ec-button onclick="toggleView('create-form')">Create
-                    Contact</x-ec-button>
-
-                @if ($errors->contact_errors->any())
-                    <p class="text-red-500 text-sm ml-3"> Error Creating Contact
-                    </p>
-                @endif
-            </div>
-
-            <div id="create-form" class="hidden">
-                <x-contact-form
-                    action="{{ route('contacts.store') }}"></x-contact-form>
-            </div>
-
-        </div>
+        <x-ec-button href="{{ route('contacts.create') }}"
+            hx-get="{{ route('contacts.create') }}" hx-target="#modal"
+            hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
+            Contact</x-ec-button>
+    </div>
 
 </x-table-layout>

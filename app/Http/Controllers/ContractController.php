@@ -26,8 +26,8 @@ class ContractController extends Controller
     {
         return view('contracts.create', [
             'customer' => $customer,
-            'contacts' => Contact::all()->sortBy('last_name'),
-            'customers' => Customer::all()->sortBy('name'),
+            'contacts' => Contact::orderBy('last_name')->get(),
+            'customers' => Customer::orderBy('name')->get(),
         ]);
     }
 
@@ -38,8 +38,8 @@ class ContractController extends Controller
         return view('contracts.edit', [
             'isHTMX' => $isHTMX,
             'contract' => $contract,
-            'contacts' => Contact::all()->sortBy('last_name'),
-            'customers' => Customer::all()->sortBy('name'),
+            'contacts' => Contact::orderBy('last_name')->get(),
+            'customers' => Customer::orderBy('name')->get(),
         ])->fragmentIf($isHTMX, 'edit-contract');
     }
 
@@ -50,8 +50,8 @@ class ContractController extends Controller
             'financial_contact_id' => ['required', 'exists:contacts,full_name'],
             'pi_contact_id' => ['nullable', 'exists:contacts,full_name'],
             'technical_contact_id' => ['nullable', 'exists:contacts,full_name'],
-            'darbi_header_ref_1' => ['nullable'],
-            'darbi_header_ref_2' => ['nullable'],
+            'darbi_header_ref_1' => ['nullable', 'max:20'],
+            'darbi_header_ref_2' => ['nullable', 'max:20'],
             'darbi_special_instructions' => ['nullable'],
             'notes' => ['nullable'],
         ]);
@@ -90,8 +90,8 @@ class ContractController extends Controller
                 'financial_contact_id' => ['required', 'exists:contacts,full_name'],
                 'pi_contact_id' => ['nullable', 'exists:contacts,full_name'],
                 'technical_contact_id' => ['nullable', 'exists:contacts,full_name'],
-                'darbi_header_ref_1' => ['nullable'],
-                'darbi_header_ref_2' => ['nullable'],
+                'darbi_header_ref_1' => ['nullable', 'max:20'],
+                'darbi_header_ref_2' => ['nullable', 'max:20'],
                 'darbi_special_instructions' => ['nullable'],
                 'notes' => ['nullable'],
             ]);
@@ -127,8 +127,8 @@ class ContractController extends Controller
                 return view('contracts.edit', [
                     'isHTMX' => $isHTMX,
                     'contract' => $contract,
-                    'contacts' => Contact::all()->sortBy('last_name'),
-                    'customers' => Customer::all()->sortBy('name'),
+                    'contacts' => Contact::orderBy('last_name')->get(),
+                    'customers' => Customer::orderBy('name')->get(),
                 ])->withErrors($e->errors())->fragment('edit-contract');
             }
             throw $e;

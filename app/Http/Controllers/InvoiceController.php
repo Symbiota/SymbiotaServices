@@ -23,18 +23,21 @@ class InvoiceController extends Controller
         ]);
     }
 
-    public function create(Contract $contract)
+    public function create(Contract $contract, Invoice $invoice)
     {
         $contracts = Contract::select('contracts.*')
             ->join('customers', 'customers.id', '=', 'contracts.customer_id')
             ->orderBy('customers.name')
             ->get();
 
+        $invoice['billing_start'] = $invoice['billing_end'] = $invoice['date_invoiced'] = $invoice['date_paid'] = null;
+
         return view('invoices.create', [
             'contract' => $contract,
+            'invoice' => $invoice,
             'contracts' => $contracts,
             'services' => Service::all(),
-            'contacts' => Contact::all()->sortBy('last_name'),
+            'contacts' => Contact::orderBy('last_name')->get(),
         ]);
     }
 
@@ -46,7 +49,7 @@ class InvoiceController extends Controller
             'isHTMX' => $isHTMX,
             'invoice' => $invoice,
             'services' => Service::all(),
-            'contacts' => Contact::all()->sortBy('last_name'),
+            'contacts' => Contact::orderBy('last_name')->get(),
             'contracts' => Contract::select('contracts.*')
                 ->join('customers', 'customers.id', '=', 'contracts.customer_id')
                 ->orderBy('customers.name')->get(),
@@ -64,8 +67,8 @@ class InvoiceController extends Controller
             'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
             'date_paid' => ['nullable', 'date_format:Y-m-d'],
             'services' => ['required'],
-            'darbi_header_ref_1' => ['nullable'],
-            'darbi_header_ref_2' => ['nullable'],
+            'darbi_header_ref_1' => ['nullable', 'max:20'],
+            'darbi_header_ref_2' => ['nullable', 'max:20'],
             'notes' => ['nullable'],
         ]);
 
@@ -104,8 +107,8 @@ class InvoiceController extends Controller
                 'date_invoiced' => ['nullable', 'date_format:Y-m-d'],
                 'date_paid' => ['nullable', 'date_format:Y-m-d'],
                 'services' => ['required'],
-                'darbi_header_ref_1' => ['nullable'],
-                'darbi_header_ref_2' => ['nullable'],
+                'darbi_header_ref_1' => ['nullable', 'max:20'],
+                'darbi_header_ref_2' => ['nullable', 'max:20'],
                 'notes' => ['nullable'],
             ]);
 
@@ -138,7 +141,7 @@ class InvoiceController extends Controller
                     'isHTMX' => $isHTMX,
                     'invoice' => $invoice,
                     'services' => Service::all(),
-                    'contacts' => Contact::all()->sortBy('last_name'),
+                    'contacts' => Contact::orderBy('last_name')->get(),
                     'contracts' => Contract::select('contracts.*')
                         ->join('customers', 'customers.id', '=', 'contracts.customer_id')
                         ->orderBy('customers.name')->get(),
@@ -229,12 +232,12 @@ class InvoiceController extends Controller
 
         for ($i = 1; $i < count($invoice->services); $i++) {
             $item_row = [
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
+                'RSINT',
+                'KUCR Symbiota',
+                '1 - ' . $invoice->contract->customer->name,
+                $invoice->contract->customer->darbi_customer_account_number,
+                $invoice->contract->customer->darbi_site,
+                $invoice->financial_contact->first_name . ' ' . $invoice->financial_contact->last_name,
                 $invoice->services[$i]->darbi_item_number,
                 $invoice->services[$i]->description,
                 'Nico Franz',
@@ -242,14 +245,14 @@ class InvoiceController extends Controller
                 'EA',
                 $invoice->services[$i]->price_per_unit,
                 '$ ' . $invoice->services[$i]->pivot->amount_owed,
-                '',
-                '',
-                '',
-                '',
+                $invoice->billing_start,
+                $invoice->billing_end,
+                $invoice->darbi_header_ref_1,
+                $invoice->darbi_header_ref_2,
                 $invoice->services[$i]->pivot->line_ref_1,
                 $invoice->services[$i]->pivot->line_ref_2,
-                '',
-                '',
+                $invoice->contract->darbi_special_instructions,
+                'Symbiota Internal Invoice ID: #' . $invoice->id,
             ];
 
             fputcsv($handle, $item_row);

@@ -1,6 +1,6 @@
 <x-table-layout heading="{{ $service->name }}">
     @fragment('show-service')
-        <title>Service: {{ $service->name }}</title>
+        <title>Service: {{ $service->name }} - SymbiotaServices</title>
 
         <x-modal-header :isHTMX="$isHTMX">{{ $service->name }}
         </x-modal-header>
@@ -9,8 +9,6 @@
             <li><b>DARBI Item Number:</b> {{ $service->darbi_item_number }}</li>
             <li><b>Price per Unit:</b> {{ $service->price_per_unit }}</li>
             <li><b>Description:</b> {{ $service->description }}</li>
-            <li><b>Line Reference 1:</b> {{ $service->line_ref_1 }}</li>
-            <li><b>Line Reference 2:</b> {{ $service->line_ref_2 }}</li>
             <x-timestamps :model="$service"></x-timestamps>
         </ul>
 
@@ -26,12 +24,18 @@
                 @endif
             </div>
 
-            <form method="post" action="{{ route('services.retire', $service) }}">
+            <form method="POST" action="{{ route('services.retire', $service) }}">
                 @csrf
                 @method('PATCH')
-                <x-ec-button onclick="return confirm('Retire this service?');"
-                    class="!border-red-500 !text-red-500">Retire
-                    Service</x-ec-button>
+                @if ($service->active_status)
+                    <x-ec-button onclick="return confirm('Retire this service?');"
+                        class="!border-red-500 !text-red-500">Retire
+                        Service</x-ec-button>
+                @else
+                    <x-ec-button
+                        onclick="return confirm('Unretire this service?');">Unretire
+                        Service</x-ec-button>
+                @endif
             </form>
         </div>
 
@@ -45,7 +49,6 @@
                 <x-service-form :service="$service"
                     action="{{ route('services.update', $service) }}">@method('PATCH')</x-service-form>
             @endif
-
         </div>
     @endfragment
 

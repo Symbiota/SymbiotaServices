@@ -21,14 +21,17 @@
                 @enderror
             </x-form-box>
 
-            <datalist id="contact-datalist">
-                @foreach ($contacts as $contact)
-                    <option
-                        value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
-                        {{ $contact->last_name }}, {{ $contact->first_name }} -
-                        {{ $contact->id }}</option>
-                @endforeach
-            </datalist>
+            @fragment('contract-contact-input')
+                <datalist id="contact-datalist" hx-swap-oob="true">
+                    @foreach ($contacts as $contact)
+                        <option
+                            value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
+                            {{ $contact->last_name }},
+                            {{ $contact->first_name }} -
+                            {{ $contact->id }}</option>
+                    @endforeach
+                </datalist>
+            @endfragment
 
             <x-form-box for="financial_contact_id"> Financial Contact ID*
                 <x-form-input list="contact-datalist"

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\Service;
+use App\Models\Contract;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -10,23 +13,32 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return view('contacts.index', ['contacts' => Contact::all()]);
+        $contacts = Contact::all();
+        return view('contacts.index', ['contacts' => $contacts, 'allContactsList' => $contacts])
+            ->fragmentIf(request()->hasHeader('HX-Request'), 'contact-list');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        return view('contacts.index', [
+            'contacts' => Contact::whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%$search%"])->orderBy('last_name')->get(),
+            'allContactsList' => Contact::all()
+        ])->fragmentIf(request()->hasHeader('HX-Request'), 'contact-list');
     }
 
     public function show(Request $request, Contact $contact)
     {
         $isHTMX = $request->hasHeader('HX-Request');
 
-        return view('contacts.show', compact('contact', 'isHTMX'))
-            ->fragmentIf($isHTMX, 'show-contact');
+        return view('contacts.show', compact('contact', 'isHTMX'))->fragmentIf($isHTMX, 'show-contact');
     }
 
     public function create(Request $request)
     {
         $isHTMX = $request->hasHeader('HX-Request');
 
-        return view('contacts.create', compact('isHTMX'))
-            ->fragmentIf($isHTMX, 'create-contact');
+        return view('contacts.create', compact('isHTMX'))->fragmentIf($isHTMX, 'create-contact');
     }
 
     public function store(Request $request)
@@ -37,7 +49,7 @@ class ContactController extends Controller
             $data = $request->validateWithBag('contact_errors', [
                 'first_name' => ['required'],
                 'last_name' => ['required'],
-                'email' => ['required', 'email'],
+                'email' => ['required', 'email', 'unique:contacts,email'],
                 'phone_number' => ['nullable'],
                 'notes' => ['nullable'],
             ]);
@@ -46,9 +58,25 @@ class ContactController extends Controller
             $contact->update(['full_name' => $contact->last_name . ', ' . $contact->first_name . ' - ' . $contact->id]);
 
             if ($isHTMX) {
-                return response(null, 204)->header('HX-Redirect', route('contacts.index'));
+                $contacts = Contact::all();
+                $modalShow = view('contacts.show', compact('contact', 'isHTMX'))->fragment('show-contact');
+                $contactIndex = view('contacts.index', ['contacts' => $contacts, 'allContactsList' => $contacts])->fragment('contact-list');
+                $invoiceContactInput = view('invoices.create', [
+                    'contract' => null,
+                    'invoice' => null,
+                    'contracts' => Contract::all(),
+                    'services' => Service::all(),
+                    'contacts' => Contact::orderBy('last_name')->get(),
+                ])->fragment('invoice-contact-input');
+                $contractContactInput = view('contracts.create', [
+                    'customer' => null,
+                    'contacts' => Contact::orderBy('last_name')->get(),
+                    'customers' => Customer::orderBy('name')->get(),
+                ])->fragment('contract-contact-input');
+
+                return response($contactIndex . $invoiceContactInput . $contractContactInput . $modalShow);
             }
-            return redirect()->route('contacts.index');
+            return redirect()->route('contacts.show', $contact);
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('contacts.create', compact('isHTMX'))->withErrors($e->errors(), 'contact_errors')
@@ -66,7 +94,7 @@ class ContactController extends Controller
             $data = $request->validateWithBag('contact_errors', [
                 'first_name' => ['required'],
                 'last_name' => ['required'],
-                'email' => ['required', 'email'],
+                'email' => ['required', 'email', \Illuminate\Validation\Rule::unique('contacts')->ignore($contact->id)],
                 'phone_number' => ['nullable'],
                 'notes' => ['nullable'],
             ]);
@@ -75,12 +103,33 @@ class ContactController extends Controller
 
             $contact->update($data);
 
-            return view('contacts.show', compact('contact', 'isHTMX'))->fragmentIf($isHTMX, 'show-contact');
+            if ($isHTMX) {
+                $contacts = Contact::all();
+                $contactIndex = view('contacts.index', ['contacts' => $contacts, 'allContactsList' => $contacts])->fragment('contact-list');
+                $modalShow = view('contacts.show', compact('contact', 'isHTMX'))->fragment('show-contact');
+                return response($contactIndex . $modalShow);
+            }
+            return redirect()->route('contacts.show', $contact);
         } catch (ValidationException $e) {
             if ($isHTMX) {
                 return view('contacts.show', compact('contact', 'isHTMX'))->withErrors($e->errors(), 'contact_errors')->fragment('show-contact');
             }
             throw $e;
         }
+    }
+
+    public function destroy(Request $request, Contact $contact)
+    {
+        $isHTMX = $request->hasHeader('HX-Request');
+
+        if ($contact->contracts()->filter->isNotEmpty()->isNotEmpty() || $contact->invoices()->exists()) { // If contact is attached to contracts/invoices, return error
+            return view('contacts.show', compact('contact', 'isHTMX'))->withErrors(['delete_error' => 'Cannot delete contacts attached to contracts and/or invoices.'])->fragmentIf($isHTMX, 'show-contact');
+        }
+
+        $contact->delete();
+        if ($isHTMX) {
+            return response(null, 204)->header('HX-Redirect', route('contacts.index'));
+        }
+        return redirect()->route('contacts.index');
     }
 }

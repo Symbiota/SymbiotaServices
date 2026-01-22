@@ -1,5 +1,5 @@
 <x-table-layout heading="Invoice: {{ $invoice->id }}">
-    <title>Invoice: {{ $invoice->id }}</title>
+    <title>Invoice: {{ $invoice->id }} - SymbiotaServices</title>
 
     <ul>
         <li><b>Invoice ID:</b> {{ $invoice->id }}</li>
@@ -11,8 +11,12 @@
                     class="text-blue-700 underline decoration-2">Customer ID:</b>
                 {{ $invoice->contract->customer->id }} -
                 {{ $invoice->contract->customer->name }}</a></li>
-        <li><a href="{{ route('contacts.show', $invoice->financial_contact) }}">
-                <b class="text-blue-700 underline decoration-2">Financial Contact
+        <li><a href="{{ route('contacts.show', $invoice->financial_contact) }}"
+                hx-get="{{ route('contacts.show', $invoice->financial_contact) }}"
+                hx-target="#modal" hx-swap="innerHTML"
+                onclick="toggleView('modal-container')">
+                <b class="text-blue-700 underline decoration-2">Financial
+                    Contact
                     ID:</b>
                 {{ $invoice->financial_contact_id }} -
                 {{ $invoice->financial_contact->first_name }}
@@ -43,15 +47,17 @@
 
     <div class="flex items-start">
 
-        <a href="{{ route('invoices.exportCSV', $invoice) }}"<x-ec-button>Export
-            CSV</x-ec-button></a>
+        <x-ec-button href="{{ route('invoices.exportCSV', $invoice) }}">Export
+            CSV</x-ec-button>
 
-        <a href="{{ route('invoices.edit', $invoice) }}">
-            <x-ec-button hx-get="{{ route('invoices.edit', $invoice) }}"
-                hx-target="#modal" hx-swap="innerHTML"
-                onclick="toggleView('modal-container')">Edit
-                Invoice</x-ec-button>
-        </a>
+        <x-ec-button
+            href="{{ route('invoices.create', [$invoice->contract, $invoice]) }}">Duplicate
+            Invoice</x-ec-button>
+
+        <x-ec-button href="{{ route('invoices.edit', $invoice) }}"
+            hx-get="{{ route('invoices.edit', $invoice) }}" hx-target="#modal"
+            hx-swap="innerHTML" onclick="toggleView('modal-container')">Edit
+            Invoice</x-ec-button>
 
     </div>
 

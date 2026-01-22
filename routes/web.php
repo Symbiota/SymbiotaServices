@@ -13,14 +13,17 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('user.create');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('user.store');
 
 Route::get('/login', [SessionController::class, 'create'])->name('session.create');
 Route::post('/login', [SessionController::class, 'store'])->name('session.store');
 Route::post('/logout', [SessionController::class, 'destroy'])->name('session.destroy');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/user', [RegisteredUserController::class, 'show'])->name('user.show');
+    Route::patch('/user/update', [RegisteredUserController::class, 'update'])->name('user.update');
+    Route::patch('/user/changePassword', [RegisteredUserController::class, 'changePassword'])->name('user.changePassword');
 
     Route::controller(ServiceController::class)->group(function () {
         Route::get('/services', 'index')->name('services.index');
@@ -54,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::controller(InvoiceController::class)->group(function () {
-        Route::get('/invoices/create/{contract?}', 'create')->name('invoices.create');
+        Route::get('/invoices/create/{contract?}/{invoice?}', 'create')->name('invoices.create');
         Route::get('/invoices', 'index')->name('invoices.index');
         Route::get('/invoices/{invoice}', 'show')->name('invoices.show');
         Route::get('/invoices/{invoice}/edit', 'edit')->name('invoices.edit');
@@ -66,7 +69,9 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(ContactController::class)->group(function () {
         Route::get('/contacts', 'index')->name('contacts.index');
         Route::get('/contacts/create', 'create')->name('contacts.create');
+        Route::get('/contacts/search', 'search')->name('contacts.search');
         Route::get('/contacts/{contact}', 'show')->name('contacts.show');
+        Route::delete('/contacts/{contact}/delete', 'destroy')->name('contacts.destroy');
         Route::patch('/contacts/{contact}/update', 'update')->name('contacts.update');
         Route::post('/contacts/store', 'store')->name('contacts.store');
     });
