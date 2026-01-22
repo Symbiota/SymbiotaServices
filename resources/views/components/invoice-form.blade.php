@@ -133,7 +133,7 @@
                 <br>
 
                 <div id="retired_services"
-                    class="{{ $invoice->services->contains('active_status', false) ? '' : 'hidden' }}">
+                    class="{{ isset($invoice) && $invoice->services && $invoice->services->contains('active_status', false) ? '' : 'hidden' }}">
                     <br>
                     @foreach ($inactiveServices as $service)
                         <div class="p-4 border border-gray-500">
