@@ -49,7 +49,7 @@ class ServiceController extends Controller
 
             $history = $service->getAttributes();
             unset($history['id']);
-            $history += ['service_id' => $service->id];
+            $history += ['service_id' => $service->id, 'modified_by' => auth()->user()->id];
             DB::table('services_history')->insert($history);
 
             if ($isHTMX) {
@@ -90,7 +90,7 @@ class ServiceController extends Controller
             $history = $service->getChanges();
             if ($history) {
                 unset($history['id']);
-                $history += ['service_id' => $service->id];
+                $history += ['service_id' => $service->id, 'modified_by' => auth()->user()->id];
                 if ($key = array_search(null, $history)) {
                     $history[$key] = "[{$key} was removed]";
                 }

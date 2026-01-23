@@ -73,6 +73,9 @@
                         <li class="mt-1 text-sm italic">Date Updated:
                             {{ $historyItem->updated_at }}</li>
                     @endif
+                    <li class="mt-1 text-sm italic">Modified By:
+                        {{ \App\Models\User::find($historyItem->modified_by)->name ?? 'unknown' }}
+                    </li>
                 </ul>
             @endforeach
         </div>

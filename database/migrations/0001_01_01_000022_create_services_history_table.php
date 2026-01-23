@@ -22,6 +22,8 @@ return new class extends Migration
             $table->boolean('active_status')->nullable();
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
+            $table->unsignedBigInteger('modified_by')->nullable();
+            $table->foreign('modified_by')->references('id')->on('users');
         });
     }
 
