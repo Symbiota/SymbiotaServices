@@ -92,7 +92,7 @@ class ServiceController extends Controller
                 unset($history['id']);
                 $history += ['service_id' => $service->id];
                 if ($key = array_search(null, $history)) {
-                    $history[$key] = '[was removed]';
+                    $history[$key] = "[{$key} was removed]";
                 }
                 DB::table('services_history')->insert($history);
             }

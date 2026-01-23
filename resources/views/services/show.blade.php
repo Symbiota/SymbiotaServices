@@ -46,13 +46,6 @@
             @foreach ($service->history() as $historyItem)
                 <br>
                 <ul>
-                    @if ($loop->index == 0)
-                        <li class="mb-1 text-sm italic">Date Created:
-                            {{ $historyItem->created_at }}</li>
-                    @else
-                        <li class="mb-1 text-sm italic">Date Updated:
-                            {{ $historyItem->updated_at }}</li>
-                    @endif
                     @isset($historyItem->name)
                         <li><b>Name:</b> {{ $historyItem->name }}</li>
                     @endisset
@@ -73,6 +66,13 @@
                             {{ $historyItem->active_status ? 'Active' : 'Retired' }}
                         </li>
                     @endisset
+                    @if ($loop->index == 0)
+                        <li class="mt-1 text-sm italic">Date Created:
+                            {{ $historyItem->created_at }}</li>
+                    @else
+                        <li class="mt-1 text-sm italic">Date Updated:
+                            {{ $historyItem->updated_at }}</li>
+                    @endif
                 </ul>
             @endforeach
         </div>
