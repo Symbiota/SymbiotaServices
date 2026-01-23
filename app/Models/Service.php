@@ -24,10 +24,6 @@ class Service extends Model
         'active_status' => true,
     ];
 
-    protected $attributes = [
-        'active_status' => true,
-    ];
-
     // Services have a many-to-many relationship with invoices
     public function invoices()
     {
