@@ -26,8 +26,8 @@ class ContractController extends Controller
     {
         return view('contracts.create', [
             'customer' => $customer,
-            'contacts' => Contact::all()->sortBy('last_name'),
-            'customers' => Customer::all()->sortBy('name'),
+            'contacts' => Contact::orderBy('last_name')->get(),
+            'customers' => Customer::orderBy('name')->get(),
         ]);
     }
 
@@ -38,8 +38,8 @@ class ContractController extends Controller
         return view('contracts.edit', [
             'isHTMX' => $isHTMX,
             'contract' => $contract,
-            'contacts' => Contact::all()->sortBy('last_name'),
-            'customers' => Customer::all()->sortBy('name'),
+            'contacts' => Contact::orderBy('last_name')->get(),
+            'customers' => Customer::orderBy('name')->get(),
         ])->fragmentIf($isHTMX, 'edit-contract');
     }
 
@@ -127,8 +127,8 @@ class ContractController extends Controller
                 return view('contracts.edit', [
                     'isHTMX' => $isHTMX,
                     'contract' => $contract,
-                    'contacts' => Contact::all()->sortBy('last_name'),
-                    'customers' => Customer::all()->sortBy('name'),
+                    'contacts' => Contact::orderBy('last_name')->get(),
+                    'customers' => Customer::orderBy('name')->get(),
                 ])->withErrors($e->errors())->fragment('edit-contract');
             }
             throw $e;

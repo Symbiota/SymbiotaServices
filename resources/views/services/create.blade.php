@@ -1,5 +1,6 @@
 <x-table-layout heading="Create Service:">
     @fragment('create-service')
+        <title>Create Service - SymbiotaServices</title>
         <x-modal-header :isHTMX="$isHTMX">Create Service:
         </x-modal-header>
         @if ($isHTMX)
