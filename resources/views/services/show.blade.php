@@ -37,6 +37,47 @@
                         Service</x-ec-button>
                 @endif
             </form>
+
+            <x-ec-button onclick="toggleView('update-history')">View
+                History</x-ec-button>
+        </div>
+
+        <div id="update-history" class="hidden">
+            @foreach ($service->history() as $historyItem)
+                <br>
+                <ul>
+                    @isset($historyItem->name)
+                        <li><b>Name:</b> {{ $historyItem->name }}</li>
+                    @endisset
+                    @isset($historyItem->darbi_item_number)
+                        <li><b>DARBI Item Number:</b>
+                            {{ $historyItem->darbi_item_number }}
+                        </li>
+                    @endisset
+                    @isset($historyItem->price_per_unit)
+                        <li><b>Price per Unit:</b> {{ $historyItem->price_per_unit }}
+                        </li>
+                    @endisset
+                    @isset($historyItem->description)
+                        <li><b>Description:</b> {{ $historyItem->description }}</li>
+                    @endisset
+                    @isset($historyItem->active_status)
+                        <li><b>Status:</b>
+                            {{ $historyItem->active_status ? 'Active' : 'Retired' }}
+                        </li>
+                    @endisset
+                    @if ($loop->index == 0)
+                        <li class="mt-1 text-sm italic">Date Created:
+                            {{ $historyItem->created_at }}</li>
+                    @else
+                        <li class="mt-1 text-sm italic">Date Updated:
+                            {{ $historyItem->updated_at }}</li>
+                    @endif
+                    <li class="mt-1 text-sm italic">Modified By:
+                        {{ \App\Models\User::find($historyItem->modified_by)->name ?? 'unknown' }}
+                    </li>
+                </ul>
+            @endforeach
         </div>
 
         <div id="edit-form" class="{{ $errors->any() ? '' : 'hidden' }}">
