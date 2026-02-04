@@ -212,7 +212,7 @@ class InvoiceController extends Controller
             $invoice->contract->customer->darbi_site,
             $invoice->financial_contact->first_name . ' ' . $invoice->financial_contact->last_name, // NOTE: Invoice Financial Contact
             $invoice->services[0]->darbi_item_number,
-            $invoice->services[0]->description,
+            $invoice->services[0]->name, // Item Description
             'Nico Franz', // SALESPERSON
             $invoice->services[0]->pivot->qty,
             'EA', // UOM
@@ -239,7 +239,7 @@ class InvoiceController extends Controller
                 $invoice->contract->customer->darbi_site,
                 $invoice->financial_contact->first_name . ' ' . $invoice->financial_contact->last_name,
                 $invoice->services[$i]->darbi_item_number,
-                $invoice->services[$i]->description,
+                $invoice->services[$i]->name,
                 'Nico Franz',
                 $invoice->services[$i]->pivot->qty,
                 'EA',
