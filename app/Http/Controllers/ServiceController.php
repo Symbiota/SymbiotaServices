@@ -91,8 +91,10 @@ class ServiceController extends Controller
             if ($history) {
                 unset($history['id']);
                 $history += ['service_id' => $service->id, 'modified_by' => auth()->user()->id];
-                if ($key = array_search(null, $history)) {
-                    $history[$key] = "[{$key} was removed]";
+                foreach ($history as $key => $value) {
+                    if (is_null($value)) {
+                        $history[$key] = "[{$key} was removed]";
+                    }
                 }
                 DB::table('services_history')->insert($history);
             }
