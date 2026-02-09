@@ -71,8 +71,8 @@
                         Contact: {{ $pi_contract->id }}</a>
                 @endforeach
                 @foreach ($contact->contracts_by_technical_contact as $t_contract)
-                    <a href="{{ route('contracts.show', $t_contract) }}">Technical
-                        Contact: {{ $t_contract->id }}</a>
+                    <a href="{{ route('contracts.show', $t_contract) }}">SSH
+                        Internal Contact: {{ $t_contract->id }}</a>
                 @endforeach
             </div>
             <br>

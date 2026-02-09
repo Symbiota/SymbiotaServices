@@ -44,7 +44,7 @@
                 <div>
                     <b>Contract ID:</b> {{ $contract->id }}
                     <b>Customer ID:</b> {{ $contract->customer_id }}
-                    <b>Original Contact ID:</b>
+                    <b>Original Contact:</b>
                     {{ $contract->original_contact_id }}
                     <br>
                     <b>Header Ref 1:</b>
