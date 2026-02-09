@@ -33,7 +33,7 @@
                 </datalist>
             @endfragment
 
-            <x-form-box for="financial_contact_id"> Financial Contact ID*
+            <x-form-box for="financial_contact_id"> Financial Contact*
                 <x-form-input list="contact-datalist"
                     name="financial_contact_id" id="financial_contact_id"
                     value="{{ $contract->current_financial_contact->full_name ?? old('financial_contact_id') }}">
@@ -43,7 +43,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="pi_contact_id"> PI Contact ID
+            <x-form-box for="pi_contact_id"> PI Contact
                 <x-form-input list="contact-datalist" name="pi_contact_id"
                     id="pi_contact_id"
                     value="{{ $contract->pi_contact->full_name ?? old('pi_contact_id') }}">>
@@ -53,7 +53,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="technical_contact_id"> Technical Contact ID
+            <x-form-box for="technical_contact_id"> SSH Internal Contact
                 <x-form-input list="contact-datalist"
                     name="technical_contact_id" id="technical_contact_id"
                     value="{{ $contract->technical_contact->full_name ?? old('technical_contact_id') }}">>
