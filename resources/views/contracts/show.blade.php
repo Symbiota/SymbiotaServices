@@ -4,7 +4,7 @@
     <ul>
         <li><b>Contract ID:</b> {{ $contract->id }}</li>
         <li><a href="{{ route('customers.show', $contract->customer) }}">
-                <b class="text-blue-700 underline decoration-2">Customer ID:</b>
+                <b class="text-blue-700 underline decoration-2">Customer:</b>
                 {{ $contract->customer_id }} -
                 {{ $contract->customer->name }}</a></li>
 
