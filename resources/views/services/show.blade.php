@@ -15,28 +15,35 @@
         <br>
 
         <div class="flex items-start">
-            <div class="flex items-center">
-                <x-ec-button onclick="toggleView('edit-form')">Edit
-                    Service</x-ec-button>
+            <div
+                class="flex {{ str_contains(request()->header('HX-Current-URL'), '/invoices/') ? 'hidden' : '' }}">
 
-                @if ($errors->any())
-                    <p class="text-red-500 text-sm ml-3">Error Editing Service</p>
-                @endif
+                <div class="flex items-center">
+                    <x-ec-button onclick="toggleView('edit-form')">Edit
+                        Service</x-ec-button>
+
+                    @if ($errors->any())
+                        <p class="text-red-500 text-sm ml-3">Error Editing Service
+                        </p>
+                    @endif
+                </div>
+
+                <form method="POST"
+                    action="{{ route('services.retire', $service) }}">
+                    @csrf
+                    @method('PATCH')
+                    @if ($service->active_status)
+                        <x-ec-button
+                            onclick="return confirm('Retire this service?');"
+                            class="!border-red-500 !text-red-500">Retire
+                            Service</x-ec-button>
+                    @else
+                        <x-ec-button
+                            onclick="return confirm('Unretire this service?');">Unretire
+                            Service</x-ec-button>
+                    @endif
+                </form>
             </div>
-
-            <form method="POST" action="{{ route('services.retire', $service) }}">
-                @csrf
-                @method('PATCH')
-                @if ($service->active_status)
-                    <x-ec-button onclick="return confirm('Retire this service?');"
-                        class="!border-red-500 !text-red-500">Retire
-                        Service</x-ec-button>
-                @else
-                    <x-ec-button
-                        onclick="return confirm('Unretire this service?');">Unretire
-                        Service</x-ec-button>
-                @endif
-            </form>
 
             <x-ec-button onclick="toggleView('update-history')">View
                 History</x-ec-button>
