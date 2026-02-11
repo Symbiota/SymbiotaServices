@@ -22,7 +22,7 @@
             </x-form-box>
 
             @fragment('contract-contact-input')
-                <datalist id="contact-datalist" hx-swap-oob="true">
+                <datalist id="contact-datalist">
                     @foreach ($contacts as $contact)
                         <option
                             value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
