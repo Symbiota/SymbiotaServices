@@ -29,4 +29,10 @@ class Service extends Model
     {
         return $this->belongsToMany(Invoice::class)->withPivot('qty', 'amount_owed', 'line_ref_1', 'line_ref_2');
     }
+
+    public function history()
+    {
+        $history = DB::table('services_history')->where('service_id', $this->id)->get();
+        return $history;
+    }
 }

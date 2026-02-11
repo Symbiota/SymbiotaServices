@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
@@ -46,6 +47,11 @@ class ServiceController extends Controller
 
             $service = Service::create($data);
 
+            $history = $service->getAttributes();
+            unset($history['id']);
+            $history += ['service_id' => $service->id, 'modified_by' => auth()->user()->id];
+            DB::table('services_history')->insert($history);
+
             if ($isHTMX) {
                 $services = service::all();
                 $serviceIndex = view('services.index', compact('services'))->fragment('service-list');
@@ -81,6 +87,18 @@ class ServiceController extends Controller
 
             $service->update($data);
 
+            $history = $service->getChanges();
+            if ($history) {
+                unset($history['id']);
+                $history += ['service_id' => $service->id, 'modified_by' => auth()->user()->id];
+                foreach ($history as $key => $value) {
+                    if (is_null($value)) {
+                        $history[$key] = "[{$key} was removed]";
+                    }
+                }
+                DB::table('services_history')->insert($history);
+            }
+
             if ($isHTMX) {
                 $services = Service::all();
                 $serviceIndex = view('services.index', compact('services'))->fragment('service-list');
@@ -99,6 +117,12 @@ class ServiceController extends Controller
     public function retire(Service $service)
     {
         $service->update(['active_status' => !$service->active_status]);
+
+        $history = $service->getChanges();
+        unset($history['id']);
+        $history += ['service_id' => $service->id];
+        DB::table('services_history')->insert($history);
+
         return redirect()->route('services.index');
     }
 }
