@@ -5,6 +5,7 @@
         <x-modal-header :isHTMX="$isHTMX">{{ $service->name }}
         </x-modal-header>
         <ul>
+            <li><b>ID:</b> {{ $service->id }}</li>
             <li><b>Name:</b> {{ $service->name }}</li>
             <li><b>DARBI Item Number:</b> {{ $service->darbi_item_number }}</li>
             <li><b>Price per Unit:</b> {{ $service->price_per_unit }}</li>

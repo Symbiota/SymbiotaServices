@@ -4,7 +4,7 @@
     <ul>
         <li><b>Contract ID:</b> {{ $contract->id }}</li>
         <li><a href="{{ route('customers.show', $contract->customer) }}">
-                <b class="text-blue-700 underline decoration-2">Customer ID:</b>
+                <b class="text-blue-700 underline decoration-2">Customer:</b>
                 {{ $contract->customer_id }} -
                 {{ $contract->customer->name }}</a></li>
 
@@ -12,8 +12,8 @@
                 hx-get="{{ route('contacts.show', $contract->original_contact) }}"
                 hx-target="#modal" hx-swap="innerHTML"
                 onclick="toggleView('modal-container')">
-                <b class="text-blue-700 underline decoration-2">Original Contact
-                    ID:</b>
+                <b class="text-blue-700 underline decoration-2">Original
+                    Contact:</b>
                 {{ $contract->original_contact_id }} -
                 {{ $contract->original_contact->first_name }}
                 {{ $contract->original_contact->last_name }}</a>
@@ -24,7 +24,7 @@
                 hx-target="#modal" hx-swap="innerHTML"
                 onclick="toggleView('modal-container')">
                 <b class="text-blue-700 underline decoration-2">Current
-                    Financial Contact ID:</b>
+                    Financial Contact:</b>
                 {{ $contract->current_financial_contact_id }} -
                 {{ $contract->current_financial_contact->first_name }}
                 {{ $contract->current_financial_contact->last_name }}</a>
@@ -36,14 +36,14 @@
                     hx-get="{{ route('contacts.show', $contract->pi_contact) }}"
                     hx-target="#modal" hx-swap="innerHTML"
                     onclick="toggleView('modal-container')">
-                    <b class="text-blue-700 underline decoration-2">PI Contact
-                        ID:</b>
+                    <b class="text-blue-700 underline decoration-2">PI
+                        Contact:</b>
                     {{ $contract->pi_contact_id }} -
                     {{ $contract->pi_contact->first_name }}
                     {{ $contract->pi_contact->last_name }}
                 </a>
             @else
-                <b>PI Contact ID:</b> None
+                <b>PI Contact:</b> None
             @endif
         </li>
 
@@ -53,14 +53,14 @@
                     hx-get="{{ route('contacts.show', $contract->technical_contact) }}"
                     hx-target="#modal" hx-swap="innerHTML"
                     onclick="toggleView('modal-container')">
-                    <b class="text-blue-700 underline decoration-2">Technical
-                        Contact ID:</b>
+                    <b class="text-blue-700 underline decoration-2">SSH Internal
+                        Contact:</b>
                     {{ $contract->technical_contact_id }} -
                     {{ $contract->technical_contact->first_name }}
                     {{ $contract->technical_contact->last_name }}
                 </a>
             @else
-                <b>Technical Contact ID:</b> None
+                <b>SSH Internal Contact:</b> None
             @endif
         </li>
 
