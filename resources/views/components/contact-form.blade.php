@@ -39,8 +39,9 @@
             </x-form-box>
 
             <x-form-box for="notes"> Notes
+                <span class="text-s italic float-right">Internal use notes about
+                    this contact (will not export to CSV)</span>
                 <x-form-input type="text" name="notes" id="notes"
-                    placeholder="Internal use notes about this contact (will not export to CSV)"
                     value="{{ $contact->notes ?? (old('notes') ?? request()->input('notes')) }}"></x-form-input>
                 @error('notes', 'contact_errors')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
