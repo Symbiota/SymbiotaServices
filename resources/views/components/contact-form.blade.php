@@ -39,12 +39,13 @@
             </x-form-box>
 
             <x-form-box for="notes"> Notes
-                <span class="text-s italic float-right">Internal use notes about
-                    this contact (will not export to CSV)</span>
+                <x-s-label>Internal use notes about
+                    this contact (will not export to CSV)</x-s-label>
                 <x-form-input type="text" name="notes" id="notes"
                     value="{{ $contact->notes ?? (old('notes') ?? request()->input('notes')) }}"></x-form-input>
                 @error('notes', 'contact_errors')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}
+                    </p>
                 @enderror
             </x-form-box>
 
