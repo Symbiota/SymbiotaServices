@@ -11,10 +11,10 @@
                 <x-s-label class="ml-3.5">Value should match
                     &quot;Item Description&quot; in DARBI Item Report, e.g.
                     &quot;EXAC 26Data portal maintenance
-                    services&quot;</x-s-label>
-                @error('name')
-                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
-                @enderror
+                    services&quot;</x-hint>
+                    @error('name')
+                        <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                    @enderror
             </x-form-box>
 
             <x-form-box for="darbi_item_number"> DARBI Item Number*
@@ -36,7 +36,7 @@
             </x-form-box>
 
             <x-form-box for="description"> Description
-                <x-s-label>Optional notes for SSH internal use only</x-s-label>
+                <x-hint>Optional notes for SSH internal use only</x-hint>
                 <textarea
                     class="block min-w-0 w-[98.5%] grow py-1.5 pr-3 pl-1 ml-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500"
                     name="description" id="description">{{ $service->description ?? (old('description') ?? request()->input('description')) }}</textarea>
