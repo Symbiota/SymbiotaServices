@@ -55,9 +55,9 @@
             </x-form-box>
 
             <x-form-box for="address_line_2"> Address Line 2
+                <x-hint>E.g., building, suite, room, etc.</x-hint>
                 <x-form-input type="text" name="address_line_2"
                     id="address_line_2"
-                    placeholder="E.g., building, suite, room, etc."
                     value="{{ $customer->address_line_2 ?? '' }}"></x-form-input>
                 @error('address_line_2')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}
@@ -106,8 +106,8 @@
             </x-form-box>
 
             <x-form-box for="notes"> Notes
+                <x-hint>Extra notes to display in customer request CSV</x-hint>
                 <x-form-input type="text" name="notes" id="notes"
-                    placeholder="Extra notes to display in customer request CSV"
                     value="{{ $customer->notes ?? '' }}"></x-form-input>
                 @error('notes')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}

@@ -84,7 +84,8 @@
             </x-form-box>
 
             <x-form-box for="darbi_special_instructions"> DARBI Special
-                Instructions <x-hint>Corresponds to
+                Instructions
+                <x-hint>Corresponds to
                     KU_Symbiota_Quote_NMNH_20250423c.pdf</x-hint>
                 <x-form-input type="text" name="darbi_special_instructions"
                     id="darbi_special_instructions"

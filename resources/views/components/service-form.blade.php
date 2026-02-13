@@ -8,13 +8,13 @@
             <x-form-box for="name"> Name*
                 <x-form-input type="text" name="name" id="name"
                     value="{{ $service->name ?? (old('name') ?? request()->input('name')) }}"></x-form-input>
-                <x-s-label class="ml-3.5">Value should match
+                <x-hint class="ml-3.5">Value should match
                     &quot;Item Description&quot; in DARBI Item Report, e.g.
                     &quot;EXAC 26Data portal maintenance
                     services&quot;</x-hint>
-                    @error('name')
-                        <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
-                    @enderror
+                @error('name')
+                    <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
+                @enderror
             </x-form-box>
 
             <x-form-box for="darbi_item_number"> DARBI Item Number*
