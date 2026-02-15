@@ -1,13 +1,28 @@
 <x-table-layout heading="Invoices">
     <title>Invoices - SymbiotaServices</title>
 
-    <x-ec-button href="{{ route('invoices.create') }}">Create
-        Invoice</x-ec-button>
+    <div class="flex items-center">
+        <x-ec-button href="{{ route('invoices.create') }}">Create
+            Invoice</x-ec-button>
+
+        <div class="flex items-center ml-auto">
+            <form action="{{ route('invoices.sort') }}" method="GET">
+                @csrf
+                <select
+                    class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
+                    name="sort" id="sort" onchange="this.form.submit()">
+                    <option>Default</option>
+                    <option value="billing_end">Billing End Date</option>
+                    <option value="date_paid">Payment Status</option>
+                </select>
+            </form>
+        </div>
+
+    </div>
 
     <br>
-    <br>
 
-    <div class = "space-y-4">
+    <div class="space-y-4">
         @foreach ($invoices as $invoice)
             <a href="{{ route('invoices.show', $invoice) }}"
                 class="block px-4 py-6 border border-gray-500">

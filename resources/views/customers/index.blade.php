@@ -15,6 +15,7 @@
             <form hx-get="{{ route('customers.search') }}"
                 hx-target="#customer-list-div"
                 action="{{ route('customers.search') }}" method="GET">
+                @csrf
                 <input
                     class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                     type="text" name="search" id="searchbox"

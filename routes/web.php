@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::controller(InvoiceController::class)->group(function () {
         Route::get('/invoices/create/{contract?}/{invoice?}', 'create')->name('invoices.create');
+        Route::get('/invoices/sort', 'sort')->name('invoices.sort');
         Route::get('/invoices', 'index')->name('invoices.index');
         Route::get('/invoices/{invoice}', 'show')->name('invoices.show');
         Route::get('/invoices/{invoice}/edit', 'edit')->name('invoices.edit');

@@ -23,6 +23,17 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function sort(Request $request)
+    {
+        $sort = $request->input('sort');
+        if ($sort == "billing_end") {
+            $invoices = Invoice::orderBy('billing_end', 'desc')->get();
+        } elseif ($sort == "date_paid") {
+            $invoices = Invoice::orderBy('date_paid')->get();
+        }
+        return view('invoices.index', ['invoices' => $invoices]);
+    }
+
     public function create(Contract $contract, Invoice $invoice)
     {
         $contracts = Contract::select('contracts.*')
