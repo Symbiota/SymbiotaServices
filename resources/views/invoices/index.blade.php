@@ -11,7 +11,7 @@
                 <select
                     class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                     name="sort" id="sort" onchange="this.form.submit()">
-                    <option>Default</option>
+                    <option>Sort Invoices</option>
                     <option value="billing_end">Billing End Date</option>
                     <option value="date_paid">Payment Status</option>
                 </select>

@@ -39,6 +39,7 @@ class ServiceController extends Controller
                     'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/', 'unique:services,darbi_item_number'],
                     'price_per_unit' => ['required', 'numeric:strict'],
                     'description' => ['nullable'],
+                    'isRecurring' => ['nullable', 'boolean'],
                 ],
                 [
                     'darbi_item_number.regex' => 'DARBI Item Number should be SYMBI + 5 digits.'
@@ -79,6 +80,7 @@ class ServiceController extends Controller
                     'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/', \Illuminate\Validation\Rule::unique('services')->ignore($service->id)],
                     'price_per_unit' => ['required', 'numeric:strict'],
                     'description' => ['nullable'],
+                    'isRecurring' => ['nullable', 'boolean'],
                 ],
                 [
                     'darbi_item_number.regex' => 'DARBI Item Number should be SYMBI + 5 digits.'

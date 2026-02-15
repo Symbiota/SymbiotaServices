@@ -10,6 +10,7 @@
             <li><b>DARBI Item Number:</b> {{ $service->darbi_item_number }}</li>
             <li><b>Price per Unit:</b> {{ $service->price_per_unit }}</li>
             <li><b>Description:</b> {{ $service->description }}</li>
+            <li><b>Reoccurring:</b> {{ $service->isRecurring ? 'Yes' : 'No' }}</li>
             <x-timestamps :model="$service"></x-timestamps>
         </ul>
 
