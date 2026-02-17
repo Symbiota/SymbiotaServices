@@ -42,7 +42,8 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="recurring"> Does service reoccur?
+            <x-form-box for="recurring"> Is it a recurring service (billed
+                repeatedly)?
                 <input type="hidden" name="isRecurring" value="0">
                 <input type="checkbox" name="isRecurring" id="isRecurring"
                     value="1">

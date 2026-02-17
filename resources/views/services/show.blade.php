@@ -10,7 +10,8 @@
             <li><b>DARBI Item Number:</b> {{ $service->darbi_item_number }}</li>
             <li><b>Price per Unit:</b> {{ $service->price_per_unit }}</li>
             <li><b>Description:</b> {{ $service->description }}</li>
-            <li><b>Reoccurring:</b> {{ $service->isRecurring ? 'Yes' : 'No' }}</li>
+            <li><b>Recurring/Billed Repeatedly:</b>
+                {{ $service->isRecurring ? 'Yes' : 'No' }}</li>
             <x-timestamps :model="$service"></x-timestamps>
         </ul>
 
@@ -66,6 +67,11 @@
                     @isset($historyItem->active_status)
                         <li><b>Status:</b>
                             {{ $historyItem->active_status ? 'Active' : 'Retired' }}
+                        </li>
+                    @endisset
+                    @isset($historyItem->isRecurring)
+                        <li><b>Recurring/Billed Repeatedly:</b>
+                            {{ $historyItem->isRecurring ? 'Yes' : 'No' }}
                         </li>
                     @endisset
                     @if ($loop->index == 0)
