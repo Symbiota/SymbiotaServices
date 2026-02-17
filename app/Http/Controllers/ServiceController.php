@@ -40,6 +40,7 @@ class ServiceController extends Controller
                     'price_per_unit' => ['required', 'numeric:strict'],
                     'description' => ['nullable'],
                     'isRecurring' => ['nullable', 'boolean'],
+                    'recurringInterval' => ['nullable'],
                 ],
                 [
                     'darbi_item_number.regex' => 'DARBI Item Number should be SYMBI + 5 digits.'
@@ -81,6 +82,7 @@ class ServiceController extends Controller
                     'price_per_unit' => ['required', 'numeric:strict'],
                     'description' => ['nullable'],
                     'isRecurring' => ['nullable', 'boolean'],
+                    'recurringInterval' => ['nullable'],
                 ],
                 [
                     'darbi_item_number.regex' => 'DARBI Item Number should be SYMBI + 5 digits.'
