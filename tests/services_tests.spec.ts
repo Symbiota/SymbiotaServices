@@ -10,6 +10,7 @@ test.beforeEach(async ({ page }) => {
   await page.getByLabel('Email').fill(userEmail);
   await page.getByLabel('Password').fill(userPassword);
   await page.getByRole('button', { name: 'Log In' }).click();
+  await expect(page).not.toHaveURL(/\/login$/);
 });
 
 
