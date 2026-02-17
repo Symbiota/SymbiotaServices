@@ -1,8 +1,9 @@
 import {test, expect} from '@playwright/test';
+import 'dotenv/config';
 
 const baseURL = 'http://localhost:8000';
-const userEmail = 'TODO add user email';
-const userPassword = 'TODO add user password';
+const userEmail = process.env.EMAIL_ADDRESS || '';
+const userPassword = process.env.PASSWORD || '';
 
 test.beforeEach(async ({ page }) => {
   await page.goto(`${baseURL}/login`);
