@@ -1,11 +1,13 @@
 import {test, expect} from '@playwright/test';
 
 const baseURL = 'http://localhost:8000';
+const userEmail = 'TODO add user email';
+const userPassword = 'TODO add user password';
 
 test.beforeEach(async ({ page }) => {
   await page.goto(`${baseURL}/login`);
-  await page.getByLabel('Email').fill('mark.aaron.fisher@gmail.com');
-  await page.getByLabel('Password').fill('password');
+  await page.getByLabel('Email').fill(userEmail);
+  await page.getByLabel('Password').fill(userPassword);
   await page.getByRole('button', { name: 'Log In' }).click();
 });
 
