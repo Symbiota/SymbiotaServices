@@ -87,7 +87,7 @@
                     @enderror
                 </div>
                 @foreach ($activeServices as $service)
-                    <div class="p-4 border border-gray-500">
+                    <div class="ml-3 p-4 border border-gray-500">
                         <input type="checkbox"
                             name="services[{{ $service->id }}]" id="service"
                             value="{{ $service->id }}"
@@ -136,7 +136,7 @@
                     class="{{ isset($invoice) && $invoice->services && $invoice->services->contains('active_status', false) ? '' : 'hidden' }}">
                     <br>
                     @foreach ($inactiveServices as $service)
-                        <div class="p-4 border border-gray-500">
+                        <div class="ml-3 p-4 border border-gray-500">
                             <input type="checkbox"
                                 name="services[{{ $service->id }}]"
                                 id="service" value="{{ $service->id }}"
