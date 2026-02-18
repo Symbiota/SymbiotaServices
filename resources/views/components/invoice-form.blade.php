@@ -127,7 +127,7 @@
                 @endforeach
 
                 <br>
-                <x-ec-button type="button" class="!ml-0"
+                <x-ec-button type="button" class="ml-3"
                     onclick="toggleView('retired_services')">Retired
                     Services</x-ec-button>
                 <br>
