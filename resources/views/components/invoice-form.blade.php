@@ -88,8 +88,7 @@
                 </div>
                 @foreach ($activeServices as $service)
                     <div
-                        class="ml-3 p-4 border border-gray-500 grid
-                        grid-cols-4">
+                        class="ml-3 p-4 border border-gray-500 grid grid-cols-4 gap-2">
                         <div class="col-span-2">
                             <input type="checkbox"
                                 name="services[{{ $service->id }}]"
@@ -100,11 +99,15 @@
                             @else {{ old('services.' . $service->id) ? 'checked' : '' }} @endif>
                             {{ $service->name }}
                         </div>
-                        <span>e.g., Portal name</span>
-                        <span>e.g., other notes (e.g., recurring, discount
-                            applied, etc.)</span>
+                        @if ($loop->index == 0)
+                            <span>Line Ref 1:<br>e.g., Portal name</span>
+                            <span>Line Ref 2:<br>e.g., other notes (e.g.,
+                                recurring, discount applied, etc.)</span>
+                        @else
+                            <div class="col-span-2"></div>
+                        @endif
                         <input type="number"
-                            class="m-1 ml-4 mt-2 p-1 border border-gray-500"
+                            class="m-1 mt-2 p-1 border border-gray-500"
                             @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
                             @else value="{{ old('qty.' . $service->id, 1) }}" @endif
                             step="any" min="0"
@@ -112,7 +115,7 @@
                             id="qty_{{ $service->id }}"
                             service_price="{{ $service->price_per_unit }}"
                             onchange="select_checkbox({{ $service->id }}); calc_each_service_bill(); calc_total_amount_billed();">
-                        <div class=>
+                        <div>
                             $<input type="text"
                                 class="m-1 mt-2 p-1 border border-gray-500"
                                 id="amount_owed_{{ $service->id }}"
