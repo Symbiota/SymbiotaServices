@@ -34,7 +34,7 @@
             </x-form-box>
 
             @fragment('invoice-contact-input')
-                <datalist id="contact-datalist" hx-swap-oob="true">
+                <datalist id="contact-datalist">
                     @foreach ($contacts as $contact)
                         <option
                             value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
@@ -45,7 +45,7 @@
                 </datalist>
             @endfragment
 
-            <x-form-box for="financial_contact_id"> Financial Contact ID*
+            <x-form-box for="financial_contact_id"> Financial Contact*
                 <x-form-input list="contact-datalist"
                     name="financial_contact_id" id="financial_contact_id"
                     value="{{ $invoice->financial_contact->full_name ?? ($contract->current_financial_contact->full_name ?? old('financial_contact_id')) }}">
