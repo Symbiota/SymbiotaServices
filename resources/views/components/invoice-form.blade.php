@@ -88,7 +88,7 @@
                 </div>
                 @foreach ($activeServices as $service)
                     <div
-                        class="ml-3 p-4 border border-gray-500 grid grid-cols-4 gap-2">
+                        class="ml-3 p-4 border border-gray-500 grid grid-cols-4 gap-x-2 items-center">
                         <div class="col-span-2">
                             <input type="checkbox"
                                 name="services[{{ $service->id }}]"
@@ -107,7 +107,7 @@
                             <div class="col-span-2"></div>
                         @endif
                         <input type="number"
-                            class="m-1 mt-2 p-1 border border-gray-500"
+                            class="m-1 mt-2 p-1 border border-gray-500 ml-4"
                             @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
                             @else value="{{ old('qty.' . $service->id, 1) }}" @endif
                             step="any" min="0"
@@ -115,9 +115,9 @@
                             id="qty_{{ $service->id }}"
                             service_price="{{ $service->price_per_unit }}"
                             onchange="select_checkbox({{ $service->id }}); calc_each_service_bill(); calc_total_amount_billed();">
-                        <div>
+                        <div class="flex items-center">
                             $<input type="text"
-                                class="m-1 mt-2 p-1 border border-gray-500"
+                                class="m-1 mt-2 p-1 border border-gray-500 w-full"
                                 id="amount_owed_{{ $service->id }}"
                                 name="amount_owed[{{ $service->id }}]"
                                 value="{{ $service->price_per_unit }}"
