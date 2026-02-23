@@ -1,7 +1,7 @@
 <x-table-layout heading="Create Invoice">
     <title>Create Invoice - SymbiotaServices</title>
 
-    <x-ec-button class="float-right !-ml-32" href="{{ route('contacts.create') }}"
+    <x-ec-button class="float-right !-mt-20" href="{{ route('contacts.create') }}"
         hx-get="{{ route('contacts.create') }}" hx-target="#modal"
         hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
         Contact</x-ec-button>
