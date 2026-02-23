@@ -149,6 +149,9 @@
                 <div id="retired_services"
                     class="{{ isset($invoice) && $invoice->services && $invoice->services->contains('active_status', false) ? '' : 'hidden' }}">
                     <br>
+                    @if (count($inactiveServices) == 0)
+                        <p class="ml-3.5">No retired services.</p>
+                    @endif
                     @foreach ($inactiveServices as $service)
                         <div
                             class="ml-3 p-4 border border-gray-500 grid grid-cols-4 gap-x-2 items-center">
