@@ -100,9 +100,11 @@
                             {{ $service->name }}
                         </div>
                         @if ($loop->index == 0)
-                            <span>Line Ref 1:<br>e.g., Portal name</span>
-                            <span>Line Ref 2:<br>e.g., other notes (e.g.,
-                                recurring, discount applied, etc.)</span>
+                            <span class="ml-1.5">Line Ref 1:<br>e.g., Portal
+                                name</span>
+                            <span class="ml-1.5">Line Ref 2:<br>e.g., other
+                                notes (e.g., recurring, discount applied,
+                                etc.)</span>
                         @else
                             <div class="col-span-2"></div>
                         @endif
