@@ -89,7 +89,8 @@
                 @foreach ($activeServices as $service)
                     <div
                         class="ml-3 p-4 border border-gray-500 grid grid-cols-4 gap-x-2 items-center">
-                        <div class="col-span-2">
+                        <div
+                            class="{{ $loop->index == 0 ? 'col-span-2' : 'col-span-4 mb-2' }}">
                             <input type="checkbox"
                                 name="services[{{ $service->id }}]"
                                 id="service" value="{{ $service->id }}"
@@ -97,7 +98,7 @@
                                 onchange="calc_total_amount_billed();"
                                 @if (!empty($invoice->id)) {{ $invoice->services->find($service) ? 'checked' : '' }}
                             @else {{ old('services.' . $service->id) ? 'checked' : '' }} @endif>
-                            {{ $service->name }}
+                            <span class="ml-1">{{ $service->name }}</span>
                         </div>
                         @if ($loop->index == 0)
                             <span class="ml-1.5">Line Ref 1:<br>e.g., Portal
@@ -105,8 +106,6 @@
                             <span class="ml-1.5">Line Ref 2:<br>e.g., other
                                 notes (e.g., recurring, discount applied,
                                 etc.)</span>
-                        @else
-                            <div class="col-span-2"></div>
                         @endif
                         <input type="number"
                             class="m-1 mt-2 p-1 border border-gray-500 ml-4"
