@@ -19,7 +19,6 @@ class Service extends Model
         'darbi_item_number',
         'active_status',
         'isRecurring',
-        'recurringInterval'
     ];
 
     protected $attributes = [
