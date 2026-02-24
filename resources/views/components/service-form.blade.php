@@ -42,20 +42,11 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="isRecurring"> Is it a recurring service (billed
+            <x-form-box for="recurring"> Is it a recurring service (billed
                 repeatedly)?
                 <input type="hidden" name="isRecurring" value="0">
-                <input class="ml-1" type="checkbox" name="isRecurring"
-                    id="isRecurring" value="1"
-                    @checked(
-                        $service->isRecurring ??
-                            (request()->input('isRecurring') ?? old('isRecurring')))>
-            </x-form-box>
-
-            <x-form-box for="recurringInterval" class="!-mt-6"> If so, how
-                often?
-                <x-form-input type="text" name="recurringInterval"
-                    id="recurringInterval"></x-form-input>
+                <input type="checkbox" name="isRecurring" id="isRecurring"
+                    value="1">
             </x-form-box>
 
         </div>

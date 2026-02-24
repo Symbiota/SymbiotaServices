@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
         Contract::factory(15)->create();
         $invoices = Invoice::factory(20)->create();
 
+        $count = 1;
         foreach ($contacts as $contact) {
             $contact->update(['full_name' => $contact->last_name . ', ' . $contact->first_name . ' - ' . $contact->id]);
         }

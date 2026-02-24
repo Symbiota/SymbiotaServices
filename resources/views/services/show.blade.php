@@ -12,11 +12,6 @@
             <li><b>Description:</b> {{ $service->description }}</li>
             <li><b>Recurring/Billed Repeatedly:</b>
                 {{ $service->isRecurring ? 'Yes' : 'No' }}</li>
-            @if ($service->isRecurring)
-                <li class="ml-4"><b>Recurring Interval:</b>
-                    {{ $service->recurringInterval }}
-                </li>
-            @endif
             <x-timestamps :model="$service"></x-timestamps>
         </ul>
 
@@ -77,11 +72,6 @@
                     @isset($historyItem->isRecurring)
                         <li><b>Recurring/Billed Repeatedly:</b>
                             {{ $historyItem->isRecurring ? 'Yes' : 'No' }}
-                        </li>
-                    @endisset
-                    @isset($historyItem->recurringInterval)
-                        <li><b>Recurring Interval:</b>
-                            {{ $historyItem->recurringInterval }}
                         </li>
                     @endisset
                     @if ($loop->index == 0)

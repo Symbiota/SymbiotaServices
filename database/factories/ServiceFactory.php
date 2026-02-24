@@ -30,12 +30,6 @@ class ServiceFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (Service $service) {
-
-            if ($service->isRecurring) {
-                $service['recurringInterval'] = 'every ' . $this->faker->numberBetween(1, 100) . ' days';
-                $service->save();
-            }
-
             $history = $service->getAttributes();
             unset($history['id']);
             $history += ['service_id' => $service->id];
