@@ -10,8 +10,11 @@
                 @csrf
                 <select
                     class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
-                    name="sort" id="sort" onchange="this.form.submit()">
-                    <option>Sort Invoices</option>
+                    name="sort" id="sort"
+                    hx-get="{{ route('invoices.sort') }}"
+                    hx-target="#invoice-list-div" hx-trigger="change"
+                    onchange="if(!window.htmx) this.form.submit();">
+                    <option>Recent</option>
                     <option value="billing_end">Billing End Date</option>
                     <option value="date_paid">Payment Status</option>
                 </select>
@@ -22,7 +25,8 @@
 
     <br>
 
-    <div class="space-y-4">
+    @fragment('invoice-list')
+    <div class="space-y-4" id="invoice-list-div">
         @foreach ($invoices as $invoice)
             <a href="{{ route('invoices.show', $invoice) }}"
                 class="block px-4 py-6 border border-gray-500">
@@ -62,5 +66,6 @@
             </a>
         @endforeach
     </div>
+    @endfragment('invoice-list')
 
 </x-table-layout>

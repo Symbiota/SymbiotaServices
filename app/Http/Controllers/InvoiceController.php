@@ -13,7 +13,7 @@ class InvoiceController extends Controller
 {
     public function index()
     {
-        return view('invoices.index', ['invoices' => Invoice::all()]);
+        return view('invoices.index', ['invoices' => Invoice::orderBy('id', 'desc')->get()]);
     }
 
     public function show(Invoice $invoice)
@@ -30,8 +30,11 @@ class InvoiceController extends Controller
             $invoices = Invoice::orderBy('billing_end', 'desc')->get();
         } elseif ($sort == "date_paid") {
             $invoices = Invoice::orderBy('date_paid')->get();
+        } else {
+            $invoices = Invoice::orderBy('id', 'desc')->get();
         }
-        return view('invoices.index', ['invoices' => $invoices]);
+        return view('invoices.index', ['invoices' => $invoices])
+            ->fragmentIf(request()->hasHeader('HX-Request'), 'invoice-list');;
     }
 
     public function create(Contract $contract, Invoice $invoice)
