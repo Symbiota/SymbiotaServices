@@ -12,7 +12,7 @@ class ContractController extends Controller
 {
     public function index()
     {
-        return view('contracts.index', ['contracts' => Contract::all()]);
+        return view('contracts.index', ['contracts' => Contract::orderby('id', 'desc')->get()]);
     }
 
     public function show(Contract $contract)
