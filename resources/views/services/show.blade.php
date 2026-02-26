@@ -24,7 +24,7 @@
                         Service</x-ec-button>
 
                     @if ($errors->any())
-                        <p class="text-red-500 text-sm ml-3">Error Editing Service
+                        <p class="text-red-500 text-sm mr-3">Error Editing Service
                         </p>
                     @endif
                 </div>
