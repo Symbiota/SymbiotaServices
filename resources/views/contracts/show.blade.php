@@ -87,6 +87,21 @@
             </form>
         </div>
 
+        <form method="POST"
+            action="{{ route('contracts.terminate', $contract) }}">
+            @csrf
+            @method('PATCH')
+            @if (!$contract->isTerminated)
+                <x-ec-button
+                    onclick="return confirm('Terminate this contract?');">Terminate
+                    Contract</x-ec-button>
+            @else
+                <x-ec-button
+                    onclick="return confirm('Undo Termination of this contract?');">
+                    Undo Termination</x-ec-button>
+            @endif
+        </form>
+
         <x-ec-button
             href="{{ route('customers.exportCSV', ['customer' => $contract->customer, 'contract' => $contract]) }}">Export
             Customer CSV</x-ec-button>

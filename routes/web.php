@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/contracts/store', 'store')->name('contracts.store');
         Route::delete('/contracts/{contract}/delete', 'destroy')->name('contracts.destroy');
         Route::patch('/contracts/{contract}/update', 'update')->name('contracts.update');
+        Route::patch('/contracts/{contract}/terminate', 'terminate')->name('contracts.terminate');
     });
 
     Route::controller(CustomerController::class)->group(function () {

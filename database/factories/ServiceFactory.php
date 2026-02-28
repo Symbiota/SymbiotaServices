@@ -23,6 +23,7 @@ class ServiceFactory extends Factory
             'darbi_item_number' => $this->faker->numerify('SYMBI#####'),
             'price_per_unit' => $this->faker->numberBetween(1, 9999),
             'description' => $this->faker->word(),
+            'active_status' => $this->faker->boolean(0.9),
             'isRecurring' => $this->faker->boolean(),
         ];
     } // to use: php artisan tinker, App\Models\Service::factory(number)->create()

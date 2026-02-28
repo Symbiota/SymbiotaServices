@@ -140,4 +140,10 @@ class ContractController extends Controller
         $contract->delete();
         return redirect()->route('contracts.index');
     }
+
+    public function terminate(Contract $contract)
+    {
+        $contract->update(['isTerminated' => !$contract->isTerminated]);
+        return redirect()->route('contracts.show', $contract);
+    }
 }
