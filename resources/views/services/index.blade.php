@@ -32,8 +32,7 @@
             </div>
 
             <br>
-            <x-ec-button class="!ml-0"
-                onclick="toggleView('retired_services')">Retired
+            <x-ec-button onclick="toggleView('retired_services')">Retired
                 Services</x-ec-button>
             <br><br>
 

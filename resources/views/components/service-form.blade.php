@@ -7,8 +7,11 @@
 
             <x-form-box for="name"> Name*
                 <x-form-input type="text" name="name" id="name"
-                    value="{{ $service->name ?? (old('name') ?? request()->input('name')) }}"
-                    placeholder="Value should match &quot;Item Description&quot; in DARBI Item Report, e.g. &quot;EXAC 26Data portal maintenance services&quot;"></x-form-input>
+                    value="{{ $service->name ?? (old('name') ?? request()->input('name')) }}"></x-form-input>
+                <x-hint class="ml-3.5">Value should match
+                    &quot;Item Description&quot; in DARBI Item Report, e.g.
+                    &quot;EXAC 26Data portal maintenance
+                    services&quot;</x-hint>
                 @error('name')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -33,10 +36,10 @@
             </x-form-box>
 
             <x-form-box for="description"> Description
+                <x-hint>Optional notes for SSH internal use only</x-hint>
                 <textarea
-                    class="mt-2 block min-w-0 w-[98.5%] grow py-1.5 pr-3 pl-1 ml-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500"
-                    name="description" id="description"
-                    placeholder="Optional notes for SSH internal use only">{{ $service->description ?? (old('description') ?? request()->input('description')) }}</textarea>
+                    class="block min-w-0 w-[98.5%] grow py-1.5 pr-3 pl-1 ml-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500"
+                    name="description" id="description">{{ $service->description ?? (old('description') ?? request()->input('description')) }}</textarea>
                 @error('description')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror

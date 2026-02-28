@@ -122,7 +122,7 @@ class ServiceController extends Controller
 
         $history = $service->getChanges();
         unset($history['id']);
-        $history += ['service_id' => $service->id];
+        $history += ['service_id' => $service->id, 'modified_by' => auth()->user()->id];
         DB::table('services_history')->insert($history);
 
         return redirect()->route('services.index');
