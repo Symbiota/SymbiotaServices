@@ -28,7 +28,7 @@ class ContractFactory extends Factory
             'darbi_header_ref_2' => $this->faker->word(),
             'darbi_special_instructions' => $this->faker->text(),
             'notes' => $this->faker->text(),
-            'isTerminated' => $this->faker->boolean(0.1),
+            'isTerminated' => $this->faker->boolean(10),
         ];
     }
 }

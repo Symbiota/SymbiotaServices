@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'password' => 'admin',
         ]);
 
-        $services = Service::factory(6)->create();
+        $services = Service::factory(8)->create();
         $contacts = Contact::factory(10)->create();
         Customer::factory(6)->create();
         Contract::factory(15)->create();
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $invoices->each(function ($invoice) use ($services) {
-            $selectedServices = $services->random(rand(1, 6));
+            $selectedServices = $services->random(rand(1, 8));
             $amountBilled = 0;
 
             foreach ($selectedServices as $service) {

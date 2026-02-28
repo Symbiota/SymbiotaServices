@@ -28,8 +28,8 @@ class InvoiceFactory extends Factory
             'amount_billed' => 0,
             'date_invoiced' => $this->faker->optional(0.8)->dateTime(),
             'date_paid' => $this->faker->optional(0.8)->dateTime(),
-            'darbi_header_ref_1' => $this->faker->boolean(0.75) ? $contract->darbi_header_ref_1 : $this->faker->word(),
-            'darbi_header_ref_2' => $this->faker->boolean(0.75) ? $contract->darbi_header_ref_2 : $this->faker->word(),
+            'darbi_header_ref_1' => $this->faker->boolean(75) ? $contract->darbi_header_ref_1 : $this->faker->word(),
+            'darbi_header_ref_2' => $this->faker->boolean(75) ? $contract->darbi_header_ref_2 : $this->faker->word(),
             'notes' => $this->faker->text(),
         ];
     }
