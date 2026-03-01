@@ -1,8 +1,22 @@
-<x-table-layout heading="{{ $service->name }}">
+<x-table-layout>
+    <x-slot:heading>
+        {{ $service->name }}
+        @if (!$service->active_status)
+            <span class="text-red-500 float-right mr-4">(RETIRED)</span>
+        @endif
+    </x-slot:heading>
+
     @fragment('show-service')
         <title>Service: {{ $service->name }} - SymbiotaServices</title>
 
         <x-modal-header :isHTMX="$isHTMX">{{ $service->name }}
+            <x-slot:rightCondition>
+                @if (!$service->active_status)
+                    <h1
+                        class="text-3xl font-bold tracking-tight text-red-500 ml-auto">
+                        (RETIRED)</span>
+                @endif
+            </x-slot:rightCondition>
         </x-modal-header>
         <ul>
             <li><b>ID:</b> {{ $service->id }}</li>

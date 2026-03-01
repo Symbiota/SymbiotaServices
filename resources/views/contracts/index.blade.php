@@ -12,6 +12,11 @@
             <a href="{{ route('contracts.show', $contract) }}"
                 class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                 <ul>
+                    @if ($contract->isTerminated)
+                        <span class="ml-auto mb-auto text-red-500">
+                            <b>(Terminated)</b>
+                        </span>
+                    @endif
                     <li><b>Contract ID:</b> {{ $contract->id }}</li>
                     <li><b>Customer:</b> {{ $contract->customer_id }} -
                         {{ $contract->customer->name }}</li>

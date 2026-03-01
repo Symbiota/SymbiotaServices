@@ -1,4 +1,12 @@
-<x-table-layout heading="Contract: {{ $contract->id }}">
+<x-table-layout>
+
+    <x-slot:heading>
+        Contract: {{ $contract->id }}
+        @if ($contract->isTerminated)
+            <span class="text-red-500 float-right">(TERMINATED)</span>
+        @endif
+    </x-slot:heading>
+
     <title>Contract: {{ $contract->id }} - SymbiotaServices</title>
 
     <ul>

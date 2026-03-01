@@ -67,8 +67,10 @@
             hx-get="{{ route('services.show', $service) }}" hx-target="#modal"
             hx-swap="innerHTML" onclick="toggleView('modal-container')">
             <ul class="block px-4 py-2 border border-gray-500">
-                @if ($service->active_status == 0)
-                    <li><b>(RETIRED)</b></li>
+                @if (!$service->active_status)
+                    <li class="float-right text-red-500">
+                        <b>(RETIRED)</b>
+                    </li>
                 @endif
                 <li><b>Name:</b> {{ $service->name }}</li>
                 <li><b>Service ID:</b> {{ $service->id }}</li>
