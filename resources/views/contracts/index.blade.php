@@ -13,9 +13,9 @@
                 class="px-4 py-6 border border-gray-500 flex justify-between items-center">
                 <ul>
                     @if ($contract->isTerminated)
-                        <span class="ml-auto mb-auto text-red-500">
+                        <li class="text-red-500">
                             <b>(Terminated)</b>
-                        </span>
+                        </li>
                     @endif
                     <li><b>Contract ID:</b> {{ $contract->id }}</li>
                     <li><b>Customer:</b> {{ $contract->customer_id }} -

@@ -162,7 +162,8 @@
                                     onchange="calc_total_amount_billed();"
                                     @if (!empty($invoice->id)) {{ $invoice->services->find($service) ? 'checked' : '' }}
                             @else {{ old('services.' . $service->id) ? 'checked' : '' }} @endif>
-                                {{ $service->name }}
+                                <span
+                                    class="ml-1">{{ $service->name }}</span>
                             </div>
                             @if ($loop->index == 0)
                                 <span class="ml-1.5">Line Ref 1:<br>e.g., Portal
