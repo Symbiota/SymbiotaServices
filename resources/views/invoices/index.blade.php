@@ -17,6 +17,8 @@
                         onchange="if(!window.htmx) this.form.submit();">
                         <option>Recent</option>
                         <option value="billing_end">Billing End Date</option>
+                        <option value="60_days">Billing Date ends
+                            within next 60 days</option>
                         <option value="date_paid">Payment Status</option>
                     </select>
                 </label>

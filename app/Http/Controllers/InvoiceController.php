@@ -30,6 +30,8 @@ class InvoiceController extends Controller
             $invoices = Invoice::orderBy('billing_end', 'desc')->get();
         } elseif ($sort == "date_paid") {
             $invoices = Invoice::orderBy('date_paid')->get();
+        } elseif ($sort == "60_days") {
+            $invoices = Invoice::where('billing_end', '>=', today()->subDays(1))->where('billing_end', '<=', today()->addDays(60))->orderBy('billing_end', 'asc')->get();
         } else {
             $invoices = Invoice::orderBy('id', 'desc')->get();
         }
