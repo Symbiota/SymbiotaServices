@@ -4,8 +4,8 @@
             <h1 class="text-3xl font-bold tracking-tight text-gray-900">
                 {{ $slot }}
             </h1>
-            @if (isset($rightCondition))
-                {{ $rightCondition }}
+            @if (isset($showAlteredStatus))
+                {{ $showAlteredStatus }}
             @endif
             @if ($errors->any())
                 <p class="text-red-500 text-base font-normal ml-auto mr-5">Error

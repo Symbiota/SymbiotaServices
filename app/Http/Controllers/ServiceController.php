@@ -116,7 +116,7 @@ class ServiceController extends Controller
         }
     }
 
-    public function retire(Service $service)
+    public function toggleRetire(Service $service)
     {
         $service->update(['active_status' => !$service->active_status]);
 

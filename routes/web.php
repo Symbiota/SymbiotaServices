@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/services/{service}', 'show')->name('services.show');
         Route::patch('/services/{service}/update', 'update')->name('services.update');
         Route::post('/services/store', 'store')->name('services.store');
-        Route::patch('/services/{service}/retire', 'retire')->name('services.retire');
+        Route::patch('/services/{service}/toggleRetire', 'toggleRetire')->name('services.toggleRetire');
     });
 
     Route::controller(ContractController::class)->group(function () {
@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/contracts/store', 'store')->name('contracts.store');
         Route::delete('/contracts/{contract}/delete', 'destroy')->name('contracts.destroy');
         Route::patch('/contracts/{contract}/update', 'update')->name('contracts.update');
-        Route::patch('/contracts/{contract}/terminate', 'terminate')->name('contracts.terminate');
+        Route::patch('/contracts/{contract}/toggleTerminate', 'toggleTerminate')->name('contracts.toggleTerminate');
     });
 
     Route::controller(CustomerController::class)->group(function () {

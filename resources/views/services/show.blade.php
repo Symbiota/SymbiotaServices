@@ -10,13 +10,13 @@
         <title>Service: {{ $service->name }} - SymbiotaServices</title>
 
         <x-modal-header :isHTMX="$isHTMX">{{ $service->name }}
-            <x-slot:rightCondition>
+            <x-slot:showAlteredStatus>
                 @if (!$service->active_status)
                     <h1
                         class="text-3xl font-bold tracking-tight text-red-500 ml-auto">
                         (RETIRED)</span>
                 @endif
-            </x-slot:rightCondition>
+            </x-slot:showAlteredStatus>
         </x-modal-header>
         <ul>
             <li><b>ID:</b> {{ $service->id }}</li>
@@ -46,7 +46,7 @@
                 </div>
 
                 <form method="POST"
-                    action="{{ route('services.retire', $service) }}">
+                    action="{{ route('services.toggleRetire', $service) }}">
                     @csrf
                     @method('PATCH')
                     @if ($service->active_status)

@@ -96,7 +96,7 @@
         </div>
 
         <form method="POST"
-            action="{{ route('contracts.terminate', $contract) }}">
+            action="{{ route('contracts.toggleTerminate', $contract) }}">
             @csrf
             @method('PATCH')
             @if (!$contract->isTerminated)

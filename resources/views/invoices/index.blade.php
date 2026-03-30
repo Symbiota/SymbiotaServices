@@ -15,7 +15,7 @@
                         hx-get="{{ route('invoices.sort') }}"
                         hx-target="#invoice-list-div" hx-trigger="change"
                         onchange="if(!window.htmx) this.form.submit();">
-                        <option>Recent</option>
+                        <option>Date Created</option>
                         <option value="billing_end">Billing End Date</option>
                         <option value="60_days">Billing Date ends
                             within next 60 days</option>
