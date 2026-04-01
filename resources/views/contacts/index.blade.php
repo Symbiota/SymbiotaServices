@@ -38,7 +38,7 @@
     <br>
 
     @fragment('contact-list')
-        <div class="space-y-4" id="contact-list-div" hx-swap-oob="true">
+        <div class="space-y-4" id="contact-list-div">
             @if (count($contacts) == 0)
                 <div class="px-4 text-center text-2xl text-gray-700">
                     <p>No contacts found.</p>

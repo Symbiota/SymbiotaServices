@@ -108,7 +108,10 @@ class CustomerController extends Controller
     {
         $customer->delete();
         $customers = Customer::all();
-        return view('customers.index', compact('customers'))->fragment('customer-list');
+        return view('customers.index', [
+            'customers' => $customers,
+            'allCustomersList' => $customers
+        ])->fragmentIf(request()->hasHeader('HX-Request'), 'customer-list');
     }
 
     public function exportCSV(Customer $customer, Contract $contract)

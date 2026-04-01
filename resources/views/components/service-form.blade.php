@@ -45,6 +45,16 @@
                 @enderror
             </x-form-box>
 
+            <x-form-box for="isRecurring"> Is it a recurring service (billed
+                repeatedly)?
+                <input type="hidden" name="isRecurring" value="0">
+                <input class="ml-1" type="checkbox" name="isRecurring"
+                    id="isRecurring" value="1"
+                    @checked(
+                        $service->isRecurring ??
+                            (request()->input('isRecurring') ?? old('isRecurring')))>
+            </x-form-box>
+
         </div>
     </div>
 

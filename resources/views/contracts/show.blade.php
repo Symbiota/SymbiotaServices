@@ -1,4 +1,12 @@
-<x-table-layout heading="Contract: {{ $contract->id }}">
+<x-table-layout>
+
+    <x-slot:heading>
+        Contract: {{ $contract->id }}
+        @if ($contract->isTerminated)
+            <span class="text-red-500 float-right">(TERMINATED)</span>
+        @endif
+    </x-slot:heading>
+
     <title>Contract: {{ $contract->id }} - SymbiotaServices</title>
 
     <ul>
@@ -86,6 +94,21 @@
                     Contract</x-ec-button>
             </form>
         </div>
+
+        <form method="POST"
+            action="{{ route('contracts.toggleTerminate', $contract) }}">
+            @csrf
+            @method('PATCH')
+            @if (!$contract->isTerminated)
+                <x-ec-button
+                    onclick="return confirm('Terminate this contract?');">Terminate
+                    Contract</x-ec-button>
+            @else
+                <x-ec-button
+                    onclick="return confirm('Undo Termination of this contract?');">
+                    Undo Termination</x-ec-button>
+            @endif
+        </form>
 
         <x-ec-button
             href="{{ route('customers.exportCSV', ['customer' => $contract->customer, 'contract' => $contract]) }}">Export

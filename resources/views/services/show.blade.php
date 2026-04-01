@@ -1,8 +1,22 @@
-<x-table-layout heading="{{ $service->name }}">
+<x-table-layout>
+    <x-slot:heading>
+        {{ $service->name }}
+        @if (!$service->active_status)
+            <span class="text-red-500 float-right mr-4">(RETIRED)</span>
+        @endif
+    </x-slot:heading>
+
     @fragment('show-service')
         <title>Service: {{ $service->name }} - SymbiotaServices</title>
 
         <x-modal-header :isHTMX="$isHTMX">{{ $service->name }}
+            <x-slot:showAlteredStatus>
+                @if (!$service->active_status)
+                    <h1
+                        class="text-3xl font-bold tracking-tight text-red-500 ml-auto">
+                        (RETIRED)</span>
+                @endif
+            </x-slot:showAlteredStatus>
         </x-modal-header>
         <ul>
             <li><b>ID:</b> {{ $service->id }}</li>
@@ -10,6 +24,8 @@
             <li><b>DARBI Item Number:</b> {{ $service->darbi_item_number }}</li>
             <li><b>Price per Unit:</b> {{ $service->price_per_unit }}</li>
             <li><b>Description:</b> {{ $service->description }}</li>
+            <li><b>Recurring/Billed Repeatedly:</b>
+                {{ $service->isRecurring ? 'Yes' : 'No' }}</li>
             <x-timestamps :model="$service"></x-timestamps>
         </ul>
 
@@ -30,7 +46,7 @@
                 </div>
 
                 <form method="POST"
-                    action="{{ route('services.retire', $service) }}">
+                    action="{{ route('services.toggleRetire', $service) }}">
                     @csrf
                     @method('PATCH')
                     @if ($service->active_status)
@@ -72,6 +88,11 @@
                     @isset($historyItem->active_status)
                         <li><b>Status:</b>
                             {{ $historyItem->active_status ? 'Active' : 'Retired' }}
+                        </li>
+                    @endisset
+                    @isset($historyItem->isRecurring)
+                        <li><b>Recurring/Billed Repeatedly:</b>
+                            {{ $historyItem->isRecurring ? 'Yes' : 'No' }}
                         </li>
                     @endisset
                     @if ($loop->index == 0)

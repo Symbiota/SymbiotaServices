@@ -18,6 +18,7 @@ class Service extends Model
         'price_per_unit',
         'darbi_item_number',
         'active_status',
+        'isRecurring',
     ];
 
     protected $attributes = [
