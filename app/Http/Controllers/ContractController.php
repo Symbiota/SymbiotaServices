@@ -12,7 +12,7 @@ class ContractController extends Controller
 {
     public function index()
     {
-        return view('contracts.index', ['contracts' => Contract::all()]);
+        return view('contracts.index', ['contracts' => Contract::orderby('id', 'desc')->get()]);
     }
 
     public function show(Contract $contract)
@@ -139,5 +139,11 @@ class ContractController extends Controller
     {
         $contract->delete();
         return redirect()->route('contracts.index');
+    }
+
+    public function toggleTerminate(Contract $contract)
+    {
+        $contract->update(['isTerminated' => !$contract->isTerminated]);
+        return redirect()->route('contracts.show', $contract);
     }
 }

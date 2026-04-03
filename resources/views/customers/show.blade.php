@@ -41,11 +41,15 @@
         @foreach ($customer->contracts as $contract)
             <a href="{{ route('contracts.show', $contract) }}"
                 class="block px-4 py-2 border border-gray-500">
+                @if ($contract->isTerminated)
+                    <p class="float-right text-red-500">
+                        <b>(TERMINATED)</b>
+                    </p>
+                @endif
                 <div>
                     <b>Contract ID:</b> {{ $contract->id }}
-                    <b>Customer ID:</b> {{ $contract->customer_id }}
-                    <b>Original Contact ID:</b>
-                    {{ $contract->original_contact_id }}
+                    <b>Original Contact:</b>
+                    {{ $contract->original_contact->full_name }}
                     <br>
                     <b>Header Ref 1:</b>
                     {{ $contract->darbi_header_ref_1 }}

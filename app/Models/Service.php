@@ -18,6 +18,7 @@ class Service extends Model
         'price_per_unit',
         'darbi_item_number',
         'active_status',
+        'isRecurring',
     ];
 
     protected $attributes = [
@@ -28,5 +29,11 @@ class Service extends Model
     public function invoices()
     {
         return $this->belongsToMany(Invoice::class)->withPivot('qty', 'amount_owed', 'line_ref_1', 'line_ref_2');
+    }
+
+    public function history()
+    {
+        $history = DB::table('services_history')->where('service_id', $this->id)->get();
+        return $history;
     }
 }

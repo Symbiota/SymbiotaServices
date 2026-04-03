@@ -22,6 +22,7 @@ class Contract extends Model
         'darbi_header_ref_2',
         'darbi_special_instructions',
         'notes',
+        'isTerminated',
     ];
 
     // A contract belongs to a customer

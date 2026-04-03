@@ -8,7 +8,7 @@
                     Contract ID:</b> {{ $invoice->contract_id }}</a></li>
         <li><a
                 href="{{ route('customers.show', $invoice->contract->customer) }}"><b
-                    class="text-blue-700 underline decoration-2">Customer ID:</b>
+                    class="text-blue-700 underline decoration-2">Customer:</b>
                 {{ $invoice->contract->customer->id }} -
                 {{ $invoice->contract->customer->name }}</a></li>
         <li><a href="{{ route('contacts.show', $invoice->financial_contact) }}"
@@ -16,8 +16,7 @@
                 hx-target="#modal" hx-swap="innerHTML"
                 onclick="toggleView('modal-container')">
                 <b class="text-blue-700 underline decoration-2">Financial
-                    Contact
-                    ID:</b>
+                    Contact:</b>
                 {{ $invoice->financial_contact_id }} -
                 {{ $invoice->financial_contact->first_name }}
                 {{ $invoice->financial_contact->last_name }}</a>
@@ -68,8 +67,10 @@
             hx-get="{{ route('services.show', $service) }}" hx-target="#modal"
             hx-swap="innerHTML" onclick="toggleView('modal-container')">
             <ul class="block px-4 py-2 border border-gray-500">
-                @if ($service->active_status == 0)
-                    <li><b>(RETIRED)</b></li>
+                @if (!$service->active_status)
+                    <li class="float-right text-red-500">
+                        <b>(RETIRED)</b>
+                    </li>
                 @endif
                 <li><b>Name:</b> {{ $service->name }}</li>
                 <li><b>Service ID:</b> {{ $service->id }}</li>

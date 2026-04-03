@@ -22,7 +22,7 @@
             </x-form-box>
 
             @fragment('contract-contact-input')
-                <datalist id="contact-datalist" hx-swap-oob="true">
+                <datalist id="contact-datalist">
                     @foreach ($contacts as $contact)
                         <option
                             value="{{ $contact->last_name }}, {{ $contact->first_name }} - {{ $contact->id }}">
@@ -33,7 +33,7 @@
                 </datalist>
             @endfragment
 
-            <x-form-box for="financial_contact_id"> Financial Contact ID*
+            <x-form-box for="financial_contact_id"> Financial Contact*
                 <x-form-input list="contact-datalist"
                     name="financial_contact_id" id="financial_contact_id"
                     value="{{ $contract->current_financial_contact->full_name ?? old('financial_contact_id') }}">
@@ -43,7 +43,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="pi_contact_id"> PI Contact ID
+            <x-form-box for="pi_contact_id"> PI Contact
                 <x-form-input list="contact-datalist" name="pi_contact_id"
                     id="pi_contact_id"
                     value="{{ $contract->pi_contact->full_name ?? old('pi_contact_id') }}">>
@@ -53,7 +53,7 @@
                 @enderror
             </x-form-box>
 
-            <x-form-box for="technical_contact_id"> Technical Contact ID
+            <x-form-box for="technical_contact_id"> SSH Internal Contact
                 <x-form-input list="contact-datalist"
                     name="technical_contact_id" id="technical_contact_id"
                     value="{{ $contract->technical_contact->full_name ?? old('technical_contact_id') }}">>
@@ -64,9 +64,9 @@
             </x-form-box>
 
             <x-form-box for="darbi_header_ref_1"> DARBI Header Ref 1
+                <x-hint>e.g., Attn. [financial contact]</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_1"
                     id="darbi_header_ref_1"
-                    placeholder="Portal name, e.g. &quot;CCH2 Symbiota Portal&quot; (20 character max)"
                     value="{{ $contract->darbi_header_ref_1 ?? old('darbi_header_ref_1') }}"></x-form-input>
                 @error('darbi_header_ref_1')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -74,9 +74,9 @@
             </x-form-box>
 
             <x-form-box for="darbi_header_ref_2"> DARBI Header Ref 2
+                <x-hint>Optional second attn. person</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_2"
                     id="darbi_header_ref_2"
-                    placeholder="Optional additional description of service (20 characters max)"
                     value="{{ $contract->darbi_header_ref_2 ?? old('darbi_header_ref_2') }}"></x-form-input>
                 @error('darbi_header_ref_2')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -85,9 +85,10 @@
 
             <x-form-box for="darbi_special_instructions"> DARBI Special
                 Instructions
+                <x-hint>Corresponds to
+                    KU_Symbiota_Quote_NMNH_20250423c.pdf</x-hint>
                 <x-form-input type="text" name="darbi_special_instructions"
                     id="darbi_special_instructions"
-                    placeholder="Corresponds to KU_Symbiota_Quote_NMNH_20250423c.pdf"
                     value="{{ $contract->darbi_special_instructions ?? old('darbi_special_instructions') }}"></x-form-input>
                 @error('darbi_special_instructions')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -95,8 +96,9 @@
             </x-form-box>
 
             <x-form-box for="notes"> Notes
+                <x-hint>Notes to be included in the Customer Request
+                    CSV</x-hint>
                 <x-form-input type="text" name="notes" id="notes"
-                    placeholder="Notes to be included in the Customer Request CSV"
                     value="{{ $contract->notes ?? old('notes') }}"></x-form-input>
                 @error('notes')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>

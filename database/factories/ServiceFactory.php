@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
+use App\Models\Service;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Service>
@@ -21,6 +23,18 @@ class ServiceFactory extends Factory
             'darbi_item_number' => $this->faker->numerify('SYMBI#####'),
             'price_per_unit' => $this->faker->numberBetween(1, 9999),
             'description' => $this->faker->word(),
+            'active_status' => $this->faker->boolean(75),
+            'isRecurring' => $this->faker->boolean(),
         ];
     } // to use: php artisan tinker, App\Models\Service::factory(number)->create()
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (Service $service) {
+            $history = $service->getAttributes();
+            unset($history['id']);
+            $history += ['service_id' => $service->id];
+            DB::table('services_history')->insert($history);
+        });
+    }
 }

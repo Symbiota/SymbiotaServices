@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
@@ -38,6 +39,7 @@ class ServiceController extends Controller
                     'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/', 'unique:services,darbi_item_number'],
                     'price_per_unit' => ['required', 'numeric:strict'],
                     'description' => ['nullable'],
+                    'isRecurring' => ['nullable', 'boolean'],
                 ],
                 [
                     'darbi_item_number.regex' => 'DARBI Item Number should be SYMBI + 5 digits.'
@@ -45,6 +47,11 @@ class ServiceController extends Controller
             );
 
             $service = Service::create($data);
+
+            $history = $service->getAttributes();
+            unset($history['id']);
+            $history += ['service_id' => $service->id, 'modified_by' => auth()->user()->id];
+            DB::table('services_history')->insert($history);
 
             if ($isHTMX) {
                 $services = service::all();
@@ -73,6 +80,7 @@ class ServiceController extends Controller
                     'darbi_item_number' => ['required', 'regex:/SYMBI\d{5}$/', \Illuminate\Validation\Rule::unique('services')->ignore($service->id)],
                     'price_per_unit' => ['required', 'numeric:strict'],
                     'description' => ['nullable'],
+                    'isRecurring' => ['nullable', 'boolean'],
                 ],
                 [
                     'darbi_item_number.regex' => 'DARBI Item Number should be SYMBI + 5 digits.'
@@ -80,6 +88,18 @@ class ServiceController extends Controller
             );
 
             $service->update($data);
+
+            $history = $service->getChanges();
+            if ($history) {
+                unset($history['id']);
+                $history += ['service_id' => $service->id, 'modified_by' => auth()->user()->id];
+                foreach ($history as $key => $value) {
+                    if (is_null($value)) {
+                        $history[$key] = "[{$key} was removed]";
+                    }
+                }
+                DB::table('services_history')->insert($history);
+            }
 
             if ($isHTMX) {
                 $services = Service::all();
@@ -96,9 +116,15 @@ class ServiceController extends Controller
         }
     }
 
-    public function retire(Service $service)
+    public function toggleRetire(Service $service)
     {
         $service->update(['active_status' => !$service->active_status]);
+
+        $history = $service->getChanges();
+        unset($history['id']);
+        $history += ['service_id' => $service->id, 'modified_by' => auth()->user()->id];
+        DB::table('services_history')->insert($history);
+
         return redirect()->route('services.index');
     }
 }

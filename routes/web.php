@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/services/{service}', 'show')->name('services.show');
         Route::patch('/services/{service}/update', 'update')->name('services.update');
         Route::post('/services/store', 'store')->name('services.store');
-        Route::patch('/services/{service}/retire', 'retire')->name('services.retire');
+        Route::patch('/services/{service}/toggleRetire', 'toggleRetire')->name('services.toggleRetire');
     });
 
     Route::controller(ContractController::class)->group(function () {
@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/contracts/store', 'store')->name('contracts.store');
         Route::delete('/contracts/{contract}/delete', 'destroy')->name('contracts.destroy');
         Route::patch('/contracts/{contract}/update', 'update')->name('contracts.update');
+        Route::patch('/contracts/{contract}/toggleTerminate', 'toggleTerminate')->name('contracts.toggleTerminate');
     });
 
     Route::controller(CustomerController::class)->group(function () {
@@ -58,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::controller(InvoiceController::class)->group(function () {
         Route::get('/invoices/create/{contract?}/{invoice?}', 'create')->name('invoices.create');
+        Route::get('/invoices/sort', 'sort')->name('invoices.sort');
         Route::get('/invoices', 'index')->name('invoices.index');
         Route::get('/invoices/{invoice}', 'show')->name('invoices.show');
         Route::get('/invoices/{invoice}/edit', 'edit')->name('invoices.edit');
