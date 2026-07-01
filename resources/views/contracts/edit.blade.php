@@ -9,12 +9,12 @@
                 hx-post="{{ route('contracts.update', $contract) }}"
                 hx-target="#modal" hx-swap="innerHTML scroll:top" :errors="$errors"
                 :contract="$contract" :customers="$customers"
-                :contacts="$contacts">@method('PATCH')</x-contract-form>
-            @else
-                <x-forms.contract-form
-                    action="{{ route('contracts.update', $contract) }}" class="-mt-8"
-                    :contract="$contract" :customers="$customers"
-                    :contacts="$contacts">@method('PATCH')</x-service-form>
+                :contacts="$contacts">@method('PATCH')</x-forms.contract-form>
+        @else
+            <x-forms.contract-form
+                action="{{ route('contracts.update', $contract) }}" class="-mt-8"
+                :contract="$contract" :customers="$customers"
+                :contacts="$contacts">@method('PATCH')</x-forms.contract-form>
         @endif
     @endfragment
 </x-table-layout>

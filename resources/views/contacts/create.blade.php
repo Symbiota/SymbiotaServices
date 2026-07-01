@@ -6,10 +6,10 @@
         @if ($isHTMX)
             <x-forms.contact-form :errors="$errors" class="-mt-4"
                 hx-post="{{ route('contacts.store') }}" hx-target="#modal"
-                hx-swap="innerHTML scroll:top"></x-contact-form>
-            @else
-                <x-forms.contact-form class="-mt-8"
-                    action="{{ route('contacts.store') }}"></x-contact-form>
+                hx-swap="innerHTML scroll:top"></x-forms.contact-form>
+        @else
+            <x-forms.contact-form class="-mt-8"
+                action="{{ route('contacts.store') }}"></x-forms.contact-form>
         @endif
     @endfragment
 </x-table-layout>

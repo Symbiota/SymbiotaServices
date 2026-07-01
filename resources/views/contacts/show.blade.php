@@ -91,11 +91,11 @@
                     :contact="$contact"
                     hx-post="{{ route('contacts.update', $contact) }}"
                     hx-target="#modal"
-                    hx-swap="innerHTML scroll:top">@method('PATCH')</x-contact-form>
-                @else
-                    <x-forms.contact-form
-                        action="{{ route('contacts.update', $contact) }}"
-                        :contact="$contact">@method('PATCH')</x-contact-form>
+                    hx-swap="innerHTML scroll:top">@method('PATCH')</x-forms.contact-form>
+            @else
+                <x-forms.contact-form
+                    action="{{ route('contacts.update', $contact) }}"
+                    :contact="$contact">@method('PATCH')</x-forms.contact-form>
             @endif
         </div>
     @endfragment

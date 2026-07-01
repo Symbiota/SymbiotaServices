@@ -6,11 +6,11 @@
             <x-forms.customer-form
                 hx-post="{{ route('customers.update', $customer) }}"
                 hx-target="#modal" hx-swap="innerHTML scroll:top" :errors="$errors"
-                :customer="$customer">@method('PATCH')</x-customer-form>
-            @else
-                <x-forms.customer-form
-                    action="{{ route('customers.update', $customer) }}" class="-mt-8"
-                    :customer="$customer">@method('PATCH')</x-service-form>
+                :customer="$customer">@method('PATCH')</x-forms.customer-form>
+        @else
+            <x-forms.customer-form
+                action="{{ route('customers.update', $customer) }}" class="-mt-8"
+                :customer="$customer">@method('PATCH')</x-forms.customer-form>
         @endif
     @endfragment
 </x-table-layout>

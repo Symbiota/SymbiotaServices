@@ -6,12 +6,11 @@
             <x-forms.invoice-form hx-post="{{ route('invoices.update', $invoice) }}"
                 hx-target="#modal" hx-swap="innerHTML scroll:top" :errors="$errors"
                 :invoice="$invoice" :services="$services" :contracts="$contracts"
-                :contacts="$contacts">@method('PATCH')</x-invoice-form>
-            @else
-                <x-forms.invoice-form
-                    action="{{ route('invoices.update', $invoice) }}" class="-mt-8"
-                    :invoice="$invoice" :services="$services" :contracts="$contracts"
-                    :contacts="$contacts">@method('PATCH')</x-service-form>
+                :contacts="$contacts">@method('PATCH')</x-forms.invoice-form>
+        @else
+            <x-forms.invoice-form action="{{ route('invoices.update', $invoice) }}"
+                class="-mt-8" :invoice="$invoice" :services="$services" :contracts="$contracts"
+                :contacts="$contacts">@method('PATCH')</x-forms.invoice-form>
         @endif
     @endfragment
 </x-table-layout>

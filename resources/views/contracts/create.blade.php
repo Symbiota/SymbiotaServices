@@ -8,6 +8,6 @@
 
     <x-forms.contract-form class="-mt-8" :customer="$customer" :customers="$customers"
         :contacts="$contacts"
-        action="{{ route('contracts.store') }}"></x-contract-form>
+        action="{{ route('contracts.store') }}"></x-forms.contract-form>
 
 </x-table-layout>

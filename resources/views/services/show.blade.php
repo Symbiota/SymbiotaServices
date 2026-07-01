@@ -115,10 +115,10 @@
                     :service="$service"
                     hx-post="{{ route('services.update', $service) }}"
                     hx-target="#modal"
-                    hx-swap="innerHTML scroll:top">@method('PATCH')</x-service-form>
-                @else
-                    <x-forms.service-form :service="$service"
-                        action="{{ route('services.update', $service) }}">@method('PATCH')</x-service-form>
+                    hx-swap="innerHTML scroll:top">@method('PATCH')</x-forms.service-form>
+            @else
+                <x-forms.service-form :service="$service"
+                    action="{{ route('services.update', $service) }}">@method('PATCH')</x-forms.service-form>
             @endif
         </div>
     @endfragment
