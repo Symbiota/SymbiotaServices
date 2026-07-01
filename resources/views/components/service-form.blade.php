@@ -1,3 +1,8 @@
+@props([
+    'service' => null,
+    'errors' => null,
+])
+
 <form {{ $attributes->merge(['method' => 'POST']) }}>
     @csrf
     {{ $slot }}
@@ -7,7 +12,7 @@
 
             <x-form-box for="name"> Name*
                 <x-form-input type="text" name="name" id="name"
-                    value="{{ $service->name ?? (old('name') ?? request()->input('name')) }}"></x-form-input>
+                    value="{{ old('name') ?? (request()->input('name') ?? $service?->name) }}"></x-form-input>
                 <x-hint class="ml-3.5">Value should match
                     &quot;Item Description&quot; in DARBI Item Report, e.g.
                     &quot;EXAC 26Data portal maintenance
@@ -20,7 +25,7 @@
             <x-form-box for="darbi_item_number"> DARBI Item Number*
                 <x-form-input type="text" name="darbi_item_number"
                     id="darbi_item_number" placeholder="SYMBI01234"
-                    value="{{ $service->darbi_item_number ?? (old('darbi_item_number') ?? request()->input('darbi_item_number')) }}"></x-form-input>
+                    value="{{ old('darbi_item_number') ?? (request()->input('darbi_item_number') ?? $service?->darbi_item_number) }}"></x-form-input>
                 @error('darbi_item_number')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -29,7 +34,7 @@
             <x-form-box for="price_per_unit"> Price Per Unit*
                 <x-form-input type="text" name="price_per_unit"
                     id="price_per_unit"
-                    value="{{ $service->price_per_unit ?? (old('price_per_unit') ?? request()->input('price_per_unit')) }}"></x-form-input>
+                    value="{{ old('price_per_unit') ?? (request()->input('price_per_unit') ?? $service?->price_per_unit) }}"></x-form-input>
                 @error('price_per_unit')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -39,7 +44,7 @@
                 <x-hint>Optional notes for SSH internal use only</x-hint>
                 <textarea
                     class="block min-w-0 w-[98.5%] grow py-1.5 pr-3 pl-1 ml-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 border border-gray-500"
-                    name="description" id="description">{{ $service->description ?? (old('description') ?? request()->input('description')) }}</textarea>
+                    name="description" id="description">{{ old('description') ?? (request()->input('description') ?? $service?->description) }}</textarea>
                 @error('description')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -51,7 +56,7 @@
                 <input class="ml-1" type="checkbox" name="isRecurring"
                     id="isRecurring" value="1"
                     @checked(
-                        $service->isRecurring ??
+                        $service?->isRecurring ??
                             (request()->input('isRecurring') ?? old('isRecurring')))>
             </x-form-box>
 
