@@ -6,7 +6,7 @@
         hx-swap="innerHTML" onclick="toggleView('modal-container')">Create
         Contact</x-ec-button>
 
-    <x-contract-form class="-mt-8" :customer="$customer" :customers="$customers"
+    <x-forms.contract-form class="-mt-8" :customer="$customer" :customers="$customers"
         :contacts="$contacts"
         action="{{ route('contracts.store') }}"></x-contract-form>
 

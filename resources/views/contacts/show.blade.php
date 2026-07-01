@@ -87,13 +87,15 @@
         <div id="edit-form"
             class="{{ $errors->contact_errors->any() ? '' : 'hidden' }} -mt-6">
             @if ($isHTMX)
-                <x-contact-form class="-mt-2" :errors="$errors" :contact="$contact"
+                <x-forms.contact-form class="-mt-2" :errors="$errors"
+                    :contact="$contact"
                     hx-post="{{ route('contacts.update', $contact) }}"
                     hx-target="#modal"
                     hx-swap="innerHTML scroll:top">@method('PATCH')</x-contact-form>
-            @else
-                <x-contact-form action="{{ route('contacts.update', $contact) }}"
-                    :contact="$contact">@method('PATCH')</x-contact-form>
+                @else
+                    <x-forms.contact-form
+                        action="{{ route('contacts.update', $contact) }}"
+                        :contact="$contact">@method('PATCH')</x-contact-form>
             @endif
         </div>
     @endfragment

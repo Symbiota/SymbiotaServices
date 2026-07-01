@@ -4,12 +4,12 @@
         <x-modal-header :isHTMX="$isHTMX">Create Service:
         </x-modal-header>
         @if ($isHTMX)
-            <x-service-form :errors="$errors" class="-mt-4"
+            <x-forms.service-form :errors="$errors" class="-mt-4"
                 hx-post="{{ route('services.store') }}" hx-target="#modal"
                 hx-swap="innerHTML scroll:top"></x-service-form>
-        @else
-            <x-service-form class="-mt-8"
-                action="{{ route('services.store') }}"></x-service-form>
+            @else
+                <x-forms.service-form class="-mt-8"
+                    action="{{ route('services.store') }}"></x-service-form>
         @endif
     @endfragment
 </x-table-layout>

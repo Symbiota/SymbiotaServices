@@ -7,7 +7,7 @@
         Contact</x-ec-button>
 
     <div>
-        <x-invoice-form class="-mt-8" :contract="$contract" :contracts="$contracts"
+        <x-forms.invoice-form class="-mt-8" :contract="$contract" :contracts="$contracts"
             :services="$services" :contacts="$contacts" :invoice="$invoice"
             action="{{ route('invoices.store') }}"></x-invoice-form>
     </div>
