@@ -1,3 +1,11 @@
+@props([
+    'invoice' => null,
+    'contracts' => collect(),
+    'contacts' => collect(),
+    'services' => collect(),
+    'contract' => null,
+])
+
 <form {{ $attributes->merge(['method' => 'POST']) }}>
     @csrf
     {{ $slot }}
@@ -48,7 +56,7 @@
             <x-form-box for="financial_contact_id"> Financial Contact*
                 <x-form-input list="contact-datalist"
                     name="financial_contact_id" id="financial_contact_id"
-                    value="{{ $invoice->financial_contact->full_name ?? ($contract->current_financial_contact->full_name ?? old('financial_contact_id')) }}">
+                    value="{{ old('financial_contact_id') ?? (request()->input('financial_contact_id') ?? ($invoice?->financial_contact?->full_name ?? $contract?->current_financial_contact?->full_name)) }}">
                 </x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -58,7 +66,7 @@
             <x-form-box for="billing_start"> Billing Start*
                 <x-form-input type="text" name="billing_start"
                     id="billing_start" placeholder="YYYY-MM-DD"
-                    value="{{ $invoice->billing_start ?? old('billing_start') }}"></x-form-input>
+                    value="{{ old('billing_start') ?? (request()->input('billing_start') ?? $invoice?->billing_start) }}"></x-form-input>
                 @error('billing_start')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -67,7 +75,7 @@
             <x-form-box for="billing_end"> Billing End*
                 <x-form-input type="text" name="billing_end" id="billing_end"
                     placeholder="YYYY-MM-DD"
-                    value="{{ $invoice->billing_end ?? old('billing_end') }}"></x-form-input>
+                    value="{{ old('billing_end') ?? (request()->input('billing_end') ?? $invoice?->billing_end) }}"></x-form-input>
                 @error('billing_end')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -109,7 +117,7 @@
                         @endif
                         <input type="number"
                             class="m-1 mt-2 p-1 border border-gray-500 ml-4"
-                            @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
+                            @if (!empty($invoice?->id)) value="{{ $invoice?->services->find($service)->pivot->qty ?? 1 }}"
                             @else value="{{ old('qty.' . $service->id, 1) }}" @endif
                             step="any" min="0"
                             name="qty[{{ $service->id }}]"
@@ -219,7 +227,7 @@
             <x-form-box for="date_invoiced"> Date Invoiced
                 <x-form-input type="text" name="date_invoiced"
                     id="date_invoiced" placeholder="YYYY-MM-DD"
-                    value="{{ $invoice->date_invoiced ?? old('date_invoiced') }}"></x-form-input>
+                    value="{{ old('date_invoiced') ?? (request()->input('date_invoiced') ?? $invoice?->date_invoiced) }}"></x-form-input>
                 @error('date_invoiced')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -228,7 +236,7 @@
             <x-form-box for="date_paid"> Date Paid
                 <x-form-input type="text" name="date_paid" id="date_paid"
                     placeholder="YYYY-MM-DD"
-                    value="{{ $invoice->date_paid ?? old('date_paid') }}"></x-form-input>
+                    value="{{ old('date_paid') ?? (request()->input('date_paid') ?? $invoice?->date_paid) }}"></x-form-input>
                 @error('date_paid')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -238,7 +246,7 @@
                 <x-hint>e.g., Attn. [financial contact]</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_1"
                     id="darbi_header_ref_1"
-                    value="{{ $invoice->darbi_header_ref_1 ?? ($contract->darbi_header_ref_1 ?? old('darbi_header_ref_1')) }}"></x-form-input>
+                    value="{{ old('darbi_header_ref_1') ?? (request()->input('darbi_header_ref_1') ?? ($invoice?->darbi_header_ref_1 ?? $contract->darbi_header_ref_1)) }}"></x-form-input>
                 @error('darbi_header_ref_1')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -248,7 +256,7 @@
                 <x-hint>Optional second attn. person</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_2"
                     id="darbi_header_ref_2"
-                    value="{{ $invoice->darbi_header_ref_2 ?? ($contract->darbi_header_ref_2 ?? old('darbi_header_ref_2')) }}"></x-form-input>
+                    value="{{ old('darbi_header_ref_2') ?? (request()->input('darbi_header_ref_2') ?? ($invoice?->darbi_header_ref_2 ?? $contract->darbi_header_ref_2)) }}"></x-form-input>
                 @error('darbi_header_ref_2')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -256,7 +264,7 @@
 
             <x-form-box for="notes"> Notes
                 <x-form-input type="text" name="notes" id="notes"
-                    value="{{ $invoice->notes ?? old('notes') }}"></x-form-input>
+                    value="{{ old('notes') ?? (request()->input('notes') ?? $invoice?->notes) }}"></x-form-input>
                 @error('notes')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
