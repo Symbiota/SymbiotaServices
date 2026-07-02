@@ -16,7 +16,7 @@
             <x-form-box for="customer_id"> Customer Name*
                 <x-form-input list="customer-datalist" name="customer_id"
                     id="customer_id"
-                    value="{{ old('customer_id') ?? (request()->input('customer_id') ?? ($contract?->customer->name ?? $customer->name)) }}">
+                    value="{{ old('customer_id') ?? (request()->input('customer_id') ?? ($contract?->customer?->name ?? $customer?->name)) }}">
                 </x-form-input>
                 <datalist id="customer-datalist">
                     @foreach ($customers as $o_customer)
@@ -44,7 +44,7 @@
             <x-form-box for="financial_contact_id"> Financial Contact*
                 <x-form-input list="contact-datalist"
                     name="financial_contact_id" id="financial_contact_id"
-                    value="{{ old('financial_contact_id') ?? (request()->input('financial_contact_id') ?? $contract?->current_financial_contact->full_name) }}">
+                    value="{{ old('financial_contact_id') ?? (request()->input('financial_contact_id') ?? $contract?->current_financial_contact?->full_name) }}">
                 </x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -54,7 +54,7 @@
             <x-form-box for="pi_contact_id"> PI Contact
                 <x-form-input list="contact-datalist" name="pi_contact_id"
                     id="pi_contact_id"
-                    value="{{ old('pi_contact_id') ?? (request()->input('pi_contact_id') ?? $contract?->pi_contact->full_name) }}">>
+                    value="{{ old('pi_contact_id') ?? (request()->input('pi_contact_id') ?? $contract?->pi_contact?->full_name) }}">>
                 </x-form-input>
                 @error('pi_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -64,7 +64,7 @@
             <x-form-box for="technical_contact_id"> SSH Internal Contact
                 <x-form-input list="contact-datalist"
                     name="technical_contact_id" id="technical_contact_id"
-                    value="{{ old('technical_contact_id') ?? (request()->input('technical_contact_id') ?? $contract?->technical_contact->full_name) }}">>
+                    value="{{ old('technical_contact_id') ?? (request()->input('technical_contact_id') ?? $contract?->technical_contact?->full_name) }}">>
                 </x-form-input>
                 @error('technical_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
