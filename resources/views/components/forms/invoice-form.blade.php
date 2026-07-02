@@ -105,8 +105,10 @@
                                 id="service" value="{{ $service->id }}"
                                 data-id="{{ $service->id }}"
                                 onchange="calc_total_amount_billed();"
-                                @if (!empty($invoice->id)) {{ $invoice->services->find($service) ? 'checked' : '' }}
-                            @else {{ old('services.' . $service->id) ? 'checked' : '' }} @endif>
+                                @checked(old('services') !== null || request()->has('services')
+                                        ? old("services.$service->id") ??
+                                            request()->has("services.$service->id")
+                                        : $invoice->services->contains($service->id))>
                             <span class="ml-1">{{ $service->name }}</span>
                         </div>
                         @if ($loop->index == 0)
@@ -118,8 +120,9 @@
                         @endif
                         <input type="number"
                             class="m-1 mt-2 p-1 border border-gray-500 ml-4"
-                            @if (!empty($invoice?->id)) value="{{ $invoice?->services->find($service)->pivot->qty ?? 1 }}"
-                            @else value="{{ old('qty.' . $service->id, 1) }}" @endif
+                            value="{{ old('qty') !== null || request()->has('qty')
+                                ? old("qty.$service->id") ?? request()->input("qty.$service->id")
+                                : $invoice->services->find($service->id)->pivot->qty ?? 1 }}"
                             step="any" min="0"
                             name="qty[{{ $service->id }}]"
                             id="qty_{{ $service->id }}"
@@ -169,8 +172,10 @@
                                     id="service" value="{{ $service->id }}"
                                     data-id="{{ $service->id }}"
                                     onchange="calc_total_amount_billed();"
-                                    @if (!empty($invoice->id)) {{ $invoice->services->find($service) ? 'checked' : '' }}
-                            @else {{ old('services.' . $service->id) ? 'checked' : '' }} @endif>
+                                    @checked(old('services') !== null || request()->has('services')
+                                            ? old("services.$service->id") ??
+                                                request()->has("services.$service->id")
+                                            : $invoice->services->contains($service->id))>
                                 <span
                                     class="ml-1">{{ $service->name }}</span>
                             </div>
@@ -185,8 +190,9 @@
                             @endif
                             <input type="number"
                                 class="m-1 mt-2 p-1 border border-gray-500 ml-4"
-                                @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
-                            @else value="{{ old('qty.' . $service->id, 1) }}" @endif
+                                value="{{ old('qty') !== null || request()->has('qty')
+                                    ? old("qty.$service->id") ?? request()->input("qty.$service->id")
+                                    : $invoice->services->find($service->id)->pivot->qty ?? 1 }}"
                                 step="any" min="0"
                                 name="qty[{{ $service->id }}]"
                                 id="qty_{{ $service->id }}"
