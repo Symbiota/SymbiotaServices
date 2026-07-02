@@ -4,6 +4,7 @@
     'contacts' => collect(),
     'services' => collect(),
     'contract' => null,
+    'errors' => null,
 ])
 
 <form {{ $attributes->merge(['method' => 'POST']) }}>
@@ -30,7 +31,7 @@
                     <option value=""></option>
                     @foreach ($contracts as $o_contract)
                         <option value="{{ $o_contract->id }}"
-                            @selected(old('contract_id') == $o_contract->id)>
+                            @selected(old('contract_id') == $o_contract->id || request()->input('contract_id') == $o_contract->id)>
                             {{ $o_contract->customer->name }} -
                             {{ $o_contract->id }}
                         </option>
