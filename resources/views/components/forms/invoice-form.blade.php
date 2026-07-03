@@ -86,6 +86,7 @@
                 [$activeServices, $inactiveServices] = $services->partition(
                     fn($service) => $service->active_status,
                 );
+                $inactiveIDs = $inactiveServices->pluck('id')->all();
             @endphp
 
             <x-form-box for="services_field">
@@ -162,7 +163,11 @@
                 <br>
 
                 <div id="retired_services"
-                    class="{{ isset($invoice) && $invoice->services && $invoice->services->contains('active_status', false) ? '' : 'hidden' }}">
+                    class="{{ $invoice?->services?->contains('active_status', false) ||
+                    !empty(array_intersect(old('services', []), $inactiveIDs)) ||
+                    !empty(array_intersect(request()->input('services', []), $inactiveIDs))
+                        ? ''
+                        : 'hidden' }}">
                     <br>
                     @if (count($inactiveServices) == 0)
                         <p class="ml-3.5">No retired services.</p>
