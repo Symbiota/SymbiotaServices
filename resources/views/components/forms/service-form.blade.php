@@ -56,8 +56,7 @@
                 <input class="ml-1" type="checkbox" name="isRecurring"
                     id="isRecurring" value="1"
                     @checked(request()->input('isRecurring') ??
-                            old('isRecurring') ??
-                            $service?->isRecurring)>
+                            (old('isRecurring') ?? $service?->isRecurring))>
             </x-form-box>
 
         </div>
