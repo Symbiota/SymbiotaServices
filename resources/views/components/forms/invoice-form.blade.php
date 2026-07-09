@@ -1,3 +1,12 @@
+@props([
+    'invoice' => null,
+    'contracts' => collect(),
+    'contacts' => collect(),
+    'services' => collect(),
+    'contract' => null,
+    'errors' => null,
+])
+
 <form {{ $attributes->merge(['method' => 'POST']) }}>
     @csrf
     {{ $slot }}
@@ -13,16 +22,16 @@
                             - {{ $invoice->contract_id }}
                         </option>
                     @endisset
-                    @isset($contract->customer->name)
-                        <option value="{{ $contract->id }}">
-                            {{ $contract->customer->name }}
-                            - {{ $contract->id }}
+                    @isset($contract?->customer->name)
+                        <option value="{{ $contract?->id }}">
+                            {{ $contract?->customer->name }}
+                            - {{ $contract?->id }}
                         </option>
                     @endisset
                     <option value=""></option>
                     @foreach ($contracts as $o_contract)
                         <option value="{{ $o_contract->id }}"
-                            @selected(old('contract_id') == $o_contract->id)>
+                            @selected(old('contract_id') == $o_contract->id || request()->input('contract_id') == $o_contract->id)>
                             {{ $o_contract->customer->name }} -
                             {{ $o_contract->id }}
                         </option>
@@ -48,7 +57,7 @@
             <x-form-box for="financial_contact_id"> Financial Contact*
                 <x-form-input list="contact-datalist"
                     name="financial_contact_id" id="financial_contact_id"
-                    value="{{ $invoice->financial_contact->full_name ?? ($contract->current_financial_contact->full_name ?? old('financial_contact_id')) }}">
+                    value="{{ old('financial_contact_id') ?? (request()->input('financial_contact_id') ?? ($invoice?->financial_contact?->full_name ?? $contract?->current_financial_contact?->full_name)) }}">
                 </x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -58,7 +67,7 @@
             <x-form-box for="billing_start"> Billing Start*
                 <x-form-input type="text" name="billing_start"
                     id="billing_start" placeholder="YYYY-MM-DD"
-                    value="{{ $invoice->billing_start ?? old('billing_start') }}"></x-form-input>
+                    value="{{ old('billing_start') ?? (request()->input('billing_start') ?? $invoice?->billing_start) }}"></x-form-input>
                 @error('billing_start')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -67,7 +76,7 @@
             <x-form-box for="billing_end"> Billing End*
                 <x-form-input type="text" name="billing_end" id="billing_end"
                     placeholder="YYYY-MM-DD"
-                    value="{{ $invoice->billing_end ?? old('billing_end') }}"></x-form-input>
+                    value="{{ old('billing_end') ?? (request()->input('billing_end') ?? $invoice?->billing_end) }}"></x-form-input>
                 @error('billing_end')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -77,6 +86,7 @@
                 [$activeServices, $inactiveServices] = $services->partition(
                     fn($service) => $service->active_status,
                 );
+                $inactiveIDs = $inactiveServices->pluck('id')->all();
             @endphp
 
             <x-form-box for="services_field">
@@ -96,8 +106,10 @@
                                 id="service" value="{{ $service->id }}"
                                 data-id="{{ $service->id }}"
                                 onchange="calc_total_amount_billed();"
-                                @if (!empty($invoice->id)) {{ $invoice->services->find($service) ? 'checked' : '' }}
-                            @else {{ old('services.' . $service->id) ? 'checked' : '' }} @endif>
+                                @checked(old('services') !== null || request()->has('services')
+                                        ? old("services.$service->id") ??
+                                            request()->has("services.$service->id")
+                                        : $invoice?->services->contains($service->id))>
                             <span class="ml-1">{{ $service->name }}</span>
                         </div>
                         @if ($loop->index == 0)
@@ -113,8 +125,9 @@
                         @endif
                         <input type="number"
                             class="m-1 mt-2 p-1 border border-gray-500 ml-4"
-                            @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
-                            @else value="{{ old('qty.' . $service->id, 1) }}" @endif
+                            value="{{ old('qty') !== null || request()->has('qty')
+                                ? old("qty.$service->id") ?? request()->input("qty.$service->id")
+                                : $invoice?->services->find($service->id)->pivot->qty ?? 1 }}"
                             step="any" min="0"
                             name="qty[{{ $service->id }}]"
                             id="qty_{{ $service->id }}"
@@ -133,15 +146,19 @@
                             name="line_ref_1[{{ $service->id }}]"
                             id="line_ref_1" placeholder="Line Ref 1"
                             maxlength="20"
-                            @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->line_ref_1 ?? '' }}"
-                            @else value="{{ old('line_ref_1.' . $service->id) }}" @endif>
+                            value="{{ old('line_ref_1') !== null || request()->has('line_ref_1')
+                                ? old("line_ref_1.$service->id") ??
+                                    request()->input("line_ref_1.$service->id")
+                                : $invoice?->services->find($service->id)->pivot->line_ref_1 ?? '' }}">
                         <input type="text"
                             class="m-1 mt-2 p-1 border border-gray-500"
                             name="line_ref_2[{{ $service->id }}]"
                             id="line_ref_2" placeholder="Line Ref 2"
                             maxlength="20"
-                            @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->line_ref_2 ?? '' }}"
-                            @else value="{{ old('line_ref_2.' . $service->id) }}" @endif">
+                            value="{{ old('line_ref_2') !== null || request()->has('line_ref_2')
+                                ? old("line_ref_2.$service->id") ??
+                                    request()->input("line_ref_2.$service->id")
+                                : $invoice?->services->find($service->id)->pivot->line_ref_2 ?? '' }}">
                     </div>
                 @endforeach
 
@@ -152,7 +169,11 @@
                 <br>
 
                 <div id="retired_services"
-                    class="{{ isset($invoice) && $invoice->services && $invoice->services->contains('active_status', false) ? '' : 'hidden' }}">
+                    class="{{ $invoice?->services?->contains('active_status', false) ||
+                    !empty(array_intersect(old('services', []), $inactiveIDs)) ||
+                    !empty(array_intersect(request()->input('services', []), $inactiveIDs))
+                        ? ''
+                        : 'hidden' }}">
                     <br>
                     @if (count($inactiveServices) == 0)
                         <p class="ml-3.5">No retired services.</p>
@@ -166,8 +187,10 @@
                                     id="service" value="{{ $service->id }}"
                                     data-id="{{ $service->id }}"
                                     onchange="calc_total_amount_billed();"
-                                    @if (!empty($invoice->id)) {{ $invoice->services->find($service) ? 'checked' : '' }}
-                            @else {{ old('services.' . $service->id) ? 'checked' : '' }} @endif>
+                                    @checked(old('services') !== null || request()->has('services')
+                                            ? old("services.$service->id") ??
+                                                request()->has("services.$service->id")
+                                            : $invoice?->services->contains($service->id))>
                                 <span
                                     class="ml-1">{{ $service->name }}</span>
                             </div>
@@ -182,8 +205,9 @@
                             @endif
                             <input type="number"
                                 class="m-1 mt-2 p-1 border border-gray-500 ml-4"
-                                @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->qty ?? 1 }}"
-                            @else value="{{ old('qty.' . $service->id, 1) }}" @endif
+                                value="{{ old('qty') !== null || request()->has('qty')
+                                    ? old("qty.$service->id") ?? request()->input("qty.$service->id")
+                                    : $invoice?->services->find($service->id)->pivot->qty ?? 1 }}"
                                 step="any" min="0"
                                 name="qty[{{ $service->id }}]"
                                 id="qty_{{ $service->id }}"
@@ -201,14 +225,18 @@
                                 class="m-1 mt-2 p-1 border border-gray-500"
                                 name="line_ref_1[{{ $service->id }}]"
                                 id="line_ref_1" placeholder="Line Ref 1"
-                                @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->line_ref_1 ?? '' }}"
-                            @else value="{{ old('line_ref_1.' . $service->id) }}" @endif>
+                                value="{{ old('line_ref_1') !== null || request()->has('line_ref_1')
+                                    ? old("line_ref_1.$service->id") ??
+                                        request()->input("line_ref_1.$service->id")
+                                    : $invoice?->services->find($service->id)->pivot->line_ref_1 ?? '' }}">
                             <input type="text"
                                 class="m-1 mt-2 p-1 border border-gray-500"
                                 name="line_ref_2[{{ $service->id }}]"
                                 id="line_ref_2" placeholder="Line Ref 2"
-                                @if (!empty($invoice->id)) value="{{ $invoice->services->find($service)->pivot->line_ref_2 ?? '' }}"
-                            @else value="{{ old('line_ref_2.' . $service->id) }}" @endif">
+                                value="{{ old('line_ref_2') !== null || request()->has('line_ref_2')
+                                    ? old("line_ref_2.$service->id") ??
+                                        request()->input("line_ref_2.$service->id")
+                                    : $invoice?->services->find($service->id)->pivot->line_ref_2 ?? '' }}">
                         </div>
                     @endforeach
                 </div>
@@ -225,7 +253,7 @@
             <x-form-box for="date_invoiced"> Date Invoiced
                 <x-form-input type="text" name="date_invoiced"
                     id="date_invoiced" placeholder="YYYY-MM-DD"
-                    value="{{ $invoice->date_invoiced ?? old('date_invoiced') }}"></x-form-input>
+                    value="{{ old('date_invoiced') ?? (request()->input('date_invoiced') ?? $invoice?->date_invoiced) }}"></x-form-input>
                 @error('date_invoiced')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -234,7 +262,7 @@
             <x-form-box for="date_paid"> Date Paid
                 <x-form-input type="text" name="date_paid" id="date_paid"
                     placeholder="YYYY-MM-DD"
-                    value="{{ $invoice->date_paid ?? old('date_paid') }}"></x-form-input>
+                    value="{{ old('date_paid') ?? (request()->input('date_paid') ?? $invoice?->date_paid) }}"></x-form-input>
                 @error('date_paid')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -245,7 +273,7 @@
                     contact]</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_1"
                     id="darbi_header_ref_1" maxlength="20"
-                    value="{{ $invoice->darbi_header_ref_1 ?? ($contract->darbi_header_ref_1 ?? old('darbi_header_ref_1')) }}"></x-form-input>
+                    value="{{ old('darbi_header_ref_1') ?? (request()->input('darbi_header_ref_1') ?? ($invoice?->darbi_header_ref_1 ?? $contract?->darbi_header_ref_1)) }}"></x-form-input>
                 @error('darbi_header_ref_1')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -256,15 +284,17 @@
                     person</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_2"
                     id="darbi_header_ref_2" maxlength="20"
-                    value="{{ $invoice->darbi_header_ref_2 ?? ($contract->darbi_header_ref_2 ?? old('darbi_header_ref_2')) }}"></x-form-input>
+                    value="{{ old('darbi_header_ref_2') ?? (request()->input('darbi_header_ref_2') ?? ($invoice?->darbi_header_ref_2 ?? $contract?->darbi_header_ref_2)) }}"></x-form-input>
                 @error('darbi_header_ref_2')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
             </x-form-box>
 
             <x-form-box for="notes"> Notes
+                <x-hint>Internal use notes about this invoice (will not export
+                    to CSV)</x-hint>
                 <x-form-input type="text" name="notes" id="notes"
-                    value="{{ $invoice->notes ?? old('notes') }}"></x-form-input>
+                    value="{{ old('notes') ?? (request()->input('notes') ?? $invoice?->notes) }}"></x-form-input>
                 @error('notes')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -278,7 +308,7 @@
         <x-cancel-button>
             @if (request()->routeIs('invoices.edit'))
                 {{ route('invoices.show', $invoice) }}
-            @elseif (request()->routeIs('invoices.create') && !empty($contract->id))
+            @elseif (request()->routeIs('invoices.create') && !empty($contract?->id))
                 {{ route('contracts.show', $contract) }}
             @elseif (request()->routeIs('invoices.create'))
                 {{ route('invoices.index') }}
