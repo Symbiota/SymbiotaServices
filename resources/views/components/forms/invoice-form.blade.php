@@ -283,6 +283,8 @@
             </x-form-box>
 
             <x-form-box for="notes"> Notes
+                <x-hint>Internal use notes about this invoice (will not export
+                    to CSV)</x-hint>
                 <x-form-input type="text" name="notes" id="notes"
                     value="{{ old('notes') ?? (request()->input('notes') ?? $invoice?->notes) }}"></x-form-input>
                 @error('notes')
