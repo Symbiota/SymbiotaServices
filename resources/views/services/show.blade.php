@@ -111,13 +111,14 @@
 
         <div id="edit-form" class="{{ $errors->any() ? '' : 'hidden' }}">
             @if ($isHTMX)
-                <x-service-form class="-mt-2" :errors="$errors" :service="$service"
+                <x-forms.service-form class="-mt-2" :errors="$errors"
+                    :service="$service"
                     hx-post="{{ route('services.update', $service) }}"
                     hx-target="#modal"
-                    hx-swap="innerHTML scroll:top">@method('PATCH')</x-service-form>
+                    hx-swap="innerHTML scroll:top">@method('PATCH')</x-forms.service-form>
             @else
-                <x-service-form :service="$service"
-                    action="{{ route('services.update', $service) }}">@method('PATCH')</x-service-form>
+                <x-forms.service-form :service="$service"
+                    action="{{ route('services.update', $service) }}">@method('PATCH')</x-forms.service-form>
             @endif
         </div>
     @endfragment

@@ -1,4 +1,6 @@
-@props(['type' => 'text'])
+@props([
+    'type' => 'text',
+])
 
 <div class="mt-2">
     <div

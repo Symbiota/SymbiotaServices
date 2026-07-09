@@ -1,3 +1,11 @@
+@props([
+    'contract' => null,
+    'customers' => collect(),
+    'contacts' => collect(),
+    'customer' => null,
+    'errors' => null,
+])
+
 <form {{ $attributes->merge(['method' => 'POST']) }}>
     @csrf
     {{ $slot }}
@@ -8,7 +16,7 @@
             <x-form-box for="customer_id"> Customer Name*
                 <x-form-input list="customer-datalist" name="customer_id"
                     id="customer_id"
-                    value="{{ $contract->customer->name ?? ($customer->name ?? old('customer_id')) }}">
+                    value="{{ old('customer_id') ?? (request()->input('customer_id') ?? ($contract?->customer?->name ?? $customer?->name)) }}">
                 </x-form-input>
                 <datalist id="customer-datalist">
                     @foreach ($customers as $o_customer)
@@ -36,7 +44,7 @@
             <x-form-box for="financial_contact_id"> Financial Contact*
                 <x-form-input list="contact-datalist"
                     name="financial_contact_id" id="financial_contact_id"
-                    value="{{ $contract->current_financial_contact->full_name ?? old('financial_contact_id') }}">
+                    value="{{ old('financial_contact_id') ?? (request()->input('financial_contact_id') ?? $contract?->current_financial_contact?->full_name) }}">
                 </x-form-input>
                 @error('financial_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -46,7 +54,7 @@
             <x-form-box for="pi_contact_id"> PI Contact
                 <x-form-input list="contact-datalist" name="pi_contact_id"
                     id="pi_contact_id"
-                    value="{{ $contract->pi_contact->full_name ?? old('pi_contact_id') }}">>
+                    value="{{ old('pi_contact_id') ?? (request()->input('pi_contact_id') ?? $contract?->pi_contact?->full_name) }}">>
                 </x-form-input>
                 @error('pi_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -56,7 +64,7 @@
             <x-form-box for="technical_contact_id"> SSH Internal Contact
                 <x-form-input list="contact-datalist"
                     name="technical_contact_id" id="technical_contact_id"
-                    value="{{ $contract->technical_contact->full_name ?? old('technical_contact_id') }}">>
+                    value="{{ old('technical_contact_id') ?? (request()->input('technical_contact_id') ?? $contract?->technical_contact?->full_name) }}">>
                 </x-form-input>
                 @error('technical_contact_id')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -67,7 +75,7 @@
                 <x-hint>e.g., Attn. [financial contact]</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_1"
                     id="darbi_header_ref_1"
-                    value="{{ $contract->darbi_header_ref_1 ?? old('darbi_header_ref_1') }}"></x-form-input>
+                    value="{{ old('darbi_header_ref_1') ?? (request()->input('darbi_header_ref_1') ?? $contract?->darbi_header_ref_1) }}"></x-form-input>
                 @error('darbi_header_ref_1')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -77,7 +85,7 @@
                 <x-hint>Optional second attn. person</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_2"
                     id="darbi_header_ref_2"
-                    value="{{ $contract->darbi_header_ref_2 ?? old('darbi_header_ref_2') }}"></x-form-input>
+                    value="{{ old('darbi_header_ref_2') ?? (request()->input('darbi_header_ref_2') ?? $contract?->darbi_header_ref_2) }}"></x-form-input>
                 @error('darbi_header_ref_2')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -89,7 +97,7 @@
                     KU_Symbiota_Quote_NMNH_20250423c.pdf</x-hint>
                 <x-form-input type="text" name="darbi_special_instructions"
                     id="darbi_special_instructions"
-                    value="{{ $contract->darbi_special_instructions ?? old('darbi_special_instructions') }}"></x-form-input>
+                    value="{{ old('darbi_special_instructions') ?? (request()->input('darbi_special_instructions') ?? $contract?->darbi_special_instructions) }}"></x-form-input>
                 @error('darbi_special_instructions')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
@@ -99,7 +107,7 @@
                 <x-hint>Notes to be included in the Customer Request
                     CSV</x-hint>
                 <x-form-input type="text" name="notes" id="notes"
-                    value="{{ $contract->notes ?? old('notes') }}"></x-form-input>
+                    value="{{ old('notes') ?? (request()->input('notes') ?? $contract?->notes) }}"></x-form-input>
                 @error('notes')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
                 @enderror
