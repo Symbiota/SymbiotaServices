@@ -137,8 +137,10 @@ return [
     'version' => env('APP_VERSION', function () {
         try {
             // Get the latest git tag
-            $version = trim(shell_exec('git describe --tags --abbrev=0 2>/dev/null'));
-            return $version ?: 'dev';
+            $nullDevice = (PHP_OS_FAMILY === 'Windows') ? 'nul' : '/dev/null';
+            $version = trim(shell_exec("git describe --tags --abbrev=0 2>$nullDevice"));
+            if ($version === 'v1.0.0') $version = 'dev';
+            return $version;
         } catch (Exception $e) {
             return 'dev';
         }
