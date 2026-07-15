@@ -133,14 +133,31 @@ return [
     | tags are found or git is not available.
     |
     |*/
-    
-    'version' => env('APP_VERSION', function() {
+
+    'version' => env('APP_VERSION', function () {
         try {
             // Get the latest git tag
-            $version = trim(shell_exec('git describe --tags --abbrev=0 2>/dev/null'));
-            return $version ?: 'dev';
+            $nullDevice = (PHP_OS_FAMILY === 'Windows') ? 'nul' : '/dev/null';
+            $version = trim(shell_exec("git describe --tags --abbrev=0 2>$nullDevice"));
+            if ($version === 'v1.0.0') $version = 'dev';
+            return $version;
         } catch (Exception $e) {
             return 'dev';
         }
     }),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Allow/Show Option to Register New Users
+    |--------------------------------------------------------------------------
+    |
+    | When set to true, shows "Register New User" button and web pages.
+    | When set to false, hides button and blocks off registration routes/web pages.
+    | If ALLOW_REGISTRATION="" has no value, it's treated as false.
+    | If the ALLOW_REGISTRATION variable is missing from the .env file, it defaults to true.
+    |
+    */
+
+    'allow_registration' => env('ALLOW_REGISTRATION', true),
+
 ];

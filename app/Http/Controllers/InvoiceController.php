@@ -173,7 +173,9 @@ class InvoiceController extends Controller
         $filename = 'BillingInformation_' . $customer_name . '_' . date('Y-m-d') . '.csv';
 
         $sanitizedFilename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename);
-        $handle = fopen($sanitizedFilename, 'w');
+        $tempfname = tempnam(sys_get_temp_dir(), $sanitizedFilename);
+        error_log('FileName:' . $tempfname);
+        $handle = fopen($tempfname, 'w');
 
         $headers = [
             ['Submitted  by (Required)',],
@@ -276,6 +278,6 @@ class InvoiceController extends Controller
 
         fclose($handle);
 
-        return response()->download(public_path($sanitizedFilename))->deleteFileAfterSend(true);
+        return response()->download($tempfname, $sanitizedFilename)->deleteFileAfterSend(true);
     }
 }
