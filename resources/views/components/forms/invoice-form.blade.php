@@ -113,9 +113,13 @@
                             <span class="ml-1">{{ $service->name }}</span>
                         </div>
                         @if ($loop->index == 0)
-                            <span class="ml-1.5">Line Ref 1:<br>e.g., Portal
+                            <span class="ml-1.5">Line Ref 1:<span
+                                    class="float-right text-gray-600 mr-1.5">(20
+                                    char. limit)</span><br>e.g., Portal
                                 name</span>
-                            <span class="ml-1.5">Line Ref 2:<br>e.g., other
+                            <span class="ml-1.5">Line Ref 2:<span
+                                    class="float-right text-gray-600 mr-1.5">(20
+                                    char. limit)</span><br>e.g., other
                                 notes (e.g., recurring, discount applied,
                                 etc.)</span>
                         @endif
@@ -141,6 +145,7 @@
                             class="m-1 mt-2 p-1 border border-gray-500"
                             name="line_ref_1[{{ $service->id }}]"
                             id="line_ref_1" placeholder="Line Ref 1"
+                            maxlength="20"
                             value="{{ old('line_ref_1') !== null || request()->has('line_ref_1')
                                 ? old("line_ref_1.$service->id") ??
                                     request()->input("line_ref_1.$service->id")
@@ -149,6 +154,7 @@
                             class="m-1 mt-2 p-1 border border-gray-500"
                             name="line_ref_2[{{ $service->id }}]"
                             id="line_ref_2" placeholder="Line Ref 2"
+                            maxlength="20"
                             value="{{ old('line_ref_2') !== null || request()->has('line_ref_2')
                                 ? old("line_ref_2.$service->id") ??
                                     request()->input("line_ref_2.$service->id")
@@ -263,9 +269,10 @@
             </x-form-box>
 
             <x-form-box for="darbi_header_ref_1"> DARBI Header Ref 1
-                <x-hint>e.g., Attn. [financial contact]</x-hint>
+                <x-hint>(20 char. limit) &emsp; e.g., Attn. [financial
+                    contact]</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_1"
-                    id="darbi_header_ref_1"
+                    id="darbi_header_ref_1" maxlength="20"
                     value="{{ old('darbi_header_ref_1') ?? (request()->input('darbi_header_ref_1') ?? ($invoice?->darbi_header_ref_1 ?? $contract?->darbi_header_ref_1)) }}"></x-form-input>
                 @error('darbi_header_ref_1')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -273,9 +280,10 @@
             </x-form-box>
 
             <x-form-box for="darbi_header_ref_2"> DARBI Header Ref 2
-                <x-hint>Optional second attn. person</x-hint>
+                <x-hint>(20 char. limit) &emsp; Optional second attn.
+                    person</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_2"
-                    id="darbi_header_ref_2"
+                    id="darbi_header_ref_2" maxlength="20"
                     value="{{ old('darbi_header_ref_2') ?? (request()->input('darbi_header_ref_2') ?? ($invoice?->darbi_header_ref_2 ?? $contract?->darbi_header_ref_2)) }}"></x-form-input>
                 @error('darbi_header_ref_2')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>

@@ -72,9 +72,10 @@
             </x-form-box>
 
             <x-form-box for="darbi_header_ref_1"> DARBI Header Ref 1
-                <x-hint>e.g., Attn. [financial contact]</x-hint>
+                <x-hint>(20 char. limit) &emsp; e.g., Attn. [financial
+                    contact]</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_1"
-                    id="darbi_header_ref_1"
+                    id="darbi_header_ref_1" maxlength="20"
                     value="{{ old('darbi_header_ref_1') ?? (request()->input('darbi_header_ref_1') ?? $contract?->darbi_header_ref_1) }}"></x-form-input>
                 @error('darbi_header_ref_1')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
@@ -82,9 +83,10 @@
             </x-form-box>
 
             <x-form-box for="darbi_header_ref_2"> DARBI Header Ref 2
-                <x-hint>Optional second attn. person</x-hint>
+                <x-hint>(20 char. limit) &emsp; Optional second attn.
+                    person</x-hint>
                 <x-form-input type="text" name="darbi_header_ref_2"
-                    id="darbi_header_ref_2"
+                    id="darbi_header_ref_2" maxlength="20"
                     value="{{ old('darbi_header_ref_2') ?? (request()->input('darbi_header_ref_2') ?? $contract?->darbi_header_ref_2) }}"></x-form-input>
                 @error('darbi_header_ref_2')
                     <p class="text-red-500 text-sm ml-3">{{ $message }}</p>
