@@ -22,5 +22,5 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     # RewriteRule ^ index.php [L]
-    RewriteRule ^ /Services/index.php [L]
+    RewriteRule ^ /SymbiotaServices/index.php [L]
 </IfModule>
